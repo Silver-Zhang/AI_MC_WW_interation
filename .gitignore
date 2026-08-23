@@ -1,0 +1,19 @@
+# ===== 敏感文件（禁止入 git）=====
+# 服务器登录凭据（用户/密码），严禁上传
+sever_info.md
+
+# ===== 嵌套的独立 git 仓库（各自管理，不纳入本仓库）=====
+# RMC 代码仓库（独立 git，团队共享，另见其自身远程）
+RMC/
+# AI-MC 原型（独立 git，GitHub Silver-Zhang/AIMC_WWiteration）
+AIMC_WWiteration/
+
+# ===== 通用忽略 =====
+.DS_Store
+*.log
+.venv/
+venv/
+__pycache__/
+*.pyc
+build/
+dist/
