@@ -10,10 +10,10 @@
 |---|---|---|
 | [`RMC/`](RMC/) | RMC 蒙特卡罗程序代码仓库（团队共享，改动谨慎） | 独立 git，分支 `Neural_Network_WW_Iteration` |
 | [`AIMC_WWiteration/`](AIMC_WWiteration/) | AI-MC 权重窗口**研究原型**（DNN/PINN/U-Net × 多群 MC 迭代，6 种学习变体） | 独立 git，分支 `develop` |
-| [`MLVR_develop/`](MLVR_develop/) | **ML-VR 开发工作区**：一任务一档，记录从立项到归档全过程 | 新建 |
-| [`MLVR_Knowledge/`](MLVR_Knowledge/) | **知识库**：RMC WW 架构、ML 方法、接口规格、已知问题（长期沉淀） | 新建 |
-| [`server_guide.md`](server_guide.md) | **服务器操作通用指南**（组内共享，选机/登录/传文件/长任务/ML·GPU 操作） | 新建 |
-| [`sever_info.md`](sever_info.md) | 服务器登录信息（**含凭据，敏感**，勿入 git） | 新建 |
+| [`MLVR_develop/`](MLVR_develop/) | **ML-VR 开发工作区**：一任务一档，记录从立项到归档全过程 | 本仓库 |
+| [`MLVR_Knowledge/`](MLVR_Knowledge/) | **知识库**：RMC WW 架构、ML 方法、接口规格、已知问题（长期沉淀） | 本仓库 |
+| [`server_guide.md`](server_guide.md) | **服务器操作通用指南**（组内共享，选机/登录/传文件/长任务/ML·GPU 操作） | 本仓库 |
+| [`sever_info.md`](sever_info.md) | 服务器登录信息（**含凭据，敏感**，已被 `.gitignore` 排除） | 不入 git |
 
 ## 从哪读起
 
@@ -46,6 +46,7 @@ cd MLVR_develop && ./new_task.sh <任务短名> [知识库条目编号]
 - 任何开发任务/缺陷修复走 [`MLVR_develop/README.md`](MLVR_develop/README.md) 的**五步流程**，
   **决策节点由人拍板**，代码改动落成 `changes.diff` 供复核。
 - 改动 RMC 或知识库后，同步更新对应文档并在文末"变更记录"追加一行。
-- **`sever_info.md` 含登录凭据，敏感**：若对工作区做 git 版本管理，必须将其加入 `.gitignore`。
-- 工作区根目录**不是 git 仓库**；如需版本管理 `MLVR_develop/` 与 `MLVR_Knowledge/`，
-  由用户决定是否 `git init`。
+- **`sever_info.md` 含登录凭据，敏感**：已被 `.gitignore` 排除，禁止手动加入提交。
+- **本仓库远程**：`https://gitlab.reallab.org.cn/zhangjunxiao/AI_MC_WW_interation.git`
+  （分支 `main`，2026-08-23 建立，私有）。`RMC/` 与 `AIMC_WWiteration/` 为独立仓库
+  不纳入本仓库；如需在克隆环境中引用，可后续用 git submodule 关联。
