@@ -47,6 +47,8 @@ cd MLVR_develop && ./new_task.sh <任务短名> [知识库条目编号]
   **决策节点由人拍板**，代码改动落成 `changes.diff` 供复核。
 - 改动 RMC 或知识库后，同步更新对应文档并在文末"变更记录"追加一行。
 - **`sever_info.md` 含登录凭据，敏感**：已被 `.gitignore` 排除，禁止手动加入提交。
-- **本仓库远程**：`https://gitlab.reallab.org.cn/zhangjunxiao/AI_MC_WW_interation.git`
-  （分支 `main`，2026-08-23 建立，私有）。`RMC/` 与 `AIMC_WWiteration/` 为独立仓库
+- **本仓库远程（双镜像，`git push origin main` 同时推送两边）**：
+  - GitLab（主）：`https://gitlab.reallab.org.cn/zhangjunxiao/AI_MC_WW_interation.git`
+  - GitHub（镜像）：`git@github.com:Silver-Zhang/AI_MC_WW_interation.git`
+  分支 `main`，2026-08-23 建立，均私有。`RMC/` 与 `AIMC_WWiteration/` 为独立仓库
   不纳入本仓库；如需在克隆环境中引用，可后续用 git submodule 关联。
