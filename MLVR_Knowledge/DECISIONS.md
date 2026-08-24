@@ -41,3 +41,67 @@
 决定：第一版不实现跨iteration历史场累计，先完成单轮闭环框架。
 
 状态：Frozen
+
+## D006
+
+日期：2026-08-24
+
+决定：第一版 Field 只定义为空间网格 × 能群上的统计场，不包含角度、时间、高阶角通量矩或机器学习特征；每个位置至少包含 mean field 与 RE。
+
+状态：Frozen
+
+## D007
+
+日期：2026-08-24
+
+决定：Forward Field 与 Adjoint Field 采用统一的数据维度与基本统计信息规范，但物理语义和生命周期必须严格区分；具体 C++ 数据结构留到接口设计阶段决定。
+
+状态：Frozen
+
+## D008
+
+日期：2026-08-24
+
+决定：第一版双向迭代采用用户给定的固定 iteration 次数，不实现 RE/FOM 自动收敛停止、patience 或其他自适应终止策略。
+
+状态：Frozen
+
+## D009
+
+日期：2026-08-24
+
+决定：正式双向迭代前增加独立 Bootstrap Stage，用于生成第一轮伴随权重窗 WW_A(1)；Bootstrap 不属于正式 iteration 编号。
+
+状态：Frozen
+
+## D010
+
+日期：2026-08-24
+
+决定：第一版 Bootstrap 采用真实物理问题下的低粒子数 Analog Forward MC，不使用权重窗、不修改密度或构造辅助物理问题。
+
+状态：Frozen
+
+## D011
+
+日期：2026-08-24
+
+决定：Bootstrap 输出至少包含 forward field + RE，经 Field Reconstruction 后生成 WW_A(1)；Bootstrap 数据不参与正式 FOM 比较、跨 iteration 历史累计或最终物理结果。
+
+状态：Frozen
+
+## D012
+
+日期：2026-08-24
+
+决定：第一版 Bootstrap 与正式 iteration 使用相同的空间 Field mesh 和能群结构，不引入 mesh mapping 或 energy-group mapping。
+
+状态：Frozen
+
+## D013
+
+日期：2026-08-24
+
+决定：Bootstrap 策略保留后续可扩展性；降密度、辅助减方差、外部场、多阶段初始化等仅作为后续研究方向，第一版不实现。
+
+状态：Frozen
