@@ -105,3 +105,35 @@
 决定：Bootstrap 策略保留后续可扩展性；降密度、辅助减方差、外部场、多阶段初始化等仅作为后续研究方向，第一版不实现。
 
 状态：Frozen
+
+## D014
+
+日期：2026-08-24
+
+决定：Stage 2 的 RMC 功能审查统一采用 `Requirement → Existence → Actual Behavior → Requirement Match → Integration Compatibility → Targeted Verification → Classification` 的证据链。
+
+状态：Frozen
+
+## D015
+
+日期：2026-08-24
+
+决定：Stage 2 采用 A–F 六类结论：A Ready、B Extend、C Verify、D Integration issue、E Defect、F Missing。
+
+状态：Frozen
+
+## D016
+
+日期：2026-08-24
+
+决定：严格区分 Audit 与 Repair。Stage 2 发现缺口、缺陷或兼容性问题后只记录证据和分类，不在同一任务中修改 RMC；需要代码改动的事项进入 Stage 3 后重新立项并由用户拍板。
+
+状态：Frozen
+
+## D017
+
+日期：2026-08-24
+
+决定：Stage 2 每次只审查一个逻辑功能，首项正式审查为 F02 多群 Adjoint transport；第一轮以只读源码审查为主，若静态证据不足则提出最小验证方案，不以推测替代验证。
+
+状态：Frozen
