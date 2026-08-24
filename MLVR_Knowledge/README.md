@@ -1,31 +1,62 @@
-# MLVR 知识库 —— RMC 机器学习减方差
+# MLVR 知识库 —— RMC 双向迭代权重窗开发
 
-> 长期沉淀 RMC ML-VR 开发所需的**事实与经验**：架构、方法、接口、已知问题。
-> 开发任务的过程记录在 [`MLVR_develop/`](../MLVR_develop/)（一任务一档），
-> 本知识库只存**沉淀后的结论**。
+> 长期沉淀 RMC 双向迭代 WW / ML-VR 开发所需的事实、方法、审查结论、接口设计与已知问题。
+> 开发任务过程记录在 [`MLVR_develop/`](../MLVR_develop/)（一任务一档），本知识库存放沉淀后的长期结论。
 
-## 文档地图
+## 当前文档地图
 
-| 编号 | 文档 | 状态 | 内容 |
-|---|---|---|---|
-| — | [AGENT_CONTEXT.md](AGENT_CONTEXT.md) | 🟢 已建 | **一屏上下文**，Agent 开工先读 |
-| 01 | 架构总览 | 🟡 规划 | RMC WW 现有架构 + AI-MC 迭代框架 + 两者对接点 |
-| 02 | 权重窗口接口与数据格式 | 🟡 规划 | `WeightWindow`/`wwout`/`wwinp`/HDF5 读写、Python 接口、输入卡 |
-| 03 | 机器学习方法 | 🟡 规划 | 模型变体、先验、loss、训练策略、可复现性约定 |
-| 04 | 迭代循环与收敛判据 | 🟡 规划 | AI-MC 双向迭代协议、WW 有效性门控、RE/FOM 定义 |
-| 05 | 测试与验证 | 🟡 规划 | smoke test、无偏性检查、回归基准、算例集 |
-| 06 | [已知问题与改进建议](06_已知问题与改进建议.md) | 🟢 已建 | 已知坑、改进想法、待办储备（工作流联动） |
-| 07 | 实验环境与资源 | 🟡 规划 | 项目专用环境/RMC 构建细节；**服务器通用操作见根目录 [`server_guide.md`](../server_guide.md)（登录凭据 [`sever_info.md`](../sever_info.md)）** |
+| 文档 | 状态 | 内容 |
+|---|---|---|
+| [AGENT_CONTEXT.md](AGENT_CONTEXT.md) | 🟢 Active | Agent 开工的一屏上下文与当前任务 |
+| [00_开发总纲与阶段路线.md](00_开发总纲与阶段路线.md) | 🟢 Active | 项目目标、Stage 路线、当前阶段与进入/退出逻辑 |
+| [01_双向迭代基础框架_方法与功能需求.md](01_双向迭代基础框架_方法与功能需求.md) | 🟢 Frozen v1 | 第一版算法流程、Field/Bootstrap/iteration 功能需求边界 |
+| [02_RMC功能审查矩阵.md](02_RMC功能审查矩阵.md) | 🟢 Active | F01–F12 功能台账、状态和 A–F 审查分类 |
+| [03_RMC功能审查规范.md](03_RMC功能审查规范.md) | 🟢 Active | Stage 2 Audit Protocol、证据标准、统一输出模板和审查顺序 |
+| [DECISIONS.md](DECISIONS.md) | 🟢 Active | 已冻结设计决策，只追加不覆盖 |
+| [06_已知问题与改进建议.md](06_已知问题与改进建议.md) | 🟢 Active | 已知坑、改进想法、后续储备 |
+
+## 后续专题文档（按阶段需要再建立）
+
+以下内容暂不提前创建空文档，避免在功能审查前臆造接口和架构：
+
+- RMC / Field Reconstruction 接口设计规范；
+- WW 数据交换与格式规范；
+- 双向迭代 controller / lifecycle 设计；
+- 测试与验证基准；
+- 简单回归与后续高级 ML 方法；
+- 项目专用实验环境与资源说明。
+
+只有当前一 Stage 的证据足以支撑下一阶段设计时，再新增相应专题文档。
 
 ## 从哪读起
 
-- **快速建立认知** → [AGENT_CONTEXT.md](AGENT_CONTEXT.md)（一屏）
-- **要知道有哪些坑** → [06_已知问题与改进建议](06_已知问题与改进建议.md)
-- **要开新任务** → [`MLVR_develop/README.md`](../MLVR_develop/README.md)（五步工作流）
+Agent 推荐读取顺序：
+
+```text
+AGENTS.md
+  ↓
+MLVR_Knowledge/AGENT_CONTEXT.md
+  ↓
+MLVR_Knowledge/00_开发总纲与阶段路线.md
+  ↓
+MLVR_Knowledge/DECISIONS.md
+  ↓
+当前 Stage 的专题文档
+  ↓
+MLVR_develop/<当前任务>/README.md
+  ↓
+再读取 RMC / AIMC_WWiteration 代码
+```
+
+当前 Stage 2 还必须阅读：
+
+- `02_RMC功能审查矩阵.md`
+- `03_RMC功能审查规范.md`
 
 ## 维护约定
 
-- 新增专题文档时在"文档地图"登记编号与状态。
-- 每次改动/实现后，在对应专题文档文末"变更记录"追加一行：
-  `YYYY-MM-DD · <简述> · 关联 MLVR_develop/<任务文件夹>`
-- 知识库条目状态与 `MLVR_develop/INDEX.md` 联动（见工作流规范第 3 条）。
+- 新增专题文档时在“当前文档地图”登记。
+- 每次形成稳定结论后，在对应专题文档文末“变更记录”追加日期、简述和关联任务。
+- 关键设计变化必须同步追加到 `DECISIONS.md`，不得静默覆盖旧决策。
+- 功能审查状态同步更新 `02_RMC功能审查矩阵.md` 与 `MLVR_develop/INDEX.md`。
+- Stage 2 审查发现的问题不得直接在同一任务中修复；进入 Stage 3 后重新立项。
