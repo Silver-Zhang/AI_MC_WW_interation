@@ -26,8 +26,9 @@ Forward–Adjoint iterative framework
 2. 不提前修改 RMC 架构，先完成需求分析和功能审查。
 3. 先确认算法需求，再检查 RMC 是否满足。
 4. 功能确认后，再分析接口并逐步连接。
-5. 一次只实现一个小功能，并进行记录和验证。
+5. 一次只处理一个逻辑功能，并进行记录和验证。
 6. 方案由用户逐阶段拍板，Agent 不得自行跨阶段扩展设计。
+7. Stage 2 严格执行 `Audit ≠ Repair`：发现问题只记录证据和分类，不修改 RMC 源码。
 
 ## 第一版方法边界（已冻结）
 
@@ -90,6 +91,40 @@ WW_A(k+1)
 
 正式 iteration 从 `k = 1` 开始。
 
+## Stage 2 审查规则
+
+当前已进入 **Stage 2 — RMC Existing Capability Audit**。
+
+统一协议：`MLVR_Knowledge/03_RMC功能审查规范.md`。
+
+审查链：
+
+```text
+Requirement → Existence → Actual Behavior → Requirement Match
+→ Integration Compatibility → Targeted Verification → Classification
+```
+
+分类：
+
+- A Ready
+- B Extend
+- C Verify
+- D Integration issue
+- E Defect
+- F Missing
+
+源码证据必须尽量记录 `RMC commit + file:function:line`。不得仅凭函数名、注释或关键词宣称功能正确。
+
+## 当前正式任务
+
+首项审查：**F02 — Multigroup Adjoint Transport Audit**。
+
+任务档案：
+
+`MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`
+
+该任务第一轮仅进行只读源码审查：追踪多群伴随输运的启用入口、调用链和实际物理实现。若静态证据不足，应提出最小验证方案并标记未验证项，不得直接修改代码。
+
 ## 开发流程
 
 所有任务遵循：
@@ -101,7 +136,7 @@ WW_A(k+1)
  ↓
 用户决策冻结
  ↓
-实施
+实施/审查
  ↓
 测试与记录
  ↓
@@ -114,16 +149,13 @@ WW_A(k+1)
 - `MLVR_Knowledge/00_开发总纲与阶段路线.md`
 - `MLVR_Knowledge/01_双向迭代基础框架_方法与功能需求.md`
 - `MLVR_Knowledge/02_RMC功能审查矩阵.md`
+- `MLVR_Knowledge/03_RMC功能审查规范.md`
 - `MLVR_Knowledge/DECISIONS.md`
 
 ## 当前阶段
 
-Stage 0：工作流与知识库基础已建立。
+- Stage 0：基础工作流已建立。
+- Stage 1：第一版框架功能需求基线已冻结。
+- **Stage 2：已启动，当前执行 F02 多群 Adjoint transport 只读审查。**
 
-Stage 1：第一版双向迭代框架功能需求基线已形成，等待用户最终确认后进入 Stage 2。
-
-下一阶段：
-
-Stage 2：RMC 现有功能审查。
-
-Stage 2 开始时应先确定审查顺序和单项审查记录模板，然后由本地 Agent 对 RMC 进行只读调查；在用户拍板前不得修改 RMC 源码。
+在 F02 审查结论经用户确认前，不进入 F03，也不修改 RMC 源码。
