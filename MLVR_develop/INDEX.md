@@ -10,7 +10,8 @@
 | 2026-08-24 | `20260824_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |
 | 2026-08-24 | `20260824_stage1-framework-requirements` | 功能需求基线 | 已完成并确认 | 01 / 02 / DECISIONS | GitHub history |
 | 2026-08-24 | `20260824_stage2-audit-protocol` | 审查规范 | 已完成 | 02 / 03 / DECISIONS | GitHub history |
-| 2026-08-24 | `20260824_f02-mg-adjoint-transport-audit` | RMC只读功能审查 | Ready for local audit | F02 / 03 | 待审查结果 |
+| 2026-08-24 | `20260824_f02-mg-adjoint-transport-audit` | RMC只读功能审查（F02-A） | 已完成 | F02 / 03 | 未修改 RMC |
+| 2026-08-24 | `20260824_f02-adjoint-physics-verification` | RMC只读物理正确性审查（F02-B） | 待决策 | F02 / W5 / W6 | 独立复核及 Claude 第二轮反驳再复核完成；成员/getter 数据流与已登记双 nubar 实表均维持 W5/W6，完整能力 E、受限子域 C；待人工复核；未修改 RMC |
 
 ## 待办储备（来自知识库 06 文档，尚未立项）
 

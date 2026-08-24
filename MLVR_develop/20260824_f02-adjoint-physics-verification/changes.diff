@@ -1,0 +1,20 @@
+# F02-B multigroup adjoint physics verification
+
+当前任务仅修改审查与治理文档。
+
+未授权、也未进行 RMC 或 AIMC_WWiteration 源码修改；因此无源码 `git diff` 可生成。
+
+本任务的文档改动见：
+
+- `MLVR_develop/20260824_f02-adjoint-physics-verification/README.md`
+- `MLVR_Knowledge/02_RMC功能审查矩阵.md`
+- `MLVR_Knowledge/06_已知问题与改进建议.md`
+- `MLVR_develop/INDEX.md`
+
+RMC 审查基线：
+
+- branch: `Neural_Network_WW_Iteration`
+- commit: `4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b`
+- 工作树：clean
+
+若后续获批进入 Stage 3 修复，应另立任务并在新任务中生成真实 RMC 源码改动快照，不覆盖本只读审查记录。
