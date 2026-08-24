@@ -1,0 +1,7 @@
+# F02 multigroup adjoint transport audit
+
+当前任务处于只读审查阶段。
+
+未授权、也未进行 RMC 或 AIMC_WWiteration 源码修改。
+
+如后续本地审查过程中始终保持只读，本文件保持为“无源码改动”记录；若用户另行批准进入 Stage 3 修复，应创建新的任务档案，而不是在本任务中覆盖本记录。
