@@ -1,0 +1,7 @@
+# Stage 2 audit protocol changes
+
+本任务仅涉及 MLVR 工作流与知识库文档。
+
+未修改 RMC 或 AIMC_WWiteration 源码。
+
+GitHub 提交已记录各文档变更；如需统一本地 diff，可在同步仓库后生成并覆盖本文件。
