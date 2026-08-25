@@ -1,0 +1,2 @@
+stage,run_count,independent_pair_count,population_per_run,R_F,sigma_F,R_A,sigma_A,z,all_individual_abs_z_le_3,max_individual_abs_z,anomaly_lines,execution_pass,formal_statistics_pass,criterion_pass
+pilot,2,1,20000,0.25084,0.005866144239999999,0.24456,0.011775808560000002,0.47734738753181355,True,0.4773473875318136,0,True,True,True

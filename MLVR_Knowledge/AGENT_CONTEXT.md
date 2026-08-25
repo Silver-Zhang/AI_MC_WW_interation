@@ -129,9 +129,11 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - `MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
 - `MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
 
-当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A — Ready。W5 已让散射/裂变权重使用当前位置总原子密度；W7 已隔离纯中子初始化中的 photon 群访问；W6 已把运行时裂变前驱群抽样统一到初始化采用的 total nubar 核。部署双表数据的确定性 oracle 给出逐群核和归一化概率差均为 0，10,000 历史重放产生 2,487 条 bank 后继并正常结束。现有响应级正证据仍主要来自非裂变 H/O 代表案例，尚不能放行一般密度 mesh、混合材料、强各向异性或可裂变最终响应。
+当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A — Ready。W5 已让散射/裂变权重使用当前位置总原子密度；W7 已隔离纯中子初始化中的 photon 群访问；W6 已把运行时裂变前驱群抽样统一到初始化采用的 total nubar 核。部署双表数据的确定性 oracle 给出逐群核和归一化概率差均为 0，10,000 历史重放产生 2,487 条 bank 后继并正常结束。可裂变 `g6↔g1` 响应级正式批次又以五组独立流验证最终响应相容（合并 $z=-0.703$）。现有正证据仍不能放行一般密度 mesh、混合材料、强各向异性或任意裂变问题。
 
-下一步是人工复核 W5/W6/W7 的未提交补丁与 C — Verify 边界，再决定是否接受 F02 阶段结论并进入 F03；不得把 C 写成完整物理放行。
+W5/W6/W7 补丁已完成人工复核并提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。可裂变响应任务 `20260825_08_f02-fissile-response-reciprocity-verification` 已归档：正式 10/10 个 1M-history 运行无异常，五组及合并 $|z|\le3$。F02 阶段复核完成并保持 C — Verify；下一项进入 F03 Adjoint source 只读审查。
+
+F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
@@ -168,4 +170,4 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - Stage 1：第一版框架功能需求基线已冻结。
 - **Stage 3：W5/W6/W7 修复均已完成并验证；F02 保守评级为 C — Verify。**
 
-W5/W6/W7 的当前修复尚未 commit/push；reference/benchmark 未更新。
+W5/W6/W7 已 commit、未 push；reference/benchmark 未更新。F02 阶段复核完成，当前进入 F03 Adjoint source 审查。

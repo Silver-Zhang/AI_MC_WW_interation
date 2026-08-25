@@ -136,7 +136,7 @@ Regression:
 - **结论**：W7 根因已修复。neutron-only fixed-source MGACE adjoint 不再访问 photon 群；原崩溃输入正常完成，既有伴随回归和 reference 保持不变。
 - **遗留问题 / 后续待办**：W5/W6 仍未修复，完整能力保持 E。W7 没有独立纳入 RMC 常驻 CTest，因为当前仓库测试数据不包含可移植的 neutron-only `c5g7td`；针对性输入和真实输出保存在本任务档案。
 - **知识库同步**：更新 `06_已知问题与改进建议.md`、`02_RMC功能审查矩阵.md`、`AGENT_CONTEXT.md`、物理导读和任务台账。
-- **是否已提交**：未 commit、未 push、未切分支；由用户决定。
+- **是否已提交**：已由 GitHub Copilot 提交到 RMC `Neural_Network_WW_Iteration`，commit `6d2087518e0d9f23574d629f5fde361c79f519e4`；未 push、未切分支。
 
 ---
 

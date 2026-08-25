@@ -7,10 +7,13 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；F02-B 保守转 C — Verify |
+| 2026-08-25 | [f02-extended-physics-readiness](20260825_10_f02-extended-physics-readiness/README.md) |  | 待设计 | F02 | |
+| 2026-08-25 | [f03-adjoint-source-definition-audit](20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 待设计 | F03 | 已进入 F03；初始定位为通用外源采样后标记伴随，尚不预判分类 |
+| 2026-08-25 | [f02-fissile-response-reciprocity-verification](20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
+| 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；已随 W5/W7 提交为 RMC `6d208751...` |
 | 2026-08-25 | [f02-w5-nonuniform-density-reciprocity-verification](20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md) | 算法实验 / 现有能力验证 | 已完成 | W5 | 200k 原批次严格门槛失败；1M 全量精度升级通过逐种子、分组与总体判据 |
-| 2026-08-25 | [f02-w5-local-density-adjoint-weight-fix](20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md) | 缺陷修复 | 已完成 | W5 | 两处权重分母使用局部总原子密度；三种密度权重恢复 $1:1:1$；回归通过；未提交 |
-| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；原崩溃输入退出 0，既有回归 1/1 通过；未提交 |
+| 2026-08-25 | [f02-w5-local-density-adjoint-weight-fix](20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md) | 缺陷修复 | 已完成 | W5 | 两处权重分母使用局部总原子密度；三种密度权重恢复 $1:1:1$；已随 W6/W7 提交为 RMC `6d208751...` |
+| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；崩溃输入和回归通过；已随 W5/W6 提交为 RMC `6d208751...` |
 | 2026-08-25 | [physics-guide-topic-refactor](20260825_03_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
 | 2026-08-25 | [human-physics-guide](20260825_02_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
 | 2026-08-25 | [f02-adjoint-numerical-verification](20260825_01_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |

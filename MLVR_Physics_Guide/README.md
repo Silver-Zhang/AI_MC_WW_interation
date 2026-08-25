@@ -18,9 +18,9 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已在当前工作树修复并通过针对性验证，已不存在审查中确认但未修复的缺陷，故从 E 调整为 **C — Verify**。这不等于完整放行：W6 的确定性核一致性和动态 bank 可达性已验证，但可裂变最终响应、一般材料/密度场和强各向异性仍缺代表性验证。
+RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已修复并通过针对性验证，已不存在审查中确认但未修复的缺陷，故从 E 调整为 **C — Verify**。这不等于完整放行：W6 已有确定性核一致性、动态 bank 可达性和单个裂变主导最终响应案例的正证据，但一般材料/密度场、更多裂变问题和强各向异性仍缺代表性验证。
 
-局部正证据不能改变这一结论：非裂变 H/O 的两个指定群对不仅在均匀球中通过互易性检查，也在等体积内球/外壳、两种相反密度排列的 1M 全量精度批次中通过逐种子、分组和总体判据。这是代表性响应级证据，不是一般密度场、裂变或完整伴随能力的证明。
+局部正证据不能改变这一结论：非裂变 H/O 的两个指定群对在均匀球及两种相反密度排列的双区域中通过互易性检查；可裂变 `10001.01m` 的 `g6↔g1` 案例也在五组独立流和合并层面通过。它们是代表性响应级证据，不是一般密度场、任意裂变问题或完整伴随能力的证明。
 
 ## 阅读与维护原则
 
@@ -36,6 +36,7 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已在当前
 - [F02 第一阶段数值验证](../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
 - [W5 非均匀密度响应级验证](../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
 - [W6 双 nubar 核一致性修复](../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
+- [可裂变响应级互易性验证](../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
@@ -45,3 +46,4 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已在当前
 - 2026-08-25：W7 已按粒子模式隔离 neutron/photon 能群上限初始化；纯中子 `c5g7td` 算例恢复运行，完整能力仍因 W5/W6 保持 E。
 - 2026-08-25：W5 修复后完成等体积双区域响应级互易性验证；1M 全量批次通过，完整能力仍因 W6 保持 E。
 - 2026-08-25：W6 已统一采用 total nubar 核；确定性逐群核/概率差为 0，10,000 历史动态重放覆盖 2,487 条 bank 后继。F02 转为 C — Verify，不宣称 A。
+- 2026-08-25：`g6↔g1` 可裂变最终响应正式批次通过五组独立流及合并互易性判据；单代表案例不改变 C — Verify 的完整能力评级。

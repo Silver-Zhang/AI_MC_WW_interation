@@ -1,0 +1,25 @@
+mgace=/home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td sha256=cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c address=1 NGRP=7 NNUBAR=2
+group,energy_MeV,sigma_f,total_nubar,nu_sigma_f,chi,p0_row_sum
+1,5.68,0.00721206,2.34542,0.0169153097652,0.58791,0.16992444291630002
+2,0.6846,0.000819301,2.09844,0.0017192539904400002,0.41176,0.3260874031427
+3,0.0046278,0.0064532,2.05101,0.013235577732000002,0.00033906,0.4536192
+4,2.985e-05,0.0185648,2.05093,0.038075105264,1.1761e-07,0.4581314
+5,2.365e-06,0.0178084,2.05093,0.036523781812,0.0,0.281781260021
+6,3.8e-07,0.0830348,2.05093,0.170298562364,0.0,0.2839078
+7,6.5e-08,0.216004,2.05093,0.44300908372000003,0.0,0.2816258
+top_fission_operator_entries:
+strength=0.26044947041,g=7,h=1,Eg=6.5e-08,Eh=5.68,scatter_g_h=0,scatter_h_g=0
+strength=0.182413420313,g=7,h=2,Eg=6.5e-08,Eh=0.6846,scatter_g_h=0,scatter_h_g=0
+strength=0.100120227799,g=6,h=1,Eg=3.8e-07,Eh=5.68,scatter_g_h=0,scatter_h_g=0
+strength=0.070122136039,g=6,h=2,Eg=3.8e-07,Eh=0.6846,scatter_g_h=0,scatter_h_g=0
+strength=0.0223847351358,g=4,h=1,Eg=2.985e-05,Eh=5.68,scatter_g_h=0,scatter_h_g=5.5163e-09
+strength=0.0214726965651,g=5,h=1,Eg=2.365e-06,Eh=5.68,scatter_g_h=0,scatter_h_g=0
+strength=0.0156778053435,g=4,h=2,Eg=2.985e-05,Eh=0.6846,scatter_g_h=0,scatter_h_g=3.1427e-09
+strength=0.0150390323989,g=5,h=2,Eg=2.365e-06,Eh=0.6846,scatter_g_h=0,scatter_h_g=0
+strength=0.00994467976406,g=1,h=1,Eg=5.68,Eh=5.68,scatter_g_h=0.127537,scatter_h_g=0.127537
+strength=0.00778132850442,g=3,h=1,Eg=0.0046278,Eh=5.68,scatter_g_h=0,scatter_h_g=9.4374e-06
+strength=0.00696504794892,g=1,h=2,Eg=5.68,Eh=0.6846,scatter_g_h=0.042378,scatter_h_g=0
+strength=0.00544988148693,g=3,h=2,Eg=0.0046278,Eh=0.6846,scatter_g_h=0,scatter_h_g=0.0016314
+strength=0.00101076661352,g=2,h=1,Eg=0.6846,Eh=5.68,scatter_g_h=0,scatter_h_g=0.042378
+strength=0.000707920023104,g=2,h=2,Eg=0.6846,Eh=0.6846,scatter_g_h=0.324456,scatter_h_g=0.324456
+strength=0.000150206659926,g=7,h=3,Eg=6.5e-08,Eh=0.0046278,scatter_g_h=0,scatter_h_g=0

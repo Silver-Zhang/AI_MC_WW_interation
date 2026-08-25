@@ -1,0 +1,8 @@
+2026-08-25T18:51:13+08:00
+Neural_Network_WW_Iteration
+6d2087518e0d9f23574d629f5fde361c79f519e4
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmake version 3.28.3
+f3870bf42b3e6d4ab2518f45542288da3d1590824069b375baa213af2211ba16  /tmp/mlvr_f02_rmc_build/bin/RMC
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td

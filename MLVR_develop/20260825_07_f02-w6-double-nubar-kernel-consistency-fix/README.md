@@ -158,7 +158,7 @@ c5g7td sha256=cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c
 - **结论**：W6 根因已修复。standard MGACE 双 nubar 伴随裂变初始化、通用 getter 与运行时前驱群抽样现在统一使用 total nubar 核；确定性逐群核/概率差为 0，真实动态 bank 路径稳定可达。W5/W6/W7 三项已知缺陷均已闭合，F02-B 从 E 调整为 **C — Verify**，不宣称 A — Ready。
 - **遗留问题 / 后续待办**：为可裂变最终响应、混合材料、一般密度场、强各向异性和更多几何/群对补充代表性验证；异常 MGACE 数据中的零/负 $\chi$、$\nu\Sigma_f$ 及累计残差健壮性另行审查；delayed/AIS/HDF5 等另立任务审查。
 - **知识库同步**：更新 `AGENT_CONTEXT.md`、`02_RMC功能审查矩阵.md`、`06_已知问题与改进建议.md`、知识库 README，以及物理导读总览和多群伴随输运专题 01-04。
-- **是否已提交**：未 commit/push/切分支；仍为 `Neural_Network_WW_Iteration` / `4d3e1aac...` 未提交工作树。
+- **是否已提交**：已由 GitHub Copilot 提交到 RMC `Neural_Network_WW_Iteration`，commit `6d2087518e0d9f23574d629f5fde361c79f519e4`；未 push、未切分支。
 
 ---
 

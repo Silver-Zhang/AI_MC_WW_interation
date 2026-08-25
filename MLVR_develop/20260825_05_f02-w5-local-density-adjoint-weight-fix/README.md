@@ -159,7 +159,7 @@ signal_lines=0
 - **结论**：W5 根因已修复。MGACE 伴随散射和裂变权重均用当前位置总原子密度 $N_0r$ 归一化宏观总截面；共同密度因子正确抵消。V2 从 $2:1:0.5$ 恢复为 $1:1:1$，$r=1$ 逐事件不变，既有回归和 W7 兼容性通过。
 - **遗留问题 / 后续待办**：W6 双 nubar 核不一致仍未修复，完整 standard MGACE fixed-source neutron adjoint 保持 E — Defect。一般非均匀密度场互易性和混合材料仍需后续验证。
 - **知识库同步**：更新 `06_已知问题与改进建议.md`、`02_RMC功能审查矩阵.md`、`AGENT_CONTEXT.md`；物理导读补充 W5 修复公式、边界、第六张密度数据流图及当前能力状态。
-- **是否已提交**：未 commit、未 push、未切分支；由用户决定。
+- **是否已提交**：已由 GitHub Copilot 提交到 RMC `Neural_Network_WW_Iteration`，commit `6d2087518e0d9f23574d629f5fde361c79f519e4`；未 push、未切分支。
 
 ---
 

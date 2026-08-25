@@ -1,0 +1,16 @@
+2026-08-25T19:17:12+08:00
+Neural_Network_WW_Iteration
+6d2087518e0d9f23574d629f5fde361c79f519e4
+cmake version 3.28.3
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Linux silver-work-station 7.0.0-30-generic #30~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:27:52 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+=== CMake cache options ===
+BUILD_TESTING:BOOL=OFF
+CMAKE_BUILD_TYPE:STRING=Release
+ais:BOOL=off
+=== hashes ===
+f3870bf42b3e6d4ab2518f45542288da3d1590824069b375baa213af2211ba16  /tmp/mlvr_f02_rmc_build/bin/RMC
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  /home/workspace/AI_MC_WW_interation/RMC/tests/fixed_source_adjoint/reference_result
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001  /home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td
