@@ -26,7 +26,7 @@
 4. 不破坏已修复的 W7 neutron-only `c5g7td` 可达性；原输入仍退出 0。
 5. `git diff --check` 通过，RMC 改动仅包含已存在的 W7 `InitiateAll.cpp` 和本任务批准的 W5 文件；生成仅含 W5 增量的 `changes.diff`。
 
-**原始材料**：修复前数值证据原样保存在 `../20260825_f02-adjoint-numerical-verification/cases/v2_w5_density/` 及该任务 `logs/v2_evidence.txt`；关键结果为 $r=0.5,1,2$ 的首碰撞后平均权重 `1.3381, 0.66903, 0.33452`。本任务不改写历史证据，实施时把重放输入、修复后原生 `.source`、退出码和分析结果保存到本任务目录。
+**原始材料**：修复前数值证据原样保存在 `../20260825_01_f02-adjoint-numerical-verification/cases/v2_w5_density/` 及该任务 `logs/v2_evidence.txt`；关键结果为 $r=0.5,1,2$ 的首碰撞后平均权重 `1.3381, 0.66903, 0.33452`。本任务不改写历史证据，实施时把重放输入、修复后原生 `.source`、退出码和分析结果保存到本任务目录。
 
 ---
 
@@ -58,7 +58,7 @@ $$
 | 3 | `RMC/src/GetExitState.cpp:186-189` | 伴随散射权重当前直接读取未缩放成员 `p_dMatAtomDen`。 |
 | 4 | `RMC/src/SampleColliType.cpp:187-192` | 伴随裂变权重使用同一未缩放分母。 |
 | 5 | `RMC/src/GetLocationInfo.cpp:59-82` | `p_dDensRatio` 来源覆盖 cell 预计算密度比例和位置相关密度网格。 |
-| 6 | `20260825_f02-adjoint-numerical-verification` V2 | 固定 RNG、128 粒子原生 source trace 得到约 $2:1:0.5$，相对 $1/r$ 最大误差 $2.9894\times10^{-5}$。 |
+| 6 | `20260825_01_f02-adjoint-numerical-verification` V2 | 固定 RNG、128 粒子原生 source trace 得到约 $2:1:0.5$，相对 $1/r$ 最大误差 $2.9894\times10^{-5}$。 |
 
 **局部假设与反证检查**：若 W5 仅由权重分母遗漏当前位置比例造成，则两个调用点改用 `GetMatAtomDen(p_nMAT, p_dDensRatio)` 后，原 V2 三组首碰撞后平均权重应在 $5\times10^{-4}$ 内相等；若仍保持 $1/r$、出现新的密度趋势或 $r=1$ 回归改变，则假设被否定并停止扩大修改。
 

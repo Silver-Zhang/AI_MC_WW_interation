@@ -41,7 +41,7 @@
 - 更新 `00_开发总纲与阶段路线.md`，Stage 2 标记为已启动；
 - 更新 `AGENT_CONTEXT.md`；
 - 整理 `MLVR_Knowledge/README.md` 文档地图；
-- 建立第一项正式审查任务 `20260824_f02-mg-adjoint-transport-audit/`。
+- 建立第一项正式审查任务 `20260824_04_f02-mg-adjoint-transport-audit/`。
 
 ## 5. 验证
 

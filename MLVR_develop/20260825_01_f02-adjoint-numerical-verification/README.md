@@ -46,7 +46,7 @@
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `MLVR_develop/20260824_f02-adjoint-physics-verification/README.md` D.3 | W5 的局部密度数据流与 $1/r$ 后果已由静态证据闭合。 |
+| 1 | `MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md` D.3 | W5 的局部密度数据流与 $1/r$ 后果已由静态证据闭合。 |
 | 2 | 同上 F.3 / A.4 | W6 在已登记 `c5g7td` 双 nubar 表上可达，两个核的累计裂变产生量不一致。 |
 | 3 | `RMC/tests/fixed_source_adjoint/inp` | V0/V2 可复用的现有 30 群 H/O 非裂变基础输入；只读。 |
 | 4 | `RMC/tests/ptrac_grp/inp`、`RMC/src/ParticleTrack.cpp` | PTRAC 具有群号、方向和权重输出能力；实际是否足够区分 bank child 需运行确认。 |

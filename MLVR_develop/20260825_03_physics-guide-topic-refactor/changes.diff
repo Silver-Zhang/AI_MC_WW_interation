@@ -180,7 +180,7 @@ index cf0b327..2836044 100644
 +
  ## 技术证据
  
- 图中流程对应的主要实现位置见 [功能逻辑与物理对象](01_功能逻辑与物理对象.md)。W5/W6/W7 的源码、核数据与运行证据边界见 [缺陷解读](04_三个已确认缺陷的物理解读.md) 和 [F02 数值验证](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)。
+ 图中流程对应的主要实现位置见 [功能逻辑与物理对象](01_功能逻辑与物理对象.md)。W5/W6/W7 的源码、核数据与运行证据边界见 [缺陷解读](04_三个已确认缺陷的物理解读.md) 和 [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)。
 diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md"
 index 3d2e26e..84e6815 100644
 --- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md"
@@ -232,12 +232,12 @@ index 3d2e26e..84e6815 100644
  
  ## 证据入口
  
- - [F02-B 静态复核](../../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)
- - [F02 数值验证](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)
-+- [W7 修复与验证](../../MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/README.md)
- - [V2 分析脚本](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v2_w5_density/analyze_source_trace.py)
- - [V3 分析脚本](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v3_double_nubar/analyze_double_nubar.py)
- - [V4 分析脚本](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v4_reciprocity/analyze_reciprocity.py)
+ - [F02-B 静态复核](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+ - [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
++- [W7 修复与验证](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
+ - [V2 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/cases/v2_w5_density/analyze_source_trace.py)
+ - [V3 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/cases/v3_double_nubar/analyze_double_nubar.py)
+ - [V4 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/cases/v4_reciprocity/analyze_reciprocity.py)
 diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md"
 index 21be010..56a4f3d 100644
 --- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md"
@@ -310,10 +310,10 @@ index 21be010..56a4f3d 100644
  
  ## 技术证据
  
- - W5：[F02-B D.3](../../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)；[V2](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)；`RMC/src/SampleFreeFlyDist.cpp`、`GetExitState.cpp`、`SampleColliType.cpp`、`MaterialFunctions.cpp`。
- - W6：[F02-B F.3](../../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)；[V3](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)；`RMC/src/Nuclide.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`。
--- W7：[V3 动态记录](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
-+- W7：[V3 修复前动态记录](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；[修复与验证档案](../../MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/README.md)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
+ - W5：[F02-B D.3](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)；[V2](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)；`RMC/src/SampleFreeFlyDist.cpp`、`GetExitState.cpp`、`SampleColliType.cpp`、`MaterialFunctions.cpp`。
+ - W6：[F02-B F.3](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)；[V3](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)；`RMC/src/Nuclide.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`。
+-- W7：[V3 动态记录](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
++- W7：[V3 修复前动态记录](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；[修复与验证档案](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
 diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md"
 index e41c42d..9b38492 100644
 --- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md"
@@ -340,15 +340,15 @@ index e41c42d..9b38492 100644
  
  ## 技术证据
  
- - [F02-B 静态审查](../../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)
- - [F02 数值验证](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)
-+- [W7 修复与验证](../../MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/README.md)
+ - [F02-B 静态审查](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+ - [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
++- [W7 修复与验证](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
  - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
  - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)
-diff --git a/MLVR_develop/20260825_physics-guide-topic-refactor/README.md b/MLVR_develop/20260825_physics-guide-topic-refactor/README.md
+diff --git a/MLVR_develop/20260825_03_physics-guide-topic-refactor/README.md b/MLVR_develop/20260825_03_physics-guide-topic-refactor/README.md
 index 5568336..18dcd9b 100644
---- a/MLVR_develop/20260825_physics-guide-topic-refactor/README.md
-+++ b/MLVR_develop/20260825_physics-guide-topic-refactor/README.md
+--- a/MLVR_develop/20260825_03_physics-guide-topic-refactor/README.md
++++ b/MLVR_develop/20260825_03_physics-guide-topic-refactor/README.md
 @@ -3,7 +3,7 @@
  | 项 | 内容 |
  |---|---|
@@ -419,9 +419,9 @@ index 94fe508..edb8176 100644
  
  | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
  |---|---|---|---|---|---|
--| 2026-08-25 | [physics-guide-topic-refactor](20260825_physics-guide-topic-refactor/README.md) | 文档 | 已完成，待人工复核 | F02 / W5 / W6 / W7 | 按物理功能重构导读；新增 RMC 多群伴随输运专题、逻辑说明与 Mermaid 图；未修改 RMC |
-+| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；原崩溃输入退出 0，既有回归 1/1 通过；未提交 |
-+| 2026-08-25 | [physics-guide-topic-refactor](20260825_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
- | 2026-08-25 | [human-physics-guide](20260825_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
- | 2026-08-25 | [f02-adjoint-numerical-verification](20260825_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
- | 2026-08-24 | `20260824_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |
+-| 2026-08-25 | [physics-guide-topic-refactor](20260825_03_physics-guide-topic-refactor/README.md) | 文档 | 已完成，待人工复核 | F02 / W5 / W6 / W7 | 按物理功能重构导读；新增 RMC 多群伴随输运专题、逻辑说明与 Mermaid 图；未修改 RMC |
++| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；原崩溃输入退出 0，既有回归 1/1 通过；未提交 |
++| 2026-08-25 | [physics-guide-topic-refactor](20260825_03_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
+ | 2026-08-25 | [human-physics-guide](20260825_02_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
+ | 2026-08-25 | [f02-adjoint-numerical-verification](20260825_01_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
+ | 2026-08-24 | `20260824_01_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |

@@ -32,9 +32,9 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的完整能力仍不能�
 
 ## 证据入口
 
-- [F02 静态物理复核](../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)
-- [F02 第一阶段数值验证](../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)
-- [W5 非均匀密度响应级验证](../MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/README.md)
+- [F02 静态物理复核](../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+- [F02 第一阶段数值验证](../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
+- [W5 非均匀密度响应级验证](../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 

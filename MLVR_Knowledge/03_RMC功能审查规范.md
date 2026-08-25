@@ -186,7 +186,7 @@ Stage 2 第一项任务固定为：
 
 > **F02 — Multigroup Adjoint Transport Audit**
 
-任务档案：`MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`
+任务档案：`MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`
 
 第一轮以只读源码审查为主。若静态证据不足以确认关键物理正确性，应记录为 C — Verify，并提出最小验证方案，而不是在未验证情况下直接判定正确。
 
@@ -194,4 +194,4 @@ Stage 2 第一项任务固定为：
 
 ## 变更记录
 
-- 2026-08-24 · 建立 Stage 2 统一审查协议与 A–F 分类体系 · 关联 `MLVR_develop/20260824_stage2-audit-protocol/`
+- 2026-08-24 · 建立 Stage 2 统一审查协议与 A–F 分类体系 · 关联 `MLVR_develop/20260824_03_stage2-audit-protocol/`

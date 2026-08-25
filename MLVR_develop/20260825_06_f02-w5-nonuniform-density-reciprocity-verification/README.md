@@ -27,7 +27,7 @@
 5. 修复前同一正式算例至少选一组重放，预期显示系统性互易性破坏；若无法在不覆盖当前源码的前提下安全构建修复前二进制，则明确记为未覆盖，不伪造前后对照。
 6. RMC 工作树、既有 reference 和 W5/W7 源码不被本实验修改；归档真实命令、环境、输出和未覆盖范围。
 
-**原始材料**：方法基线来自 `../20260825_f02-adjoint-numerical-verification/cases/v4_reciprocity/`；W5 修复和首碰撞证据来自 `../20260825_f02-w5-local-density-adjoint-weight-fix/`。本任务独立生成输入与 manifest，不覆盖既有 V4/W5 产物。
+**原始材料**：方法基线来自 `../20260825_01_f02-adjoint-numerical-verification/cases/v4_reciprocity/`；W5 修复和首碰撞证据来自 `../20260825_05_f02-w5-local-density-adjoint-weight-fix/`。本任务独立生成输入与 manifest，不覆盖既有 V4/W5 产物。
 
 ---
 
@@ -47,7 +47,7 @@ $$
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `20260825_f02-adjoint-numerical-verification` V4 | 已验证同一均匀区域内两个强非对称群对，可复用群对、五种子和 $z$ 判据。 |
+| 1 | `20260825_01_f02-adjoint-numerical-verification` V4 | 已验证同一均匀区域内两个强非对称群对，可复用群对、五种子和 $z$ 判据。 |
 | 2 | `RMC/docs/source-en/usersguide/SourceDescription.rst` | 仅给 `CELL=` 时，球/球壳支持在 cell 内自动均匀抽样源位置。 |
 | 3 | `RMC/RMC/model/test/resources/test_fixed_source/reference` | 壳层 cell 语法为 `CELL 2 1 & -2`。 |
 | 4 | `RMC/src/TallyByTL.cpp` | Type=1 track-length flux 逐飞行段累计 $w\ell$。 |

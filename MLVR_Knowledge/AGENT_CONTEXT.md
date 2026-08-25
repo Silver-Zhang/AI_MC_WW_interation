@@ -121,12 +121,12 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 任务档案：
 
-- `MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`：存在性审查；
-- `MLVR_develop/20260824_f02-adjoint-physics-verification/`：物理静态复核；
-- `MLVR_develop/20260825_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
-- `MLVR_develop/20260825_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
-- `MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
-- `MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
+- `MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
+- `MLVR_develop/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
+- `MLVR_develop/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
+- `MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
+- `MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
+- `MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
 
 当前结论：完整 standard MGACE fixed-source neutron adjoint 仍为 **E — Defect**。W5 已让散射/裂变权重使用当前位置总原子密度；$r=0.5,1,2$ 首碰撞后权重由约 $2:1:0.5$ 恢复为 $1:1:1$。等体积 H2O 内球/外壳又以两种相反密度排列、两群对和五种子验证跨界面完整历史；1M 全量批次 20/20 单种子、4/4 合并与总体满足 $|z|\le3$。这只是代表性非均匀子域正证据，不能放行一般密度 mesh/材料/角核。W7 也已完成修复。W6（双 nubar 核混用）仍静态确认且未修复，运行时频数未覆盖；它单独足以维持完整能力 E。
 

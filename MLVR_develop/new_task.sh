@@ -15,7 +15,11 @@ KB="${2:-无}"
 BASE="$(cd "$(dirname "$0")" && pwd)"
 DATE="$(date +%Y%m%d)"
 STAMP="$(date '+%Y-%m-%d %H:%M')"
-DIR="$BASE/${DATE}_${SLUG}"
+
+# 按天序号：当天已有编号文件夹的最大序号 + 1（YYYYMMDD_NN_短名，NN 为两位）
+MAX_SEQ="$(ls -d "$BASE"/${DATE}_[0-9][0-9]_* 2>/dev/null | sed -E "s#.*/${DATE}_([0-9]+)_.*#\1#" | sort -n | tail -1)"
+SEQ="$(printf '%02d' "$(( ${MAX_SEQ:-0} + 1 ))")"
+DIR="$BASE/${DATE}_${SEQ}_${SLUG}"
 
 if [ -e "$DIR" ]; then
   echo "已存在: $DIR" >&2
@@ -40,7 +44,7 @@ open(path, 'w', encoding='utf-8').write(s)
 PY
 
 # 追加一行到台账的"进行中"表格（定位到表头分隔行之后）
-python3 - "$BASE/INDEX.md" "$SLUG" "${DATE}_${SLUG}" "$KB" <<'PY'
+python3 - "$BASE/INDEX.md" "$SLUG" "${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
 import sys, datetime
 path, slug, folder, kb = sys.argv[1:5]
 row = '| %s | [%s](%s/README.md) |  | 待设计 | %s | |\n' % (

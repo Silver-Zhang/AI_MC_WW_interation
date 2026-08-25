@@ -27,10 +27,10 @@
 
 ## 技术证据
 
-- [F02-B 静态审查](../../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)
-- [F02 数值验证](../../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)
-- [W5 修复与验证](../../MLVR_develop/20260825_f02-w5-local-density-adjoint-weight-fix/README.md)
-- [W5 非均匀密度响应级验证](../../MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/README.md)
-- [W7 修复与验证](../../MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/README.md)
+- [F02-B 静态审查](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+- [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
+- [W5 修复与验证](../../MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)
+- [W5 非均匀密度响应级验证](../../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
+- [W7 修复与验证](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
 - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)

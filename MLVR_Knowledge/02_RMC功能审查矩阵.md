@@ -20,8 +20,8 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | ID | 功能需求 | 当前状态 | 审查重点 | 任务 |
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
-| F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_f02-mg-adjoint-transport-audit` |
-| F02-B | 多群Adjoint物理正确性审查 | Stage 3 修复中（E — Defect） | W5/W7 已修复验证；W5 非均匀双区域响应级互易性通过；W6 动态频数未覆盖且未修复 | `20260824_f02-adjoint-physics-verification`；`20260825_f02-adjoint-numerical-verification`；`20260825_f02-w5-local-density-adjoint-weight-fix`；`20260825_f02-w5-nonuniform-density-reciprocity-verification`；`20260825_f02-w7-neutron-only-adjoint-init-fix` |
+| F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
+| F02-B | 多群Adjoint物理正确性审查 | Stage 3 修复中（E — Defect） | W5/W7 已修复验证；W5 非均匀双区域响应级互易性通过；W6 动态频数未覆盖且未修复 | `20260824_05_f02-adjoint-physics-verification`；`20260825_01_f02-adjoint-numerical-verification`；`20260825_05_f02-w5-local-density-adjoint-weight-fix`；`20260825_06_f02-w5-nonuniform-density-reciprocity-verification`；`20260825_04_f02-w7-neutron-only-adjoint-init-fix` |
 | F03 | Adjoint source定义 | 待审查 | 目标响应驱动伴随源 | — |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |

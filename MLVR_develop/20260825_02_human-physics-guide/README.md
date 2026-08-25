@@ -37,8 +37,8 @@
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `20260824_f02-adjoint-physics-verification/README.md` | W5/W6 的公式、数据流与证据边界。 |
-| 2 | `20260825_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实数值结果与 W7 崩溃证据。 |
+| 1 | `20260824_05_f02-adjoint-physics-verification/README.md` | W5/W6 的公式、数据流与证据边界。 |
+| 2 | `20260825_01_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实数值结果与 W7 崩溃证据。 |
 | 3 | Claude 独立复审 | 同意完整能力 E，确认三项缺陷，并建议收紧 V3/V4 表述。 |
 
 **影响面**：只增加文档导航和后续维护责任；不改变任何能力分类、基准结果、代码接口或实验输出。

@@ -34,8 +34,8 @@
 
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `MLVR_develop/20260824_f02-adjoint-physics-verification/README.md` | W5/W6/W7 的源码数据流与分类。 |
-| 2 | `MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实运行边界。 |
+| 1 | `MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md` | W5/W6/W7 的源码数据流与分类。 |
+| 2 | `MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实运行边界。 |
 | 3 | `RMC/src/InitiateAll.cpp`、`SampleFreeFlyDist.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`、`GetExitState.cpp`、`GetFissionNeuState.cpp` | 本专题功能逻辑的只读源码依据。 |
 | 4 | `MLVR_Knowledge/02_RMC功能审查矩阵.md`、`06_已知问题与改进建议.md` | 当前正式台账结论。 |
 

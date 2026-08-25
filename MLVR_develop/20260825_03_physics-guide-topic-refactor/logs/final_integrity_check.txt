@@ -17,8 +17,8 @@ bodies identical (only line-3 cross-ref differs)
  M MLVR_develop/INDEX.md
  M README.md
 ?? MLVR_Physics_Guide/
-?? MLVR_develop/20260825_human-physics-guide/
-?? MLVR_develop/20260825_physics-guide-topic-refactor/
+?? MLVR_develop/20260825_02_human-physics-guide/
+?? MLVR_develop/20260825_03_physics-guide-topic-refactor/
 
 === new topic tree ===
 MLVR_Physics_Guide/01_RMC多群伴随输运/01_功能逻辑与物理对象.md

@@ -21,7 +21,7 @@ MLVR_develop/
   INDEX.md                         ★ 任务总台账，一行一个任务，先看这里
   new_task.sh                      建档脚本
   _template/README.md              单任务记录模板
-  YYYYMMDD_<任务短名>/             ★ 一个任务一个文件夹
+  YYYYMMDD_NN_<任务短名>/          ★ 一个任务一个文件夹（NN=当天工作顺序，01 起两位）
     README.md                      ★ 全过程记录（唯一主文档，含工作日志第 9 节）
     会话纪要.md                    可选：人机讨论要点（Q&A 脉络 + 共识 + 未决事项，脱敏）
     logs/                          原始报错、训练日志、失败产物（原样保存，不加工）
@@ -30,11 +30,11 @@ MLVR_develop/
 
 > ⚠️ 原始聊天转储**不要**存进仓库（可能含口令/token）；留纪要即可，且必须脱敏。
 
-命名示例：
-- `20260824_rmc-ww-mesh读入/`（对应知识库已知问题条目时注明编号）
-- `20260825_prior_residual_rmc实验/`（算法实验）
+命名示例（`NN` 为当天序号，由 `new_task.sh` 自动生成，`ls` 即见工作顺序）：
+- `20260824_01_workflow-baseline/`（当天第 1 个任务）
+- `20260825_04_f02-w7-neutron-only-adjoint-init-fix/`（当天第 4 个任务）
 
-同一天多个任务靠短名区分；短名要能"看名字就知道是什么事"。
+同一天多个任务靠 `NN` 序号区分先后；短名要能"看名字就知道是什么事"。
 
 ## 五步工作流
 
@@ -69,7 +69,7 @@ git -C ../AIMC_WWiteration diff > <任务文件夹>/changes.diff
 ### 2. 一任务 = 一分支 = 一提交，消息里带文件夹名
 ```bash
 git -C ../RMC checkout -b feat/mlvr-<任务短名>
-git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_xxx)"
+git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
 ```
 好处：**双向可查**——从 git 历史能找到档案，从档案能找到提交。
 不想开分支时至少保证 commit message 里带文件夹名。

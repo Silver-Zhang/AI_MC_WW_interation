@@ -58,7 +58,7 @@
 
 新增：
 
-- `MLVR_develop/20260824_stage1-framework-requirements/README.md`
+- `MLVR_develop/20260824_02_stage1-framework-requirements/README.md`
 
 ## 5. Stage 1 结论
 
@@ -98,4 +98,4 @@ WW_A(2)
 
 2026-08-24：用户确认 Stage 1 架构与功能需求，项目已进入 Stage 2。
 
-Stage 2 统一审查协议见 `MLVR_Knowledge/03_RMC功能审查规范.md`，首项任务为 `20260824_f02-mg-adjoint-transport-audit/`。
+Stage 2 统一审查协议见 `MLVR_Knowledge/03_RMC功能审查规范.md`，首项任务为 `20260824_04_f02-mg-adjoint-transport-audit/`。
