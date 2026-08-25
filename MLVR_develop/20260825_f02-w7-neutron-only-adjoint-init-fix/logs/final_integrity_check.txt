@@ -1,0 +1,19 @@
+broken_local_links=0
+mermaid_open=4
+mermaid_close=4
+mermaid_declarations=4
+mermaid_renderer=not_installed
+agent_rules_body_diff_exit=0
+rmc_changed_files=src/InitiateAll.cpp
+rmc_diff_bytes=1314
+reference_sha256=750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa
+targeted_validation:
+exit_code=0
+particle_records=12487
+source_number=10000
+signal_lines=0
+snapshot_matches=yes
+template_placeholders=0
+root_diff_check=clean
+rmc_diff_check=clean
+rmc_status= M src/InitiateAll.cpp

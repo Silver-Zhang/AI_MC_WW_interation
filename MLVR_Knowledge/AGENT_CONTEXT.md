@@ -117,17 +117,18 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 ## 当前正式任务
 
-**F02 — Multigroup Adjoint Transport Audit** 的静态审查与第一阶段 L4 数值验证均已完成，等待用户接受结论和决定 Stage 3 优先级。
+**F02 — Multigroup Adjoint Transport Audit** 的静态审查与第一阶段 L4 数值验证均已完成；Stage 3 已完成 W7 修复，W5/W6 仍待分别立项和拍板。
 
 任务档案：
 
 - `MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`：存在性审查；
 - `MLVR_develop/20260824_f02-adjoint-physics-verification/`：物理静态复核；
 - `MLVR_develop/20260825_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
+- `MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
 
-当前结论：完整 standard MGACE fixed-source neutron adjoint 为 **E — Defect**。W5（非单位局部密度 $1/r$ 权重偏差）已数值确认；W6（双 nubar 核混用）静态确认且已量化部署数据功效，但运行时频数未覆盖；W7（neutron-only MGACE adjoint 无条件 photon 群定位）已由 c5g7td SIGSEGV 动态确认。V4 只证明 $r=1$、非裂变 P0 H2O 均匀球中两个强非对称群对满足前向—伴随互易性，不能抵消完整能力 E 或整体放行受限子域。
+当前结论：完整 standard MGACE fixed-source neutron adjoint 仍为 **E — Defect**。W5（非单位局部密度 $1/r$ 权重偏差）已数值确认且未修复；W6（双 nubar 核混用）静态确认且已量化部署数据功效，但运行时频数未覆盖；W7 已按粒子模式隔离 neutron/photon 上限定位，同一 `c5g7td` 输入退出 0 并完成 10,000 个源历史，既有回归 1/1 通过。V4 只证明 $r=1$、非裂变 P0 H2O 均匀球中两个强非对称群对未检测到显著互易性差异，不能抵消 W5/W6 或整体放行受限子域。
 
-下一步必须由用户决定：分别为 W5/W6/W7 建立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 RMC、不更新 reference、不进入 F03。
+下一步必须由用户决定：为 W5 或 W6 建立独立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 W5/W6 相关 RMC 代码、不更新 reference、不进入 F03。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
@@ -162,6 +163,6 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 2：F02 静态审查与第一阶段 L4 数值验证已完成，等待人工接受和 Stage 3 决策。**
+- **Stage 3：W7 修复已完成并验证；W5/W6 仍待独立决策。**
 
-在 F02 审查结论经用户确认并决定 W5/W6/W7 处置前，不进入 F03，也不修改 RMC 源码。
+W7 的当前修复尚未 commit/push；W5/W6 未经独立任务拍板前不得修改，不进入 F03。

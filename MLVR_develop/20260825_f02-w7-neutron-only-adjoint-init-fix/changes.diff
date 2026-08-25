@@ -1,0 +1,24 @@
+diff --git a/src/InitiateAll.cpp b/src/InitiateAll.cpp
+index 4e7d6b36..77b3fe66 100755
+--- a/src/InitiateAll.cpp
++++ b/src/InitiateAll.cpp
+@@ -190,8 +190,17 @@ void CDFixedSource::InitiateAll(int p_nParticleMode, CDNeutronTransport &cNeutro
+     cPhotonTransport.p_dMinWgt = 1.0E-08;
+   }
+   if (p_bIsAdjoint) {
+-    p_dMaxAdjointNeutronEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointNeutronEnergy, CDParticleState::Neutron);
+-    p_dMaxAdjointPhotonEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointPhotonEnergy, CDParticleState::Photon);
++    if (p_nParticleMode == CDCalMode::NeutronMode ||
++        p_nParticleMode == CDCalMode::NeutronPhotonMode ||
++        p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
++      p_dMaxAdjointNeutronEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointNeutronEnergy, CDParticleState::Neutron);
++    }
++    if (p_nParticleMode == CDCalMode::NeutronPhotonMode ||
++        p_nParticleMode == CDCalMode::PhotonMode ||
++        p_nParticleMode == CDCalMode::PhotonElectronMode ||
++        p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
++      p_dMaxAdjointPhotonEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointPhotonEnergy, CDParticleState::Photon);
++    }
+   }
+ # ifdef USE_PYTHON_API
+   //如果使用了外源子程序，则初始化(包括开启python解释器等）

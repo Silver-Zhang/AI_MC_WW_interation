@@ -7,7 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-08-25 | [physics-guide-topic-refactor](20260825_physics-guide-topic-refactor/README.md) | 文档 | 已完成，待人工复核 | F02 / W5 / W6 / W7 | 按物理功能重构导读；新增 RMC 多群伴随输运专题、逻辑说明与 Mermaid 图；未修改 RMC |
+| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；原崩溃输入退出 0，既有回归 1/1 通过；未提交 |
+| 2026-08-25 | [physics-guide-topic-refactor](20260825_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
 | 2026-08-25 | [human-physics-guide](20260825_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
 | 2026-08-25 | [f02-adjoint-numerical-verification](20260825_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
 | 2026-08-24 | `20260824_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |

@@ -1,0 +1,5 @@
+[  0%] Built target fmt
+[  0%] Built target spdlog
+[  0%] Built target RNG
+[  6%] Built target Depth
+[100%] Built target RMC

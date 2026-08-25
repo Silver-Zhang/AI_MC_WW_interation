@@ -1,0 +1,7 @@
+branch=Neural_Network_WW_Iteration
+sha=4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+status_before:
+compiler=g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmake=cmake version 3.28.3
+executable_sha256=55a820e69e5bb5b2d69f5426a2a835b0a5d4e817dbfd72f294f1c3a17d4c62f9
+input_sha256=ecc35caf3f52ec38d5f9c393afef379e65644ad97a2e5224abe18fdd0fa08106
