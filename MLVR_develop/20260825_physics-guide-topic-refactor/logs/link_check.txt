@@ -1,0 +1,3 @@
+checked 64 link references across 11 files
+broken: 0
+all local relative links resolve

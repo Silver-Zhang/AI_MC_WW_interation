@@ -1,0 +1,29 @@
+=== git diff --check ===
+diff --check: clean
+
+=== RMC worktree status ===
+(no output above = clean)
+Neural_Network_WW_Iteration
+4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+
+=== AGENTS.md vs CLAUDE.md body sync ===
+bodies identical (only line-3 cross-ref differs)
+
+=== changed-file inventory (top-level repo) ===
+ M AGENTS.md
+ M CLAUDE.md
+ M MLVR_Knowledge/AGENT_CONTEXT.md
+ M MLVR_Knowledge/README.md
+ M MLVR_develop/INDEX.md
+ M README.md
+?? MLVR_Physics_Guide/
+?? MLVR_develop/20260825_human-physics-guide/
+?? MLVR_develop/20260825_physics-guide-topic-refactor/
+
+=== new topic tree ===
+MLVR_Physics_Guide/01_RMC多群伴随输运/01_功能逻辑与物理对象.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/02_流程图与时序图.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/03_当前能力与验证结论.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/04_三个已确认缺陷的物理解读.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/README.md
+MLVR_Physics_Guide/README.md

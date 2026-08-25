@@ -1,0 +1,112 @@
+# 改动快照 — physics-guide-topic-refactor (文档重构，只改文档)
+# 基线: RMC Neural_Network_WW_Iteration @ 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b (只读)
+# 注: RMC/ 无改动；本快照仅本仓库文档与任务档案
+
+## 一、已跟踪文件 diff
+diff --git a/MLVR_Knowledge/AGENT_CONTEXT.md b/MLVR_Knowledge/AGENT_CONTEXT.md
+index 9da4db4..2e8cd73 100644
+--- a/MLVR_Knowledge/AGENT_CONTEXT.md
++++ b/MLVR_Knowledge/AGENT_CONTEXT.md
+@@ -129,6 +129,8 @@ Requirement → Existence → Actual Behavior → Requirement Match
+ 
+ 下一步必须由用户决定：分别为 W5/W6/W7 建立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 RMC、不更新 reference、不进入 F03。
+ 
++面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
++
+ ## 开发流程
+ 
+ 所有任务遵循：
+diff --git a/MLVR_Knowledge/README.md b/MLVR_Knowledge/README.md
+index 230d746..2538a1a 100644
+--- a/MLVR_Knowledge/README.md
++++ b/MLVR_Knowledge/README.md
+@@ -2,6 +2,7 @@
+ 
+ > 长期沉淀 RMC 双向迭代 WW / ML-VR 开发所需的事实、方法、审查结论、接口设计与已知问题。
+ > 开发任务过程记录在 [`MLVR_develop/`](../MLVR_develop/)（一任务一档），本知识库存放沉淀后的长期结论。
++> 面向懂物理但不要求懂代码的解释性文档按物理专题放在 [`MLVR_Physics_Guide/`](../MLVR_Physics_Guide/)。
+ 
+ ## 当前文档地图
+ 
+@@ -15,6 +16,14 @@
+ | [DECISIONS.md](DECISIONS.md) | 🟢 Active | 已冻结设计决策，只追加不覆盖 |
+ | [06_已知问题与改进建议.md](06_已知问题与改进建议.md) | 🟢 Active | 已知坑、改进想法、后续储备 |
+ 
++## 面向物理读者的入口
++
++[`MLVR_Physics_Guide/`](../MLVR_Physics_Guide/) 不替代本知识库的证据台账，而是把稳定的代码审查结论翻译成物理语言，并按物理功能组织。当前首个专题为 [`RMC 多群伴随输运`](../MLVR_Physics_Guide/01_RMC多群伴随输运/README.md)，包括：
++
++- 当前能力、适用边界和验证结论；
++- 从输入到 tally 的物理逻辑、流程图和时序图；
++- W5、W6、W7 三项已确认缺陷的物理含义、结果风险和修复验证要求。
++
+ ## 后续专题文档（按阶段需要再建立）
+ 
+ 以下内容暂不提前创建空文档，避免在功能审查前臆造接口和架构：
+@@ -59,4 +68,5 @@ MLVR_develop/<当前任务>/README.md
+ - 每次形成稳定结论后，在对应专题文档文末“变更记录”追加日期、简述和关联任务。
+ - 关键设计变化必须同步追加到 `DECISIONS.md`，不得静默覆盖旧决策。
+ - 功能审查状态同步更新 `02_RMC功能审查矩阵.md` 与 `MLVR_develop/INDEX.md`。
++- 审查、修复或验证改变物理结论时，同步更新 `MLVR_Physics_Guide/` 中对应的人类可读文档。
+ - Stage 2 审查发现的问题不得直接在同一任务中修复；进入 Stage 3 后重新立项。
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index f1ba855..94fe508 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -7,6 +7,8 @@
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
++| 2026-08-25 | [physics-guide-topic-refactor](20260825_physics-guide-topic-refactor/README.md) | 文档 | 已完成，待人工复核 | F02 / W5 / W6 / W7 | 按物理功能重构导读；新增 RMC 多群伴随输运专题、逻辑说明与 Mermaid 图；未修改 RMC |
++| 2026-08-25 | [human-physics-guide](20260825_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
+ | 2026-08-25 | [f02-adjoint-numerical-verification](20260825_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
+ | 2026-08-24 | `20260824_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |
+ | 2026-08-24 | `20260824_stage1-framework-requirements` | 功能需求基线 | 已完成并确认 | 01 / 02 / DECISIONS | GitHub history |
+diff --git a/README.md b/README.md
+index 06796f1..3216fdb 100644
+--- a/README.md
++++ b/README.md
+@@ -12,6 +12,7 @@
+ | [`AIMC_WWiteration/`](AIMC_WWiteration/) | AI-MC 权重窗口**研究原型**（DNN/PINN/U-Net × 多群 MC 迭代，6 种学习变体） | 独立 git，分支 `develop` |
+ | [`MLVR_develop/`](MLVR_develop/) | **ML-VR 开发工作区**：一任务一档，记录从立项到归档全过程 | 本仓库 |
+ | [`MLVR_Knowledge/`](MLVR_Knowledge/) | **知识库**：RMC WW 架构、ML 方法、接口规格、已知问题（长期沉淀） | 本仓库 |
++| [`MLVR_Physics_Guide/`](MLVR_Physics_Guide/) | **物理导读**：按物理功能组织，面向懂输运物理但不要求懂代码的读者，解释结论、流程、缺陷和影响 | 本仓库 |
+ | [`server_guide.md`](server_guide.md) | **服务器操作通用指南**（组内共享，选机/登录/传文件/长任务/ML·GPU 操作） | 本仓库 |
+ | [`sever_info.md`](sever_info.md) | 服务器登录信息（**含凭据，敏感**，已被 `.gitignore` 排除） | 不入 git |
+ 
+@@ -19,6 +20,7 @@
+ 
+ - **人机协作硬规则**（所有 Agent 开工前必读） → [`AGENTS.md`](AGENTS.md)（`CLAUDE.md` 同内容）
+ - **一屏上下文**（快速建立认知） → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
++- **从物理角度理解当前结论** → [`MLVR_Physics_Guide/README.md`](MLVR_Physics_Guide/)；首个专题为 [`RMC 多群伴随输运`](MLVR_Physics_Guide/01_RMC多群伴随输运/README.md)（不要求理解代码）
+ - **要开一个新开发任务** → [`MLVR_develop/README.md`](MLVR_develop/README.md)（五步工作流）+ `./new_task.sh <任务短名>`
+ - **想知道有哪些坑** → [`MLVR_Knowledge/06_已知问题与改进建议.md`](MLVR_Knowledge/06_已知问题与改进建议.md)
+ - **看历史怎么开发的** → [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md)
+@@ -32,6 +34,7 @@ AI_MC_WW_interation/
+   AIMC_WWiteration/     AI-MC 原型（独立 git）
+   MLVR_develop/         开发工作区：一任务一档
+   MLVR_Knowledge/       知识库：架构 / 方法 / 接口 / 已知问题
++  MLVR_Physics_Guide/   人类物理导读：按物理专题组织的结论 / 流程 / 风险 / 验证边界
+   server_guide.md       服务器操作通用指南（选机 / 登录 / 传文件 / 长任务 / ML·GPU）
+   sever_info.md         ⚠️ 服务器登录凭据（敏感，勿入 git）
+ ```
+@@ -46,6 +49,7 @@ cd MLVR_develop && ./new_task.sh <任务短名> [知识库条目编号]
+ - 任何开发任务/缺陷修复走 [`MLVR_develop/README.md`](MLVR_develop/README.md) 的**五步流程**，
+   **决策节点由人拍板**，代码改动落成 `changes.diff` 供复核。
+ - 改动 RMC 或知识库后，同步更新对应文档并在文末"变更记录"追加一行。
++- 当审查或修复改变了物理结论、适用范围或风险时，同步更新 [`MLVR_Physics_Guide/`](MLVR_Physics_Guide/)；用物理语言解释，不以代码细节代替结论。
+ - **`sever_info.md` 含登录凭据，敏感**：已被 `.gitignore` 排除，禁止手动加入提交。
+ - **本仓库远程（双镜像，`git push origin main` 同时推送两边）**：
+   - GitLab（主）：`https://gitlab.reallab.org.cn/zhangjunxiao/AI_MC_WW_interation.git`
+
+## 二、新增未跟踪文件清单（本任务新建）
+?? MLVR_Physics_Guide/
+?? MLVR_develop/20260825_physics-guide-topic-refactor/
+
+## 三、新增专题文档树
+MLVR_Physics_Guide/01_RMC多群伴随输运/01_功能逻辑与物理对象.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/02_流程图与时序图.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/03_当前能力与验证结论.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/04_三个已确认缺陷的物理解读.md
+MLVR_Physics_Guide/01_RMC多群伴随输运/README.md
+MLVR_Physics_Guide/README.md

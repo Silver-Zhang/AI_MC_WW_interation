@@ -11,6 +11,7 @@ RMC/                 RMC 代码仓库（独立 git，团队共享，改动谨慎
 AIMC_WWiteration/    AI-MC 原型（独立 git，研究原型，改动较宽松）
 MLVR_develop/        开发工作区：一任务一档，记录每次开发/修复全过程
 MLVR_Knowledge/      知识库：架构、方法、接口、已知问题（长期沉淀）
+MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读者
 ```
 
 ## 硬规则
@@ -37,6 +38,9 @@ MLVR_Knowledge/      知识库：架构、方法、接口、已知问题（长�
 8. **知识库要跟着变**：修复/实现了 `MLVR_Knowledge/06_已知问题与改进建议.md` 里的条目，
    在该条目下标注 `已修复 → MLVR_develop/<任务文件夹>`；发现新问题则补写进 06 文档；
    改动影响架构/接口/方法 → 同步更新对应专题文档的"变更记录"。
+9. **物理导读要跟着结论变**：审查、修复或验证改变了物理结论、适用范围或风险时，
+   同步更新 `MLVR_Physics_Guide/`。正文面向懂输运物理但不懂代码的读者，先解释物理对象、
+   正确关系、实现偏差和结果影响，再链接技术证据；不得用代码细节代替物理结论。
 
 ## 服务器使用
 
@@ -50,4 +54,5 @@ MLVR_Knowledge/      知识库：架构、方法、接口、已知问题（长�
 - 开新任务：`cd MLVR_develop && ./new_task.sh <任务短名> [KB编号]`
 - 查台账：`MLVR_develop/INDEX.md`
 - 快速上下文：`MLVR_Knowledge/AGENT_CONTEXT.md`
+- 人类物理导读：`MLVR_Physics_Guide/README.md`
 - 服务器操作：`server_guide.md`（凭据 `sever_info.md`）

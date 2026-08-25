@@ -1,0 +1,8 @@
+mermaid open fences: 4
+mermaid blocks found: 4
+block 1: declaration='flowchart'
+block 2: declaration='flowchart'
+block 3: declaration='sequenceDiagram'
+block 4: declaration='flowchart'
+issues: 0
+mermaid structural check passed (no renderer installed; not a visual render test)

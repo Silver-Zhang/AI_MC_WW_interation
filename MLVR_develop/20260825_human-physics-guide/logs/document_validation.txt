@@ -1,0 +1,5 @@
+guide_files=3
+broken_local_links=0
+agents_claude_body_diff_exit=0
+rmc_status_lines=0
+rmc_diff_bytes=0

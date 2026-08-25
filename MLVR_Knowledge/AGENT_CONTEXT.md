@@ -129,6 +129,8 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 下一步必须由用户决定：分别为 W5/W6/W7 建立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 RMC、不更新 reference、不进入 F03。
 
+面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
+
 ## 开发流程
 
 所有任务遵循：
