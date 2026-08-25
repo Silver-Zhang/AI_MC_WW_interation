@@ -1,0 +1,56 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:38:20 Aug 25 2026
+Git commit  : 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+MPI parallel: OFF
+
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/25 03:25:12 Tuesday 
+
+------------------ Input File Start -------------------- 
+UNIVERSE 0
+CELL 1 -1  MAT=1
+CELL 2 1 MAT=0 VOID=1
+
+SURFACE
+SURF 1 SO 2.0
+
+MATERIAL
+MAT 1 1.0
+    10001.01m 1.0
+MGACE ERGGRP=7
+
+FIXEDSOURCE
+PARTICLE POPULATION=10000
+RNG TYPE=2 SEED=1 STRIDE=1000000
+ADJOINT ADJOINTCALCULATION=1 MAXADJOINTENERGY=16 16
+
+EXTERNALSOURCE
+SOURCE 1 FRACTION=1 PARTICLE=1 POINT=0 0 0 WEIGHT=1 ENERGY=7
+
+PRINT
+SOURCE 1
+
+---------------------- Input File End------------------------ 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Cell-mapping method is used to accelerate tally treatment.
+Warning: particle energy larger than maximum energy group upper bound.

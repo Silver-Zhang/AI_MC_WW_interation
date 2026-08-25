@@ -1,0 +1,4 @@
+case,density_ratio,sample_count,outgoing_groups,mean_first_post_collision_weight,min_first_post_collision_weight,max_first_post_collision_weight,observed_relative_to_r1,expected_1_over_r,relative_error_vs_1_over_r
+r0.5,0.5,128,1;2;5;6;7;8;9;10;11,1.3381,1.3381,1.3381,2.000059788051358,2.0,2.9894025679100267e-05
+r1,1.0,128,1;2;5;6;7;8;9;10;11,0.66903,0.66903,0.66903,1.0,1.0,0.0
+r2,2.0,128,1;2;5;6;7;8;9;10;11,0.33452,0.33452,0.33452,0.5000074735064197,0.5,1.4947012839439111e-05

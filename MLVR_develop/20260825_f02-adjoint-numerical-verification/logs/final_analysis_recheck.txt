@@ -1,0 +1,4 @@
+py_compile=0
+criterion: max relative error <= 5.0e-04; pass=True
+estimated_samples_for_80pct_power_alpha_0.05=73289470
+criterion=all combined |z| <= 3; pass=True

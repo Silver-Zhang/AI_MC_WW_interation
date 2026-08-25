@@ -1,0 +1,14 @@
+command=/tmp/mlvr_f02_rmc_build/bin/RMC inp
+exit_code=11
+input_sha256=ecc35caf3f52ec38d5f9c393afef379e65644ad97a2e5224abe18fdd0fa08106
+source_records=0
+stack_symbolization:
+CDAceData::LocateMgErgGrp(double, int) 于 ??:?
+CDFixedSource::InitiateAll(int, CDNeutronTransport&, CDGeometry&, CDMaterial&, CDTally&, CDAceData&, CDParticleState&, CDBurnup&, CDRNG&, CDSampling&, bool, CDPhotonTransport&, CDElectronTransport&, CDCalMode&, CDPerturbation&) 于 ??:?
+CDCalMode::CalcFixedSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource, CDSampling&, CDPerturbation&) 于 ??:?
+CDCalMode::RunCalculation(CDCalMode&, CDNeutronTransport, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDGeometry, Depth_Class&, CDCriticality, CDMaterial, CDParticleState, CDConvergence, CDTally, CDBurnup, CDFixedSource&, CDRNG&, ME_Class&, TTA_Class&, CDAdjoint&, CDExternalSource&, CDSampling, CDKinetics&, CDPerturbation&) 于 ??:?
+main 于 ??:?
+observed_anomalies:
+MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v3_double_nubar/reachability/stdout.log:Warning: particle energy larger than maximum energy group upper bound.
+MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v3_double_nubar/reachability/stdout.log:Signal (No. 11) caught, processing...
+MLVR_develop/20260825_f02-adjoint-numerical-verification/cases/v3_double_nubar/reachability/inp.out:Warning: particle energy larger than maximum energy group upper bound.

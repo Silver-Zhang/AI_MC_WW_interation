@@ -117,13 +117,17 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 ## 当前正式任务
 
-首项审查：**F02 — Multigroup Adjoint Transport Audit**。
+**F02 — Multigroup Adjoint Transport Audit** 的静态审查与第一阶段 L4 数值验证均已完成，等待用户接受结论和决定 Stage 3 优先级。
 
 任务档案：
 
-`MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`
+- `MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`：存在性审查；
+- `MLVR_develop/20260824_f02-adjoint-physics-verification/`：物理静态复核；
+- `MLVR_develop/20260825_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
 
-该任务第一轮仅进行只读源码审查：追踪多群伴随输运的启用入口、调用链和实际物理实现。若静态证据不足，应提出最小验证方案并标记未验证项，不得直接修改代码。
+当前结论：完整 standard MGACE fixed-source neutron adjoint 为 **E — Defect**。W5（非单位局部密度 $1/r$ 权重偏差）已数值确认；W6（双 nubar 核混用）静态确认且已量化部署数据功效，但运行时频数未覆盖；W7（neutron-only MGACE adjoint 无条件 photon 群定位）已由 c5g7td SIGSEGV 动态确认。V4 只证明 $r=1$、非裂变 P0 H2O 均匀球中两个强非对称群对满足前向—伴随互易性，不能抵消完整能力 E 或整体放行受限子域。
+
+下一步必须由用户决定：分别为 W5/W6/W7 建立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 RMC、不更新 reference、不进入 F03。
 
 ## 开发流程
 
@@ -156,6 +160,6 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 2：已启动，当前执行 F02 多群 Adjoint transport 只读审查。**
+- **Stage 2：F02 静态审查与第一阶段 L4 数值验证已完成，等待人工接受和 Stage 3 决策。**
 
-在 F02 审查结论经用户确认前，不进入 F03，也不修改 RMC 源码。
+在 F02 审查结论经用户确认并决定 W5/W6/W7 处置前，不进入 F03，也不修改 RMC 源码。

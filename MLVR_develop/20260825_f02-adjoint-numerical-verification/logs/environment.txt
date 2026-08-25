@@ -1,0 +1,35 @@
+=== timestamp_utc ===
+2026-08-24T18:39:54Z
+=== host ===
+silver-work-station
+Linux silver-work-station 7.0.0-30-generic #30~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  7 13:27:52 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+=== git ===
+Neural_Network_WW_Iteration
+4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+=== toolchain ===
+cmake version 3.28.3
+c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+RMC -- Reactor Monte Carlo code, version: 3.5.0
+Git tag: v3.5.0-alpha.0-302-g4d3e1aac
+Build time: 02:37:52, Aug 25 2026
+Parallel: MPI off, OpenMP off
+Copyright (c) 2000-2026 REAL Tsinghua University. All Rights Reserved.
+=== cmake_cache ===
+ais:BOOL=off
+CMAKE_BUILD_TYPE:STRING=Release
+coolprop:BOOL=off
+dagmc:BOOL=off
+fission:BOOL=off
+loadmodules:BOOL=on
+mpi:UNINITIALIZED=off
+openmp:BOOL=off
+plotpng:BOOL=off
+pythonapi:BOOL=off
+test:BOOL=on
+=== hashes ===
+78f5fd62f2e8ea351c73dd903b7abaff4e9dc8d60ce55081980df6d35ec8c711  RMC/tests/fixed_source_adjoint/inp
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  RMC/tests/fixed_source_adjoint/reference_result
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001  /home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td
+55a820e69e5bb5b2d69f5426a2a835b0a5d4e817dbfd72f294f1c3a17d4c62f9  /tmp/mlvr_f02_rmc_build/bin/RMC

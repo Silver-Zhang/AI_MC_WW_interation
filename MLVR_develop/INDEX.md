@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-08-25 | [f02-adjoint-numerical-verification](20260825_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
 | 2026-08-24 | `20260824_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |
 | 2026-08-24 | `20260824_stage1-framework-requirements` | 功能需求基线 | 已完成并确认 | 01 / 02 / DECISIONS | GitHub history |
 | 2026-08-24 | `20260824_stage2-audit-protocol` | 审查规范 | 已完成 | 02 / 03 / DECISIONS | GitHub history |
