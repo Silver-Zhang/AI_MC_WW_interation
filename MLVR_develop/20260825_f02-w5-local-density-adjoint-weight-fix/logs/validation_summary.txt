@@ -1,0 +1,25 @@
+Incremental build:
+[100%] Built target RMC
+
+V2 density invariance after W5 fix:
+r0.5 exit_code=0 sample_count=128 mean=0.66903 relative_to_r1=1.0
+r1   exit_code=0 sample_count=128 mean=0.66903 relative_to_r1=1.0
+r2   exit_code=0 sample_count=128 mean=0.66903 relative_to_r1=1.0
+criterion: max relative error <= 5.0e-04; pass=True
+
+Unit-density equivalence:
+before_sha256=7effc2428b2d030ac60d5acc193c21da94592231d6eeb3ac71200a2b5627691d
+after_sha256=7effc2428b2d030ac60d5acc193c21da94592231d6eeb3ac71200a2b5627691d
+cmp_exit=0
+
+Existing adjoint regression:
+1/1 Test #62: test_fixed_source_adjoint ........ Passed 0.77 sec
+100% tests passed, 0 tests failed out of 1
+
+W7 neutron-only compatibility:
+exit_code=0
+particle_records=12487
+signal_lines=0
+
+Reference integrity:
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa

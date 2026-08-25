@@ -117,18 +117,20 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 ## 当前正式任务
 
-**F02 — Multigroup Adjoint Transport Audit** 的静态审查与第一阶段 L4 数值验证均已完成；Stage 3 已完成 W7 修复，W5/W6 仍待分别立项和拍板。
+**F02 — Multigroup Adjoint Transport Audit** 的静态审查与第一阶段 L4 数值验证均已完成；Stage 3 已完成 W5/W7 修复，W6 仍待独立立项和拍板。
 
 任务档案：
 
 - `MLVR_develop/20260824_f02-mg-adjoint-transport-audit/`：存在性审查；
 - `MLVR_develop/20260824_f02-adjoint-physics-verification/`：物理静态复核；
 - `MLVR_develop/20260825_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
+- `MLVR_develop/20260825_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
+- `MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
 - `MLVR_develop/20260825_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
 
-当前结论：完整 standard MGACE fixed-source neutron adjoint 仍为 **E — Defect**。W5（非单位局部密度 $1/r$ 权重偏差）已数值确认且未修复；W6（双 nubar 核混用）静态确认且已量化部署数据功效，但运行时频数未覆盖；W7 已按粒子模式隔离 neutron/photon 上限定位，同一 `c5g7td` 输入退出 0 并完成 10,000 个源历史，既有回归 1/1 通过。V4 只证明 $r=1$、非裂变 P0 H2O 均匀球中两个强非对称群对未检测到显著互易性差异，不能抵消 W5/W6 或整体放行受限子域。
+当前结论：完整 standard MGACE fixed-source neutron adjoint 仍为 **E — Defect**。W5 已让散射/裂变权重使用当前位置总原子密度；$r=0.5,1,2$ 首碰撞后权重由约 $2:1:0.5$ 恢复为 $1:1:1$。等体积 H2O 内球/外壳又以两种相反密度排列、两群对和五种子验证跨界面完整历史；1M 全量批次 20/20 单种子、4/4 合并与总体满足 $|z|\le3$。这只是代表性非均匀子域正证据，不能放行一般密度 mesh/材料/角核。W7 也已完成修复。W6（双 nubar 核混用）仍静态确认且未修复，运行时频数未覆盖；它单独足以维持完整能力 E。
 
-下一步必须由用户决定：为 W5 或 W6 建立独立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 W5/W6 相关 RMC 代码、不更新 reference、不进入 F03。
+下一步必须由用户决定：为 W6 建立独立 Stage 3 修复/验证任务，或接受风险后调整 F02 门禁。在此之前不修改 W6 相关 RMC 代码、不更新 reference、不进入 F03。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
@@ -163,6 +165,6 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 3：W7 修复已完成并验证；W5/W6 仍待独立决策。**
+- **Stage 3：W5/W7 修复已完成并验证；W6 仍待独立决策。**
 
-W7 的当前修复尚未 commit/push；W5/W6 未经独立任务拍板前不得修改，不进入 F03。
+W5/W7 的当前修复尚未 commit/push；W6 未经独立任务拍板前不得修改，不进入 F03。

@@ -18,9 +18,9 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard MGACE fixed-source neutron adjoint 的完整能力仍不能放行：非单位局部密度会产生额外的 $1/r$ 权重因子（W5），双 nubar 裂变数据会混用两套裂变核（W6）。纯中子初始化错误访问 photon 群并崩溃的问题（W7）已在当前工作树修复并通过针对性验证，但这不消除 W5/W6 的物理错误。
+RMC 当前 standard MGACE fixed-source neutron adjoint 的完整能力仍不能放行：W5 的非单位局部密度额外 $1/r$ 权重因子与 W7 的纯中子初始化崩溃已在当前工作树修复并通过针对性验证；W6 的双 nubar 裂变核混用仍未修复，单独足以维持 **E — Defect**。
 
-局部正证据不能改变这一结论：在严格受限的非裂变 H/O 案例中，两个指定群对在当前样本量下**未检测到显著互易性差异**；这不是一般正确性的证明。
+局部正证据不能改变这一结论：非裂变 H/O 的两个指定群对不仅在均匀球中通过互易性检查，也在等体积内球/外壳、两种相反密度排列的 1M 全量精度批次中通过逐种子、分组和总体判据。这是代表性响应级证据，不是一般密度场、裂变或完整伴随能力的证明。
 
 ## 阅读与维护原则
 
@@ -34,6 +34,7 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的完整能力仍不能�
 
 - [F02 静态物理复核](../MLVR_develop/20260824_f02-adjoint-physics-verification/README.md)
 - [F02 第一阶段数值验证](../MLVR_develop/20260825_f02-adjoint-numerical-verification/README.md)
+- [W5 非均匀密度响应级验证](../MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
@@ -41,3 +42,4 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的完整能力仍不能�
 
 - 2026-08-25：从平铺结论文档重构为按物理功能组织的专题目录；建立首个“RMC 多群伴随输运”专题。
 - 2026-08-25：W7 已按粒子模式隔离 neutron/photon 能群上限初始化；纯中子 `c5g7td` 算例恢复运行，完整能力仍因 W5/W6 保持 E。
+- 2026-08-25：W5 修复后完成等体积双区域响应级互易性验证；1M 全量批次通过，完整能力仍因 W6 保持 E。

@@ -1,0 +1,8 @@
+RMC version: 3.5.0
+Branch: Neural_Network_WW_Iteration
+Baseline commit: 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+Pre-existing worktree change: src/InitiateAll.cpp (W7 task)
+Reference SHA256: 750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa
+Compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+CMake: 3.28.3
+Build: standard ACE, AIS/MPI/OpenMP off (reused /tmp/mlvr_f02_rmc_build)

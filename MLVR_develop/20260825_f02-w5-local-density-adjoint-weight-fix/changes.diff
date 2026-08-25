@@ -1,0 +1,28 @@
+diff --git a/src/GetExitState.cpp b/src/GetExitState.cpp
+index 151ceb06..d3677fe2 100644
+--- a/src/GetExitState.cpp
++++ b/src/GetExitState.cpp
+@@ -186,7 +186,8 @@ void CDNeutronTransport::GetExitState(CDFixedSource &cFixedSource, CDAceData &cA
+           //调整伴随粒子权重
+           cParticleState.p_dWgt = cParticleState.p_dWgt *
+                                   cParticleState.adjointAccumulatedCrossSection[cParticleState.ErgGrp() - 1] /
+-                                  (cParticleState.p_dMacroTotCs / cMaterial.p_vMatSet[cParticleState.p_nMAT].p_dMatAtomDen);
++                        (cParticleState.p_dMacroTotCs /
++                         cMaterial.GetMatAtomDen(cParticleState.p_nMAT, cParticleState.p_dDensRatio));
+           if (cParticleState.p_dExitErg <
+               cFixedSource.p_dMaxAdjointNeutronEnergy) { //超过粒子能量上限被杀死；能群号越小粒子能量越高
+             cParticleState.kill();
+diff --git a/src/SampleColliType.cpp b/src/SampleColliType.cpp
+index 8da88613..69852c5f 100644
+--- a/src/SampleColliType.cpp
++++ b/src/SampleColliType.cpp
+@@ -188,7 +188,8 @@ int CDNeutronTransport::SampleColliMT_FixedSrc(CDAceData &cAceData, CDMaterial &
+                                           exitGrp); //之前已经得到计算伴随裂变中子的能量，修改GetMgFisErgDir抽出来的伴随裂变中子能量
+           mt = ReactionType::N_FISSION; //伴随粒子发生了裂变
+           cParticleState.p_dWgt = cParticleState.p_dWgt * cParticleState.adjointAccumulatedCrossSection[incidGrp - 1] /
+-                                  (cParticleState.p_dMacroTotCs / cMaterial.p_vMatSet[cParticleState.p_nMAT].p_dMatAtomDen);
++                                  (cParticleState.p_dMacroTotCs /
++                                   cMaterial.GetMatAtomDen(cParticleState.p_nMAT, cParticleState.p_dDensRatio));
+         }
+         sampleReactionType = sampleReactionType -
+                              sampleFission; //存储伴随粒子临时截面，在后续的计算中会用到;
