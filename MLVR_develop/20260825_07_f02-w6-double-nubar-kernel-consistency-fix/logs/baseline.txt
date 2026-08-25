@@ -1,0 +1,16 @@
+2026-08-25T18:07:41+08:00
+Neural_Network_WW_Iteration
+4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+ M src/GetExitState.cpp
+ M src/InitiateAll.cpp
+ M src/SampleColliType.cpp
+src/GetExitState.cpp
+src/InitiateAll.cpp
+src/SampleColliType.cpp
+eb1204f8c943432595e8e22e0685238db18a6ae0f6ae1a4832b1f21caf8d6c67  /tmp/mlvr_f02_rmc_build/bin/RMC
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  RMC/tests/fixed_source_adjoint/reference_result
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td
+ecc35caf3f52ec38d5f9c393afef379e65644ad97a2e5224abe18fdd0fa08106  MLVR_develop/20260825_01_f02-adjoint-numerical-verification/cases/v3_double_nubar/reachability/inp
+g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmake version 3.28.3

@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；F02-B 保守转 C — Verify |
 | 2026-08-25 | [f02-w5-nonuniform-density-reciprocity-verification](20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md) | 算法实验 / 现有能力验证 | 已完成 | W5 | 200k 原批次严格门槛失败；1M 全量精度升级通过逐种子、分组与总体判据 |
 | 2026-08-25 | [f02-w5-local-density-adjoint-weight-fix](20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md) | 缺陷修复 | 已完成 | W5 | 两处权重分母使用局部总原子密度；三种密度权重恢复 $1:1:1$；回归通过；未提交 |
 | 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；原崩溃输入退出 0，既有回归 1/1 通过；未提交 |

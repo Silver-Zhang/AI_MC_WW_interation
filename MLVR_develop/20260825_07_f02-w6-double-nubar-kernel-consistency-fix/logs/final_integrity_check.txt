@@ -1,0 +1,13 @@
+2026-08-25T18:18:16+08:00
+Neural_Network_WW_Iteration
+4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+modified_files=src/GetExitState.cpp,src/InitiateAll.cpp,src/SampleColliType.cpp
+ src/GetExitState.cpp    |  3 ++-
+ src/InitiateAll.cpp     | 13 +++++++++++--
+ src/SampleColliType.cpp |  6 +++---
+ 3 files changed, 16 insertions(+), 6 deletions(-)
+a9c24042ce02b162d8f6595c41c01d41962ac86b5478ed4a7d1778585a649bd4  MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/changes.diff
+f3870bf42b3e6d4ab2518f45542288da3d1590824069b375baa213af2211ba16  /tmp/mlvr_f02_rmc_build/bin/RMC
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  RMC/tests/fixed_source_adjoint/reference_result
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td

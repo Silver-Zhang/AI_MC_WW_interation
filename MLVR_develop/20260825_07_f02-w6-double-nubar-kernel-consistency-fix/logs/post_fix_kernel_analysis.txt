@@ -1,0 +1,11 @@
+source=RMC/src/SampleColliType.cpp sha256=2306c1ffdf42bca87dc3ad22a834ec8fa983c242014546067d9eb9e4901f0887
+xsdir=/home/silver/NucXS_Library/RMC_DATA/xsdir sha256=970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b
+mgace=/home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td sha256=cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c address=1
+zaid=10001.01M NGRP=7 NNUBAR=2 first_nubar=29 getter_nubar=36
+single_table_locator=29 unchanged=True
+expected_total_kernel_sum=0.71977667464764
+runtime_kernel_sum=0.71977667464764
+max_kernel_difference=0
+max_probability_difference=0
+output=MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/logs/post_fix_kernel.csv
+criterion=runtime kernel equals initialized total kernel group-by-group; pass=True
