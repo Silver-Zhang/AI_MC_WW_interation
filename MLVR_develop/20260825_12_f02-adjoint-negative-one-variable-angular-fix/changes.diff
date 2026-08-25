@@ -1,0 +1,13 @@
+diff --git a/src/GetMgExitErgMu.cpp b/src/GetMgExitErgMu.cpp
+index 667b9053..4edf77a6 100644
+--- a/src/GetMgExitErgMu.cpp
++++ b/src/GetMgExitErgMu.cpp
+@@ -482,7 +482,7 @@ void CDAceData::GetMgAdjNeuExitErgMu(CDParticleState &cParticleState, double &Mu
+                 if (p_vNuclides[nNuc].XSS[lx] >= 0) {
+                   MuLab = 1 - 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
+                 } else {
+-                  MuLab = -1 + 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
++                  MuLab = -1 + 2 * ORNG.Rand() * (1 + p_vNuclides[nNuc].XSS[lx]);
+                 }
+               }
+             } else { //discrete consines

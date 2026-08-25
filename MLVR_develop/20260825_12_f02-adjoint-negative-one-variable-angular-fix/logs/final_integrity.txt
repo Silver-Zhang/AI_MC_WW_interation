@@ -1,0 +1,11 @@
+Neural_Network_WW_Iteration
+6d2087518e0d9f23574d629f5fde361c79f519e4
+ M src/GetMgExitErgMu.cpp
+fd9bd9bd176ba5c1787b175f0fb75168eb1acc6ec932d46bae2d60d163ca25db  /tmp/mlvr_f02_rmc_build/bin/RMC
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  /home/workspace/AI_MC_WW_interation/RMC/tests/fixed_source_adjoint/reference_result
+3ecdbec876af3008a9c0fc23926f5bb17c09df4e6ff3b8f8e3dd304ae85c37f5  /home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/mgace_requalification.json
+19c4db7a7c3f1a995476056bdbec69b734e15b363b756bb8477289648b6cf2fe  /home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/w9_fix_validation.json
+d6fe124001f75c4c4328f5c721d0679959017d3429e1a39c12ec18a7cc39731c  /home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/pre_post_comparison.json
+Python 3.12.3
+cmake version 3.28.3
+c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0

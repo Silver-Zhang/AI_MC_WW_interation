@@ -1,0 +1,4 @@
+case=one_variable_negative mode=forward exit_code=0
+case=one_variable_negative mode=adjoint exit_code=0
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/logs/low_optical_run.json
+report_sha256=7e8c2e21de6de4b1f83292fbd7d7469da7637d6190a94e8815fd214a326bc9ff

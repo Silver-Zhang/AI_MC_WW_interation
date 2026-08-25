@@ -1,0 +1,3 @@
+generated_runs=1
+manifest=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/runs/pilot_negative_adjoint_source_surface/manifest.json
+manifest_sha256=a9e557db7519eb541b8972e8ac18235710b7dc1a4b695dc9709dc55e822cf0c4

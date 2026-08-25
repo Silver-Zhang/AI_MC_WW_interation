@@ -1,0 +1,14 @@
+dimension,status,evidence
+"nonfission asymmetric scatter, two deployed materials",available,mgxsnp H/O prior parser/generator
+two-region material interface and vacuum outer boundary,available,CELL/SURF input supported by existing F02 tasks
+three density ratios as cell densities,available,W5 input pattern
+position-dependent density mesh,not demonstrated,"RMC source supports DENS=<negative mesh id>, but no task-owned HDF5 mesh writer or known runnable test input was located"
+mixed composition regions,available,RMC MATERIAL allows multiple nuclides and distinct MAT IDs; requires task generator
+NNUBAR=1 fissile deployed table,available,10005.01m
+NNUBAR>1 fissile deployed table,available,10001.01m through 10004.01m
+three fission-dominated pairs per independent fissile material,not demonstrated,requires screening and pilot; not frozen yet
+strong P1/P2 directional source-response,not demonstrated,deployed NLEG inventory and existing task harness provide no prevalidated direction-resolved fixed-source adjoint response generator
+forward/backward angular distributions,not demonstrated,no readback oracle for conditional angular P1/P2 path available
+serial runtime,available,current isolated build
+OpenMP/MPI runtime,unavailable,current isolated build cache has no enabled MPI/OMP options
+Windows,unavailable,no environment

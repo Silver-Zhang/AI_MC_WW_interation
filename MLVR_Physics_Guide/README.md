@@ -18,9 +18,9 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已修复并通过针对性验证，已不存在审查中确认但未修复的缺陷，故从 E 调整为 **C — Verify**。这不等于完整放行：W6 已有确定性核一致性、动态 bank 可达性和单个裂变主导最终响应案例的正证据，但一般材料/密度场、更多裂变问题和强各向异性仍缺代表性验证。
+RMC 当前 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W5/W6/W7/W9 均已修复；W9 修复后三个 seed 共 1438 对负单变量前/伴随样本逐项一致、零越界，合并均值与理论相容（$z=0.367$）。
 
-局部正证据不能改变这一结论：非裂变 H/O 的两个指定群对在均匀球及两种相反密度排列的双区域中通过互易性检查；可裂变 `10001.01m` 的 `g6↔g1` 案例也在五组独立流和合并层面通过。它们是代表性响应级证据，不是一般密度场、任意裂变问题或完整伴随能力的证明。
+W9 的 E 级反例已经闭合，但局部修复不能自动放行 A。其他四类角表示的动态矩、真实 density mesh、NNUBAR=1/多材料裂变以及预冻结 formal 矩阵仍未完成。
 
 ## 阅读与维护原则
 
@@ -37,6 +37,8 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已修复并
 - [W5 非均匀密度响应级验证](../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
 - [W6 双 nubar 核一致性修复](../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
 - [可裂变响应级互易性验证](../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
+- [W9 私有角资产与动态确认](../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
+- [W9 修复与验证](../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
@@ -47,3 +49,5 @@ RMC 当前 standard MGACE fixed-source neutron adjoint 的 W5/W6/W7 已修复并
 - 2026-08-25：W5 修复后完成等体积双区域响应级互易性验证；1M 全量批次通过，完整能力仍因 W6 保持 E。
 - 2026-08-25：W6 已统一采用 total nubar 核；确定性逐群核/概率差为 0，10,000 历史动态重放覆盖 2,487 条 bank 后继。F02 转为 C — Verify，不宣称 A。
 - 2026-08-25：`g6↔g1` 可裂变最终响应正式批次通过五组独立流及合并互易性判据；单代表案例不改变 C — Verify 的完整能力评级。
+- 2026-08-25：私有 MGACE 独立 readback 与低光学厚度动态路径确认 W9 负单变量伴随角核支持域越界；完整能力改判 E，停止 density-HDF5 与 A formal。
+- 2026-08-25：W9 负单变量公式修正为 `(1+x)`；三 seed 共 1438 对样本零越界且前/伴随逐项一致，CTest/reference/oracle 通过。完整能力恢复 C — Verify，A 门禁不变。

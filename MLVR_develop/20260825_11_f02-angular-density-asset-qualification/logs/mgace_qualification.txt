@@ -1,0 +1,8 @@
+qualified_cases=5
+isotropic: support=[-1.0, 1.0] mean=0 status=qualified
+one_variable_negative: support=[-1.0, -0.5] mean=-0.75 status=qualified
+one_variable_positive: support=[0.5, 1.0] mean=0.75 status=qualified
+equiprobable_multi_bin: support=[-1.0, 1.0] mean=-0.0833333333333 status=qualified
+discrete_cosine: support=[-0.8, 0.9] mean=0.11 status=qualified
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/logs/mgace_qualification.json
+report_sha256=0fe6f1060eda7615f557bdc09cd3b59b54295ecfc0b81f494f5b2da98e8033df

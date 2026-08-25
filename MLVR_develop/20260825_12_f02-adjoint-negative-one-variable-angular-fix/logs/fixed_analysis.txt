@@ -1,0 +1,4 @@
+case=one_variable_negative mode=forward histories=100000 single_collision=509 mu=[-0.996164367843204,-0.0017703030081744654] support_violations=0 status=no-support-violation-observed
+case=one_variable_negative mode=adjoint histories=100000 single_collision=509 mu=[-0.996164367843204,-0.0017703030081744654] support_violations=0 status=no-support-violation-observed
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/fixed_analysis.json
+report_sha256=b38006b2ec0cbb26786cc164e56316ee0272929be9e848787a7d1199f590bada

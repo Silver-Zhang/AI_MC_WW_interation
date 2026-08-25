@@ -1,0 +1,4 @@
+case=one_variable_negative mode=forward histories=100000 single_collision=509 mu=[-0.996164367843204,-0.0017703030081744654] support_violations=0 status=no-support-violation-observed
+case=one_variable_negative mode=adjoint histories=100000 single_collision=330 mu=[-0.988492938789134,0.9936776518146894] support_violations=161 status=support-violation
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/logs/low_optical_analysis.json
+report_sha256=c8e88dddc8ba6b39a6e11365b88275994d27055c1c538cfaa6746a5871c7114f

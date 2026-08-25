@@ -1,0 +1,34 @@
+{
+  "before": {
+    "forward": {
+      "count": 509,
+      "violations": 0,
+      "mu_min": -0.996164367843204,
+      "mu_max": -0.0017703030081744654,
+      "ptrac_sha256": "ad4723d483f84082fe2b837274771ed9f900cdf8a4d8228062d10a9eaa088e16"
+    },
+    "adjoint": {
+      "count": 330,
+      "violations": 161,
+      "mu_min": -0.988492938789134,
+      "mu_max": 0.9936776518146894,
+      "ptrac_sha256": "c275d1e1eb02de82f783f26b95f3364580d08d1976caf7285a48a5234deb3bed"
+    }
+  },
+  "after": {
+    "forward": {
+      "count": 509,
+      "violations": 0,
+      "mu_min": -0.996164367843204,
+      "mu_max": -0.0017703030081744654,
+      "ptrac_sha256": "ad4723d483f84082fe2b837274771ed9f900cdf8a4d8228062d10a9eaa088e16"
+    },
+    "adjoint": {
+      "count": 509,
+      "violations": 0,
+      "mu_min": -0.996164367843204,
+      "mu_max": -0.0017703030081744654,
+      "ptrac_sha256": "a985f296aef24f3f0879ab0300ac7cabc231ad3d56378f1f6e1c06ea317747a8"
+    }
+  }
+}

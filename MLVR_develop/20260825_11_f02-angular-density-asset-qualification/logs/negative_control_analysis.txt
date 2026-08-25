@@ -1,0 +1,4 @@
+case=one_variable_negative mode=forward histories=1000 single_collision=6 mu=[-0.9620920149472202,-0.2029010806053045] support_violations=4 status=support-violation
+case=one_variable_negative mode=adjoint histories=1000 single_collision=58 mu=[-0.994418610051977,0.9949554871187013] support_violations=50 status=support-violation
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/logs/negative_control_analysis.json
+report_sha256=7b794c766b12818feacb0a9ac3999f03f9d8107bfa899bdc6c4e3650d5112b2f

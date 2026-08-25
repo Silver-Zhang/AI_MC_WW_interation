@@ -7,7 +7,9 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-08-25 | [f02-extended-physics-readiness](20260825_10_f02-extended-physics-readiness/README.md) |  | 待设计 | F02 | |
+| 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
+| 2026-08-25 | [f02-angular-density-asset-qualification](20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |
+| 2026-08-25 | [f02-extended-physics-readiness](20260825_10_f02-extended-physics-readiness/README.md) | 物理验证 | 已完成（C — Verify） | F02 | A 门禁 pilot 暴露 NNUBAR=1 有效响应、真实 density mesh 和强 P1/P2 验证缺口；未修改 RMC |
 | 2026-08-25 | [f03-adjoint-source-definition-audit](20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 待设计 | F03 | 已进入 F03；初始定位为通用外源采样后标记伴随，尚不预判分类 |
 | 2026-08-25 | [f02-fissile-response-reciprocity-verification](20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
 | 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；已随 W5/W7 提交为 RMC `6d208751...` |

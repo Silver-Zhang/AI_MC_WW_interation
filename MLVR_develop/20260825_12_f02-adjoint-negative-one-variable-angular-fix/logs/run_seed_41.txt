@@ -1,0 +1,4 @@
+case=one_variable_negative mode=forward exit_code=0
+case=one_variable_negative mode=adjoint exit_code=0
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/run_seed_41.json
+report_sha256=5b9563484b9ea445f6e332edf39678a55935126f36c1ed17156b6926c0c490f0

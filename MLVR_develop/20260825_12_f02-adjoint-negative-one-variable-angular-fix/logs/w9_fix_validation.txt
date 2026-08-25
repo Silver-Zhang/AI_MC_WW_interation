@@ -1,0 +1,4 @@
+samples=509 mean=-0.489386177164 z=0.829509 paired_equal=true violations=0
+samples=462 mean=-0.500830879566 z=-0.0618657 paired_equal=true violations=0
+samples=467 mean=-0.50213870367 z=-0.160103 paired_equal=true violations=0
+combined_samples=1438 combined_mean=-0.497204593289 combined_z=0.36721 status=passed

@@ -1,0 +1,49 @@
+{
+  "rmc": "/tmp/mlvr_f02_rmc_build/bin/RMC",
+  "rmc_sha256": "f3870bf42b3e6d4ab2518f45542288da3d1590824069b375baa213af2211ba16",
+  "manifest_sha256": "3d944d54cdf2860166fc503d4529ef54dd08c92c0d772bc92f0984b20b923908",
+  "runs": [
+    {
+      "case": "one_variable_negative",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_negative"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "6eda1a02558ddde6bf4a5ba94a21f7b814db2a80b3a1a5e8796a723d51543a9f",
+        "inp.Tally": "228d079df6e9cd2dfd5fc3a0bed3b5ec3b69b4133be3022a1545203784e9308d",
+        "inp.Result.h5": "518d127468951f48e634f13a767fc59fcbb35f5867acfde1aa478ccbe933b529",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "9bf46e4f2fc36cd77e53183ca9b0ffa6f2bfb582753500aff2c0e6c0003005f2",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "one_variable_negative",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_negative"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "22812b163f3b8efd0ed9b2a7b1d663f4933407fe50c962383545c37ae484590c",
+        "inp.Tally": "a042db09c4761e7aac0e92830f6d36bffd2ad6cda56f84a466feabe1d45ac344",
+        "inp.Result.h5": "9ca329870bb062ce8af963ba886ca7ab6af634fed2deab6560f76e758a71270c",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "6c9334cc024e2a6fd3486237a0c3058e0d3341d8937b0791178d1863b2f00e78",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    }
+  ]
+}

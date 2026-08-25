@@ -1,0 +1,3 @@
+generated_cases=5
+manifest=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/manifest.json
+manifest_sha256=4734c66312718fe52f077bb79ccbd0308104f0fd6f4492dc00cc4a8da3f86ee6

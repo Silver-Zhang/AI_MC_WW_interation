@@ -1,0 +1,13 @@
+Trigger task: MLVR_develop/20260825_11_f02-angular-density-asset-qualification
+RMC baseline: 6d2087518e0d9f23574d629f5fde361c79f519e4
+RMC binary SHA256: f3870bf42b3e6d4ab2518f45542288da3d1590824069b375baa213af2211ba16
+Qualified MGACE report: ../20260825_11_f02-angular-density-asset-qualification/logs/mgace_qualification_corrected.json
+Qualified MGACE report SHA256: 3ecdbec876af3008a9c0fc23926f5bb17c09df4e6ff3b8f8e3dd304ae85c37f5
+Dynamic report: ../20260825_11_f02-angular-density-asset-qualification/logs/low_optical_analysis_final.json
+Dynamic report SHA256: a288159ca5223175d55fb4f1af8c7a68d9401c1ffa3dfd583d90dfd5f79e3941
+Frozen experiment: seed=17, population=100000/mode, atom_density=0.001e24 atom/cm3, radius=5 cm
+Forward: reconstructed=509, support=[-1,0], violations=0
+Adjoint: reconstructed=330, support=[-1,0], violations=161, observed_max_mu=0.9936776518146894
+Conservative multi-collision expectation upper bound: 4.9626661212294225 histories
+Chernoff log10 upper probability for at least 161: -175.5226886817213
+Authorization boundary: no RMC modification is authorized until task README section 4 is approved by the user.

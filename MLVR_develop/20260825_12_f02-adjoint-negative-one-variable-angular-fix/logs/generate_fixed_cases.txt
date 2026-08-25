@@ -1,0 +1,3 @@
+generated_runs=2
+manifest=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/runs/w9_fixed_low_optical/manifest.json
+manifest_sha256=3d944d54cdf2860166fc503d4529ef54dd08c92c0d772bc92f0984b20b923908

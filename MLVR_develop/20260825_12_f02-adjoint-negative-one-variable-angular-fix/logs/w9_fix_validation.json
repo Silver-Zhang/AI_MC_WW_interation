@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "expected_mean": -0.5,
+  "max_abs_z": 3.0,
+  "reports": [
+    {
+      "report": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/fixed_analysis.json",
+      "report_sha256": "b38006b2ec0cbb26786cc164e56316ee0272929be9e848787a7d1199f590bada",
+      "sample_count": 509,
+      "mean": -0.4893861771637259,
+      "mean_z": 0.829509469867862,
+      "support_violation_count": 0,
+      "paired_samples_equal": true
+    },
+    {
+      "report": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/analysis_seed_23.json",
+      "report_sha256": "9df1a69f908be8313841c8ecb0755b443458d95f27c31e05a867dfbd15e25a3b",
+      "sample_count": 462,
+      "mean": -0.5008308795659814,
+      "mean_z": -0.061865665517708675,
+      "support_violation_count": 0,
+      "paired_samples_equal": true
+    },
+    {
+      "report": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/logs/analysis_seed_41.json",
+      "report_sha256": "d9b10bca472747548db72d010e608fa7e3cc0412c6dfdc7ec2f066a366053a19",
+      "sample_count": 467,
+      "mean": -0.5021387036700279,
+      "mean_z": -0.160103076758134,
+      "support_violation_count": 0,
+      "paired_samples_equal": true
+    }
+  ],
+  "combined": {
+    "sample_count": 1438,
+    "mean": -0.497204593289098,
+    "mean_z": 0.36721048189147115
+  }
+}

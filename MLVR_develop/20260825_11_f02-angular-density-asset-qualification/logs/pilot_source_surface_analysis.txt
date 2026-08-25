@@ -1,0 +1,3 @@
+case=one_variable_negative mode=adjoint histories=200 single_collision=14 mu=[-0.6661969842468154,0.9949554871187013] support_violations=12 status=support-violation
+report=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/logs/pilot_source_surface_analysis.json
+report_sha256=09306e2892bc2f0b19690c996bf6179af7a14f4f5309e04642c938a8f9aceb62

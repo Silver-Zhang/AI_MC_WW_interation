@@ -1,0 +1,3 @@
+generated_runs=2
+manifest=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/runs/negative_forward_adjoint_control/manifest.json
+manifest_sha256=cf69265445c6484ce54ff617d164c51ec7bf752b92024473b0c642ab980cda9b

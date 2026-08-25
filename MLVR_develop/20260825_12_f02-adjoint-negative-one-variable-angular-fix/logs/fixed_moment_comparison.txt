@@ -1,0 +1,6 @@
+forward_count=509
+forward_mean=-0.48938617716372557
+adjoint_count=509
+adjoint_mean=-0.48938617716372557
+sample_arrays_equal=true
+max_abs_paired_difference=0

@@ -1,0 +1,885 @@
+{
+  "method": "source ray/final surface ray intersection; residual <= 2e-4 cm",
+  "manifest_sha256": "cf69265445c6484ce54ff617d164c51ec7bf752b92024473b0c642ab980cda9b",
+  "runs": [
+    {
+      "case": "one_variable_negative",
+      "mode": "forward",
+      "ptrac": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/runs/negative_forward_adjoint_control/one_variable_negative/forward/inp.PTRAC",
+      "ptrac_sha256": "4c25b5fc0fba4dbcde6a66131c312e97c7c31da33d50634db2ec39f22170ebb6",
+      "history_count": 1000,
+      "event_counts": {
+        "Source Event": 1000,
+        "Elastic_Scatter": 22746,
+        "Crossing_Surface": 1000
+      },
+      "direction_norm_min": 0.9999992161766929,
+      "direction_norm_max": 1.0000007686987045,
+      "reconstructed_single_collision_count": 6,
+      "expected_support": [
+        -1.0,
+        -0.5
+      ],
+      "observed_mu_min": -0.9620920149472202,
+      "observed_mu_max": -0.2029010806053045,
+      "support_violation_count": 4,
+      "support_violations": [
+        {
+          "mu": -0.4256562678430067,
+          "line_residual_cm": 1.7781988280635365e-06,
+          "source_to_collision_cm": 0.6689809783091787,
+          "collision_to_surface_cm": 5.24797541846782,
+          "collision_radius_cm": 0.6689809783091787
+        },
+        {
+          "mu": -0.2029010806053045,
+          "line_residual_cm": 1.460890586850262e-06,
+          "source_to_collision_cm": 0.23796713500935857,
+          "collision_to_surface_cm": 5.042851421055895,
+          "collision_radius_cm": 0.23796713500935857
+        },
+        {
+          "mu": -0.3686544030371248,
+          "line_residual_cm": 9.20242820103225e-07,
+          "source_to_collision_cm": 0.7307608449207275,
+          "collision_to_surface_cm": 5.223039463252515,
+          "collision_radius_cm": 0.7307608449207275
+        },
+        {
+          "mu": -0.4744155658114135,
+          "line_residual_cm": 1.2910659807396828e-06,
+          "source_to_collision_cm": 0.974483875257701,
+          "collision_to_surface_cm": 5.388172208221324,
+          "collision_radius_cm": 0.974483875257701
+        }
+      ],
+      "reconstructed_samples": [
+        {
+          "mu": -0.4256562678430067,
+          "line_residual_cm": 1.7781988280635365e-06,
+          "source_to_collision_cm": 0.6689809783091787,
+          "collision_to_surface_cm": 5.24797541846782,
+          "collision_radius_cm": 0.6689809783091787
+        },
+        {
+          "mu": -0.2029010806053045,
+          "line_residual_cm": 1.460890586850262e-06,
+          "source_to_collision_cm": 0.23796713500935857,
+          "collision_to_surface_cm": 5.042851421055895,
+          "collision_radius_cm": 0.23796713500935857
+        },
+        {
+          "mu": -0.3686544030371248,
+          "line_residual_cm": 9.20242820103225e-07,
+          "source_to_collision_cm": 0.7307608449207275,
+          "collision_to_surface_cm": 5.223039463252515,
+          "collision_radius_cm": 0.7307608449207275
+        },
+        {
+          "mu": -0.4744155658114135,
+          "line_residual_cm": 1.2910659807396828e-06,
+          "source_to_collision_cm": 0.974483875257701,
+          "collision_to_surface_cm": 5.388172208221324,
+          "collision_radius_cm": 0.974483875257701
+        },
+        {
+          "mu": -0.8815566273322127,
+          "line_residual_cm": 7.249657577680801e-07,
+          "source_to_collision_cm": 0.2610688575889148,
+          "collision_to_surface_cm": 5.228628424530819,
+          "collision_radius_cm": 0.26106885758891474
+        },
+        {
+          "mu": -0.9620920149472202,
+          "line_residual_cm": 1.9869901596303405e-06,
+          "source_to_collision_cm": 0.7513662740883479,
+          "collision_to_surface_cm": 5.718682565612653,
+          "collision_radius_cm": 0.7513662740883479
+        }
+      ],
+      "status": "support-violation"
+    },
+    {
+      "case": "one_variable_negative",
+      "mode": "adjoint",
+      "ptrac": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/runs/negative_forward_adjoint_control/one_variable_negative/adjoint/inp.PTRAC",
+      "ptrac_sha256": "e760c882fbbeca028ee3bb6658590693b2f19b66fac157c9988b687145cf5cb1",
+      "history_count": 1000,
+      "event_counts": {
+        "Source Event": 1000,
+        "Crossing_Surface": 1000
+      },
+      "direction_norm_min": 0.9999992161766929,
+      "direction_norm_max": 1.0000007686987045,
+      "reconstructed_single_collision_count": 58,
+      "expected_support": [
+        -1.0,
+        -0.5
+      ],
+      "observed_mu_min": -0.994418610051977,
+      "observed_mu_max": 0.9949554871187013,
+      "support_violation_count": 50,
+      "support_violations": [
+        {
+          "mu": 0.7230296324337923,
+          "line_residual_cm": 1.3344317749304824e-07,
+          "source_to_collision_cm": 0.6689866037339041,
+          "collision_to_surface_cm": 4.49489870354421,
+          "collision_radius_cm": 0.6689866037339042
+        },
+        {
+          "mu": 0.4462346320245092,
+          "line_residual_cm": 1.7447654675481955e-06,
+          "source_to_collision_cm": 0.8259786668800959,
+          "collision_to_surface_cm": 4.576478533020666,
+          "collision_radius_cm": 0.8259786668800959
+        },
+        {
+          "mu": -0.08426722823501884,
+          "line_residual_cm": 1.280801560101183e-07,
+          "source_to_collision_cm": 2.34895784788,
+          "collision_to_surface_cm": 4.616263165583356,
+          "collision_radius_cm": 2.34895784788
+        },
+        {
+          "mu": -0.19202978693553543,
+          "line_residual_cm": 9.375330152460802e-07,
+          "source_to_collision_cm": 1.873943936442793,
+          "collision_to_surface_cm": 5.009350765118677,
+          "collision_radius_cm": 1.873943936442793
+        },
+        {
+          "mu": 0.8940388762141723,
+          "line_residual_cm": 8.305101332093908e-08,
+          "source_to_collision_cm": 0.7307551665999196,
+          "collision_to_surface_cm": 4.335947432822957,
+          "collision_radius_cm": 0.7307551665999196
+        },
+        {
+          "mu": 0.6888197573424545,
+          "line_residual_cm": 2.0269085954351276e-06,
+          "source_to_collision_cm": 1.1258737915351635,
+          "collision_to_surface_cm": 4.157411086242356,
+          "collision_radius_cm": 1.1258737915351635
+        },
+        {
+          "mu": 0.09151786453614087,
+          "line_residual_cm": 6.454876575735736e-07,
+          "source_to_collision_cm": 2.024683088213121,
+          "collision_to_surface_cm": 4.390182601088181,
+          "collision_radius_cm": 2.024683088213121
+        },
+        {
+          "mu": 0.9949554871187013,
+          "line_residual_cm": 7.239059596279642e-07,
+          "source_to_collision_cm": 4.625511085914044,
+          "collision_to_surface_cm": 0.3762440217503819,
+          "collision_radius_cm": 4.625511085914045
+        },
+        {
+          "mu": 0.5334177525601619,
+          "line_residual_cm": 1.7837090554891172e-06,
+          "source_to_collision_cm": 0.9180392967133896,
+          "collision_to_surface_cm": 4.449634214478768,
+          "collision_radius_cm": 0.9180392967133897
+        },
+        {
+          "mu": -0.2768617344283176,
+          "line_residual_cm": 7.131521082808898e-07,
+          "source_to_collision_cm": 0.24096931171173672,
+          "collision_to_surface_cm": 5.061351041801501,
+          "collision_radius_cm": 0.24096931171173677
+        },
+        {
+          "mu": 0.8316019239239594,
+          "line_residual_cm": 7.013227496553578e-07,
+          "source_to_collision_cm": 2.1897842744670424,
+          "collision_to_surface_cm": 3.0288156830571564,
+          "collision_radius_cm": 2.1897842744670424
+        },
+        {
+          "mu": -0.4067978005130315,
+          "line_residual_cm": 1.8169116089467434e-06,
+          "source_to_collision_cm": 2.4937789988209444,
+          "collision_to_surface_cm": 5.465329457819823,
+          "collision_radius_cm": 2.4937789988209444
+        },
+        {
+          "mu": 0.8750725273421341,
+          "line_residual_cm": 7.091719401573746e-07,
+          "source_to_collision_cm": 0.06261676016851815,
+          "collision_to_surface_cm": 4.945113988220903,
+          "collision_radius_cm": 0.06261676016851815
+        },
+        {
+          "mu": 0.1075313260498194,
+          "line_residual_cm": 8.260536930493311e-07,
+          "source_to_collision_cm": 3.3193014949844986,
+          "collision_to_surface_cm": 3.3993510625871974,
+          "collision_radius_cm": 3.3193014949844986
+        },
+        {
+          "mu": 0.4947521797402319,
+          "line_residual_cm": 1.1944422177119984e-07,
+          "source_to_collision_cm": 1.1632571339181685,
+          "collision_to_surface_cm": 4.321215420070688,
+          "collision_radius_cm": 1.1632571339181685
+        },
+        {
+          "mu": -0.007125340109623065,
+          "line_residual_cm": 6.362375241822343e-07,
+          "source_to_collision_cm": 4.035863223947851,
+          "collision_to_surface_cm": 2.980474194463797,
+          "collision_radius_cm": 4.0358632239478505
+        },
+        {
+          "mu": 0.38743353082272575,
+          "line_residual_cm": 5.866066141690606e-07,
+          "source_to_collision_cm": 2.2151944134594497,
+          "collision_to_surface_cm": 3.70569325058288,
+          "collision_radius_cm": 2.2151944134594497
+        },
+        {
+          "mu": -0.14002403975983088,
+          "line_residual_cm": 2.2704163598404614e-07,
+          "source_to_collision_cm": 2.6184461075214878,
+          "collision_to_surface_cm": 4.641943354956146,
+          "collision_radius_cm": 2.6184461075214878
+        },
+        {
+          "mu": 0.2067513773335256,
+          "line_residual_cm": 7.965764660732725e-07,
+          "source_to_collision_cm": 0.36669077815699364,
+          "collision_to_surface_cm": 4.911298254851892,
+          "collision_radius_cm": 0.3666907781569936
+        },
+        {
+          "mu": 0.08032954877011572,
+          "line_residual_cm": 2.09509570472802e-06,
+          "source_to_collision_cm": 4.824909590884486,
+          "collision_to_surface_cm": 0.9800664443652962,
+          "collision_radius_cm": 4.824909590884485
+        },
+        {
+          "mu": -0.045145198870116164,
+          "line_residual_cm": 3.8171720455306855e-07,
+          "source_to_collision_cm": 4.167542109515854,
+          "collision_to_surface_cm": 2.957078480689199,
+          "collision_radius_cm": 4.167542109515854
+        },
+        {
+          "mu": 0.5767525012821588,
+          "line_residual_cm": 1.4089245397596807e-06,
+          "source_to_collision_cm": 0.9744845409131414,
+          "collision_to_surface_cm": 4.374183709117858,
+          "collision_radius_cm": 0.9744845409131415
+        },
+        {
+          "mu": 0.7859259251446853,
+          "line_residual_cm": 3.4041964288911704e-07,
+          "source_to_collision_cm": 4.7149033701500755,
+          "collision_to_surface_cm": 0.35656505539755823,
+          "collision_radius_cm": 4.7149033701500755
+        },
+        {
+          "mu": 0.2251203424214805,
+          "line_residual_cm": 1.35605261367825e-06,
+          "source_to_collision_cm": 1.6205865027846884,
+          "collision_to_surface_cm": 4.379305559002842,
+          "collision_radius_cm": 1.6205865027846882
+        },
+        {
+          "mu": 0.8396662174642788,
+          "line_residual_cm": 1.1222421350626494e-06,
+          "source_to_collision_cm": 4.8357560631741645,
+          "collision_to_surface_cm": 0.19427981760697202,
+          "collision_radius_cm": 4.835756063174165
+        },
+        {
+          "mu": 0.12405733120461734,
+          "line_residual_cm": 1.4976090731417314e-07,
+          "source_to_collision_cm": 1.053438587592362,
+          "collision_to_surface_cm": 4.758826982171034,
+          "collision_radius_cm": 1.053438587592362
+        },
+        {
+          "mu": -0.3351403126929553,
+          "line_residual_cm": 3.2954117329605204e-07,
+          "source_to_collision_cm": 0.6182412179890475,
+          "collision_to_surface_cm": 5.173151986351225,
+          "collision_radius_cm": 0.6182412179890475
+        },
+        {
+          "mu": 0.6987256227404125,
+          "line_residual_cm": 1.6626226898935307e-07,
+          "source_to_collision_cm": 2.4320147236836944,
+          "collision_to_surface_cm": 2.988221477646731,
+          "collision_radius_cm": 2.432014723683694
+        },
+        {
+          "mu": -0.4837174614054156,
+          "line_residual_cm": 1.7802009558374821e-06,
+          "source_to_collision_cm": 2.559985627484504,
+          "collision_to_surface_cm": 5.708196272191451,
+          "collision_radius_cm": 2.559985627484504
+        },
+        {
+          "mu": 0.8236229777922365,
+          "line_residual_cm": 1.37516627775361e-06,
+          "source_to_collision_cm": 1.0492393380227685,
+          "collision_to_surface_cm": 4.100286075659337,
+          "collision_radius_cm": 1.0492393380227683
+        },
+        {
+          "mu": -0.08155503457835811,
+          "line_residual_cm": 3.3446723384009704e-07,
+          "source_to_collision_cm": 4.372733388709369,
+          "collision_to_surface_cm": 2.80741070260583,
+          "collision_radius_cm": 4.372733388709369
+        },
+        {
+          "mu": 0.9318015233263397,
+          "line_residual_cm": 1.966194183636758e-06,
+          "source_to_collision_cm": 2.924911874636643,
+          "collision_to_surface_cm": 2.1605530675538813,
+          "collision_radius_cm": 2.9249118746366434
+        },
+        {
+          "mu": 0.7500023426319076,
+          "line_residual_cm": 9.294191367451397e-07,
+          "source_to_collision_cm": 4.093482519018931,
+          "collision_to_surface_cm": 1.133335431200412,
+          "collision_radius_cm": 4.093482519018931
+        },
+        {
+          "mu": -0.21714154084966036,
+          "line_residual_cm": 3.5381920661797555e-08,
+          "source_to_collision_cm": 0.46088856592169014,
+          "collision_to_surface_cm": 5.079797200864195,
+          "collision_radius_cm": 0.46088856592169014
+        },
+        {
+          "mu": 0.03596011850973847,
+          "line_residual_cm": 1.0691197672993028e-06,
+          "source_to_collision_cm": 2.1839804496161155,
+          "collision_to_surface_cm": 4.419952449227731,
+          "collision_radius_cm": 2.1839804496161155
+        },
+        {
+          "mu": 0.4023737264680536,
+          "line_residual_cm": 1.70690056370634e-08,
+          "source_to_collision_cm": 0.5244628153111883,
+          "collision_to_surface_cm": 4.765863679535505,
+          "collision_radius_cm": 0.5244628153111883
+        },
+        {
+          "mu": 0.9270636699173666,
+          "line_residual_cm": 4.7326954674897205e-07,
+          "source_to_collision_cm": 2.928423374146268,
+          "collision_to_surface_cm": 2.163142338572884,
+          "collision_radius_cm": 2.928423374146268
+        },
+        {
+          "mu": 0.9512612630673458,
+          "line_residual_cm": 7.765027341510626e-09,
+          "source_to_collision_cm": 0.5003815128500599,
+          "collision_to_surface_cm": 4.521624692451884,
+          "collision_radius_cm": 0.5003815128500599
+        },
+        {
+          "mu": -0.2518521691037573,
+          "line_residual_cm": 1.2423935406244486e-06,
+          "source_to_collision_cm": 4.395497608986698,
+          "collision_to_surface_cm": 3.7347693138323956,
+          "collision_radius_cm": 4.395497608986698
+        },
+        {
+          "mu": 0.8730805943295356,
+          "line_residual_cm": 5.47210125361312e-07,
+          "source_to_collision_cm": 1.8286964714680087,
+          "collision_to_surface_cm": 3.3232580130250837,
+          "collision_radius_cm": 1.8286964714680085
+        },
+        {
+          "mu": 0.5469095466608198,
+          "line_residual_cm": 6.752869000523021e-08,
+          "source_to_collision_cm": 0.07162965205170375,
+          "collision_to_surface_cm": 4.960465574642153,
+          "collision_radius_cm": 0.07162965205170375
+        },
+        {
+          "mu": -0.09644187104629653,
+          "line_residual_cm": 2.4712433743366013e-06,
+          "source_to_collision_cm": 3.335956114325432,
+          "collision_to_surface_cm": 4.0600279966016,
+          "collision_radius_cm": 3.3359561143254326
+        },
+        {
+          "mu": 0.9770048106370729,
+          "line_residual_cm": 1.8597907409036004e-06,
+          "source_to_collision_cm": 2.765831060420313,
+          "collision_to_surface_cm": 2.262870988310998,
+          "collision_radius_cm": 2.7658310604203127
+        },
+        {
+          "mu": 0.6375881826268276,
+          "line_residual_cm": 7.874104824671983e-07,
+          "source_to_collision_cm": 4.029933572394198,
+          "collision_to_surface_cm": 1.3499551877880616,
+          "collision_radius_cm": 4.029933572394198
+        },
+        {
+          "mu": 0.5224029864484618,
+          "line_residual_cm": 2.3290046429242414e-07,
+          "source_to_collision_cm": 1.8728189823182757,
+          "collision_to_surface_cm": 3.759750454247691,
+          "collision_radius_cm": 1.8728189823182757
+        },
+        {
+          "mu": 0.26742411896108514,
+          "line_residual_cm": 2.27258496801923e-06,
+          "source_to_collision_cm": 3.177904108019203,
+          "collision_to_surface_cm": 3.102766740490309,
+          "collision_radius_cm": 3.1779041080192028
+        },
+        {
+          "mu": 0.8039926171322528,
+          "line_residual_cm": 1.975046348983022e-06,
+          "source_to_collision_cm": 0.37818525381362034,
+          "collision_to_surface_cm": 4.690881546907236,
+          "collision_radius_cm": 0.3781852538136204
+        },
+        {
+          "mu": -0.032022046361857334,
+          "line_residual_cm": 9.92645160157556e-07,
+          "source_to_collision_cm": 0.6158036208763051,
+          "collision_to_surface_cm": 4.981691826908579,
+          "collision_radius_cm": 0.6158036208763051
+        },
+        {
+          "mu": 0.6426634394909823,
+          "line_residual_cm": 7.909146237646229e-07,
+          "source_to_collision_cm": 2.930719509243265,
+          "collision_to_surface_cm": 2.5840085661729932,
+          "collision_radius_cm": 2.9307195092432647
+        },
+        {
+          "mu": 0.9122233702027918,
+          "line_residual_cm": 1.615531693645497e-06,
+          "source_to_collision_cm": 3.2506886564124686,
+          "collision_to_surface_cm": 1.854018340242883,
+          "collision_radius_cm": 3.2506886564124686
+        }
+      ],
+      "reconstructed_samples": [
+        {
+          "mu": 0.7230296324337923,
+          "line_residual_cm": 1.3344317749304824e-07,
+          "source_to_collision_cm": 0.6689866037339041,
+          "collision_to_surface_cm": 4.49489870354421,
+          "collision_radius_cm": 0.6689866037339042
+        },
+        {
+          "mu": 0.4462346320245092,
+          "line_residual_cm": 1.7447654675481955e-06,
+          "source_to_collision_cm": 0.8259786668800959,
+          "collision_to_surface_cm": 4.576478533020666,
+          "collision_radius_cm": 0.8259786668800959
+        },
+        {
+          "mu": -0.08426722823501884,
+          "line_residual_cm": 1.280801560101183e-07,
+          "source_to_collision_cm": 2.34895784788,
+          "collision_to_surface_cm": 4.616263165583356,
+          "collision_radius_cm": 2.34895784788
+        },
+        {
+          "mu": -0.19202978693553543,
+          "line_residual_cm": 9.375330152460802e-07,
+          "source_to_collision_cm": 1.873943936442793,
+          "collision_to_surface_cm": 5.009350765118677,
+          "collision_radius_cm": 1.873943936442793
+        },
+        {
+          "mu": 0.8940388762141723,
+          "line_residual_cm": 8.305101332093908e-08,
+          "source_to_collision_cm": 0.7307551665999196,
+          "collision_to_surface_cm": 4.335947432822957,
+          "collision_radius_cm": 0.7307551665999196
+        },
+        {
+          "mu": 0.6888197573424545,
+          "line_residual_cm": 2.0269085954351276e-06,
+          "source_to_collision_cm": 1.1258737915351635,
+          "collision_to_surface_cm": 4.157411086242356,
+          "collision_radius_cm": 1.1258737915351635
+        },
+        {
+          "mu": 0.09151786453614087,
+          "line_residual_cm": 6.454876575735736e-07,
+          "source_to_collision_cm": 2.024683088213121,
+          "collision_to_surface_cm": 4.390182601088181,
+          "collision_radius_cm": 2.024683088213121
+        },
+        {
+          "mu": 0.9949554871187013,
+          "line_residual_cm": 7.239059596279642e-07,
+          "source_to_collision_cm": 4.625511085914044,
+          "collision_to_surface_cm": 0.3762440217503819,
+          "collision_radius_cm": 4.625511085914045
+        },
+        {
+          "mu": 0.5334177525601619,
+          "line_residual_cm": 1.7837090554891172e-06,
+          "source_to_collision_cm": 0.9180392967133896,
+          "collision_to_surface_cm": 4.449634214478768,
+          "collision_radius_cm": 0.9180392967133897
+        },
+        {
+          "mu": -0.2768617344283176,
+          "line_residual_cm": 7.131521082808898e-07,
+          "source_to_collision_cm": 0.24096931171173672,
+          "collision_to_surface_cm": 5.061351041801501,
+          "collision_radius_cm": 0.24096931171173677
+        },
+        {
+          "mu": -0.5747134503321846,
+          "line_residual_cm": 1.6009389851848777e-06,
+          "source_to_collision_cm": 0.03798543665444382,
+          "collision_to_surface_cm": 5.021733795958712,
+          "collision_radius_cm": 0.03798543665444382
+        },
+        {
+          "mu": 0.8316019239239594,
+          "line_residual_cm": 7.013227496553578e-07,
+          "source_to_collision_cm": 2.1897842744670424,
+          "collision_to_surface_cm": 3.0288156830571564,
+          "collision_radius_cm": 2.1897842744670424
+        },
+        {
+          "mu": -0.4067978005130315,
+          "line_residual_cm": 1.8169116089467434e-06,
+          "source_to_collision_cm": 2.4937789988209444,
+          "collision_to_surface_cm": 5.465329457819823,
+          "collision_radius_cm": 2.4937789988209444
+        },
+        {
+          "mu": -0.6661969842468154,
+          "line_residual_cm": 1.7419193559325083e-06,
+          "source_to_collision_cm": 1.7598510755640273,
+          "collision_to_surface_cm": 5.997079904907165,
+          "collision_radius_cm": 1.7598510755640273
+        },
+        {
+          "mu": 0.8750725273421341,
+          "line_residual_cm": 7.091719401573746e-07,
+          "source_to_collision_cm": 0.06261676016851815,
+          "collision_to_surface_cm": 4.945113988220903,
+          "collision_radius_cm": 0.06261676016851815
+        },
+        {
+          "mu": 0.1075313260498194,
+          "line_residual_cm": 8.260536930493311e-07,
+          "source_to_collision_cm": 3.3193014949844986,
+          "collision_to_surface_cm": 3.3993510625871974,
+          "collision_radius_cm": 3.3193014949844986
+        },
+        {
+          "mu": -0.994418610051977,
+          "line_residual_cm": 3.362247421596123e-08,
+          "source_to_collision_cm": 0.6841437789208648,
+          "collision_to_surface_cm": 5.679804132674648,
+          "collision_radius_cm": 0.6841437789208649
+        },
+        {
+          "mu": 0.4947521797402319,
+          "line_residual_cm": 1.1944422177119984e-07,
+          "source_to_collision_cm": 1.1632571339181685,
+          "collision_to_surface_cm": 4.321215420070688,
+          "collision_radius_cm": 1.1632571339181685
+        },
+        {
+          "mu": -0.007125340109623065,
+          "line_residual_cm": 6.362375241822343e-07,
+          "source_to_collision_cm": 4.035863223947851,
+          "collision_to_surface_cm": 2.980474194463797,
+          "collision_radius_cm": 4.0358632239478505
+        },
+        {
+          "mu": 0.38743353082272575,
+          "line_residual_cm": 5.866066141690606e-07,
+          "source_to_collision_cm": 2.2151944134594497,
+          "collision_to_surface_cm": 3.70569325058288,
+          "collision_radius_cm": 2.2151944134594497
+        },
+        {
+          "mu": -0.14002403975983088,
+          "line_residual_cm": 2.2704163598404614e-07,
+          "source_to_collision_cm": 2.6184461075214878,
+          "collision_to_surface_cm": 4.641943354956146,
+          "collision_radius_cm": 2.6184461075214878
+        },
+        {
+          "mu": 0.2067513773335256,
+          "line_residual_cm": 7.965764660732725e-07,
+          "source_to_collision_cm": 0.36669077815699364,
+          "collision_to_surface_cm": 4.911298254851892,
+          "collision_radius_cm": 0.3666907781569936
+        },
+        {
+          "mu": 0.08032954877011572,
+          "line_residual_cm": 2.09509570472802e-06,
+          "source_to_collision_cm": 4.824909590884486,
+          "collision_to_surface_cm": 0.9800664443652962,
+          "collision_radius_cm": 4.824909590884485
+        },
+        {
+          "mu": -0.045145198870116164,
+          "line_residual_cm": 3.8171720455306855e-07,
+          "source_to_collision_cm": 4.167542109515854,
+          "collision_to_surface_cm": 2.957078480689199,
+          "collision_radius_cm": 4.167542109515854
+        },
+        {
+          "mu": 0.5767525012821588,
+          "line_residual_cm": 1.4089245397596807e-06,
+          "source_to_collision_cm": 0.9744845409131414,
+          "collision_to_surface_cm": 4.374183709117858,
+          "collision_radius_cm": 0.9744845409131415
+        },
+        {
+          "mu": 0.7859259251446853,
+          "line_residual_cm": 3.4041964288911704e-07,
+          "source_to_collision_cm": 4.7149033701500755,
+          "collision_to_surface_cm": 0.35656505539755823,
+          "collision_radius_cm": 4.7149033701500755
+        },
+        {
+          "mu": -0.6446689992084783,
+          "line_residual_cm": 1.1474556303508732e-06,
+          "source_to_collision_cm": 0.2610624553416573,
+          "collision_to_surface_cm": 5.164314347461702,
+          "collision_radius_cm": 0.26106245534165723
+        },
+        {
+          "mu": 0.2251203424214805,
+          "line_residual_cm": 1.35605261367825e-06,
+          "source_to_collision_cm": 1.6205865027846884,
+          "collision_to_surface_cm": 4.379305559002842,
+          "collision_radius_cm": 1.6205865027846882
+        },
+        {
+          "mu": 0.8396662174642788,
+          "line_residual_cm": 1.1222421350626494e-06,
+          "source_to_collision_cm": 4.8357560631741645,
+          "collision_to_surface_cm": 0.19427981760697202,
+          "collision_radius_cm": 4.835756063174165
+        },
+        {
+          "mu": 0.12405733120461734,
+          "line_residual_cm": 1.4976090731417314e-07,
+          "source_to_collision_cm": 1.053438587592362,
+          "collision_to_surface_cm": 4.758826982171034,
+          "collision_radius_cm": 1.053438587592362
+        },
+        {
+          "mu": -0.3351403126929553,
+          "line_residual_cm": 3.2954117329605204e-07,
+          "source_to_collision_cm": 0.6182412179890475,
+          "collision_to_surface_cm": 5.173151986351225,
+          "collision_radius_cm": 0.6182412179890475
+        },
+        {
+          "mu": 0.6987256227404125,
+          "line_residual_cm": 1.6626226898935307e-07,
+          "source_to_collision_cm": 2.4320147236836944,
+          "collision_to_surface_cm": 2.988221477646731,
+          "collision_radius_cm": 2.432014723683694
+        },
+        {
+          "mu": -0.844422363091848,
+          "line_residual_cm": 2.9813244563335445e-07,
+          "source_to_collision_cm": 0.09348652209032957,
+          "collision_to_surface_cm": 5.078690941873412,
+          "collision_radius_cm": 0.09348652209032955
+        },
+        {
+          "mu": -0.4837174614054156,
+          "line_residual_cm": 1.7802009558374821e-06,
+          "source_to_collision_cm": 2.559985627484504,
+          "collision_to_surface_cm": 5.708196272191451,
+          "collision_radius_cm": 2.559985627484504
+        },
+        {
+          "mu": 0.8236229777922365,
+          "line_residual_cm": 1.37516627775361e-06,
+          "source_to_collision_cm": 1.0492393380227685,
+          "collision_to_surface_cm": 4.100286075659337,
+          "collision_radius_cm": 1.0492393380227683
+        },
+        {
+          "mu": -0.08155503457835811,
+          "line_residual_cm": 3.3446723384009704e-07,
+          "source_to_collision_cm": 4.372733388709369,
+          "collision_to_surface_cm": 2.80741070260583,
+          "collision_radius_cm": 4.372733388709369
+        },
+        {
+          "mu": 0.9318015233263397,
+          "line_residual_cm": 1.966194183636758e-06,
+          "source_to_collision_cm": 2.924911874636643,
+          "collision_to_surface_cm": 2.1605530675538813,
+          "collision_radius_cm": 2.9249118746366434
+        },
+        {
+          "mu": 0.7500023426319076,
+          "line_residual_cm": 9.294191367451397e-07,
+          "source_to_collision_cm": 4.093482519018931,
+          "collision_to_surface_cm": 1.133335431200412,
+          "collision_radius_cm": 4.093482519018931
+        },
+        {
+          "mu": -0.21714154084966036,
+          "line_residual_cm": 3.5381920661797555e-08,
+          "source_to_collision_cm": 0.46088856592169014,
+          "collision_to_surface_cm": 5.079797200864195,
+          "collision_radius_cm": 0.46088856592169014
+        },
+        {
+          "mu": 0.03596011850973847,
+          "line_residual_cm": 1.0691197672993028e-06,
+          "source_to_collision_cm": 2.1839804496161155,
+          "collision_to_surface_cm": 4.419952449227731,
+          "collision_radius_cm": 2.1839804496161155
+        },
+        {
+          "mu": 0.4023737264680536,
+          "line_residual_cm": 1.70690056370634e-08,
+          "source_to_collision_cm": 0.5244628153111883,
+          "collision_to_surface_cm": 4.765863679535505,
+          "collision_radius_cm": 0.5244628153111883
+        },
+        {
+          "mu": -0.6739484104241806,
+          "line_residual_cm": 4.924876886492707e-07,
+          "source_to_collision_cm": 2.3551248362364623,
+          "collision_to_surface_cm": 6.2747368626686,
+          "collision_radius_cm": 2.3551248362364623
+        },
+        {
+          "mu": 0.9270636699173666,
+          "line_residual_cm": 4.7326954674897205e-07,
+          "source_to_collision_cm": 2.928423374146268,
+          "collision_to_surface_cm": 2.163142338572884,
+          "collision_radius_cm": 2.928423374146268
+        },
+        {
+          "mu": 0.9512612630673458,
+          "line_residual_cm": 7.765027341510626e-09,
+          "source_to_collision_cm": 0.5003815128500599,
+          "collision_to_surface_cm": 4.521624692451884,
+          "collision_radius_cm": 0.5003815128500599
+        },
+        {
+          "mu": -0.2518521691037573,
+          "line_residual_cm": 1.2423935406244486e-06,
+          "source_to_collision_cm": 4.395497608986698,
+          "collision_to_surface_cm": 3.7347693138323956,
+          "collision_radius_cm": 4.395497608986698
+        },
+        {
+          "mu": 0.8730805943295356,
+          "line_residual_cm": 5.47210125361312e-07,
+          "source_to_collision_cm": 1.8286964714680087,
+          "collision_to_surface_cm": 3.3232580130250837,
+          "collision_radius_cm": 1.8286964714680085
+        },
+        {
+          "mu": 0.5469095466608198,
+          "line_residual_cm": 6.752869000523021e-08,
+          "source_to_collision_cm": 0.07162965205170375,
+          "collision_to_surface_cm": 4.960465574642153,
+          "collision_radius_cm": 0.07162965205170375
+        },
+        {
+          "mu": -0.09644187104629653,
+          "line_residual_cm": 2.4712433743366013e-06,
+          "source_to_collision_cm": 3.335956114325432,
+          "collision_to_surface_cm": 4.0600279966016,
+          "collision_radius_cm": 3.3359561143254326
+        },
+        {
+          "mu": 0.9770048106370729,
+          "line_residual_cm": 1.8597907409036004e-06,
+          "source_to_collision_cm": 2.765831060420313,
+          "collision_to_surface_cm": 2.262870988310998,
+          "collision_radius_cm": 2.7658310604203127
+        },
+        {
+          "mu": 0.6375881826268276,
+          "line_residual_cm": 7.874104824671983e-07,
+          "source_to_collision_cm": 4.029933572394198,
+          "collision_to_surface_cm": 1.3499551877880616,
+          "collision_radius_cm": 4.029933572394198
+        },
+        {
+          "mu": -0.8862759770673828,
+          "line_residual_cm": 1.2721179226038628e-06,
+          "source_to_collision_cm": 0.7513665510987151,
+          "collision_to_surface_cm": 5.653792674202951,
+          "collision_radius_cm": 0.7513665510987151
+        },
+        {
+          "mu": 0.5224029864484618,
+          "line_residual_cm": 2.3290046429242414e-07,
+          "source_to_collision_cm": 1.8728189823182757,
+          "collision_to_surface_cm": 3.759750454247691,
+          "collision_radius_cm": 1.8728189823182757
+        },
+        {
+          "mu": 0.26742411896108514,
+          "line_residual_cm": 2.27258496801923e-06,
+          "source_to_collision_cm": 3.177904108019203,
+          "collision_to_surface_cm": 3.102766740490309,
+          "collision_radius_cm": 3.1779041080192028
+        },
+        {
+          "mu": 0.8039926171322528,
+          "line_residual_cm": 1.975046348983022e-06,
+          "source_to_collision_cm": 0.37818525381362034,
+          "collision_to_surface_cm": 4.690881546907236,
+          "collision_radius_cm": 0.3781852538136204
+        },
+        {
+          "mu": -0.032022046361857334,
+          "line_residual_cm": 9.92645160157556e-07,
+          "source_to_collision_cm": 0.6158036208763051,
+          "collision_to_surface_cm": 4.981691826908579,
+          "collision_radius_cm": 0.6158036208763051
+        },
+        {
+          "mu": 0.6426634394909823,
+          "line_residual_cm": 7.909146237646229e-07,
+          "source_to_collision_cm": 2.930719509243265,
+          "collision_to_surface_cm": 2.5840085661729932,
+          "collision_radius_cm": 2.9307195092432647
+        },
+        {
+          "mu": -0.623724317821823,
+          "line_residual_cm": 7.642226447231979e-07,
+          "source_to_collision_cm": 1.119352332001255,
+          "collision_to_surface_cm": 5.621020899507559,
+          "collision_radius_cm": 1.1193523320012548
+        },
+        {
+          "mu": 0.9122233702027918,
+          "line_residual_cm": 1.615531693645497e-06,
+          "source_to_collision_cm": 3.2506886564124686,
+          "collision_to_surface_cm": 1.854018340242883,
+          "collision_radius_cm": 3.2506886564124686
+        }
+      ],
+      "status": "support-violation"
+    }
+  ]
+}

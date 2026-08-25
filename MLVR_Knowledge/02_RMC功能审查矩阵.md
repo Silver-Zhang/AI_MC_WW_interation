@@ -21,7 +21,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
-| F02-B | 多群Adjoint物理正确性审查 | 阶段复核完成（C — Verify） | W5/W6/W7 已修复；非裂变密度与单一可裂变响应案例通过，仍缺强各向异性、混合材料等扩展验证 | `20260824_05_f02-adjoint-physics-verification`；`20260825_01_f02-adjoint-numerical-verification`；`20260825_04_f02-w7-neutron-only-adjoint-init-fix`；`20260825_05_f02-w5-local-density-adjoint-weight-fix`；`20260825_06_f02-w5-nonuniform-density-reciprocity-verification`；`20260825_07_f02-w6-double-nubar-kernel-consistency-fix`；`20260825_08_f02-fissile-response-reciprocity-verification` |
+| F02-B | 多群Adjoint物理正确性审查 | C — Verify | W5/W6/W7/W9 已修复；仍缺其余角表示、真实 density mesh、NNUBAR=1/多材料与冻结 A formal | 既有任务；`20260825_11_f02-angular-density-asset-qualification`；`20260825_12_f02-adjoint-negative-one-variable-angular-fix` |
 | F03 | Adjoint source定义 | 已立项（待设计） | 目标响应驱动伴随源；区分通用外源执行与响应到源构造 | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
@@ -37,14 +37,15 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 
 F02-A 已确认默认标准 ACE 多群路径存在固定源伴随输运链。
 
-F02-B 源码层独立复核曾确认两项物理缺陷，后续又发现一项可用性缺陷；当前工作树已完成 W5/W6/W7 修复。standard ACE、`ais=OFF`、MGACE fixed-source neutron adjoint 当前保守评级为 **C — Verify**，不是完整放行：
+F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。standard ACE、`ais=OFF`、MGACE fixed-source neutron adjoint 当前恢复为 **C — Verify**，不是 A — Ready：
 
 1. W5 修复前，局部密度比例 $r\ne1$ 时散射与裂变权重相对正确值多出 $1/r$；当前已改用局部总原子密度并通过 V2 密度不变性验证。
 2. W6 修复前在 `NNUBAR>1` 时混用 total/prompt nubar；当前运行时前驱群抽样已统一使用 total locator。部署双表数据的逐群核与概率差为 0，动态输入完成 10,000 个源历史和 2,487 条 bank 后继。
+3. W9 修复前，负单变量 `NLEG=1,x<0` 的伴随采样公式误用 `(1-x)`；现已改为 `(1+x)`。seeds 17/23/41 共 1438 对修复后样本前/伴随逐项一致、零越界，合并均值 $z=0.367$；既有 CTest 与 reference 不变。
 
 同时纠正两项原草稿判断：`minErgGrp` 是合法群范围外的递减哨兵，不漏边界群；在伴随方向解释为正向物理方向反向时，方位对称且仅依赖 $\mu$ 的条件角核交换方向后 $\mu$ 不变，不能仅因未显式转置 P1/P2 或应用 $(-1)^\ell$ 判错。
 
-第一阶段 L4 在 $r=1$ 的 H2O 均匀球中验证了两个强非对称散射群对；W5 修复后又在等体积内球/外壳、两种相反密度排列和同两群对上完成响应级互易性检查。1M 全量精度批次 40/40 退出 0，20/20 单种子、4/4 五种子合并与总体均满足 $|z|\le3$。W6 的确定性检查闭合了双 nubar locator 错误，动态重放覆盖真实裂变 bank 路径；随后 `10001.01m` 的 `g6↔g1` 裂变主导最终响应正式批次 10/10 退出 0，五组独立流和合并结果均满足 $|z|\le3$（合并 $z=-0.703$）。这是一项单材料、单群对、单几何正证据；一般密度 mesh、混合材料碰撞估计器、更多几何/源响应和强各向异性仍需验证，完整范围维持 C 而非 A。
+W9 闭合消除了当前已确认的 E 级反例，但不能把局部修复外推为 A。仍须资格化其他四类角表示的动态矩、真实 density-mesh HDF5、NNUBAR=1/多材料裂变、更多几何/边界，并在 pilot 全通过后重新冻结和执行 A formal。
 
 2026-08-25 对 Claude 第二轮反驳的再复核仍是有效的修复前证据：当时 `p_dMatAtomDen` 确为未乘局部比例的基准成员，两个权重调用点也未使用带比例 getter；双 nubar 运行时也确实直读第一 block。当前 W5/W6 修复分别替换了这些控制点，故不再把修复前缺陷当作当前 E 的依据。
 
@@ -77,3 +78,5 @@ F02-B 源码层独立复核曾确认两项物理缺陷，后续又发现一项�
 - 2026-08-25：完成 W5 非均匀双区域响应级互易性验证；1M 全量精度批次通过逐种子、分组与总体判据，代表性非裂变子域正证据增强；一般密度场与 W6 仍未放行，完整能力保持 E。
 - 2026-08-25：完成 W6 Stage 3 修复；运行时伴随裂变前驱群抽样统一使用 total nubar getter，确定性核差为 0，双表动态路径完成 10,000 历史和 2,487 条 bank 后继。三项已知缺陷均闭合，F02-B 保守转为 C — Verify，不宣称 A。
 - 2026-08-25：完成可裂变响应级互易性验证与 F02 阶段复核；`g6↔g1` 正式 10 个 1M-history 运行全部通过，五组及合并 $z$ 均在预设门槛内。因仅覆盖单材料/群对/几何，F02-B 保持 C — Verify，工作顺序进入 F03。
+- 2026-08-25：任务 11 以私有 MGACE、独立 readback 和低光学厚度生产路径确认 W9 负单变量伴随角核支持域越界；F02-B 改判 E，A formal 停止，修复任务 12 进入待决策。
+- 2026-08-25：任务 12 按人工批准的方案 A 修复 W9；三 seed 动态支持域/矩、五类资产 oracle、既有 CTest 和 reference 完整性均通过。F02-B 恢复 C — Verify，A 门禁仍保留。

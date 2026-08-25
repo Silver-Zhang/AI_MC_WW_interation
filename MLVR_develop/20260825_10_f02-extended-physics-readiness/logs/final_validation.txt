@@ -1,0 +1,101 @@
+=== top-level whitespace ===
+=== RMC status and no-change snapshot ===
+0 /home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/changes.diff
+=== formal manifest presence ===
+formal manifest absent as required by failed pilot gate
+=== pilot raw artifacts ===
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/manifest.json
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/exit_code.txt
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.cumrossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.fissmul
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.Info.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.material
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.out
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.Result.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.rossialpha
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.State.h5
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.Tally
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/stderr.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/stdout.log
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/pilot_results.json
+=== docs classification references ===
+/home/workspace/AI_MC_WW_interation/MLVR_develop/INDEX.md:10:| 2026-08-25 | [f02-extended-physics-readiness](20260825_10_f02-extended-physics-readiness/README.md) | 物理验证 | 已完成（C — Verify） | F02 | A 门禁 pilot 暴露 NNUBAR=1 有效响应、真实 density mesh 和强 P1/P2 验证缺口；未修改 RMC |
+/home/workspace/AI_MC_WW_interation/MLVR_develop/INDEX.md:12:| 2026-08-25 | [f02-fissile-response-reciprocity-verification](20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/AGENT_CONTEXT.md:132:当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A — Ready。扩展 readiness 任务已停止于 pilot：NNUBAR=1 有效裂变响应、真实 density mesh 和强 P1/P2 定向验证尚未建立可冻结的 formal 矩阵。W5 已让散射/裂变权重使用当前位置总原子密度；W7 已隔离纯中子初始化中的 photon 群访问；W6 已把运行时裂变前驱群抽样统一到初始化采用的 total nubar 核。部署双表数据的确定性 oracle 给出逐群核和归一化概率差均为 0，10,000 历史重放产生 2,487 条 bank 后继并正常结束。可裂变 `g6↔g1` 响应级正式批次又以五组独立流验证最终响应相容（合并 $z=-0.703$）。现有正证据仍不能放行一般密度 mesh、混合材料、强各向异性或任意裂变问题。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/AGENT_CONTEXT.md:134:W5/W6/W7 补丁已完成人工复核并提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。可裂变响应任务 `20260825_08_f02-fissile-response-reciprocity-verification` 已归档：正式 10/10 个 1M-history 运行无异常，五组及合并 $|z|\le3$。F02 阶段复核完成并保持 C — Verify；下一项进入 F03 Adjoint source 只读审查。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/AGENT_CONTEXT.md:171:- **Stage 3：W5/W6/W7 修复均已完成并验证；F02 保守评级为 C — Verify。**
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:11:- A — Ready：已有且满足第一版框架需求，可直接复用。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:13:- C — Verify：功能或实现机制存在，但关键正确性/适用范围仍需验证。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:24:| F02-B | 多群Adjoint物理正确性审查 | 阶段复核完成（C — Verify） | W5/W6/W7 已修复；非裂变密度与单一可裂变响应案例通过，仍缺强各向异性、混合材料等扩展验证 | `20260824_05_f02-adjoint-physics-verification`；`20260825_01_f02-adjoint-numerical-verification`；`20260825_04_f02-w7-neutron-only-adjoint-init-fix`；`20260825_05_f02-w5-local-density-adjoint-weight-fix`；`20260825_06_f02-w5-nonuniform-density-reciprocity-verification`；`20260825_07_f02-w6-double-nubar-kernel-consistency-fix`；`20260825_08_f02-fissile-response-reciprocity-verification` |
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:40:F02-B 源码层独立复核曾确认两项物理缺陷，后续又发现一项可用性缺陷；当前工作树已完成 W5/W6/W7 修复。 扩展 readiness 任务随后因必需矩阵维度未表达/未通过 pilot 而未冻结 formal，故不能升级 A。standard ACE、`ais=OFF`、MGACE fixed-source neutron adjoint 当前保守评级为 **C — Verify**，不是完整放行：
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:72:- 2026-08-24：F02-B 独立复核完成，确认非单位局部密度权重与双 nubar 裂变核两项 E 级缺陷；受限子域保持 C — Verify，状态转为待人工复核。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:78:- 2026-08-25：完成 W6 Stage 3 修复；运行时伴随裂变前驱群抽样统一使用 total nubar getter，确定性核差为 0，双表动态路径完成 10,000 历史和 2,487 条 bank 后继。三项已知缺陷均闭合，F02-B 保守转为 C — Verify，不宣称 A。
+/home/workspace/AI_MC_WW_interation/MLVR_Knowledge/02_RMC功能审查矩阵.md:79:- 2026-08-25：完成可裂变响应级互易性验证与 F02 阶段复核；`g6↔g1` 正式 10 个 1M-history 运行全部通过，五组及合并 $z$ 均在预设门槛内。因仅覆盖单材料/群对/几何，F02-B 保持 C — Verify，工作顺序进入 F03。
+=== task script syntax ===
+py_compile pass

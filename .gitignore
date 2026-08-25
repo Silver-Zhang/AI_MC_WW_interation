@@ -20,3 +20,4 @@ dist/
 
 # ===== 任务档案中的 RMC 运行产物（可再生成，见 MLVR_develop/README.md 归档体积规范）=====
 MLVR_develop/*/cases/
+MLVR_develop/*/runs/

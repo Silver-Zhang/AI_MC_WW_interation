@@ -1,0 +1,77 @@
+{
+  "manifest": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/manifest.json",
+  "manifest_sha256": "4734c66312718fe52f077bb79ccbd0308104f0fd6f4492dc00cc4a8da3f86ee6",
+  "qualified_case_count": 5,
+  "cases": [
+    {
+      "name": "isotropic",
+      "zaid": "10006.91m",
+      "nleg": 0,
+      "isang": 0,
+      "support": [
+        -1.0,
+        1.0
+      ],
+      "theoretical_mean": 0.0,
+      "p0_position": 6,
+      "table_sha256": "b507a3888f7d1f99132f0f5aa1a9ac281f0206e999e898a07f9e058f28d0be4f",
+      "status": "qualified"
+    },
+    {
+      "name": "one_variable_negative",
+      "zaid": "10006.91m",
+      "nleg": 1,
+      "isang": 0,
+      "support": [
+        -1.0,
+        -0.5
+      ],
+      "theoretical_mean": -0.75,
+      "p0_position": 6,
+      "table_sha256": "2792bc5047e7989d593d7d4900da7bbf4d9e413633565ee3079bca3f490b1c3e",
+      "status": "qualified"
+    },
+    {
+      "name": "one_variable_positive",
+      "zaid": "10006.91m",
+      "nleg": 1,
+      "isang": 0,
+      "support": [
+        0.5,
+        1.0
+      ],
+      "theoretical_mean": 0.75,
+      "p0_position": 6,
+      "table_sha256": "15f2b2d9bd3ff20a2f5ec406afbf84329424be40dfd6c7b3f1238688ac811732",
+      "status": "qualified"
+    },
+    {
+      "name": "equiprobable_multi_bin",
+      "zaid": "10006.91m",
+      "nleg": 4,
+      "isang": 0,
+      "support": [
+        -1.0,
+        1.0
+      ],
+      "theoretical_mean": -0.08333333333333333,
+      "p0_position": 6,
+      "table_sha256": "ad15e15d9237249c7ea2f5eb9ce83851eabd3500cf176c4adcbca614edde4090",
+      "status": "qualified"
+    },
+    {
+      "name": "discrete_cosine",
+      "zaid": "10006.91m",
+      "nleg": 5,
+      "isang": 1,
+      "support": [
+        -0.8,
+        0.9
+      ],
+      "theoretical_mean": 0.11000000000000004,
+      "p0_position": 6,
+      "table_sha256": "8f9dcb40961e4b480d31bd635f74e4d21dcb3410f0099438180db4863fdacddd",
+      "status": "qualified"
+    }
+  ]
+}

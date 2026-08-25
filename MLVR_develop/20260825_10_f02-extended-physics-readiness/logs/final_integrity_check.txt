@@ -1,0 +1,36 @@
+=== pilot outcome ===
+{
+  "run_count": 6,
+  "failure_count": 6,
+  "failures": [
+    "nnubar2_pure/forward: exit=0 src=20000 value=0.25084 re=0.023386 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar2_pure/adjoint: exit=0 src=20000 value=0.24456 re=0.048151 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar1_pure/forward: exit=0 src=20000 value=0.00012105 re=1.0 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar1_pure/adjoint: exit=0 src=20000 value=0.0 re=0.0 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "mixed_nnubar2_nonfissile/forward: exit=0 src=20000 value=0.20458 re=0.025987 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "mixed_nnubar2_nonfissile/adjoint: exit=0 src=20000 value=0.20999 re=0.041128 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']"
+  ]
+}
+=== feasibility blockers ===
+dimension,status,evidence
+"nonfission asymmetric scatter, two deployed materials",available,mgxsnp H/O prior parser/generator
+two-region material interface and vacuum outer boundary,available,CELL/SURF input supported by existing F02 tasks
+three density ratios as cell densities,available,W5 input pattern
+position-dependent density mesh,not demonstrated,"RMC source supports DENS=<negative mesh id>, but no task-owned HDF5 mesh writer or known runnable test input was located"
+mixed composition regions,available,RMC MATERIAL allows multiple nuclides and distinct MAT IDs; requires task generator
+NNUBAR=1 fissile deployed table,available,10005.01m
+NNUBAR>1 fissile deployed table,available,10001.01m through 10004.01m
+three fission-dominated pairs per independent fissile material,not demonstrated,requires screening and pilot; not frozen yet
+strong P1/P2 directional source-response,not demonstrated,deployed NLEG inventory and existing task harness provide no prevalidated direction-resolved fixed-source adjoint response generator
+forward/backward angular distributions,not demonstrated,no readback oracle for conditional angular P1/P2 path available
+serial runtime,available,current isolated build
+OpenMP/MPI runtime,unavailable,current isolated build cache has no enabled MPI/OMP options
+Windows,unavailable,no environment
+=== RMC integrity ===
+6d2087518e0d9f23574d629f5fde361c79f519e4
+Neural_Network_WW_Iteration
+=== immutable artifact hashes ===
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  /home/workspace/AI_MC_WW_interation/RMC/tests/fixed_source_adjoint/reference_result
+970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b  /home/silver/NucXS_Library/RMC_DATA/xsdir
+1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001  /home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp
+cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c  /home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td

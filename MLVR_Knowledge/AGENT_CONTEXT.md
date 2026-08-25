@@ -117,7 +117,7 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 ## 当前正式任务
 
-**F02 — Multigroup Adjoint Transport Audit** 的静态审查、第一阶段 L4 数值验证和 W5/W6/W7 Stage 3 修复均已完成。
+**F02 — Multigroup Adjoint Transport Audit** 的静态审查、第一阶段 L4 数值验证和 W5/W6/W7/W9 Stage 3 修复均已完成。
 
 任务档案：
 
@@ -128,14 +128,16 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - `MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
 - `MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
 - `MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
+- `MLVR_develop/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
+- `MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
 
-当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A — Ready。W5 已让散射/裂变权重使用当前位置总原子密度；W7 已隔离纯中子初始化中的 photon 群访问；W6 已把运行时裂变前驱群抽样统一到初始化采用的 total nubar 核。部署双表数据的确定性 oracle 给出逐群核和归一化概率差均为 0，10,000 历史重放产生 2,487 条 bank 后继并正常结束。可裂变 `g6↔g1` 响应级正式批次又以五组独立流验证最终响应相容（合并 $z=-0.703$）。现有正证据仍不能放行一般密度 mesh、混合材料、强各向异性或任意裂变问题。
+当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W9 已把伴随负单变量分支由 `(1-x)` 修正为 `(1+x)`；seeds 17/23/41 共 1438 对样本前/伴随逐项一致、零越界，合并均值 $z=0.367$。五类 MGACE oracle 5/5、既有 CTest 1/1 和 reference 完整性均通过。
 
-W5/W6/W7 补丁已完成人工复核并提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。可裂变响应任务 `20260825_08_f02-fissile-response-reciprocity-verification` 已归档：正式 10/10 个 1M-history 运行无异常，五组及合并 $|z|\le3$。F02 阶段复核完成并保持 C — Verify；下一项进入 F03 Adjoint source 只读审查。
+W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 修改当前尚未 commit：RMC 工作树仅 `src/GetMgExitErgMu.cpp` 一行改变，修复后二进制 SHA256 `fd9bd9bd...ca25db`；不更新 reference/benchmark。下一步继续任务 10/11 的 A 门禁，而不是把 W9 修复直接评为 A。
 
 F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
 
-面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
+面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
 ## 开发流程
 
@@ -168,6 +170,6 @@ F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 3：W5/W6/W7 修复均已完成并验证；F02 保守评级为 C — Verify。**
+- **Stage 3：W5/W6/W7/W9 已修复并验证；F02 评级恢复为 C — Verify。**
 
-W5/W6/W7 已 commit、未 push；reference/benchmark 未更新。F02 阶段复核完成，当前进入 F03 Adjoint source 审查。
+W5/W6/W7 已 commit、未 push；W9 已修改但未 commit；reference/benchmark 未更新。A formal 仍缺其余角表示、density mesh、裂变/材料矩阵和冻结统计验证。
