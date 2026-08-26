@@ -1,0 +1,26 @@
+{
+  "status": "qualified",
+  "manifest_sha256": "f1cbaacc5112b1e58bb09bcfeca85c7cdce0b3a6711b26bbfba301459f5fc283",
+  "cases": [
+    {
+      "name": "isotropic",
+      "nxs1": 12,
+      "status": "qualified"
+    },
+    {
+      "name": "one_variable_positive",
+      "nxs1": 17,
+      "status": "qualified"
+    },
+    {
+      "name": "equiprobable_multi_bin",
+      "nxs1": 23,
+      "status": "qualified"
+    },
+    {
+      "name": "discrete_cosine",
+      "nxs1": 25,
+      "status": "qualified"
+    }
+  ]
+}

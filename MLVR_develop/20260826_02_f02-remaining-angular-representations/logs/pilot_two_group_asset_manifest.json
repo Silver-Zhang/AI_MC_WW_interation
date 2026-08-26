@@ -1,0 +1,91 @@
+{
+  "purpose": "warning-free two-group neutron angular qualification",
+  "group_centers_MeV": [
+    3.0,
+    1.0
+  ],
+  "group_widths_MeV": [
+    2.0,
+    2.0
+  ],
+  "source_energy_MeV": 3.0,
+  "cases": [
+    {
+      "name": "isotropic",
+      "isang": 0,
+      "nleg": 0,
+      "values": [],
+      "support": [
+        -1.0,
+        1.0
+      ],
+      "mean": 0.0,
+      "variance": 0.3333333333333333,
+      "table": "isotropic/data/angular_mgace",
+      "table_sha256": "9dcffdae40e81e203d25fae0a1c94ae4b218430fb8dc1e8335714ebee8a06fc0",
+      "xsdir": "isotropic/xsdir",
+      "xsdir_sha256": "dc7a21b6fb80010866e513a560fcedd269bffaaa7688c83f60924429a5ec63bf"
+    },
+    {
+      "name": "one_variable_positive",
+      "isang": 0,
+      "nleg": 1,
+      "values": [
+        0.5
+      ],
+      "support": [
+        0.0,
+        1.0
+      ],
+      "mean": 0.5,
+      "variance": 0.08333333333333333,
+      "table": "one_variable_positive/data/angular_mgace",
+      "table_sha256": "9e02c672c2bf5657f20bf9f14e26f57e873334368254b25abfd2d0d3c4d33758",
+      "xsdir": "one_variable_positive/xsdir",
+      "xsdir_sha256": "0d68355d5bbcbfbf19cd7d1b5b670877deb1a91da4fba40e227e302f0eed6c0d"
+    },
+    {
+      "name": "equiprobable_multi_bin",
+      "isang": 0,
+      "nleg": 4,
+      "values": [
+        -1.0,
+        -0.5,
+        0.25,
+        1.0
+      ],
+      "support": [
+        -1.0,
+        1.0
+      ],
+      "mean": -0.08333333333333333,
+      "variance": 0.3587962962962963,
+      "table": "equiprobable_multi_bin/data/angular_mgace",
+      "table_sha256": "3e714b0b20a0d76f4be5bcc40abb140c6175e009c30060f0de2c374a6c0c221d",
+      "xsdir": "equiprobable_multi_bin/xsdir",
+      "xsdir_sha256": "ef9d6091573fca66f186c7a623010aee884f841c72d4fac0cacbf7a90211e74d"
+    },
+    {
+      "name": "discrete_cosine",
+      "isang": 1,
+      "nleg": 5,
+      "values": [
+        0.2,
+        0.7,
+        -0.8,
+        0.0,
+        0.9
+      ],
+      "support": [
+        -0.8,
+        0.9
+      ],
+      "mean": 0.11,
+      "variance": null,
+      "table": "discrete_cosine/data/angular_mgace",
+      "table_sha256": "b1c935235683283b4a60226ca9bd7f8ed62e1be70f64a4e96fa33a8ce83eac4e",
+      "xsdir": "discrete_cosine/xsdir",
+      "xsdir_sha256": "7ef00a54d60f0ef61af4ae149b9e0ea4b994af37ea8916139c4e01df64534c62"
+    }
+  ]
+}

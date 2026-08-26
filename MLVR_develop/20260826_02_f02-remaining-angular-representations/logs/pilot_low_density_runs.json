@@ -1,0 +1,175 @@
+{
+  "rmc": "/tmp/mlvr_f02_rmc_build/bin/RMC",
+  "rmc_sha256": "8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2",
+  "manifest_sha256": "89dea0bd56c8e5a370080f2c601220e09d9c72f77a785b0fc21b29b049b9c5c2",
+  "runs": [
+    {
+      "case": "isotropic",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/isotropic"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "ed637f211ff89114bd6925c1f14052c20e532e87d1152815e1b5570d403e5ab2",
+        "inp.Tally": "e18d97f8d0a54bec4990e4bb549a9ab9b60d0873450ea7621488b920e768287e",
+        "inp.Result.h5": "441e394db44052a8cb83b4a46ab48f8ba4df9ab142cefcfef3f37ba026a577fc",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "a1aef01f6add0883862b1219ea77a4ffee0d094125b0dbde7ade501f344239a5",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "isotropic",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/isotropic"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "55b8a2f2042667683873db8ba131b41d94fcdf3eb09d34d2ed355e161b93bf7d",
+        "inp.Tally": "e18d97f8d0a54bec4990e4bb549a9ab9b60d0873450ea7621488b920e768287e",
+        "inp.Result.h5": "441e394db44052a8cb83b4a46ab48f8ba4df9ab142cefcfef3f37ba026a577fc",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "0964ac5a37284af8d3cc9e8eb012e15e3fc2d4febe0bbc7ccdb99b833310a8a5",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "fb6eff2d678acd0c70bc80336f866b317789da592d718fd61aaba8ad5c778d29",
+        "inp.Tally": "db5a781499ba233d69f7969a049ea2797bae64d3c8f11163127c294c978394e9",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "e8da9ae9112086bb6a5a876005690cf1e71450fd59d37ac1e6b5d13e6236d04e",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "4f7c7b05246ef6ab5f3c2bbf341de4b2b29fdc02ecf5cad1528997d1c3a8d4d6",
+        "inp.Tally": "db5a781499ba233d69f7969a049ea2797bae64d3c8f11163127c294c978394e9",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "ccb9ff649bee6b1bf4aebff2e02b5120d99b529e578f3162544632938f2118af",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "e18964d8fa7f6ca35da9f91a3e2bf7047cac48d31b65d84afa89d542972b3141",
+        "inp.Tally": "330f6e14745a9962506a244d2be20cde53cb82ad0c8f3d72e014460dd563154c",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "d67decdbef98b5741f5cba6379bd16995bda98a4dc2047efc05a2d1759f959f1",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "5f5052b83a8a0b32e6ef4c87c566cf9af6e7e492bab569ac82eae4fa42ca340e",
+        "inp.Tally": "330f6e14745a9962506a244d2be20cde53cb82ad0c8f3d72e014460dd563154c",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "566266ad8df34a9413e5078b4a269cc97c69f484eedb85e91dfd64e9427638dd",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "e2d863bdc2f02accc6b36dad8c7a6fb2d06c74d8fe0218d32532f58825a297d5",
+        "inp.Tally": "ee91afd6defbd62036b93cabe375931b84ba11f381d7844c019f394f6d467494",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "37c4e740cd86c74dddb4757085a18e0d271315560a3952118888f7ae746d4816",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_remaining_angular_two_group/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "6fc3c1a958659545a15adf5c83a790f879d380a0345c4b97e8f882f05c46e785",
+        "inp.Tally": "ee91afd6defbd62036b93cabe375931b84ba11f381d7844c019f394f6d467494",
+        "inp.Result.h5": "73be8c3cba681cb2856a61547a74be987e9436fd936ad9081669a5b0c27b6ead",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "32416a0c944e31cb735c936b66ef71a1ed63a557fd2834d8a1de46de1b158c5c",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    }
+  ]
+}

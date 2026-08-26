@@ -1,0 +1,105 @@
+{
+  "source_manifest": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/manifest.json",
+  "source_manifest_sha256": "4734c66312718fe52f077bb79ccbd0308104f0fd6f4492dc00cc4a8da3f86ee6",
+  "geometry": "5 cm sphere, pure one-group self scattering, isotropic point source at origin",
+  "atom_density_1e24_per_cm3": 1.0,
+  "observation": "PTRAC collision and surface-crossing direction vectors",
+  "runs": [
+    {
+      "case": "isotropic",
+      "mode": "forward",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "isotropic/forward/inp",
+      "input_sha256": "d484fb2f12777a17e4896187f38dbf27eb41d6511ac7c45a76b26bc37e38ad79",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/isotropic",
+      "xsdir_sha256": "7c67fc844296bab34a4d01913748500ac1e43a993b93943c712c97df0fbd4b37",
+      "table_sha256": "b507a3888f7d1f99132f0f5aa1a9ac281f0206e999e898a07f9e058f28d0be4f"
+    },
+    {
+      "case": "isotropic",
+      "mode": "adjoint",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "isotropic/adjoint/inp",
+      "input_sha256": "826048fce24814ed6607022293960b043b1237fe0b4aac5c816aed5c049f1add",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/isotropic",
+      "xsdir_sha256": "7c67fc844296bab34a4d01913748500ac1e43a993b93943c712c97df0fbd4b37",
+      "table_sha256": "b507a3888f7d1f99132f0f5aa1a9ac281f0206e999e898a07f9e058f28d0be4f"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "forward",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "one_variable_positive/forward/inp",
+      "input_sha256": "d484fb2f12777a17e4896187f38dbf27eb41d6511ac7c45a76b26bc37e38ad79",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_positive",
+      "xsdir_sha256": "497046b88872f906aca03f233dfbec808bf3f68e04fa8cd2168a3d70436c85e1",
+      "table_sha256": "15f2b2d9bd3ff20a2f5ec406afbf84329424be40dfd6c7b3f1238688ac811732"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "adjoint",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "one_variable_positive/adjoint/inp",
+      "input_sha256": "826048fce24814ed6607022293960b043b1237fe0b4aac5c816aed5c049f1add",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_positive",
+      "xsdir_sha256": "497046b88872f906aca03f233dfbec808bf3f68e04fa8cd2168a3d70436c85e1",
+      "table_sha256": "15f2b2d9bd3ff20a2f5ec406afbf84329424be40dfd6c7b3f1238688ac811732"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "forward",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "equiprobable_multi_bin/forward/inp",
+      "input_sha256": "d484fb2f12777a17e4896187f38dbf27eb41d6511ac7c45a76b26bc37e38ad79",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/equiprobable_multi_bin",
+      "xsdir_sha256": "623220fcaea77bcba9400fb4853088f35aa0d347458b9d33695b48354c6c47b8",
+      "table_sha256": "ad15e15d9237249c7ea2f5eb9ce83851eabd3500cf176c4adcbca614edde4090"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "adjoint",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "equiprobable_multi_bin/adjoint/inp",
+      "input_sha256": "826048fce24814ed6607022293960b043b1237fe0b4aac5c816aed5c049f1add",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/equiprobable_multi_bin",
+      "xsdir_sha256": "623220fcaea77bcba9400fb4853088f35aa0d347458b9d33695b48354c6c47b8",
+      "table_sha256": "ad15e15d9237249c7ea2f5eb9ce83851eabd3500cf176c4adcbca614edde4090"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "forward",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "discrete_cosine/forward/inp",
+      "input_sha256": "d484fb2f12777a17e4896187f38dbf27eb41d6511ac7c45a76b26bc37e38ad79",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/discrete_cosine",
+      "xsdir_sha256": "434b4cc9cd2124b501339b95afa23d2e614edd0621fbdad2b3cc64811df4a348",
+      "table_sha256": "8f9dcb40961e4b480d31bd635f74e4d21dcb3410f0099438180db4863fdacddd"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "adjoint",
+      "seed": 17,
+      "population": 300,
+      "atom_density_1e24_per_cm3": 1.0,
+      "input": "discrete_cosine/adjoint/inp",
+      "input_sha256": "826048fce24814ed6607022293960b043b1237fe0b4aac5c816aed5c049f1add",
+      "data_index": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/discrete_cosine",
+      "xsdir_sha256": "434b4cc9cd2124b501339b95afa23d2e614edd0621fbdad2b3cc64811df4a348",
+      "table_sha256": "8f9dcb40961e4b480d31bd635f74e4d21dcb3410f0099438180db4863fdacddd"
+    }
+  ]
+}

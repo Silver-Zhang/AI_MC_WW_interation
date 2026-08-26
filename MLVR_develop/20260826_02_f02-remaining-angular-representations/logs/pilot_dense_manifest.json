@@ -1,0 +1,91 @@
+{
+  "purpose": "two-group remaining angular representations pilot",
+  "population": 300,
+  "density_1e24_per_cm3": 1.0,
+  "seeds": [
+    17
+  ],
+  "asset_manifest_sha256": "a3adace5793c33d7f4ec35ff8915f9d5980ea35cb408f3a9f96200cdcec9b967",
+  "runs": [
+    {
+      "case": "isotropic",
+      "mode": "forward",
+      "seed": 17,
+      "input": "isotropic/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/isotropic",
+      "xsdir_sha256": "dc7a21b6fb80010866e513a560fcedd269bffaaa7688c83f60924429a5ec63bf",
+      "asset_table_sha256": "9dcffdae40e81e203d25fae0a1c94ae4b218430fb8dc1e8335714ebee8a06fc0"
+    },
+    {
+      "case": "isotropic",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "isotropic/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/isotropic",
+      "xsdir_sha256": "dc7a21b6fb80010866e513a560fcedd269bffaaa7688c83f60924429a5ec63bf",
+      "asset_table_sha256": "9dcffdae40e81e203d25fae0a1c94ae4b218430fb8dc1e8335714ebee8a06fc0"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "forward",
+      "seed": 17,
+      "input": "one_variable_positive/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/one_variable_positive",
+      "xsdir_sha256": "0d68355d5bbcbfbf19cd7d1b5b670877deb1a91da4fba40e227e302f0eed6c0d",
+      "asset_table_sha256": "9e02c672c2bf5657f20bf9f14e26f57e873334368254b25abfd2d0d3c4d33758"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "one_variable_positive/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/one_variable_positive",
+      "xsdir_sha256": "0d68355d5bbcbfbf19cd7d1b5b670877deb1a91da4fba40e227e302f0eed6c0d",
+      "asset_table_sha256": "9e02c672c2bf5657f20bf9f14e26f57e873334368254b25abfd2d0d3c4d33758"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "forward",
+      "seed": 17,
+      "input": "equiprobable_multi_bin/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/equiprobable_multi_bin",
+      "xsdir_sha256": "ef9d6091573fca66f186c7a623010aee884f841c72d4fac0cacbf7a90211e74d",
+      "asset_table_sha256": "3e714b0b20a0d76f4be5bcc40abb140c6175e009c30060f0de2c374a6c0c221d"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "equiprobable_multi_bin/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/equiprobable_multi_bin",
+      "xsdir_sha256": "ef9d6091573fca66f186c7a623010aee884f841c72d4fac0cacbf7a90211e74d",
+      "asset_table_sha256": "3e714b0b20a0d76f4be5bcc40abb140c6175e009c30060f0de2c374a6c0c221d"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "forward",
+      "seed": 17,
+      "input": "discrete_cosine/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/discrete_cosine",
+      "xsdir_sha256": "7ef00a54d60f0ef61af4ae149b9e0ea4b994af37ea8916139c4e01df64534c62",
+      "asset_table_sha256": "b1c935235683283b4a60226ca9bd7f8ed62e1be70f64a4e96fa33a8ce83eac4e"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "discrete_cosine/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_remaining_angular_two_group/discrete_cosine",
+      "xsdir_sha256": "7ef00a54d60f0ef61af4ae149b9e0ea4b994af37ea8916139c4e01df64534c62",
+      "asset_table_sha256": "b1c935235683283b4a60226ca9bd7f8ed62e1be70f64a4e96fa33a8ce83eac4e"
+    }
+  ]
+}

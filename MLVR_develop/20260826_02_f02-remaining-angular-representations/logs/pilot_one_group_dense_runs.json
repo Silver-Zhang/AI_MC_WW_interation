@@ -1,0 +1,175 @@
+{
+  "rmc": "/tmp/mlvr_f02_rmc_build/bin/RMC",
+  "rmc_sha256": "8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2",
+  "manifest_sha256": "3e501e7d8c50b02329896541cc3a2774cc3b4ac5070cf8f5e6b71171937bc3de",
+  "runs": [
+    {
+      "case": "isotropic",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/isotropic"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "bd4f45f3d8dbbd6ce1ad7dabbd3db4533c2486daad885ba9887ef9d9305b40d0",
+        "inp.Tally": "934f968bf8af09612205406ef582162e6a982e68b12135cb1e989b0acb31272a",
+        "inp.Result.h5": "39a1c0571aacf387cc6594869914dbb37e32a4e69170da4aac069942a77564bb",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "6b5181d7da1fda948760af387372a869fa32ccaceff5fdad50a5519bcf418373",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "isotropic",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/isotropic"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "a0c8bf970c19ddb8f15e6a5cf12494d8578ea0133d60abe6315248db4a2ef9e3",
+        "inp.Tally": "934f968bf8af09612205406ef582162e6a982e68b12135cb1e989b0acb31272a",
+        "inp.Result.h5": "39a1c0571aacf387cc6594869914dbb37e32a4e69170da4aac069942a77564bb",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "63050e74261ee5a7f249cf1c2402b211dd0b95aed6a3792b09263f4eb3efbe4c",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "bf89242e1a912343984c959db07baedbe0b2c7fff888e15b94b0024080e9e31f",
+        "inp.Tally": "953d5f3d2331473c95be32b5cad83f75340c05c6bbb9976e463ea5d1cc9eb58b",
+        "inp.Result.h5": "7d36ba4022febd15ac36b622ac63dbc95acb6102c8d2a63a4088d69879348cc9",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "01325a2690477b6498c0666c2ea57ee957d42536fa4b312d294d2576e5b76281",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "ba3fbc28f75bf2e6f2cb854dc7e94af656c87998b4b0b1bb82ebd3f71f736435",
+        "inp.Tally": "953d5f3d2331473c95be32b5cad83f75340c05c6bbb9976e463ea5d1cc9eb58b",
+        "inp.Result.h5": "7d36ba4022febd15ac36b622ac63dbc95acb6102c8d2a63a4088d69879348cc9",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "8ee269a6d44429f37e5f922e5edc72af22ff973ad56e37d0f8cd0403fd45cf1e",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "43ab3d16af047a1f60107233fe834f999abbc348f0d4a6b3736ab56576b8caf8",
+        "inp.Tally": "55cda0cbefea81a0ff7402b4d3c8ce386373ba88a45472a6bf53773126449363",
+        "inp.Result.h5": "3efe05b9d27cd5a86a3c6299b83a5c43f285e8fab430896e786dd2d0b02d676f",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "d2885cdf508905ddc905f70eff695bd6a0d4fff3b0e212aad3e4dbf01db2c7f6",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "322d747a8650c0aae89b94a3b58d8f812a1c8ae5c957fd28eee3df904416ffa5",
+        "inp.Tally": "55cda0cbefea81a0ff7402b4d3c8ce386373ba88a45472a6bf53773126449363",
+        "inp.Result.h5": "3efe05b9d27cd5a86a3c6299b83a5c43f285e8fab430896e786dd2d0b02d676f",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "a209399bfc5dbae74a533a3bb12f886f5c83ac1fb61444e610746d1769e2ea91",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "forward",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "f2b147cc362f9e355ff46598981efec4e2cce955e021825f0d2c325e18e73a7e",
+        "inp.Tally": "4ccc201c91beb622072a56df41e3db38eb086ee3a7e1f6f0fe99045a3fd1c0e8",
+        "inp.Result.h5": "773a39ca99d015e64aa00b7969a0ace1b3d9280f89c4badb8f169be36f53e3c4",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "d9289ea44fb549242068637c7d71b9e6b0f5b0711386f14f0d11f20c25d6eae5",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "adjoint",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_11_f02-angular-density-asset-qualification/assets/mgace/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "output_hashes": {
+        "inp.out": "22891ad6002c16b4fcf7f1cdd2e38a184a86a7c7a7f1a687c7cc6998dd56a2b4",
+        "inp.Tally": "4ccc201c91beb622072a56df41e3db38eb086ee3a7e1f6f0fe99045a3fd1c0e8",
+        "inp.Result.h5": "773a39ca99d015e64aa00b7969a0ace1b3d9280f89c4badb8f169be36f53e3c4",
+        "inp.Info.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "inp.State.h5": "26c4d449632ea072317c16e9d4857e419b67e1b7751f81a89a87c8e75fe9484e",
+        "stdout.log": "0c3e67c1e14beefdf629f49394fab9ede8d5dbe1bf0ad5dfe77e818c6cf4c594",
+        "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    }
+  ]
+}

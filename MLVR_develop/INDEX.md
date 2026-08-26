@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-08-26 | [f02-remaining-angular-representations](20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 待决策 | F02 | 两群 locator/oracle 已闭合，四类 × 前向/伴随 8/8 clean pilot 通过；待用户冻结 formal 统计矩阵；RMC 只读且暂不同步 |
 | 2026-08-26 | [f02-adjoint-photon-negative-angular-audit](20260826_01_f02-adjoint-photon-negative-angular-audit/README.md) | 缺陷修复 / 数值验证 | 已完成 | F02 / W9 | photon 与 photon→neutron 两处分支修复；两群 6/6 整程零 Warning/零 Error，三 seed 共 1800 样本零越界；配对/CTest/reference 通过；未 commit |
 | 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
 | 2026-08-25 | [f02-angular-density-asset-qualification](20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |

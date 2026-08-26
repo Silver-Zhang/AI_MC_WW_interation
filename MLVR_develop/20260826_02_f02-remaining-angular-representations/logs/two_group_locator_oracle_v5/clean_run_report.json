@@ -1,0 +1,184 @@
+{
+  "rmc": "/tmp/mlvr_f02_rmc_build/bin/RMC",
+  "rmc_sha256": "8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2",
+  "asset_manifest_sha256": "f1cbaacc5112b1e58bb09bcfeca85c7cdce0b3a6711b26bbfba301459f5fc283",
+  "input_manifest_sha256": "1a2fefc79d55ff2596543edfd5fdc86810c05935908ee32e1cb8846998cf74aa",
+  "runs": [
+    {
+      "case": "isotropic",
+      "mode": "forward",
+      "seed": 17,
+      "input": "isotropic/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/isotropic",
+      "xsdir_sha256": "e8ae82e1ee2f9edba1f4c7a245c2e3d2b5e4b82edcd45ade668612cb528a15ef",
+      "asset_table_sha256": "9dcffdae40e81e203d25fae0a1c94ae4b218430fb8dc1e8335714ebee8a06fc0",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/isotropic"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "8cdc84a867a7026e8ce2f1a5e05bf7022ba7d1e9198875238ce42c3f9ebfa808"
+    },
+    {
+      "case": "isotropic",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "isotropic/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/isotropic",
+      "xsdir_sha256": "e8ae82e1ee2f9edba1f4c7a245c2e3d2b5e4b82edcd45ade668612cb528a15ef",
+      "asset_table_sha256": "9dcffdae40e81e203d25fae0a1c94ae4b218430fb8dc1e8335714ebee8a06fc0",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/isotropic"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "fca0ff82b93e02e4c15edcf6bfd8c6c10add09bfbf16328c729a002c48d0de3f"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "forward",
+      "seed": 17,
+      "input": "one_variable_positive/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/one_variable_positive",
+      "xsdir_sha256": "86661af20e2eb54313634b6573dfbd06281424e308114858fd86096644b27e18",
+      "asset_table_sha256": "bfdd52168dd836246c3506c21832bb2bae14706963a8ac57756ad1b9d5440604",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "deb5980fc7907fb04d77b5389a790fa865936f197b900f9c259d959d3d5e76fe"
+    },
+    {
+      "case": "one_variable_positive",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "one_variable_positive/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/one_variable_positive",
+      "xsdir_sha256": "86661af20e2eb54313634b6573dfbd06281424e308114858fd86096644b27e18",
+      "asset_table_sha256": "bfdd52168dd836246c3506c21832bb2bae14706963a8ac57756ad1b9d5440604",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/one_variable_positive"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "7e23c6a8e8f644d59ba535efc7116c56002e320d14ea12fd34175d3e3ac9fa00"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "forward",
+      "seed": 17,
+      "input": "equiprobable_multi_bin/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/equiprobable_multi_bin",
+      "xsdir_sha256": "647f011e2e453d28f8e1d9f0d717dde797d2b3c02b924a4216c6d484fb8c2093",
+      "asset_table_sha256": "740760dd37deda052ba05687ee823859f38575615fa3f7290b66903f4f12f941",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "4ca647e55b9d7db3fa67fde7b0c7c571640d85006e80ec9288733d86351aa1a4"
+    },
+    {
+      "case": "equiprobable_multi_bin",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "equiprobable_multi_bin/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/equiprobable_multi_bin",
+      "xsdir_sha256": "647f011e2e453d28f8e1d9f0d717dde797d2b3c02b924a4216c6d484fb8c2093",
+      "asset_table_sha256": "740760dd37deda052ba05687ee823859f38575615fa3f7290b66903f4f12f941",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/equiprobable_multi_bin"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "02335836c4f46ac79e9ee333ae0d48510a5e90d0e15c718c87004b70dcd98853"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "forward",
+      "seed": 17,
+      "input": "discrete_cosine/seed_17/forward/inp",
+      "input_sha256": "d2e834d52b0ccbb9ff4593f7ecbe91514e34239e3b0bf42b94082f6abd898bac",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/discrete_cosine",
+      "xsdir_sha256": "4e7f630a6e9cfbe6ebcc65c821b4dfec0e113c33f6e4d0dfbaf2d2a58f9e69cf",
+      "asset_table_sha256": "4f79ec016e4600887eb9e5720c5c8112d40d1f50020c7a2dad468ef66c86ed61",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "f1d5e0622530625285f8f02b458e33caf064541c2dbb47752b578782d1f3dd1b"
+    },
+    {
+      "case": "discrete_cosine",
+      "mode": "adjoint",
+      "seed": 17,
+      "input": "discrete_cosine/seed_17/adjoint/inp",
+      "input_sha256": "6f3b974447c0d27fc8299214b32ef9a097c6d25696345de181fc6dcc83626dc6",
+      "data_index": "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/discrete_cosine",
+      "xsdir_sha256": "4e7f630a6e9cfbe6ebcc65c821b4dfec0e113c33f6e4d0dfbaf2d2a58f9e69cf",
+      "asset_table_sha256": "4f79ec016e4600887eb9e5720c5c8112d40d1f50020c7a2dad468ef66c86ed61",
+      "command": [
+        "/tmp/mlvr_f02_rmc_build/bin/RMC",
+        "inp",
+        "-d",
+        "/tmp/mlvr_two_group_locator_oracle_20260826_v5/assets/discrete_cosine"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "errors": 0,
+      "finish_count": 1,
+      "stderr_bytes": 0,
+      "output_sha256": "23e6aa8275c454213a6d62dd138de89b2602ddd064d9dfa23602ba55419b5b43"
+    }
+  ]
+}

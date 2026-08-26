@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /tmp/mlvr_f02_rmc_build
+UpdateCTestConfiguration  from :/tmp/mlvr_f02_rmc_build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/tmp/mlvr_f02_rmc_build/DartConfiguration.tcl
+Test project /tmp/mlvr_f02_rmc_build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 62
+    Start 62: test_fixed_source_adjoint
+
+62: Test command: /usr/bin/python3 "../execute.py"
+62: Working Directory: /tmp/mlvr_f02_rmc_build/tests/fixed_source_adjoint
+62: Test timeout computed to be: 10000000
+1/1 Test #62: test_fixed_source_adjoint ........   Passed    0.71 sec
+
+The following tests passed:
+	test_fixed_source_adjoint
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.72 sec
