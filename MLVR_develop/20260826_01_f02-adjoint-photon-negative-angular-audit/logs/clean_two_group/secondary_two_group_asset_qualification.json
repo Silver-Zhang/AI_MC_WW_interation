@@ -1,0 +1,24 @@
+{
+  "status": "qualified",
+  "kind": "secondary",
+  "group_count": 2,
+  "lower_group_bounds_MeV": [
+    0.0,
+    2.0
+  ],
+  "source_energy_MeV": 3.0,
+  "expected_warning_count": 0,
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "theoretical_mean": -0.5,
+  "secondary_p0_matrix": [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "angular_value": -0.5,
+  "manifest_sha256": "7f6256f5cfabc38cfe9adfb9ddcabdd86c573ba5dd71439f45617b713ac6951b"
+}

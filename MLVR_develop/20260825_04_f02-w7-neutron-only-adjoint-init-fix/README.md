@@ -25,7 +25,7 @@
 3. 含 photon 的粒子模式仍执行 photon 上限定位；不改变现有中子上限定位语义。
 4. RMC 编译通过，`git diff --check` 通过；改动快照和真实验证输出归档。
 
-**原始材料**：从 `20260825_01_f02-adjoint-numerical-verification/cases/v3_double_nubar/reachability/` 原样复制修复前 `inp`、`stdout.log`、`stderr.log`、`exit_code.txt`；原始结果为退出 11、0 条 source state，栈指向 `LocateMgErgGrp()` → `CDFixedSource::InitiateAll()`。修复后保留输入、stdout/stderr、退出码、`.source` 原始文本和验证摘要；可再生成的 HDF5/附属输出未归档。
+**原始材料**：修复前 `inp`、`stdout.log`、`stderr.log`、`exit_code.txt` 已原样复制到本任务 `logs/before_fix.*`；历史输入的规范副本现存于 `../20260825_01_f02-adjoint-numerical-verification/assets/v3_reachability.inp`。原始结果为退出 11、0 条 source state，栈指向 `LocateMgErgGrp()` → `CDFixedSource::InitiateAll()`。修复后保留输入、stdout/stderr、退出码、`.source` 原始文本和验证摘要；可再生成的 HDF5/附属输出未归档。
 
 ---
 

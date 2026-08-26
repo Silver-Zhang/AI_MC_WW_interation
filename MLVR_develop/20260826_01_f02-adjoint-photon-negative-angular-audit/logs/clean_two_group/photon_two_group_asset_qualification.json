@@ -1,0 +1,21 @@
+{
+  "status": "qualified",
+  "kind": "ordinary",
+  "group_count": 2,
+  "lower_group_bounds_MeV": [
+    0.0,
+    2.0
+  ],
+  "source_energy_MeV": 3.0,
+  "expected_warning_count": 0,
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "theoretical_mean": -0.5,
+  "angular_values": [
+    -0.5,
+    -0.5
+  ],
+  "manifest_sha256": "5aa338308add98d946e8df184756775a161c7efa2191f0f4769301f3c854b4d4"
+}

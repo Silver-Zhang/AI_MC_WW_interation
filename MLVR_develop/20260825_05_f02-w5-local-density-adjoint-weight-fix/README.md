@@ -26,7 +26,7 @@
 4. 不破坏已修复的 W7 neutron-only `c5g7td` 可达性；原输入仍退出 0。
 5. `git diff --check` 通过，RMC 改动仅包含已存在的 W7 `InitiateAll.cpp` 和本任务批准的 W5 文件；生成仅含 W5 增量的 `changes.diff`。
 
-**原始材料**：修复前数值证据原样保存在 `../20260825_01_f02-adjoint-numerical-verification/cases/v2_w5_density/` 及该任务 `logs/v2_evidence.txt`；关键结果为 $r=0.5,1,2$ 的首碰撞后平均权重 `1.3381, 0.66903, 0.33452`。本任务不改写历史证据，实施时把重放输入、修复后原生 `.source`、退出码和分析结果保存到本任务目录。
+**原始材料**：修复前数值证据原样保存在 `../20260825_01_f02-adjoint-numerical-verification/logs/v2_evidence.txt` 和 `logs/v2_first_collision_weights.csv`；冻结输入由该任务 `tools/generate_v2_density_cases.py` 精确生成。关键结果为 $r=0.5,1,2$ 的首碰撞后平均权重 `1.3381, 0.66903, 0.33452`。本任务不改写历史证据，实施时把重放输入、修复后原生 `.source`、退出码和分析结果保存到本任务目录。
 
 ---
 

@@ -1,0 +1,110 @@
+{
+  "status": "passed",
+  "acceptance": "support violations = 0 and abs(z) <= 3 for every seed and combined",
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "theoretical_mean": -0.5,
+  "theoretical_variance": 0.08333333333333333,
+  "branches": {
+    "ordinary_photon": {
+      "cases": [
+        {
+          "seed": 17,
+          "sample_count": 300,
+          "observed_min": -0.9969850145338279,
+          "observed_max": -0.003944705109828028,
+          "mean": -0.4884818442666429,
+          "z_score": 0.6910893440014276,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/photon_postfix_seed17_gdb.txt",
+          "log_sha256": "2924064ed6374d57bc01a8700285fe69bec152611c25c653f29ad0cdd7481a01"
+        },
+        {
+          "seed": 23,
+          "sample_count": 300,
+          "observed_min": -0.9976783990860496,
+          "observed_max": -0.0016710948662321812,
+          "mean": -0.5091074030354712,
+          "z_score": -0.5464441821282717,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/photon_postfix_seed23_gdb.txt",
+          "log_sha256": "a9a2e057b88e09c29cd619055f1a3ff78757b0ba9b51ac5d981c1bd8e36d289d"
+        },
+        {
+          "seed": 41,
+          "sample_count": 300,
+          "observed_min": -0.9983991066151299,
+          "observed_max": -0.0031591029918572877,
+          "mean": -0.5107432708818314,
+          "z_score": -0.6445962529098814,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/photon_postfix_seed41_gdb.txt",
+          "log_sha256": "9a359cc388465720fcd6c7e6374368517ba1f5325dc4d54b148fb9cfd0330c76"
+        }
+      ],
+      "combined": {
+        "sample_count": 900,
+        "observed_min": -0.9983991066151299,
+        "observed_max": -0.0016710948662321812,
+        "mean": -0.5027775060613151,
+        "z_score": -0.28864689699169677,
+        "support_violation_count": 0,
+        "passed": true
+      }
+    },
+    "photon_to_neutron": {
+      "cases": [
+        {
+          "seed": 17,
+          "sample_count": 300,
+          "observed_min": -0.999431994830404,
+          "observed_max": -0.0010881303012086896,
+          "mean": -0.458493874189823,
+          "z_score": 2.490367548610619,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/secondary_postfix_seed17_gdb.txt",
+          "log_sha256": "62f2c77d761e664d24a51a8999fdbe4de75d53f8b333d7a509abb111eec57038"
+        },
+        {
+          "seed": 23,
+          "sample_count": 300,
+          "observed_min": -0.9976953013680596,
+          "observed_max": -0.015533652323091562,
+          "mean": -0.482901836835452,
+          "z_score": 1.0258897898728792,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/secondary_postfix_seed23_gdb.txt",
+          "log_sha256": "4a01dc05cd21098bac003b8f7a65fd8364bc33500d9f8a9c100ec2f97826568f"
+        },
+        {
+          "seed": 41,
+          "sample_count": 300,
+          "observed_min": -0.9997038383751821,
+          "observed_max": -0.00053755684731982,
+          "mean": -0.5068638978439742,
+          "z_score": -0.4118338706384539,
+          "support_violation_count": 0,
+          "passed": true,
+          "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/secondary_postfix_seed41_gdb.txt",
+          "log_sha256": "86f76e868d22df98a4ccf8e665db239ae4765397de1178883aad3160344f70c8"
+        }
+      ],
+      "combined": {
+        "sample_count": 900,
+        "observed_min": -0.9997038383751821,
+        "observed_max": -0.00053755684731982,
+        "mean": -0.4827532029564164,
+        "z_score": 1.792339724838932,
+        "support_violation_count": 0,
+        "passed": true
+      }
+    }
+  }
+}

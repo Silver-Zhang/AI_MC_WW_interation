@@ -1,0 +1,5 @@
+stage=pilot
+population_per_run=20000
+generated_runs=2
+manifest=MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/cases/pilot/manifest.json
+manifest_sha256=b936dc50cb37b564b2dee4c1cbfde6267bcd7047f7ebb4b2d4f0c72903fb87e7

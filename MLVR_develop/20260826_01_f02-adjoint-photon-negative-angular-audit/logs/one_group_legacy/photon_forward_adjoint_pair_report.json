@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "criterion": "forward and adjoint packed double sample SHA256 values are equal",
+  "pairs": [
+    {
+      "seed": 17,
+      "sample_count": 300,
+      "forward_sample_sha256": "e411d7f43943e242e7c1b9148334f5bd59aed163608ce07cefd72a02df5933e0",
+      "adjoint_sample_sha256": "e411d7f43943e242e7c1b9148334f5bd59aed163608ce07cefd72a02df5933e0",
+      "pairwise_equal": true,
+      "forward_log_sha256": "211b703d7e60da594660334e4c23d4a6babe0e5e8ad626d330e1b391cbeee0f8",
+      "adjoint_log_sha256": "7aebf0f2bc01d2477d377e021c7b517be5e0a8a9d1984530f2df2616f3983724"
+    },
+    {
+      "seed": 23,
+      "sample_count": 300,
+      "forward_sample_sha256": "2ff000eb6ddeb758d0efde2d23e85af9fd54b924026ce02e2135c81a88b235c6",
+      "adjoint_sample_sha256": "2ff000eb6ddeb758d0efde2d23e85af9fd54b924026ce02e2135c81a88b235c6",
+      "pairwise_equal": true,
+      "forward_log_sha256": "bffa67f6b9a0085c843247c6ff9283d12e97051057163626316a5f93ff140a9b",
+      "adjoint_log_sha256": "a34639eb5b95610fd61e66082604c649d418d3c4ddc611d7995d836d4ce9b320"
+    },
+    {
+      "seed": 41,
+      "sample_count": 300,
+      "forward_sample_sha256": "8c919ce6a352c238a75fb6a9b420fbba8cc8efef458b1f438260a6172b2b0cbf",
+      "adjoint_sample_sha256": "8c919ce6a352c238a75fb6a9b420fbba8cc8efef458b1f438260a6172b2b0cbf",
+      "pairwise_equal": true,
+      "forward_log_sha256": "ae92c38d01aeedce4bf7dbad43378e0cf54909ecf4f109f880f4f99b498c148a",
+      "adjoint_log_sha256": "d76f73d33ce5fb2dffdbca41cfa93f2a9077bf5413e0d3588501b517177330b7"
+    }
+  ]
+}

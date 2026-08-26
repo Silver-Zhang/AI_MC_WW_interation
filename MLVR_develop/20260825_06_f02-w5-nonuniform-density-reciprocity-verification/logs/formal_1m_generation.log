@@ -1,0 +1,6 @@
+generated_runs=40
+inner_volume_cm3=268.08257310632899
+outer_shell_volume_cm3=268.08257310632899
+relative_volume_difference=0
+manifest=MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/cases/formal_1m/manifest.json
+manifest_sha256=44dd24ccf1941d1f4191729c00c0eaea2c48a0c5673a26ddec07bb5b887fa439

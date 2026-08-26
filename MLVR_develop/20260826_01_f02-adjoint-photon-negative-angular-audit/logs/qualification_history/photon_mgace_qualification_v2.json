@@ -1,0 +1,14 @@
+{
+  "status": "qualified",
+  "zaid": "10000.91g",
+  "nleg": 1,
+  "isang": 0,
+  "angular_value": -0.5,
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "theoretical_mean": -0.5,
+  "table_sha256": "9e98df0dabad4c02b8b27cf8f2f3d1ff06d8d61440dcd40a62ecdcf78f373cb3",
+  "manifest_sha256": "64031bc37ec21a7f7dbe0d9cc6081cad4e91d942dbdb4d9b5be25860e15d95d4"
+}

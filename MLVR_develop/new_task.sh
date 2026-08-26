@@ -17,7 +17,12 @@ DATE="$(date +%Y%m%d)"
 STAMP="$(date '+%Y-%m-%d %H:%M')"
 
 # 按天序号：当天已有编号文件夹的最大序号 + 1（YYYYMMDD_NN_短名，NN 为两位）
-MAX_SEQ="$(ls -d "$BASE"/${DATE}_[0-9][0-9]_* 2>/dev/null | sed -E "s#.*/${DATE}_([0-9]+)_.*#\1#" | sort -n | tail -1)"
+shopt -s nullglob
+TODAY_DIRS=("$BASE"/${DATE}_[0-9][0-9]_*)
+MAX_SEQ=""
+if (( ${#TODAY_DIRS[@]} > 0 )); then
+  MAX_SEQ="$(printf '%s\n' "${TODAY_DIRS[@]}" | sed -E "s#.*/${DATE}_([0-9]+)_.*#\1#" | sort -n | tail -1)"
+fi
 SEQ="$(printf '%02d' "$(( 10#${MAX_SEQ:-0} + 1 ))")"
 DIR="$BASE/${DATE}_${SEQ}_${SLUG}"
 

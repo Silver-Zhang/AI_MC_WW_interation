@@ -1,0 +1,7 @@
+stage=pilot manifest_sha256=b936dc50cb37b564b2dee4c1cbfde6267bcd7047f7ebb4b2d4f0c72903fb87e7
+run_count=2 paired_stream_count=1 anomaly_lines=0
+per-pair:
+pair_index=1,forward_seed=101,adjoint_seed=103,R_F=0.25084,sigma_F=0.00586614424,RE_F=0.023386,R_A=0.24456,sigma_A=0.01177580856,RE_A=0.048151,z=0.4773473875318136,pass_abs_z_le_3=True
+combined:
+stage=pilot,run_count=2,independent_pair_count=1,population_per_run=20000,R_F=0.25084,sigma_F=0.005866144239999999,R_A=0.24456,sigma_A=0.011775808560000002,z=0.47734738753181355,all_individual_abs_z_le_3=True,max_individual_abs_z=0.4773473875318136,anomaly_lines=0,execution_pass=True,formal_statistics_pass=True,criterion_pass=True
+criterion=execution/finite/clean for pilot; plus all individual and combined |z| <= 3 for formal; pass=True

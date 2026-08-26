@@ -1,0 +1,13 @@
+Neural_Network_WW_Iteration
+4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+ M src/GetExitState.cpp
+ M src/InitiateAll.cpp
+ M src/SampleColliType.cpp
+src/GetExitState.cpp
+src/InitiateAll.cpp
+src/SampleColliType.cpp
+da9256bd2fcdc24ddc8a5fdbafc6509ca25a244c7f1a284e6d00a9e4de7f06b1  MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/changes.diff
+d1cd803d9eb8631ae990db7e5d75a8d17e9fde33cfd3c1b71f9f316cf0d0ab54  MLVR_develop/20260825_f02-w5-local-density-adjoint-weight-fix/changes.diff
+eb1204f8c943432595e8e22e0685238db18a6ae0f6ae1a4832b1f21caf8d6c67  /tmp/mlvr_f02_rmc_build/bin/RMC
+750be0255b972f0d4aa25dbd2a0c864e17b5b04058be4749109cb10290443faa  RMC/tests/fixed_source_adjoint/reference_result
+44dd24ccf1941d1f4191729c00c0eaea2c48a0c5673a26ddec07bb5b887fa439  MLVR_develop/20260825_f02-w5-nonuniform-density-reciprocity-verification/cases/formal_1m/manifest.json

@@ -1,0 +1,185 @@
+{
+  "status": "passed",
+  "criteria": [
+    "all six full runs contain exactly one finish marker and zero warnings/errors",
+    "all nine GDB logs contain zero warnings/errors",
+    "support violations = 0 and abs(z) <= 3 for every seed and combined",
+    "ordinary forward and adjoint packed sample SHA256 values are equal"
+  ],
+  "full_runs": [
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/photon_two_group_seed17_full_run.txt",
+      "log_sha256": "c76cbf0c48a1c9826bfe2d0face055ce64bf07c962c0745f693769400153dee1",
+      "branch": "photon",
+      "seed": 17
+    },
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/secondary_two_group_seed17_full_run.txt",
+      "log_sha256": "c94e7cec74cca87a50cf84e130c2d608a0df4e1c2d7ab1c11151ddcaf372be5d",
+      "branch": "secondary",
+      "seed": 17
+    },
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/photon_two_group_seed23_full_run.txt",
+      "log_sha256": "6c210092d60178254d3e20d49c74d77f64d907d375bd099f31cf8fa9b2517548",
+      "branch": "photon",
+      "seed": 23
+    },
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/secondary_two_group_seed23_full_run.txt",
+      "log_sha256": "2aad1f1d6fa5bdf024cad4d52e3889e90e81ce6b20d7f8b1548ad56dde3ce270",
+      "branch": "secondary",
+      "seed": 23
+    },
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/photon_two_group_seed41_full_run.txt",
+      "log_sha256": "f231f3941ca9d116771e873ae81a0b587e4ce45cec29e6489214f280a1799922",
+      "branch": "photon",
+      "seed": 41
+    },
+    {
+      "warnings": 0,
+      "errors": 0,
+      "finish_markers": 1,
+      "passed": true,
+      "log": "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/logs/clean_two_group/secondary_two_group_seed41_full_run.txt",
+      "log_sha256": "2290bebe2598a16dfb8e5a89b05ebd6341f6ce152906744328491140a89f393c",
+      "branch": "secondary",
+      "seed": 41
+    }
+  ],
+  "branches": {
+    "ordinary_photon": {
+      "cases": [
+        {
+          "seed": 17,
+          "sample_count": 300,
+          "observed_min": -0.9969850145338279,
+          "observed_max": -0.003944705109828028,
+          "mean": -0.4884818442666429,
+          "z_score": 0.6910893440014276,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "0ca5e05cb21487d3e461959e943dfe9513da8a73106e7c89be2c92175197241f"
+        },
+        {
+          "seed": 23,
+          "sample_count": 300,
+          "observed_min": -0.9976783990860496,
+          "observed_max": -0.0016710948662321812,
+          "mean": -0.5091074030354712,
+          "z_score": -0.5464441821282717,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "19452ab7f34b078adc8bc444391d12eda694dbc40d794d3d2f98d03ba0c2401a"
+        },
+        {
+          "seed": 41,
+          "sample_count": 300,
+          "observed_min": -0.9983991066151299,
+          "observed_max": -0.0031591029918572877,
+          "mean": -0.5107432708818314,
+          "z_score": -0.6445962529098814,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "737e6898d5ab39d2e09b6309f72846b1751e0075696b312e02a8f45d95134f39"
+        }
+      ],
+      "combined": {
+        "sample_count": 900,
+        "observed_min": -0.9983991066151299,
+        "observed_max": -0.0016710948662321812,
+        "mean": -0.5027775060613151,
+        "z_score": -0.28864689699169677,
+        "support_violation_count": 0,
+        "passed": true
+      }
+    },
+    "photon_to_neutron": {
+      "cases": [
+        {
+          "seed": 17,
+          "sample_count": 300,
+          "observed_min": -0.999431994830404,
+          "observed_max": -0.0010881303012086896,
+          "mean": -0.458493874189823,
+          "z_score": 2.490367548610619,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "584cc3fc150ee3dfbfa2af261ae86f5e57c02f8a5ce0dee9347b57ed9e4bde44"
+        },
+        {
+          "seed": 23,
+          "sample_count": 300,
+          "observed_min": -0.9976953013680596,
+          "observed_max": -0.015533652323091562,
+          "mean": -0.482901836835452,
+          "z_score": 1.0258897898728792,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "780767345ecff14daa722a09afe639709e26f9f4d380d5100b65ab38c586bddc"
+        },
+        {
+          "seed": 41,
+          "sample_count": 300,
+          "observed_min": -0.9997038383751821,
+          "observed_max": -0.00053755684731982,
+          "mean": -0.5068638978439742,
+          "z_score": -0.4118338706384539,
+          "support_violation_count": 0,
+          "passed": true,
+          "log_sha256": "2b4c3b72009c97c1f2b20972dd8a636e969b4ed6e25ef4e74ae8e2d6c740915e"
+        }
+      ],
+      "combined": {
+        "sample_count": 900,
+        "observed_min": -0.9997038383751821,
+        "observed_max": -0.00053755684731982,
+        "mean": -0.4827532029564164,
+        "z_score": 1.792339724838932,
+        "support_violation_count": 0,
+        "passed": true
+      }
+    }
+  },
+  "ordinary_forward_adjoint_pairs": [
+    {
+      "seed": 17,
+      "sample_count": 300,
+      "sample_sha256": "e411d7f43943e242e7c1b9148334f5bd59aed163608ce07cefd72a02df5933e0",
+      "passed": true
+    },
+    {
+      "seed": 23,
+      "sample_count": 300,
+      "sample_sha256": "2ff000eb6ddeb758d0efde2d23e85af9fd54b924026ce02e2135c81a88b235c6",
+      "passed": true
+    },
+    {
+      "seed": 41,
+      "sample_count": 300,
+      "sample_sha256": "8c919ce6a352c238a75fb6a9b420fbba8cc8efef458b1f438260a6172b2b0cbf",
+      "passed": true
+    }
+  ]
+}

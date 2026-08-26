@@ -86,14 +86,15 @@
 | 1 | 建立独立验证档案 | `MLVR_develop/new_task.sh f02-adjoint-numerical-verification F02` | 成功；任务状态进入实施中。 |
 | 2 | 冻结构建、源码和核库基线 | `logs/environment.txt` | RMC 3.5.0，SHA `4d3e1...`；Release，AIS/MPI/OpenMP off，test on。 |
 | 3 | 隔离构建并执行 V0 | `/tmp/mlvr_f02_rmc_build`；`ctest -R '^test_fixed_source_adjoint$' -V` | 1/1 passed；重建结果与 reference 字节一致。 |
-| 4 | 构造 V2 三种局部密度输入并解析原生 source trace | `cases/v2_w5_density/` | 三组退出 0；显式固定 RNG 后二次运行的 source 哈希逐字节相同；W5 的 $1/r$ 缺陷数值复现。 |
-| 5 | 按 RMC NXS/JXS/XSS 索引只读解析部署 MGACE | `cases/v4_reciprocity/screen_mgace_pairs.py` | H2O 筛得 359 个非对称群对候选。 |
-| 6 | 生成、运行并分析 V4 | 两群对 × 五种子 × forward/adjoint | 20/20 退出 0；合并及逐种子均满足 $|z|\le3$。 |
-| 7 | V3 双 nubar 核与功效分析 | `cases/v3_double_nubar/analyze_double_nubar.py` | 核差异重现；80% 近似功效需约 $7.33\times10^7$ 个已观测裂变子代。 |
-| 8 | V3 动态可达性尝试 | `cases/v3_double_nubar/reachability/` | 双 nubar 伴随材料初始化已执行；随后 neutron-only 光子群定位访问空数组而 SIGSEGV，登记 W7；运行时裂变群抽样未覆盖。 |
+| 4 | 构造 V2 三种局部密度输入并解析原生 source trace | `tools/generate_v2_density_cases.py`、`tools/analyze_source_trace.py` | 三组退出 0；显式固定 RNG 后二次运行的 source 哈希逐字节相同；W5 的 $1/r$ 缺陷数值复现。 |
+| 5 | 按 RMC NXS/JXS/XSS 索引只读解析部署 MGACE | `tools/screen_mgace_pairs.py` | H2O 筛得 359 个非对称群对候选。 |
+| 6 | 生成、运行并分析 V4 | `tools/generate_reciprocity_cases.py`、`tools/analyze_reciprocity.py` | 20/20 退出 0；合并及逐种子均满足 $|z|\le3$。 |
+| 7 | V3 双 nubar 核与功效分析 | `tools/analyze_double_nubar.py` | 核差异重现；80% 近似功效需约 $7.33\times10^7$ 个已观测裂变子代。 |
+| 8 | V3 动态可达性尝试 | `assets/v3_reachability.inp` | 双 nubar 伴随材料初始化已执行；随后 neutron-only 光子群定位访问空数组而 SIGSEGV，登记 W7；运行时裂变群抽样未覆盖。 |
 
 **代码改动**：见 [changes.diff](changes.diff)，摘要：
 - 无 RMC 代码改动；任务目录内只新增验证档案、独立输入/脚本和日志。
+- 唯一工具保存在 `tools/`，不可生成的最小输入保存在 `assets/`；`cases/` 和 `runs/` 仅为临时生成目录，不归档。复现命令见 [tools/README.md](tools/README.md)。
 
 生成方式：
 ```bash
@@ -114,6 +115,7 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 | V3 功效 | `analyze_double_nubar.py --zaid 10001.01m` | 退出 0；$S_1=0.71975438087957$、$S_2=0.71977667464764$，80% 功效近似样本量 73,289,470 个子代。 |
 | V3 动态尝试 | `/tmp/mlvr_f02_rmc_build/bin/RMC inp` | 退出 11；`LocateMgErgGrp()` 中 SIGSEGV，0 条 source state；不能作为 W6 频数检验。 |
 | 最终分析复验 | `py_compile` 后重跑 V2/V3/V4 分析 | 脚本语法检查退出 0；V2 与 V4 判据再次通过，V3 样本量再次得到 73,289,470。 |
+| 清理后可复现性复验 | 从 `tools/` 重新生成/分析并与 `logs/` 比较 | V2 输入 SHA256 3/3 相同；V3 CSV 字节相同且样本量为 73,289,470；V4 候选 CSV 字节相同、359 个候选，20-run manifest SHA256 仍为 `9785dabd...6c90f3d`；V3 最小输入 SHA256 相同。 |
 | 最终完整性 | `git -C RMC status/diff` + reference SHA256 | 分支/SHA 未变，RMC status 空，`changes.diff` 为 0 byte，reference SHA256 与立项值相同。 |
 
 ```
@@ -176,6 +178,7 @@ stack: CDAceData::LocateMgErgGrp -> CDFixedSource::InitiateAll -> CalcFixedSourc
 | 2026-08-25 | V0 1/1 passed；V2 数值确认 W5。 |
 | 2026-08-25 | V4 筛选 359 个群对，完成 20 个运行并通过预注册判据。 |
 | 2026-08-25 | V3 完成功效分析；动态输入在 photon 群定位处 SIGSEGV，新增 W7 并归档第一阶段。 |
+| 2026-08-26 | 仓库清理后将唯一脚本移出可生成目录，并用冻结哈希/CSV/manifest 完成恢复复验。 |
 
 ---
 
@@ -194,6 +197,7 @@ stack: CDAceData::LocateMgErgGrp -> CDFixedSource::InitiateAll -> CalcFixedSourc
 | 5 | V4 | 核库解析、生成 20 输入、配对统计 | 两群对合并与逐种子均通过 $|z|\le3$。 |
 | 6 | V3 | c5g7td 核解析、功效分析、最小动态输入 | 双核差异重现；动态被 W7 阻断，未伪报通过。 |
 | 7 | 误判修正 | 解析脚本和输入 | V4 修正 `DATAPATH`/xsdir 字段和批量目录深度；V3 修正 Python JXS 索引错位和 RNG block 位置。首次错误 RNG block 的原始失败输出曾被后续运行覆盖，仅在本档案如实记录；最终 SIGSEGV 原始输出和栈证据已完整保留。 |
+| 8 | 清理与恢复审计 | `tools/`、`assets/`、归档哈希/CSV/manifest | 移除可再生成的运行目录；恢复六个唯一工具和 V3 最小输入。V2 三输入、V3 分析 CSV、V4 候选 CSV 与 20-run manifest 均精确复现。 |
 
 **可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
 （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含

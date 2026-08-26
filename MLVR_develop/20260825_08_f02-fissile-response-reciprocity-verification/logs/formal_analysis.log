@@ -1,0 +1,11 @@
+stage=formal manifest_sha256=b7f1fa9a1ce2e7afe6bba61f323881d0c45f9a7f6f7e1c6e1bba3a1b8377e732
+run_count=10 paired_stream_count=5 anomaly_lines=0
+per-pair:
+pair_index=1,forward_seed=1,adjoint_seed=11,R_F=0.24166,sigma_F=0.000819324064,RE_F=0.0033904,R_A=0.24263,sigma_A=0.0015464265680000002,RE_A=0.0063736,z=-0.5542651682091526,pass_abs_z_le_3=True
+pair_index=2,forward_seed=3,adjoint_seed=13,R_F=0.24286,sigma_F=0.000820599654,RE_F=0.0033789,R_A=0.24177,sigma_A=0.0015567328530000002,RE_A=0.0064389,z=0.6193980744697071,pass_abs_z_le_3=True
+pair_index=3,forward_seed=5,adjoint_seed=15,R_F=0.24063,sigma_F=0.000816096645,RE_F=0.0033915,R_A=0.24426,sigma_A=0.001588007538,RE_A=0.0065013,z=-2.033116852207995,pass_abs_z_le_3=True
+pair_index=4,forward_seed=7,adjoint_seed=17,R_F=0.24313,sigma_F=0.000821341766,RE_F=0.0033782,R_A=0.24205,sigma_A=0.0016215655649999999,RE_A=0.0066993,z=0.5941535056047762,pass_abs_z_le_3=True
+pair_index=5,forward_seed=9,adjoint_seed=19,R_F=0.24173,sigma_F=0.000818812029,RE_F=0.0033873,R_A=0.24207,sigma_A=0.0016291068929999999,RE_A=0.0067299,z=-0.18647452527615666,pass_abs_z_le_3=True
+combined:
+stage=formal,run_count=10,independent_pair_count=5,population_per_run=1000000,R_F=0.24199811808304358,sigma_F=0.00036637027404590856,R_A=0.24255941171604797,sigma_A=0.0007098732314158964,z=-0.7026348520546188,all_individual_abs_z_le_3=True,max_individual_abs_z=2.033116852207995,anomaly_lines=0,execution_pass=True,formal_statistics_pass=True,criterion_pass=True
+criterion=execution/finite/clean for pilot; plus all individual and combined |z| <= 3 for formal; pass=True

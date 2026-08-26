@@ -1,0 +1,7 @@
+DATAPATH=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/assets/photon_negative_v3/data
+atomic weight ratios
+  10006  1.000000
+directory
+  10006.91m  1.000000 private_neutron_mgace 0 1 1 9 0 0 0.00
+  10000.91g  1.000000 private_photon_mgace 0 1 1 10 0 0 0.00
+  10000.03e 20.006093 electron_03e 0 1 5360 2335 0 0 .0

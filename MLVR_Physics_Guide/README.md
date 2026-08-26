@@ -18,9 +18,9 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W5/W6/W7/W9 均已修复；W9 修复后三个 seed 共 1438 对负单变量前/伴随样本逐项一致、零越界，合并均值与理论相容（$z=0.367$）。
+RMC 当前 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W5/W6/W7/W9 均已修复；W9 的 neutron、普通 photon 与 photon→neutron 次级负单变量分支现均使用正确的 `(1+x)`。neutron 三 seed 共 1438 对逐项一致；两条 photon 路径各 900 样本零越界，普通 photon 900 对前/伴随逐项一致。
 
-W9 的 E 级反例已经闭合，但局部修复不能自动放行 A。其他四类角表示的动态矩、真实 density mesh、NNUBAR=1/多材料裂变以及预冻结 formal 矩阵仍未完成。
+W9 的 E 级反例已经闭合，但局部修复不能自动放行 A，也不代表完整 photon adjoint 已验证。其他四类角表示的动态矩、真实 density mesh、NNUBAR=1/多材料裂变以及预冻结 formal 矩阵仍未完成。
 
 ## 阅读与维护原则
 
@@ -39,6 +39,7 @@ W9 的 E 级反例已经闭合，但局部修复不能自动放行 A。其他四
 - [可裂变响应级互易性验证](../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
 - [W9 私有角资产与动态确认](../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
 - [W9 修复与验证](../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
+- [W9 photon/secondary 修复与验证](../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
@@ -51,3 +52,4 @@ W9 的 E 级反例已经闭合，但局部修复不能自动放行 A。其他四
 - 2026-08-25：`g6↔g1` 可裂变最终响应正式批次通过五组独立流及合并互易性判据；单代表案例不改变 C — Verify 的完整能力评级。
 - 2026-08-25：私有 MGACE 独立 readback 与低光学厚度动态路径确认 W9 负单变量伴随角核支持域越界；完整能力改判 E，停止 density-HDF5 与 A formal。
 - 2026-08-25：W9 负单变量公式修正为 `(1+x)`；三 seed 共 1438 对样本零越界且前/伴随逐项一致，CTest/reference/oracle 通过。完整能力恢复 C — Verify，A 门禁不变。
+- 2026-08-26：W9 的普通 photon 与 photon→neutron 次级同形分支也经生产动态反例确认并修正为 `(1+x)`；两路径三 seed 各 900 样本零越界，普通 photon 900 对逐项一致。该局部结论不放行完整 photon adjoint。

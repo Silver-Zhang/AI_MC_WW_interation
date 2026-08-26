@@ -1,0 +1,46 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:38:20 Aug 25 2026
+Git commit  : 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+Git tag  : v3.5.0-alpha.0-302-g4d3e1aac
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/25 03:25:12 Tuesday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Warning: particle energy larger than maximum energy group upper bound.
+Signal (No. 11) caught, processing...
+==============================
+Call Stack for Process 0, Depth: 12:
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x552723) [0x5f9d13dda723]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x5527eb) [0x5f9d13dda7eb]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x55ff3c) [0x5f9d13de7f3c]
+/lib/x86_64-linux-gnu/libc.so.6(+0x45330) [0x7a0476445330]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x2333ed) [0x5f9d13abb3ed]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x268398) [0x5f9d13af0398]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x151279) [0x5f9d139d9279]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x48a559) [0x5f9d13d12559]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0x9fc6c) [0x5f9d13927c6c]
+/lib/x86_64-linux-gnu/libc.so.6(+0x2a1ca) [0x7a047642a1ca]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0x8b) [0x7a047642a28b]
+/tmp/mlvr_f02_rmc_build/bin/RMC(+0xa28f5) [0x5f9d1392a8f5]
+

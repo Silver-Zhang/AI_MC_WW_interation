@@ -1,0 +1,16 @@
+manifest_sha256=655171786ad405e5ad72f0ff262950125203868186328db973792e10f2f932dc
+run_count=8 paired_seed_count=4
+anomaly_lines=0 explained_warning_lines=0
+per-seed:
+density_case=high_inner_low_outer,pair=g14_to_g15,seed=1,R_F=0.093003,sigma_F=0.005211981123,RE_F=0.056041,R_A=0.095374,sigma_A=0.0047646942920000004,RE_A=0.049958,delta=-0.002370999999999998,sigma_delta=0.007061661201355225,z=-0.3357566912931156,pass_abs_z_le_3=True
+density_case=high_inner_low_outer,pair=g20_to_g22,seed=1,R_F=0.08313,sigma_F=0.0049694282699999995,RE_F=0.059779,R_A=0.080977,sigma_A=0.003693199016,RE_A=0.045608,delta=0.002153000000000002,sigma_delta=0.006191521323750614,z=0.34773360009939974,pass_abs_z_le_3=True
+density_case=low_inner_high_outer,pair=g14_to_g15,seed=1,R_F=0.1936,sigma_F=0.0059849504,RE_F=0.030914,R_A=0.18144,sigma_A=0.0093505104,RE_A=0.051535,delta=0.012160000000000004,sigma_delta=0.011101877139969093,z=1.095310265704657,pass_abs_z_le_3=True
+density_case=low_inner_high_outer,pair=g20_to_g22,seed=1,R_F=0.18031,sigma_F=0.00496429492,RE_F=0.027532,R_A=0.17403,sigma_A=0.009601757189999999,RE_A=0.055173,delta=0.006280000000000008,sigma_delta=0.01080916116951054,z=0.5809886541162914,pass_abs_z_le_3=True
+combined:
+density_case=high_inner_low_outer,pair=g14_to_g15,independent_seeds=1,R_F=0.093003,sigma_F=0.005211981123,R_A=0.095374,sigma_A=0.0047646942920000004,delta=-0.002370999999999998,sigma_delta=0.007061661201355225,z=-0.3357566912931156,pass_abs_z_le_3=True,all_individual_abs_z_le_3=True,max_individual_abs_z=0.3357566912931156
+density_case=high_inner_low_outer,pair=g20_to_g22,independent_seeds=1,R_F=0.08313,sigma_F=0.0049694282699999995,R_A=0.080977,sigma_A=0.0036931990159999994,delta=0.002153000000000002,sigma_delta=0.006191521323750613,z=0.3477336000993998,pass_abs_z_le_3=True,all_individual_abs_z_le_3=True,max_individual_abs_z=0.34773360009939974
+density_case=low_inner_high_outer,pair=g14_to_g15,independent_seeds=1,R_F=0.1936,sigma_F=0.0059849504,R_A=0.18144,sigma_A=0.0093505104,delta=0.012160000000000004,sigma_delta=0.011101877139969093,z=1.095310265704657,pass_abs_z_le_3=True,all_individual_abs_z_le_3=True,max_individual_abs_z=1.095310265704657
+density_case=low_inner_high_outer,pair=g20_to_g22,independent_seeds=1,R_F=0.18031,sigma_F=0.00496429492,R_A=0.17403,sigma_A=0.00960175719,delta=0.006280000000000008,sigma_delta=0.010809161169510542,z=0.5809886541162914,pass_abs_z_le_3=True,all_individual_abs_z_le_3=True,max_individual_abs_z=0.5809886541162914
+overall:
+independent_configurations=4,delta=0.002563638089878407,sigma_delta=0.003990068291561955,z=0.6425048150929875,pass_abs_z_le_3=True
+criterion=no unexplained anomalies and all individual/combined/overall |z| <= 3; pass=True

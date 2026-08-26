@@ -27,7 +27,7 @@
 5. 修复前同一正式算例至少选一组重放，预期显示系统性互易性破坏；若无法在不覆盖当前源码的前提下安全构建修复前二进制，则明确记为未覆盖，不伪造前后对照。
 6. RMC 工作树、既有 reference 和 W5/W7 源码不被本实验修改；归档真实命令、环境、输出和未覆盖范围。
 
-**原始材料**：方法基线来自 `../20260825_01_f02-adjoint-numerical-verification/cases/v4_reciprocity/`；W5 修复和首碰撞证据来自 `../20260825_05_f02-w5-local-density-adjoint-weight-fix/`。本任务独立生成输入与 manifest，不覆盖既有 V4/W5 产物。
+**原始材料**：方法基线来自 `../20260825_01_f02-adjoint-numerical-verification/tools/generate_reciprocity_cases.py`、`tools/analyze_reciprocity.py` 及该任务 `logs/v4_*.csv`；W5 修复和首碰撞证据来自 `../20260825_05_f02-w5-local-density-adjoint-weight-fix/`。本任务独立生成输入与 manifest，不覆盖既有 V4/W5 证据。
 
 ---
 

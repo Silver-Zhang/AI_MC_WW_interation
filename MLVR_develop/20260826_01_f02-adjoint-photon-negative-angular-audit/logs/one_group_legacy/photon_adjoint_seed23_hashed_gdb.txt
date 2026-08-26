@@ -1,0 +1,15 @@
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+HDF5-DIAG: Error detected in HDF5 (1.10.10) thread 1:
+  #000: ../../../src/H5F.c line 412 in H5Fopen(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #001: ../../../src/H5Fint.c line 1826 in H5F_open(): unable to read superblock
+    major: File accessibility
+    minor: Read failed
+  #002: ../../../src/H5Fsuper.c line 622 in H5F__super_read(): truncated file: eof = 96, sblock->base_addr = 0, stored_eof = 2048
+    major: File accessibility
+    minor: File has been truncated
+MLVR_MULAB_REPORT={"expected_support": [-1.0, 0.0], "first_backtrace": "#0  0x00005555558ae0e0 in CDPhotonTransport::ProcessMgPhotonCollision(CDRNG&, CDParticleState&, CDAceData&, CDMaterial&) ()\n#1  0x0000555555a6c867 in CDPhotonTransport::TreatMgPhotonReaction(CDCalMode&, CDFixedSource&, CDMaterial&, CDAceData&, CDParticleState&, CDRNG&) ()\n#2  0x0000555555a6e0c2 in CDPhotonTransport::TrackGmaHistory(CDCalMode&, CDFixedSource&, CDCriticality&, CDGeometry&, CDMaterial&, CDAceData&, CDParticleState&, CDTally&, CDRNG&, CDElectronTransport&, CDSampling&, int) ()\n#3  0x00005555556a6cc7 in CDCalMode::CalcFixedSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource, CDSampling&, CDPerturbation&) ()\n", "first_samples": [-0.2817708041376058, -0.7461754818972536, -0.5917135033633241, -0.36220108636413717, -0.10045747621259171, -0.13157291050190145, -0.7881571911904732, -0.746324909413095, -0.11584656737166155, -0.3533258503574721], "mean": -0.5091074030354712, "observed_max": -0.0016710948662321812, "observed_min": -0.9976783990860496, "sample_count": 300, "sample_sha256": "2ff000eb6ddeb758d0efde2d23e85af9fd54b924026ce02e2135c81a88b235c6", "support_violation_count": 0, "symbol": "CDAceData::GetMgAdjPhoExitErgMu(CDParticleState&, double&, CDRNG&)"}
+
+Breakpoint -311, 0x00005555558ae0e0 in CDPhotonTransport::ProcessMgPhotonCollision(CDRNG&, CDParticleState&, CDAceData&, CDMaterial&) ()

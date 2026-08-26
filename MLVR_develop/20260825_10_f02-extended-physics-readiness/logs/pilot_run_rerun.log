@@ -1,0 +1,12 @@
+{
+  "run_count": 6,
+  "failure_count": 6,
+  "failures": [
+    "nnubar2_pure/forward: exit=0 src=20000 value=0.25084 re=0.023386 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar2_pure/adjoint: exit=0 src=20000 value=0.24456 re=0.048151 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar1_pure/forward: exit=0 src=20000 value=0.00012105 re=1.0 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "nnubar1_pure/adjoint: exit=0 src=20000 value=0.0 re=0.0 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "mixed_nnubar2_nonfissile/forward: exit=0 src=20000 value=0.20458 re=0.025987 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']",
+    "mixed_nnubar2_nonfissile/adjoint: exit=0 src=20000 value=0.20999 re=0.041128 anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.']"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "qualified",
+  "nsec": 1,
+  "secondary_particle": 2,
+  "secondary_isang": 0,
+  "secondary_nleg": 1,
+  "secondary_p0": 1.0,
+  "secondary_angular_value": -0.5,
+  "expected_support": [
+    -1.0,
+    0.0
+  ],
+  "theoretical_mean": -0.5,
+  "neutron_table_sha256": "9c2fa2744c12b2fe6deeb68ba6488d1110bba32b41956069dd4bb8226d55ee20",
+  "photon_table_sha256": "820a9415aaa623746e2d99bbfd4e92ddd5bb1b116ee9e4e626768dcfc0737231",
+  "manifest_sha256": "89f3506f978cf80c3979a7dd4bf5ea4863bb9bf714109bcdede96cb092f71831"
+}

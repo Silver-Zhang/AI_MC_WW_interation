@@ -1,0 +1,5 @@
+script_syntax=PASS input_hashes=40/40 exits=40/40
+formal_1m=20/20_individual 4/4_combined 1/1_overall anomalies=0
+formal_200k_preserved_failed_pairs=1 failed_z=-4.00713903254372
+rmc_head_status_reference_executable_snapshot=PASS
+FINAL_VALIDATION=PASS

@@ -110,6 +110,15 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
 - 单文件 >10MB 须先与用户确认是否必要；
 - 大量同类过程文件优先**整合成脚本 + manifest**，而不是逐个上传。
 
+清理这些可再生成目录时，先预览再显式执行：
+
+```bash
+./clean_generated.sh
+./clean_generated.sh --apply
+```
+
+脚本只处理任务顶层 `runs/`、`cases/` 和 `__pycache__/`，不会删除 `logs/`、资产、README 或改动快照。
+
 ## 状态词表（INDEX.md 里只用这几个）
 
 | 状态 | 含义 |

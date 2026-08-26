@@ -1,0 +1,24 @@
+xsdir_sha256=970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b
+component=1001.50M coefficient=2 path=/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp address=1 sha256=1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001 NGRP=30 NUS=0 NDS=29 NNUBAR=0 LP0L=3242
+component=8016.50M coefficient=1 path=/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp address=11885 sha256=1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001 NGRP=30 NUS=0 NDS=29 NNUBAR=0 LP0L=3339
+candidate_count=359 output=MLVR_develop/20260825_f02-adjoint-numerical-verification/logs/v4_mgace_pair_candidates.csv
+group_a=1,energy_a_MeV=16.0,group_b=2,energy_b_MeV=14.25,sigma_a_to_b=0.3956412,sigma_b_to_a=0.0,absolute_difference=0.3956412,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=3,energy_b_MeV=12.75,sigma_a_to_b=0.1671614,sigma_b_to_a=0.0,absolute_difference=0.1671614,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=4,energy_b_MeV=11.0,sigma_a_to_b=0.16173442999999998,sigma_b_to_a=0.0,absolute_difference=0.16173442999999998,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=5,energy_b_MeV=8.895,sigma_a_to_b=0.2592624,sigma_b_to_a=0.0,absolute_difference=0.2592624,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=6,energy_b_MeV=6.93,sigma_a_to_b=0.1967873,sigma_b_to_a=0.0,absolute_difference=0.1967873,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=7,energy_b_MeV=4.875,sigma_a_to_b=0.319133,sigma_b_to_a=0.0,absolute_difference=0.319133,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=8,energy_b_MeV=3.2725,sigma_a_to_b=0.1451751,sigma_b_to_a=0.0,absolute_difference=0.1451751,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=9,energy_b_MeV=2.5485,sigma_a_to_b=0.1100914,sigma_b_to_a=0.0,absolute_difference=0.1100914,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=10,energy_b_MeV=1.985,sigma_a_to_b=0.07684969999999999,sigma_b_to_a=0.0,absolute_difference=0.07684969999999999,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=11,energy_b_MeV=1.5455,sigma_a_to_b=0.059101299999999996,sigma_b_to_a=0.0,absolute_difference=0.059101299999999996,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=12,energy_b_MeV=1.088,sigma_a_to_b=0.083355,sigma_b_to_a=0.0,absolute_difference=0.083355,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=13,energy_b_MeV=0.6615,sigma_a_to_b=0.0470767,sigma_b_to_a=0.0,absolute_difference=0.0470767,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=14,energy_b_MeV=0.4015,sigma_a_to_b=0.02517656,sigma_b_to_a=0.0,absolute_difference=0.02517656,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=15,energy_b_MeV=0.2435,sigma_a_to_b=0.01356941,sigma_b_to_a=0.0,absolute_difference=0.01356941,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=16,energy_b_MeV=0.1258,sigma_a_to_b=0.01173765,sigma_b_to_a=0.0,absolute_difference=0.01173765,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=17,energy_b_MeV=0.0462,sigma_a_to_b=0.003920049,sigma_b_to_a=0.0,absolute_difference=0.003920049,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=18,energy_b_MeV=0.01696,sigma_a_to_b=0.0013782134,sigma_b_to_a=0.0,absolute_difference=0.0013782134,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=19,energy_b_MeV=0.006235,sigma_a_to_b=0.0004960143,sigma_b_to_a=0.0,absolute_difference=0.0004960143,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=20,energy_b_MeV=0.0022925,sigma_a_to_b=0.000178158,sigma_b_to_a=0.0,absolute_difference=0.000178158,asymmetry=1.0,geometric_strength=0.0
+group_a=1,energy_a_MeV=16.0,group_b=21,energy_b_MeV=0.0008445,sigma_a_to_b=6.57898e-05,sigma_b_to_a=0.0,absolute_difference=6.57898e-05,asymmetry=1.0,geometric_strength=0.0

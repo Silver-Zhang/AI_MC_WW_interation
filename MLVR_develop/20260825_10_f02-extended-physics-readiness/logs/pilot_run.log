@@ -1,0 +1,18 @@
+{
+  "run_count": 6,
+  "failure_count": 12,
+  "failures": [
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/forward/inp.Tally'",
+    "nnubar2_pure/forward: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']",
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar2_pure/adjoint/inp.Tally'",
+    "nnubar2_pure/adjoint: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']",
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/forward/inp.Tally'",
+    "nnubar1_pure/forward: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']",
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/nnubar1_pure/adjoint/inp.Tally'",
+    "nnubar1_pure/adjoint: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']",
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/forward/inp.Tally'",
+    "mixed_nnubar2_nonfissile/forward: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']",
+    "[Errno 2] No such file or directory: '/home/workspace/AI_MC_WW_interation/MLVR_develop/20260825_10_f02-extended-physics-readiness/cases/pilot/mixed_nnubar2_nonfissile/adjoint/inp.Tally'",
+    "mixed_nnubar2_nonfissile/adjoint: exit=16 src=-1 value=nan re=nan anomalies=['Visit REAL forum https://forum.reallab.org.cn for more information.', 'Error: Keyword CELL expected in universe 0.']"
+  ]
+}

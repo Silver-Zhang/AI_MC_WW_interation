@@ -117,7 +117,7 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 ## 当前正式任务
 
-**F02 — Multigroup Adjoint Transport Audit** 的静态审查、第一阶段 L4 数值验证和 W5/W6/W7/W9 Stage 3 修复均已完成。
+**F02 — Multigroup Adjoint Transport Audit** 的静态审查、第一阶段 L4 数值验证和 W5/W6/W7/W9 Stage 3 修复均已完成；W9 已补全普通 photon 与 photon→neutron 次级同形分支。
 
 任务档案：
 
@@ -130,10 +130,11 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - `MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
 - `MLVR_develop/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
 - `MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
+- `MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
 
-当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W9 已把伴随负单变量分支由 `(1-x)` 修正为 `(1+x)`；seeds 17/23/41 共 1438 对样本前/伴随逐项一致、零越界，合并均值 $z=0.367$。五类 MGACE oracle 5/5、既有 CTest 1/1 和 reference 完整性均通过。
+当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W9 已把 neutron、普通 photon 和 photon→neutron 次级的负单变量伴随分支由 `(1-x)` 修正为 `(1+x)`。neutron 三 seed 共 1438 对逐项一致；新增两条 photon 路径三 seed 各 900 样本零越界，合并 $z=-0.289$ 与 $1.792$，普通 photon 900 对前/伴随逐项一致。既有 CTest 1/1 和 reference 完整性通过。
 
-W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 修改当前尚未 commit：RMC 工作树仅 `src/GetMgExitErgMu.cpp` 一行改变，修复后二进制 SHA256 `fd9bd9bd...ca25db`；不更新 reference/benchmark。下一步继续任务 10/11 的 A 门禁，而不是把 W9 修复直接评为 A。
+W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 三行修改当前尚未 commit，均在 `src/GetMgExitErgMu.cpp`：neutron 一行归属任务 12，photon/secondary 两行归属任务 20260826_01；修复后二进制 SHA256 `8fff3f0f...f13c2`。不更新 reference/benchmark；官方 Table F.52 原文与完整 photon/耦合粒子能力仍未验证，不能据此评为 A。
 
 F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
 
@@ -170,6 +171,6 @@ F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 3：W5/W6/W7/W9 已修复并验证；F02 评级恢复为 C — Verify。**
+- **Stage 3：W5/W6/W7/W9 已修复并验证，W9 photon/secondary 同形分支已补全；F02 评级保持 C — Verify。**
 
-W5/W6/W7 已 commit、未 push；W9 已修改但未 commit；reference/benchmark 未更新。A formal 仍缺其余角表示、density mesh、裂变/材料矩阵和冻结统计验证。
+W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。A formal 仍缺其余角表示、density mesh、裂变/材料矩阵和冻结统计验证，完整 photon adjoint 也未获放行。

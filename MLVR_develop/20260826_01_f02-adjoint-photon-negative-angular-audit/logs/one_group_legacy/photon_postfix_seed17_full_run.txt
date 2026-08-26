@@ -1,0 +1,459 @@
+HDF5-DIAG: Error detected in HDF5 (1.10.10) thread 1:
+  #000: ../../../src/H5F.c line 412 in H5Fopen(): unable to open file
+    major: File accessibility
+    minor: Unable to open file
+  #001: ../../../src/H5Fint.c line 1826 in H5F_open(): unable to read superblock
+    major: File accessibility
+    minor: Read failed
+  #002: ../../../src/H5Fsuper.c line 622 in H5F__super_read(): truncated file: eof = 96, sblock->base_addr = 0, stored_eof = 2048
+    major: File accessibility
+    minor: File has been truncated
+Warning: RMC detects that existing STATE file (inp.State.h5) has crashed. Overwrite it.
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:38:20 Aug 25 2026
+Git commit  : 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+Git tag  : v3.5.0-alpha.0-302-g4d3e1aac
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/26 00:43:06 Wednesday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+Warning: particle energy less than minimum energy group lower bound.
+
+Source Number : 400.
+
+402 warning found.
+Gamma collisions per source particle: 21.54 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0007 minutes
+
+Input File = inp   Output File = inp.out     2026/08/26 00:43:06 Wednesday
+ Total Calculation Time                   = 4.4618e-02 seconds
+ Time in Reading input blocks             = 3.3325e-04 seconds
+ Time in Fixed Source Calculation         = 4.4195e-02 seconds
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 1.0024e-03 seconds
+ Time in Tally Process                    = 4.2247e-04 seconds

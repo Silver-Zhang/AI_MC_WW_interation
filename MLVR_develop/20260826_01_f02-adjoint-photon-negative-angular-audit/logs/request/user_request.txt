@@ -1,0 +1,5 @@
+2026-08-26
+
+请你开始完成
+
+触发上下文：上一轮建议优先审查 GetMgAdjPhoNeuExitErgMu() 与 GetMgAdjPhoExitErgMu() 中仍使用 (1-x) 的 ISANG=0,NLEG=1,x<0 分支。

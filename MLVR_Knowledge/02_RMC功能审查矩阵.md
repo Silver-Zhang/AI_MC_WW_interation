@@ -21,7 +21,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
-| F02-B | 多群Adjoint物理正确性审查 | C — Verify | W5/W6/W7/W9 已修复；仍缺其余角表示、真实 density mesh、NNUBAR=1/多材料与冻结 A formal | 既有任务；`20260825_11_f02-angular-density-asset-qualification`；`20260825_12_f02-adjoint-negative-one-variable-angular-fix` |
+| F02-B | 多群Adjoint物理正确性审查 | C — Verify | W5/W6/W7/W9 已修复；W9 已补全 photon/secondary 同形分支；仍缺其余角表示、真实 density mesh、NNUBAR=1/多材料与冻结 A formal | 既有任务；`20260825_11_f02-angular-density-asset-qualification`；`20260825_12_f02-adjoint-negative-one-variable-angular-fix`；`20260826_01_f02-adjoint-photon-negative-angular-audit` |
 | F03 | Adjoint source定义 | 已立项（待设计） | 目标响应驱动伴随源；区分通用外源执行与响应到源构造 | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
@@ -41,11 +41,11 @@ F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针�
 
 1. W5 修复前，局部密度比例 $r\ne1$ 时散射与裂变权重相对正确值多出 $1/r$；当前已改用局部总原子密度并通过 V2 密度不变性验证。
 2. W6 修复前在 `NNUBAR>1` 时混用 total/prompt nubar；当前运行时前驱群抽样已统一使用 total locator。部署双表数据的逐群核与概率差为 0，动态输入完成 10,000 个源历史和 2,487 条 bank 后继。
-3. W9 修复前，负单变量 `NLEG=1,x<0` 的伴随采样公式误用 `(1-x)`；现已改为 `(1+x)`。seeds 17/23/41 共 1438 对修复后样本前/伴随逐项一致、零越界，合并均值 $z=0.367$；既有 CTest 与 reference 不变。
+3. W9 修复前，负单变量 `NLEG=1,x<0` 的 neutron、photon 与 photon→neutron 次级伴随公式误用 `(1-x)`；现已改为 `(1+x)`。neutron 三 seed 共 1438 对逐项一致；新增两条 photon 路径各 900 样本零越界且理论矩通过，普通 photon 900 对前/伴随逐项一致；既有 CTest 与 reference 不变。
 
 同时纠正两项原草稿判断：`minErgGrp` 是合法群范围外的递减哨兵，不漏边界群；在伴随方向解释为正向物理方向反向时，方位对称且仅依赖 $\mu$ 的条件角核交换方向后 $\mu$ 不变，不能仅因未显式转置 P1/P2 或应用 $(-1)^\ell$ 判错。
 
-W9 闭合消除了当前已确认的 E 级反例，但不能把局部修复外推为 A。仍须资格化其他四类角表示的动态矩、真实 density-mesh HDF5、NNUBAR=1/多材料裂变、更多几何/边界，并在 pilot 全通过后重新冻结和执行 A formal。
+W9 已闭合三个同形负单变量分支，但不能把局部修复外推为 A 或完整 photon 能力。仍须资格化其他四类角表示的动态矩、真实 density-mesh HDF5、NNUBAR=1/多材料裂变、更多几何/边界，并在 pilot 全通过后重新冻结和执行 A formal。
 
 2026-08-25 对 Claude 第二轮反驳的再复核仍是有效的修复前证据：当时 `p_dMatAtomDen` 确为未乘局部比例的基准成员，两个权重调用点也未使用带比例 getter；双 nubar 运行时也确实直读第一 block。当前 W5/W6 修复分别替换了这些控制点，故不再把修复前缺陷当作当前 E 的依据。
 

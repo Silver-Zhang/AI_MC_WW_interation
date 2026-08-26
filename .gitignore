@@ -11,6 +11,8 @@ AIMC_WWiteration/
 # ===== 通用忽略 =====
 .DS_Store
 *.log
+!MLVR_develop/*/logs/*.log
+!MLVR_develop/*/logs/**/*.log
 .venv/
 venv/
 __pycache__/

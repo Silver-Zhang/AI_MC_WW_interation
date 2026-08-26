@@ -1,0 +1,5 @@
+stage=formal
+population_per_run=1000000
+generated_runs=10
+manifest=MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/cases/formal/manifest.json
+manifest_sha256=b7f1fa9a1ce2e7afe6bba61f323881d0c45f9a7f6f7e1c6e1bba3a1b8377e732
