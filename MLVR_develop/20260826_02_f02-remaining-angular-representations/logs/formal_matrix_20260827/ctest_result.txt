@@ -1,0 +1,1 @@
+1/1 Test #62: test_fixed_source_adjoint ........   Passed    0.68 sec

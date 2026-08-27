@@ -3,7 +3,7 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-08-26 |
-| 状态 | 实施中（formal 已冻结） |
+| 状态 | 已完成（角表示 formal 通过） |
 | 任务类型 | 物理验证 / 验证资产复用 |
 | 报告人 | GitHub Copilot |
 | 关联知识库条目 | F02 |
@@ -69,8 +69,8 @@
 - **formal 授权 / 日期**：用户 / 2026-08-27（“请执行你的计划”）。
 - **冻结范围**：仅 private two-group standard ASCII neutron MGACE、fixed source、neutron forward/adjoint、Linux serial、`ais=OFF`、当前二进制 SHA256 `8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2`。
 - **冻结资产**：`two_group_locator_oracle_v5` 资产 manifest SHA256 `f1cbaacc5112b1e58bb09bcfeca85c7cdce0b3a6711b26bbfba301459f5fc283`；四类表示 × forward/adjoint × seeds `17,23,41,59,83`，共 40 条；每条 50,000 histories、密度 1.0、RNG type 2、stride 1,000,000。
-- **冻结观测与结构门禁**：每条以生产 `MuLab` return-boundary GDB probe 取得至少 1,000 样本；exit 0、Warning 0、Error 0、Finish 1、stderr 为空、无 GDB signal、哈希匹配。任何结构门禁失败立即停止并保留反例。
-- **冻结统计规则**：连续表示严格支持域；合并样本为主检验，均值 $|z|\le3$；方差采用对应理论分布的预冻结 parametric-bootstrap 双侧 99% 接受区间。离散表示严格支持点，合并样本 Pearson $\chi^2<9.210$（$df=2$、$\alpha=0.01$）。逐 seed 结果仅作诊断，不单独决定通过/失败。统计异常不追加、换 seed、补样或调阈值；完成已冻结矩阵后统一报告。
+- **冻结观测与结构门禁**：每条以生产 `MuLab` return-boundary GDB probe 取得至少 1,000 样本；x86_64 System V ABI 下，forward 使用 `CDAceData::GetMgNeuExitErgMu(int, double, double&, double&, CDRNG&)` 的 `rcx`，adjoint 使用 `CDAceData::GetMgAdjNeuExitErgMu(CDParticleState&, double&, CDRNG&)` 的 `rdx`。exit 0、Warning 0、Error 0、Finish 1、stderr 为空、无 GDB signal、哈希匹配。任何结构门禁失败立即停止并保留反例。
+- **冻结统计规则**：连续表示严格支持域；合并样本为主检验，均值 $|z|\le3$；方差采用对应理论分布的 parametric-bootstrap 双侧 99% 接受区间：每表示/模式以合并样本量 $N=5000$、固定伪随机种子 `20260827`、20,000 个理论独立重采样、无偏样本方差，并取经验 0.5%/99.5% 分位数。离散表示严格支持点，合并样本 Pearson $\chi^2<9.210$（$df=2$、$\alpha=0.01$）。逐 seed 结果仅作诊断，不单独决定通过/失败。统计异常不追加、换 seed、补样或调阈值；完成已冻结矩阵后统一报告。
 
 > 未填写本节前，Agent 不得改动 `../RMC` 下的任何文件。
 
@@ -88,6 +88,8 @@
 | 6 | 修正后两群 clean pilot | 新资产、四类 × forward/adjoint、seed 17、300 histories、密度 1.0 | 8/8 真实进程 exit 0，`Warning=0`、`Error=0`、`Finish=1`、stderr 0 bytes；multi-bin forward 不再出现越界 warning。证据见 `logs/two_group_locator_oracle_v5/`。 |
 | 7 | formal 门禁 | 本 README 第 1、3、4 节冻结门禁 | pilot 前置条件已满足。 |
 | 8 | formal 冻结 | README 第 4 节 | 用户授权 40 条、50,000 histories/条、五固定 seeds、1,000 个 GDB 返回样本/条及预冻结的结构/统计门禁。 |
+| 9 | isolated formal matrix | 新 `/tmp/mlvr_f02_angular_formal_20260827_retry2` | 修正观测器目录隔离及 forward/adjoint 目标函数后，40/40 完整输运均通过结构门禁，并取得 40,000 个生产 `MuLab` 返回样本。 |
+| 10 | formal statistics + regression | `analyze_formal_matrix.py`、CTest | 8 个表示/模式合并统计均通过支持域、均值、parametric-bootstrap 方差或 Pearson 门禁；既有 `test_fixed_source_adjoint` 1/1 通过。 |
 
 **代码改动**：RMC 无改动。任务侧新增两群资产/输入生成器和 GDB 返回值 probe；当前两群 multi-bin 生成器仅为失败 pilot 的可复核材料，未作为正式资产。
 
@@ -109,6 +111,9 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 | 一群整程 | 四类 × forward/adjoint | 8/8 exit 0、一个 Finish；但每条 history 均有最低群下界 warning，不能满足 formal 的 clean-run 门槛。 |
 | 两群 locator/readback | `verify_two_group_angular_mgace.py --root /tmp/mlvr_two_group_locator_oracle_20260826_v5/assets` | 4/4 qualified；报告 SHA256 `160d7e09...ff9a`。 |
 | 修正后两群整程 pilot | `generate_two_group_angular_mgace.py` + `generate_cases.py` + 8 条运行 | 8/8 exit 0、零 Warning、零 Error、恰好一个 Finish、stderr 0 bytes；包括 multi-bin forward。汇总 SHA256 `695e0c03...c74f7`。 |
+| 正式结构矩阵 | `run_formal_matrix.py`，4 类 × forward/adjoint × 5 seeds | 40/40：每条 50,000 histories、1,000 生产 GDB 返回样本；exit 0、Warning/Error 0、Finish 1、stderr 0。报告 SHA256 `d9e94405...a7b7fe`。 |
+| 正式统计矩阵 | `analyze_formal_matrix.py`，合并每表示/模式 5,000 样本 | 连续三类均支持域正确、$|z|\le1.215$、方差在 20,000 次固定种子 parametric-bootstrap 99% 区间内；离散两模式均仅取允许支持点，$\chi^2=0.1483<9.210$。报告 SHA256 `87526140...bab1`。 |
+| 既有回归 | `ctest --test-dir /tmp/mlvr_f02_rmc_build --output-on-failure -R test_fixed_source_adjoint` | 1/1 passed，0.68 s。 |
 
 ```
 pilot_asset_report_sha256=3ecdbec876af3008a9c0fc23926f5bb17c09df4e6ff3b8f8e3dd304ae85c37f5
@@ -118,7 +123,11 @@ two_group_locator_oracle_report_sha256=160d7e09faf956428c61510d2cd92dd26fbd1c2de
 two_group_locator_run_manifest_sha256=1a2fefc79d55ff2596543edfd5fdc86810c05935908ee32e1cb8846998cf74aa
 two_group_locator_clean_report_sha256=695e0c03b6762c5b3509a4a3639eac3ba66b7728d55c81df3f441a864c0c74f7
 two_group_multi_bin_forward_warnings=0
-formal_manifest=not_created
+formal_asset_manifest_sha256=7f5013d685c6774cfac9b8bf930ad5e38ce2e995572b8d6edcfa0b81bcb410a9
+formal_oracle_report_sha256=c6c43ef6a9fd97393dc19732cafca4c7eeed3a0c3b10f7d8347ad3a3cbc4a1c9
+formal_run_manifest_sha256=a05de5527612966fec185fc9e852c1b3fcc50762c4b85302fe8e627bf510c1c1
+formal_gdb_report_sha256=d9e94405d78168c26120917e7c11795f72d6f975d4de55db50a33497e5a7b7fe
+formal_statistics_sha256=87526140615c944d67748eab34ad6d071eb417e8ddda06c546fdeb35d9e3bab1
 ```
 
 **实验设置（算法实验必填）**：
@@ -127,14 +136,14 @@ formal_manifest=not_created
 - 依赖版本：Python 3.12.3、GDB 15.1、RMC binary SHA256 `8fff3f0f...f13c2`；串行、`ais=OFF`。
 - 基准对比：不是 RE/FOM 实验；对照为任务 11 独立资产 oracle 的理论分布矩。
 
-**未覆盖到的验证**：四类表示的 warning-free 正式动态矩、方差/离散频率的正式统计检验、density-mesh HDF5、`NNUBAR=1`、多材料、更多群对和预冻结响应级 formal 矩阵均未覆盖。两群 multi-bin 的 locator/格式语义现已独立闭合；首轮 warning 是私有资产 locator 布局错误，不构成 RMC 新缺陷证据。
+**未覆盖到的验证**：density-mesh HDF5、`NNUBAR=1`、多材料、更多群对、几何/边界以及范围外的 photon/secondary、AIS/HDF5、CE、MPI/OpenMP 和 Windows 均未覆盖。两群 multi-bin 的 locator/格式语义现已独立闭合；首轮 warning 是私有资产 locator 布局错误，不构成 RMC 新缺陷证据。
 
 ---
 
 ## 7. 结论与遗留（⑤ 归档）
 
-- **结论**：一群私有资产下，四类表示在已采到的前向/伴随函数返回样本中与静态理论分布相容，说明生产路径和 ABI-GDB 观测器可达；一群整程仍有已知能群告警。两群 P0/XPN/PN locator 经独立 oracle 闭合后，四类 × 前向/伴随 8 条 dense clean pilot 全部通过；multi-bin forward 的首轮越界来自私有资产 locator 布局错误，修正后为 0。
-- **遗留问题 / 后续待办**：用户需冻结正式矩阵的多 seed、每条 histories、连续分布支持域/均值/方差门槛、离散余弦频数 goodness-of-fit 判据及失败停止规则。该用户决策前不得运行或宣称 formal 统计结论。
+- **结论**：四类 private two-group standard ASCII neutron MGACE 角表示的正式矩阵通过：4 类 × forward/adjoint × 5 固定 seeds 的 40 条完整输运均 clean；40,000 个生产 `MuLab` 返回样本通过冻结的支持域、均值、parametric-bootstrap 方差和离散 Pearson 检验。multi-bin forward 的首轮越界由私有资产 locator 布局引起，修正后未重现。
+- **遗留问题 / 后续待办**：本任务仅闭合 F02 的“其余角表示 + 冻结统计矩阵”缺口。F02 仍须真实 density-mesh HDF5、`NNUBAR=1`/多材料裂变及更多几何/边界等独立任务；不得将本任务通过外推为 F02 A — Ready。
 - **知识库同步**：未同步评级；F02 仍为 C — Verify。
 - **是否已提交**：RMC 未提交、未推送、未合并；任务档案尚未提交。
 
@@ -149,6 +158,7 @@ formal_manifest=not_created
 | 2026-08-26 | 一群 ABI-GDB pilot 取得四类前向/伴随生产样本；一群整程因已知下界 warning 不可作 clean formal。 |
 | 2026-08-26 | 两群 multi-bin 前向发生 3,035 条越界 warning；按门禁停止，formal 未冻结。 |
 | 2026-08-26 | 建立独立 two-group neutron P0/XPN/PN readback oracle；修正私有资产 locator 布局后，四类 × 前向/伴随 8/8 clean pilot 通过。 |
+| 2026-08-27 | 用户冻结正式矩阵；隔离 GDB 采样与完整输运后，40/40 clean，40,000 个样本统计通过；任务完成，F02 保持 C — Verify。 |
 
 ---
 
@@ -168,6 +178,9 @@ formal_manifest=not_created
 | 6 | locator 语义定位 | `RMC/src/ReadAceData.cpp`、`CheckMgAceBlock.cpp`、`GetMgExitErgMu.cpp`、`Nuclide.h` | 确认表在内存中一基读取；P0 行 locator 由 `NUS/NDS` 预计算；前向路径经 `JXS(16)→LXPN→PND` 和 `JXS(17)→LPN→PN` 两级解引用。 |
 | 7 | 两群独立 oracle | `verify_two_group_angular_mgace.py`、`logs/two_group_locator_oracle_v5/` | 4/4 readback qualified；复核连续/离散理论矩与 CDF。 |
 | 8 | 最新两群 clean pilot | 新 `/tmp/mlvr_two_group_locator_oracle_20260826_v5` | 四类 × forward/adjoint、seed 17、300 histories、密度 1.0 均 exit 0、Warning/Error 0、Finish 1、stderr 0；formal 尚待用户冻结。 |
+| 9 | formal 观测器校验 | `/tmp`、`sample_mulab_gdb.py` | 确认 forward 的 `dExitMu` 地址为 `rcx`、adjoint 的 `MuLab` 地址为 `rdx`；GDB 和整程须隔离目录，避免观测器生成的 HDF5 产物干扰整程。 |
+| 10 | formal 40 条矩阵 | `run_formal_matrix.py` | 全新临时根目录，40/40 结构门禁通过；每条 50,000 histories 与 1,000 返回样本。 |
+| 11 | formal 重分析与回归 | `analyze_formal_matrix.py`、CTest | 20,000 次固定种子 parametric bootstrap 与离散 Pearson 通过；固定源伴随 CTest 1/1 通过。 |
 
 **可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
 （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含
