@@ -1,0 +1,19 @@
+xsdir=/home/silver/NucXS_Library/RMC_DATA/xsdir sha256=970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b
+zaid=10005.01M file=/home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td address=161 sha256=cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c NGRP=7 NNUBAR=1 LSIGF=22 LNU=29 LCHI=36
+strength=6.32308961777e-06,incident_g=4,exit_g=1,Einc_MeV=2.985e-05,Eout_MeV=5.68
+strength=4.42856114204e-06,incident_g=4,exit_g=2,Einc_MeV=2.985e-05,Eout_MeV=0.6846
+strength=2.50847985563e-06,incident_g=7,exit_g=1,Einc_MeV=6.5e-08,Eout_MeV=5.68
+strength=1.75688738983e-06,incident_g=7,exit_g=2,Einc_MeV=6.5e-08,Eout_MeV=0.6846
+strength=8.62086251911e-07,incident_g=6,exit_g=1,Einc_MeV=3.8e-07,Eout_MeV=5.68
+strength=6.03787374066e-07,incident_g=6,exit_g=2,Einc_MeV=3.8e-07,Eout_MeV=0.6846
+strength=5.59134867729e-07,incident_g=3,exit_g=1,Einc_MeV=0.0046278,Eout_MeV=5.68
+strength=3.91606492722e-07,incident_g=3,exit_g=2,Einc_MeV=0.0046278,Eout_MeV=0.6846
+zaid=10001.01M file=/home/silver/NucXS_Library/RMC_DATA/multigroup/c5g7td address=1 sha256=cc6951edc9cd2fc8045d6b6ab163fea2394d995749ec85da7ae40ed40540ed4c NGRP=7 NNUBAR=2 LSIGF=22 LNU=29 LCHI=43
+strength=0.26044947041,incident_g=7,exit_g=1,Einc_MeV=6.5e-08,Eout_MeV=5.68
+strength=0.182413420313,incident_g=7,exit_g=2,Einc_MeV=6.5e-08,Eout_MeV=0.6846
+strength=0.100120227799,incident_g=6,exit_g=1,Einc_MeV=3.8e-07,Eout_MeV=5.68
+strength=0.070122136039,incident_g=6,exit_g=2,Einc_MeV=3.8e-07,Eout_MeV=0.6846
+strength=0.0223847351358,incident_g=4,exit_g=1,Einc_MeV=2.985e-05,Eout_MeV=5.68
+strength=0.0214726965651,incident_g=5,exit_g=1,Einc_MeV=2.365e-06,Eout_MeV=5.68
+strength=0.0156778053435,incident_g=4,exit_g=2,Einc_MeV=2.985e-05,Eout_MeV=0.6846
+strength=0.0150390323989,incident_g=5,exit_g=2,Einc_MeV=2.365e-06,Eout_MeV=0.6846
