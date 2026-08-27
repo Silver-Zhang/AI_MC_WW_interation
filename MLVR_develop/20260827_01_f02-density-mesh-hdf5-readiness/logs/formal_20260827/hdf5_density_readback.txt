@@ -1,0 +1,10 @@
+HDF5 "/home/workspace/AI_MC_WW_interation/MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/logs/formal_20260827/density_mesh.h5" {
+DATASET "/density" {
+   DATATYPE  H5T_IEEE_F64LE
+   DATASPACE  SIMPLE { ( 2, 1, 1 ) / ( 2, 1, 1 ) }
+   DATA {
+   (0,0,0): 0.5,
+   (1,0,0): 2
+   }
+}
+}
