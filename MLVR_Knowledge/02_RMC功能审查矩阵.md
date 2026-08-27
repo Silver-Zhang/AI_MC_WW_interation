@@ -21,7 +21,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
-| F02-B | 多群Adjoint物理正确性审查 | C — Verify | W5/W6/W7/W9 已修复；W9 已补全 photon/secondary 同形分支；仍缺其余角表示、真实 density mesh、NNUBAR=1/多材料与冻结 A formal | 既有任务；`20260825_11_f02-angular-density-asset-qualification`；`20260825_12_f02-adjoint-negative-one-variable-angular-fix`；`20260826_01_f02-adjoint-photon-negative-angular-audit` |
+| F02-B | 多群Adjoint物理正确性审查 | C — Verify | 当前源码机制与多项 formal 汇总正证据相容；angular/density formal 的 raw transport 证据及逐 seed 强制门禁须恢复 | `20260827_04_f02-formal-evidence-recovery`；既有 F02 验证任务 |
 | F03 | Adjoint source定义 | 已立项（待设计） | 目标响应驱动伴随源；区分通用外源执行与响应到源构造 | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
@@ -37,7 +37,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 
 F02-A 已确认默认标准 ACE 多群路径存在固定源伴随输运链。
 
-F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。standard ACE、`ais=OFF`、MGACE fixed-source neutron adjoint 当前恢复为 **C — Verify**，不是 A — Ready：
+F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。当前冻结作用域（Linux x86_64、serial、`ais=OFF`、standard ASCII MGACE、fixed-source neutron adjoint）恢复为 **C — Verify**：尚未发现新的已证实 RMC 物理缺陷，但 angular/density formal 的证据留存不足以独立闭合 A。
 
 1. W5 修复前，局部密度比例 $r\ne1$ 时散射与裂变权重相对正确值多出 $1/r$；当前已改用局部总原子密度并通过 V2 密度不变性验证。
 2. W6 修复前在 `NNUBAR>1` 时混用 total/prompt nubar；当前运行时前驱群抽样已统一使用 total locator。部署双表数据的逐群核与概率差为 0，动态输入完成 10,000 个源历史和 2,487 条 bank 后继。
@@ -45,7 +45,19 @@ F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针�
 
 同时纠正两项原草稿判断：`minErgGrp` 是合法群范围外的递减哨兵，不漏边界群；在伴随方向解释为正向物理方向反向时，方位对称且仅依赖 $\mu$ 的条件角核交换方向后 $\mu$ 不变，不能仅因未显式转置 P1/P2 或应用 $(-1)^\ell$ 判错。
 
-W9 已闭合三个同形负单变量分支，但不能把局部修复外推为 A 或完整 photon 能力。仍须资格化其他四类角表示的动态矩、真实 density-mesh HDF5、NNUBAR=1/多材料裂变、更多几何/边界，并在 pilot 全通过后重新冻结和执行 A formal。
+W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
+
+1. 四类其余 MGACE 条件角表示（isotropic、正单变量、等概率 multi-bin、discrete-cosine）完成 40/40 clean formal 和 40,000 个生产样本的支持域/矩/频数检验。历史“强 P1/P2”措辞不准确；`NLEG/ISANG` 在本路径表示群对条件余弦分布，不等同于传统 Legendre P1/P2 矩输运。
+2. 私有 HDF5 position-dependent density mesh 完成独立 readback、位置依赖观测和 10/10 clean 响应 formal，合并 $z=0.0984$。
+3. 部署 `10005.01m` 的 NNUBAR=1 纯材料和 `10005:10001=0.9999:0.0001` 的 NNUBAR=1 主导双裂变核混合材料完成 20/20 clean formal，合并 $z=0.9563$ 与 $0.3748$。
+
+最终复核按冻结 F02 需求裁定：“更多几何/边界”不是无限枚举门槛。现有球、内球/外壳和双盒证据覆盖了泄漏、曲面/平面穿越、材料与密度界面等已识别风险；没有证据要求任意几何数量才能评 A。反射边界等未测机制仍明确排除，若第一版实际问题需要则另行审查。
+
+**独立审核后的证据限制**：角表示 40 条和 density-mesh 10 条 formal 的逐运行 `stdout`、`stderr`、`inp.out`、exit-code 与 tally 原始输出未归档；现有汇总字段不能替代独立逐条读取。并且 angular analyzer 的最终接受状态只强制 aggregate 门槛，不强制 README 所述的逐 seed 统计门槛。故前述结果目前只能作为强正向汇总证据，不可作为 A 的独立可审计闭环。任务 `20260827_04_f02-formal-evidence-recovery` 已建立；需在冻结快照下保留 raw evidence 重跑并使用逐 seed + aggregate checker，才可重新评估 A。
+
+**身份边界**：所有正向证据针对 base commit `6d2087518e0d9f23574d629f5fde361c79f519e4` 加 W9 三行冻结工作树补丁；完整 diff SHA256 为 `5eec92f929ca93caaabeaacd64d5c92f44f1dc89c61c11997ab962fe8957c756`，运行二进制 SHA256 为 `8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2`。base commit 单独不含 W9，不能称为本次 verified revision。
+
+**A 的能力边界**：不覆盖完整 photon/耦合粒子、continuous-energy、AIS/HDF5 核数据、delayed、GPT、MPI/OpenMP、Windows、反射边界、任意机制组合，也不替代 F03 伴随源、F04 adjoint+WW 或 F06/F07 field/RE 的独立分类。
 
 2026-08-25 对 Claude 第二轮反驳的再复核仍是有效的修复前证据：当时 `p_dMatAtomDen` 确为未乘局部比例的基准成员，两个权重调用点也未使用带比例 getter；双 nubar 运行时也确实直读第一 block。当前 W5/W6 修复分别替换了这些控制点，故不再把修复前缺陷当作当前 E 的依据。
 
@@ -80,3 +92,8 @@ W9 已闭合三个同形负单变量分支，但不能把局部修复外推为 A
 - 2026-08-25：完成可裂变响应级互易性验证与 F02 阶段复核；`g6↔g1` 正式 10 个 1M-history 运行全部通过，五组及合并 $z$ 均在预设门槛内。因仅覆盖单材料/群对/几何，F02-B 保持 C — Verify，工作顺序进入 F03。
 - 2026-08-25：任务 11 以私有 MGACE、独立 readback 和低光学厚度生产路径确认 W9 负单变量伴随角核支持域越界；F02-B 改判 E，A formal 停止，修复任务 12 进入待决策。
 - 2026-08-25：任务 12 按人工批准的方案 A 修复 W9；三 seed 动态支持域/矩、五类资产 oracle、既有 CTest 和 reference 完整性均通过。F02-B 恢复 C — Verify，A 门禁仍保留。
+- 2026-08-27：其余四类 MGACE 条件角表示完成 40/40 clean formal，40,000 个生产样本通过冻结分布门槛；旧“强 P1/P2”改按实际条件余弦表示解释。
+- 2026-08-27：真实 HDF5 density mesh 完成 readback、位置依赖和 10/10 clean formal，合并 $z=0.0984$。
+- 2026-08-27：部署 NNUBAR=1 纯材料和 NNUBAR=1 主导双裂变核混合材料完成 20/20 clean formal，合并 $z=0.9563/0.3748$。
+- 2026-08-27：最终风险复核确认冻结需求和全部明确 C 门槛已闭合；F02-B 改为 A — Ready（有界、冻结工作树快照）。开放式“更多几何/边界”不再作为无终点门槛，未测边界机制与相邻功能继续明确排除。
+- 2026-08-27：Claude 独立审核确认未发现新的已证实 RMC 物理缺陷，但指出 angular/density formal 未留存逐运行 raw transport 输出，且 angular checker 未强制逐 seed 接受门槛；原 A 结论下调为 C — Verify，建立 `20260827_04_f02-formal-evidence-recovery` 等待用户决定是否重跑恢复可审计证据。

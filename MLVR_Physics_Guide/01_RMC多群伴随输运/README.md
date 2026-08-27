@@ -2,7 +2,7 @@
 
 ## 一句话结论
 
-在当前基线（RMC 3.5.0、`Neural_Network_WW_Iteration`、`6d208751...` 加未提交 W9 三行修复、standard ACE、`ais=OFF`）下，RMC 的 fixed-source neutron adjoint 为 **C — Verify**：W5/W6/W7/W9 均已闭合，但 A formal 仍有未验证维度。
+在当前冻结快照（RMC 3.5.0、`Neural_Network_WW_Iteration`、base `6d208751...` 加 W9 三行 diff `5eec92f9...c756`、binary `8fff3f0f...f13c2`、standard ASCII MGACE、Linux serial、`ais=OFF`）下，RMC 的 fixed-source neutron adjoint 为 **C — Verify**：没有新增的已证实物理 defect，但 angular/density formal 的原始逐运行证据与逐 seed 接受门槛尚未独立闭合。
 
 ## 适用范围
 
@@ -24,7 +24,10 @@
 | W6 双 nubar 裂变核 | 已修复；运行时与初始化统一使用 total 核，逐群核/概率差为 0，动态 bank 路径可达，单一裂变主导响应案例通过互易性判据 |
 | W7 photon 群初始化 | 已修复并验证；neutron-only `c5g7td` 正常完成 10,000 个源历史 |
 | W9 负单变量角核 | neutron、普通 photon、photon→neutron 次级均已修复；neutron 1438 对、普通 photon 900 对逐项一致，两条 photon 路径各 900 样本零越界 |
-| 完整能力 | **C — Verify**；其余角表示、density mesh、裂变/材料和 A formal 仍未完成 |
+| 其余条件角表示 | 四类 × forward/adjoint × 五 seeds，40/40 clean；40,000 个生产样本通过支持域、矩、方差/Pearson 门槛 |
+| HDF5 density mesh | 两区域读回、位置依赖和 10/10 clean formal 通过，合并 $z=0.0984$ |
+| NNUBAR=1/混合裂变材料 | 20/20 clean formal 通过，合并 $z=0.9563/0.3748$ |
+| 完整能力 | **C — Verify**；任务 `20260827_04_f02-formal-evidence-recovery` 完成独立 raw-evidence formal 前不得升级 A |
 
 ## 技术证据
 
@@ -38,5 +41,9 @@
 - [W9 私有角资产与动态确认](../../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
 - [W9 修复与验证](../../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
 - [W9 photon/secondary 修复与验证](../../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
+- [其余条件角表示 formal](../../MLVR_develop/20260826_02_f02-remaining-angular-representations/README.md)
+- [真实 density mesh formal](../../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
+- [NNUBAR=1/混合材料 formal](../../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
+- [最终 A 复核](../../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
 - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)

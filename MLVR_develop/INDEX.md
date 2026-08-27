@@ -7,9 +7,11 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-08-27 | [f02-nnubar-material-reciprocity](20260827_02_f02-nnubar-material-reciprocity/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 部署 `10005` NNUBAR=1 及 NNUBAR=1 主导的 `10005/10001` 混合裂变材料，各五对 formal 共 20/20 clean；合并 $z=0.9563$ 与 $0.3748$；F02 仍须总体 A 门槛复核 |
-| 2026-08-27 | [f02-density-mesh-hdf5-readiness](20260827_01_f02-density-mesh-hdf5-readiness/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 私有 HDF5 两区域 mesh 读回、位置依赖 pilot 与五 seed 10/10 clean formal 通过；合并互易性 $z=0.0984$；F02 仍缺裂变/材料与几何门槛；RMC 只读且暂不同步 |
-| 2026-08-26 | [f02-remaining-angular-representations](20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 已完成 | F02 | 四类 × 前向/伴随 × 五 seeds 的 40/40 clean formal 通过；40,000 样本支持域/矩/离散频数通过；仅闭合角表示缺口，F02 仍为 C — Verify；RMC 只读且暂不同步 |
+| 2026-08-27 | [f02-formal-evidence-recovery](20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 待决策 | F02 | Claude 审核确认 angular/density formal 未归档逐运行 raw 输出，且 angular checker 仅强制 aggregate；需用户决定完整重跑恢复 A，或保持 C |
+| 2026-08-27 | [f02-final-a-readiness-review](20260827_03_f02-final-a-readiness-review/README.md) | 物理审查 / 证据归并 | 已完成（结论已被独立审核下调） | F02 | 原有界 A 结论被 Claude 审核否决：formal 原始证据留存与逐 seed 接受门禁不足；当前 F02 为 C — Verify |
+| 2026-08-27 | [f02-nnubar-material-reciprocity](20260827_02_f02-nnubar-material-reciprocity/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 部署 `10005` NNUBAR=1 及 NNUBAR=1 主导的 `10005/10001` 混合裂变材料，各五对 formal 共 20/20 clean；合并 $z=0.9563$ 与 $0.3748$；最终 A 复核已纳入 |
+| 2026-08-27 | [f02-density-mesh-hdf5-readiness](20260827_01_f02-density-mesh-hdf5-readiness/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 私有 HDF5 两区域 mesh 读回、位置依赖 pilot 与五 seed 10/10 clean formal 通过；合并互易性 $z=0.0984$；最终 A 复核已纳入 |
+| 2026-08-26 | [f02-remaining-angular-representations](20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 已完成 | F02 | 四类 × 前向/伴随 × 五 seeds 的 40/40 clean formal 通过；40,000 样本支持域/矩/离散频数通过；最终 A 复核已纳入；RMC 只读且暂不同步 |
 | 2026-08-26 | [f02-adjoint-photon-negative-angular-audit](20260826_01_f02-adjoint-photon-negative-angular-audit/README.md) | 缺陷修复 / 数值验证 | 已完成 | F02 / W9 | photon 与 photon→neutron 两处分支修复；两群 6/6 整程零 Warning/零 Error，三 seed 共 1800 样本零越界；配对/CTest/reference 通过；未 commit |
 | 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
 | 2026-08-25 | [f02-angular-density-asset-qualification](20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |

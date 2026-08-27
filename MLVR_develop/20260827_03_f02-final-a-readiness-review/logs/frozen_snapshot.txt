@@ -1,0 +1,8 @@
+F02 final A-readiness frozen evidence snapshot
+date=2026-08-27
+Neural_Network_WW_Iteration
+6d2087518e0d9f23574d629f5fde361c79f519e4
+ M src/GetMgExitErgMu.cpp
+rmc_diff_sha256=5eec92f929ca93caaabeaacd64d5c92f44f1dc89c61c11997ab962fe8957c756
+rmc_diff_numstat=3	3	src/GetMgExitErgMu.cpp;
+rmc_binary_sha256=8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2

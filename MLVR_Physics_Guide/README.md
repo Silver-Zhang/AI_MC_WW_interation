@@ -18,9 +18,9 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W5/W6/W7/W9 均已修复；W9 的 neutron、普通 photon 与 photon→neutron 次级负单变量分支现均使用正确的 `(1+x)`。neutron 三 seed 共 1438 对逐项一致；两条 photon 路径各 900 样本零越界，普通 photon 900 对前/伴随逐项一致。
+RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **C — Verify**：W5/W6/W7/W9 均已修复，四类条件角表示、真实 density mesh、NNUBAR=1 与双裂变核混合材料均有强正向 formal 汇总。独立审核发现 angular/density 的逐运行原始输运输出未归档、angular checker 未强制逐 seed 门槛，因此不能将这些汇总独立验收为 A 级证据；正启动证据恢复任务。
 
-W9 的 E 级反例已经闭合，但局部修复不能自动放行 A，也不代表完整 photon adjoint 已验证。其他四类角表示的动态矩、真实 density mesh、NNUBAR=1/多材料裂变以及预冻结 formal 矩阵仍未完成。
+该结论不代表完整 photon adjoint、CE、AIS/HDF5 核数据、delayed、并行环境、Windows、反射边界或相邻 F03/F04/F06/F07 能力已验证。W9 的 photon/secondary 两条同形分支虽已修复，但仍只是局部证据。
 
 ## 阅读与维护原则
 
@@ -40,6 +40,10 @@ W9 的 E 级反例已经闭合，但局部修复不能自动放行 A，也不代
 - [W9 私有角资产与动态确认](../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
 - [W9 修复与验证](../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
 - [W9 photon/secondary 修复与验证](../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
+- [其余条件角表示 formal](../MLVR_develop/20260826_02_f02-remaining-angular-representations/README.md)
+- [真实 density mesh formal](../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
+- [NNUBAR=1/混合材料 formal](../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
+- [F02 最终 A 复核](../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
@@ -53,3 +57,5 @@ W9 的 E 级反例已经闭合，但局部修复不能自动放行 A，也不代
 - 2026-08-25：私有 MGACE 独立 readback 与低光学厚度动态路径确认 W9 负单变量伴随角核支持域越界；完整能力改判 E，停止 density-HDF5 与 A formal。
 - 2026-08-25：W9 负单变量公式修正为 `(1+x)`；三 seed 共 1438 对样本零越界且前/伴随逐项一致，CTest/reference/oracle 通过。完整能力恢复 C — Verify，A 门禁不变。
 - 2026-08-26：W9 的普通 photon 与 photon→neutron 次级同形分支也经生产动态反例确认并修正为 `(1+x)`；两路径三 seed 各 900 样本零越界，普通 photon 900 对逐项一致。该局部结论不放行完整 photon adjoint。
+- 2026-08-27：其余四类条件角表示、真实 density mesh、NNUBAR=1/混合裂变材料的冻结 formal 全部完成；最终风险复核将 standard ASCII MGACE fixed-source neutron adjoint 改判为有界 A — Ready。
+- 2026-08-27：Claude 独立审核发现 angular/density formal 的原始逐运行证据和逐 seed 强制接受门槛不足；未发现新的物理 defect，但 F02 下调为 C — Verify，等待证据恢复后重新评估。

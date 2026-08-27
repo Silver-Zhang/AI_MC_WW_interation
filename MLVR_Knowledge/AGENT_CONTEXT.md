@@ -131,10 +131,16 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - `MLVR_develop/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
 - `MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
 - `MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
+- `MLVR_develop/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
+- `MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
+- `MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
+- `MLVR_develop/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
 
-当前结论：审查范围内的 standard MGACE fixed-source neutron adjoint 为 **C — Verify**，不是 A。W9 已把 neutron、普通 photon 和 photon→neutron 次级的负单变量伴随分支由 `(1-x)` 修正为 `(1+x)`。neutron 三 seed 共 1438 对逐项一致；新增两条 photon 路径三 seed 各 900 样本零越界，合并 $z=-0.289$ 与 $1.792$，普通 photon 900 对前/伴随逐项一致。既有 CTest 1/1 和 reference 完整性通过。
+当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **C — Verify**。W5/W6/W7/W9 当前源码机制及多项 formal 汇总均为强正证据，但 Claude 独立审核确认 angular/density formal 没有归档逐运行 raw transport 输出，且 angular checker 仅强制 aggregate；故 A 证据不可独立审计。`20260827_04_f02-formal-evidence-recovery` 已待决策：完整重跑并留存 raw evidence 后才可重新评估 A。
 
-W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 三行修改当前尚未 commit，均在 `src/GetMgExitErgMu.cpp`：neutron 一行归属任务 12，photon/secondary 两行归属任务 20260826_01；修复后二进制 SHA256 `8fff3f0f...f13c2`。不更新 reference/benchmark；官方 Table F.52 原文与完整 photon/耦合粒子能力仍未验证，不能据此评为 A。
+W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 三行修改尚未 commit，均在 `src/GetMgExitErgMu.cpp`；完整 diff SHA256 `5eec92f9...c756`，修复后二进制 SHA256 `8fff3f0f...f13c2`。A 只归属于“base `6d208751...` + 该冻结 diff + 该 binary”快照，不能称 base commit 单独 Ready。未 commit 不妨碍有哈希的物理证据，但何时提交/推送仍由用户决定。
+
+有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、MPI/OpenMP、Windows、反射边界或任意机制组合；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测边界机制，应另立针对性审查。
 
 F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
 
@@ -171,6 +177,6 @@ F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 3：W5/W6/W7/W9 已修复并验证，W9 photon/secondary 同形分支已补全；F02 评级保持 C — Verify。**
+- **Stage 3：W5/W6/W7/W9 已修复并验证；F02 当前为 C — Verify，等待 formal 原始证据恢复。**
 
-W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。A formal 仍缺其余角表示、density mesh、裂变/材料矩阵和冻结统计验证，完整 photon adjoint 也未获放行。
+W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。F02 不应追加无终点覆盖矩阵，但需先解决已确认的 formal 证据审计缺口；在用户决定是否重跑前，继续 F03 前应保留 F02 的 C 状态。
