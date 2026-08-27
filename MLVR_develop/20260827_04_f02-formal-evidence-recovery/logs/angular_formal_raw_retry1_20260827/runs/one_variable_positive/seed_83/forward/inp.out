@@ -1,0 +1,76 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:38:20 Aug 25 2026
+Git commit  : 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+MPI parallel: OFF
+
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/27 20:46:09 Thursday 
+
+------------------ Input File Start -------------------- 
+UNIVERSE 0
+CELL 1 -1 MAT=1 DENS=1.0
+CELL 2 1 MAT=0 VOID=1
+
+SURFACE
+SURF 1 SO 5.0
+
+MATERIAL
+MAT 1 1.0
+    10006.93m 1.0
+MGACE ERGGRP=2
+
+FIXEDSOURCE
+PARTICLE POPULATION=50000
+RNG TYPE=2 SEED=83 STRIDE=1000000
+
+EXTERNALSOURCE
+SOURCE 1 FRACTION=1 PARTICLE=1 CELL=1 POINT=0 0 0 WEIGHT=1 ENERGY=3.0
+
+PTRAC NEU=1 SRC=1 COL=1 SUR=1 MAX=500000 MEPH=1000 WRITE=1 CELL=1 2 GRP=1
+
+TALLY
+CELLTALLY 1 TYPE=1 ESTIMATOR=1 PARTICLE=1 CELL=1 ENERGY=-1
+
+---------------------- Input File End------------------------ 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Cell-mapping method is used to accelerate tally treatment.
+
+Source Number : 50000.
+
+Neutron collisions per source particle: 10.03 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0151 minutes
+
+Input File = inp   Output File = inp.out     2026/08/27 20:46:10 Thursday
+ Total Calculation Time                   = 9.0528e-01 seconds
+
+Time spent in each part of calculation:
+ Time in Reading input blocks             = 1.9450e-04 seconds
+ Time in Fixed Source Calculation         = 1.6766e-01 seconds
+ Calculation rate in Fixed Source         = 2.9822e+05 particles/second
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 3.9848e-02 seconds

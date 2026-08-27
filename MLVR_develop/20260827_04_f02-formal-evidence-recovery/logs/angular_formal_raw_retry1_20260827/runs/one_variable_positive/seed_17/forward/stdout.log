@@ -1,0 +1,96 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:38:20 Aug 25 2026
+Git commit  : 4d3e1aac60f1c40062f05e5d532afb6c7eb6fb4b
+Git tag  : v3.5.0-alpha.0-302-g4d3e1aac
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/27 20:45:48 Thursday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+neutron : 1000
+neutron : 2000
+neutron : 3000
+neutron : 4000
+neutron : 5000
+neutron : 6000
+neutron : 7000
+neutron : 8000
+neutron : 9000
+neutron : 10000
+neutron : 11000
+neutron : 12000
+neutron : 13000
+neutron : 14000
+neutron : 15000
+neutron : 16000
+neutron : 17000
+neutron : 18000
+neutron : 19000
+neutron : 20000
+neutron : 21000
+neutron : 22000
+neutron : 23000
+neutron : 24000
+neutron : 25000
+neutron : 26000
+neutron : 27000
+neutron : 28000
+neutron : 29000
+neutron : 30000
+neutron : 31000
+neutron : 32000
+neutron : 33000
+neutron : 34000
+neutron : 35000
+neutron : 36000
+neutron : 37000
+neutron : 38000
+neutron : 39000
+neutron : 40000
+neutron : 41000
+neutron : 42000
+neutron : 43000
+neutron : 44000
+neutron : 45000
+neutron : 46000
+neutron : 47000
+neutron : 48000
+neutron : 49000
+neutron : 50000
+
+Source Number : 50000.
+
+Neutron collisions per source particle: 10.01 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0154 minutes
+
+Input File = inp   Output File = inp.out     2026/08/27 20:45:49 Thursday
+ Total Calculation Time                   = 9.2293e-01 seconds
+ Time in Reading input blocks             = 3.0671e-04 seconds
+ Time in Fixed Source Calculation         = 1.6840e-01 seconds
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 3.9957e-02 seconds

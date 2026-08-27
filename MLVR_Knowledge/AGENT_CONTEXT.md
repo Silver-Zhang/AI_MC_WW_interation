@@ -136,7 +136,7 @@ Requirement → Existence → Actual Behavior → Requirement Match
 - `MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
 - `MLVR_develop/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
 
-当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **C — Verify**。W5/W6/W7/W9 当前源码机制及多项 formal 汇总均为强正证据，但 Claude 独立审核确认 angular/density formal 没有归档逐运行 raw transport 输出，且 angular checker 仅强制 aggregate；故 A 证据不可独立审计。`20260827_04_f02-formal-evidence-recovery` 已待决策：完整重跑并留存 raw evidence 后才可重新评估 A。
+当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界、冻结工作树快照）**。任务 `20260827_04_f02-formal-evidence-recovery` 已补齐 40 条 angular 与 10 条 density 的逐运行 raw evidence；strict checker 分别强制逐 seed + aggregate 门槛，并以可执行 SHA256 manifest 归档。独立复核接受恢复 A。
 
 W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 三行修改尚未 commit，均在 `src/GetMgExitErgMu.cpp`；完整 diff SHA256 `5eec92f9...c756`，修复后二进制 SHA256 `8fff3f0f...f13c2`。A 只归属于“base `6d208751...` + 该冻结 diff + 该 binary”快照，不能称 base commit 单独 Ready。未 commit 不妨碍有哈希的物理证据，但何时提交/推送仍由用户决定。
 
@@ -177,6 +177,6 @@ F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 3：W5/W6/W7/W9 已修复并验证；F02 当前为 C — Verify，等待 formal 原始证据恢复。**
+- **Stage 3：W5/W6/W7/W9 已修复并验证；formal 原始证据已恢复并独立复核，F02-B 为有界 A — Ready。**
 
-W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。F02 不应追加无终点覆盖矩阵，但需先解决已确认的 formal 证据审计缺口；在用户决定是否重跑前，继续 F03 前应保留 F02 的 C 状态。
+W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。F02 不应追加无终点覆盖矩阵；其已确认的 formal 证据审计缺口已解决。按既定顺序继续 F03，完整 photon adjoint 与其他范围外能力仍未放行。

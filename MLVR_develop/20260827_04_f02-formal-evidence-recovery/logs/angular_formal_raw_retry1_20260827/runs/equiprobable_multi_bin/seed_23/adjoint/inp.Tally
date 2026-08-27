@@ -1,0 +1,9 @@
+
+================================ Tally Table Start ================================ 
+============================= 1 cell tally in total ==============================
+
+--------- ID = 1, Particle = neutron, Type = flux, Estimator = track length, Number of cell/surface/point bins  = 1 --------------
+Cell                          Group       Energy Bin         Ave            RE
+1                               1         0.0000E+00     0.0000E+00     0.0000E+00
+                                2         2.0000E+00     1.7348E+01     2.7641E-03
+                               Tot                       1.7348E+01     2.7641E-03

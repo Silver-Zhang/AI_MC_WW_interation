@@ -27,6 +27,11 @@ MLVR_develop/*/formal/
 MLVR_develop/*/pilot/
 MLVR_develop/*/pilot_aborted_high_density/
 MLVR_develop/*/**/*.h5
+MLVR_develop/*/logs/**/inp.PTRAC
+MLVR_develop/*/logs/**/inp.cumrossialpha
+MLVR_develop/*/logs/**/inp.fissmul
+MLVR_develop/*/logs/**/inp.material
+MLVR_develop/*/logs/**/inp.rossialpha
 
 # ===== 编译产物 =====
 *.o

@@ -1,0 +1,55 @@
+{
+  "all_structural_pass": true,
+  "per_seed": [
+    {
+      "seed": 17,
+      "forward": 1.8521,
+      "adjoint": 1.8765,
+      "sigma": 0.029940124658518006,
+      "z": -0.8149598666770462,
+      "pass_abs_z_le_3": true
+    },
+    {
+      "seed": 23,
+      "forward": 1.8495,
+      "adjoint": 1.8573,
+      "sigma": 0.029937629345228534,
+      "z": -0.2605416718222278,
+      "pass_abs_z_le_3": true
+    },
+    {
+      "seed": 41,
+      "forward": 1.8558,
+      "adjoint": 1.9029,
+      "sigma": 0.03027343800135528,
+      "z": -1.5558193290729507,
+      "pass_abs_z_le_3": true
+    },
+    {
+      "seed": 59,
+      "forward": 1.8942,
+      "adjoint": 1.8588,
+      "sigma": 0.030337159779798253,
+      "z": 1.166885768376156,
+      "pass_abs_z_le_3": true
+    },
+    {
+      "seed": 83,
+      "forward": 1.925,
+      "adjoint": 1.8719,
+      "sigma": 0.030757767646495425,
+      "z": 1.7263931703460418,
+      "pass_abs_z_le_3": true
+    }
+  ],
+  "per_seed_pass": true,
+  "combined": {
+    "forward": 1.8744809932708022,
+    "sigma_forward": 0.010787469393106675,
+    "adjoint": 1.8732006048827987,
+    "sigma_adjoint": 0.00815667296506167,
+    "z": 0.09467469456468869,
+    "pass_abs_z_le_3": true
+  },
+  "status": "passed"
+}

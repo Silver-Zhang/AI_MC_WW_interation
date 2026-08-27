@@ -1,0 +1,5 @@
+MLVR_develop/*/logs/**/stdout.log whitespace=-trailing-space
+MLVR_develop/*/logs/**/stderr.log whitespace=-trailing-space
+MLVR_develop/*/logs/**/inp.out whitespace=-trailing-space
+MLVR_develop/*/logs/**/inp.Tally whitespace=-trailing-space
+MLVR_develop/*/logs/**/runs.csv whitespace=-trailing-space
