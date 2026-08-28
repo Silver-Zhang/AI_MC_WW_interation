@@ -138,7 +138,7 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**。严格作用域为 Linux x86_64、MPI-off serial build、OpenMP off、`ais=OFF`；任务 01 已从 `6d208751... + W9 diff 5eec...` 完成 explicit MPI-off fresh configure/build，40 angular + 10 density raw formal、逐 seed/aggregate strict gates、fixed-source CTest、SHA256 manifest 和独立审计均闭合。
 
-W5/W6/W7 已提交为 RMC `6d2087518e0d9f23574d629f5fde361c79f519e4`（未 push）。W9 三行修改尚未 commit，均在 `src/GetMgExitErgMu.cpp`；完整 diff SHA256 `5eec92f9...c756`，修复后二进制 SHA256 `8fff3f0f...f13c2`。A 只归属于“base `6d208751...` + 该冻结 diff + 该 binary”快照，不能称 base commit 单独 Ready。未 commit 不妨碍有哈希的物理证据，但何时提交/推送仍由用户决定。
+W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `src/GetMgExitErgMu.cpp`；验证执行时的冻结快照为 `6d208751... +` diff SHA256 `5eec92f9...c756`，MPI-off binary SHA256 为 `f7354ed9...6d3e`。`76cbfe72...` 将该 W9 diff 固化为可追溯提交；该提交尚未 push。A 严格限于已验证的 MPI-off、OpenMP-off 冻结范围。
 
 有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、MPI/OpenMP、Windows、反射边界或任意机制组合；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测边界机制，应另立针对性审查。
 
@@ -179,4 +179,4 @@ F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`
 - Stage 1：第一版框架功能需求基线已冻结。
 - **Stage 3：W5/W6/W7/W9 已修复并验证；MPI-off source—binary provenance 与 formal 原始证据已闭合，冻结 F02-B 为有界 A — Ready。**
 
-W5/W6/W7 已 commit、未 push；W9 三行已修改但未 commit；reference/benchmark 未更新。F02 的 raw-evidence、source—binary provenance 与 serial 语义审计缺口均已由任务 01 解决；A 严格限于 MPI-off、OpenMP-off 已冻结范围，不外推到未审查能力。
+W5/W6/W7/W9 均已 commit、未 push；reference/benchmark 未更新。F02 的 raw-evidence、source—binary provenance 与 serial 语义审计缺口均已由任务 01 解决；A 严格限于 MPI-off、OpenMP-off 已冻结范围，不外推到未审查能力。

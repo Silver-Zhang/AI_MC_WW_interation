@@ -2,7 +2,7 @@
 
 ## 一句话结论
 
-在当前声明冻结快照（RMC 3.5.0、`Neural_Network_WW_Iteration`、base `6d208751...` 加 W9 三行 diff `5eec92f9...c756`）下，RMC 的 fixed-source neutron adjoint 为 **C — Verify**：任务 04 已恢复 raw formal evidence，但所用 binary `8fff...` 的 banner 为 `4d3e1...`，尚不能严密归属到此 source snapshot。
+在验证执行时的冻结快照（RMC 3.5.0、`Neural_Network_WW_Iteration`、base `6d208751...` 加 W9 三行 diff `5eec92f9...c756`）下，RMC 的 fixed-source neutron adjoint 为 **A — Ready（有界）**：显式 MPI-off fresh binary 已完成 50 条 formal，运行 banner、raw evidence、strict gates、CTest、checksum 与独立审计均闭合。该 W9 diff 现已固化为提交 `76cbfe72...`。
 
 ## 适用范围
 
@@ -27,7 +27,7 @@
 | 其余条件角表示 | 四类 × forward/adjoint × 五 seeds，40/40 clean；40,000 个生产样本通过支持域、矩、方差/Pearson 门槛 |
 | HDF5 density mesh | 两区域读回、位置依赖和 10/10 clean formal 通过，合并 $z=0.0984$ |
 | NNUBAR=1/混合裂变材料 | 20/20 clean formal 通过，合并 $z=0.9563/0.3748$ |
-| 完整能力 | **C — Verify**；任务 05 fresh build、banner/source identity 和 formal 重跑完成独立复核前不得升级 A |
+| 完整能力 | **A — Ready（有界）**；仅 Linux x86_64、MPI-off serial build、OpenMP off、`ais=OFF`、standard ASCII MGACE fixed-source neutron adjoint |
 
 ## 技术证据
 
@@ -45,5 +45,6 @@
 - [真实 density mesh formal](../../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
 - [NNUBAR=1/混合材料 formal](../../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
 - [最终 A 复核](../../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
+- [MPI-off serial provenance](../../MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/README.md)
 - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)

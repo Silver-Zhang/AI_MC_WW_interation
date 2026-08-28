@@ -10,7 +10,7 @@
 
 | 专题 | 内容 | 当前状态 |
 |---|---|---|
-| [01 RMC 多群伴随输运](01_RMC多群伴随输运/README.md) | standard MGACE fixed-source neutron adjoint 的物理对象、流程、验证和缺陷修复 | **C — Verify** |
+| [01 RMC 多群伴随输运](01_RMC多群伴随输运/README.md) | standard MGACE fixed-source neutron adjoint 的物理对象、流程、验证和缺陷修复 | **A — Ready（有界）** |
 | 正向输运 | 后续专题：正向固定源与场统计 | 待建立 |
 | 权重窗迭代 | 后续专题：重要性场到 split/roulette 的物理链路 | 待建立 |
 | ML 代理模型 | 后续专题：重构模型与物理约束 | 待建立 |
@@ -18,7 +18,7 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **C — Verify**：W5/W6/W7/W9 均已修复，角表示、density mesh、NNUBAR=1 与混合材料均有正式证据，raw evidence 与逐 seed 门禁也已恢复。但后续审核发现实际运行 binary 的 banner 是 `4d3e1...`，不能严格归属为声明的 `6d208751... + W9 diff` 源码快照；必须 fresh build 并重跑后才可恢复 A。
+RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**：验证使用显式 MPI-off fresh build，运行 banner 为 MPI OFF、OpenMP OFF，并完成 40 条条件角表示与 10 条 density-mesh formal；raw evidence、逐 seed/aggregate strict gates、fixed-source CTest、checksum 与独立审计均已闭合。
 
 该结论不代表完整 photon adjoint、CE、AIS/HDF5 核数据、delayed、并行环境、Windows、反射边界或相邻 F03/F04/F06/F07 能力已验证。W9 的 photon/secondary 两条同形分支虽已修复，但仍只是局部证据。
 
@@ -44,6 +44,7 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **C — Verify*
 - [真实 density mesh formal](../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
 - [NNUBAR=1/混合材料 formal](../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
 - [F02 最终 A 复核](../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
+- [MPI-off serial provenance](../MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
 
