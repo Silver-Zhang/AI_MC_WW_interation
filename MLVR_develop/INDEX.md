@@ -7,8 +7,10 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-08-27 | [f02-formal-evidence-recovery](20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 已完成 | F02 | 方案 A 重跑并保留 angular 40 条、density 10 条 raw outputs；strict per-seed/aggregate 检查与 SHA256 manifest 均经独立复核接受，F02 恢复有界 A |
-| 2026-08-27 | [f02-final-a-readiness-review](20260827_03_f02-final-a-readiness-review/README.md) | 物理审查 / 证据归并 | 已完成（证据恢复后重新生效） | F02 | 有界 A 结论曾因 raw evidence 缺失暂降 C；任务 04 已补齐并获独立复核接受 |
+| 2026-08-28 | [f02-mpi-off-serial-provenance](20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
+| 2026-08-27 | [f02-binary-source-identity](20260827_05_f02-binary-source-identity/README.md) | 验证基础设施 / 证据恢复 | 已完成（后续范围收紧） | F02 | 已闭合 source/binary；但该 fresh binary 是 MPI-enabled one-rank execution。task 01 已在严格 MPI-off serial 范围重跑并作为当前 A 证据 |
+| 2026-08-27 | [f02-formal-evidence-recovery](20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 已完成（raw evidence 恢复） | F02 | 50 条 raw outputs 与 strict gates 均通过；但随后发现 binary banner/source snapshot 身份不闭合，不能单独恢复 A |
+| 2026-08-27 | [f02-final-a-readiness-review](20260827_03_f02-final-a-readiness-review/README.md) | 物理审查 / 证据归并 | 已完成（后续证据恢复） | F02 | 原 binary provenance 问题已由 task 05 闭合；serial 定义由 task 01 的 MPI-off fresh matrix 进一步闭合，当前 F02 为有界 A |
 | 2026-08-27 | [f02-nnubar-material-reciprocity](20260827_02_f02-nnubar-material-reciprocity/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 部署 `10005` NNUBAR=1 及 NNUBAR=1 主导的 `10005/10001` 混合裂变材料，各五对 formal 共 20/20 clean；合并 $z=0.9563$ 与 $0.3748$；最终 A 复核已纳入 |
 | 2026-08-27 | [f02-density-mesh-hdf5-readiness](20260827_01_f02-density-mesh-hdf5-readiness/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 私有 HDF5 两区域 mesh 读回、位置依赖 pilot 与五 seed 10/10 clean formal 通过；合并互易性 $z=0.0984$；最终 A 复核已纳入 |
 | 2026-08-26 | [f02-remaining-angular-representations](20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 已完成 | F02 | 四类 × 前向/伴随 × 五 seeds 的 40/40 clean formal 通过；40,000 样本支持域/矩/离散频数通过；最终 A 复核已纳入；RMC 只读且暂不同步 |

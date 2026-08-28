@@ -21,7 +21,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
-| F02-B | 多群Adjoint物理正确性审查 | A — Ready（有界） | raw evidence recovery 已补齐 angular/density 每运行输出、逐 seed + aggregate 统计门禁和 checksum manifest | `20260827_04_f02-formal-evidence-recovery`；既有 F02 验证任务 |
+| F02-B | 多群Adjoint物理正确性审查 | A — Ready（有界） | explicit MPI-off fresh build、banner、50 条 raw formal、strict gates、CTest 与 checksum 已绑定至 `6d208751... + W9 diff` | `20260828_01_f02-mpi-off-serial-provenance`；既有 F02 验证任务 |
 | F03 | Adjoint source定义 | 已立项（待设计） | 目标响应驱动伴随源；区分通用外源执行与响应到源构造 | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
@@ -37,7 +37,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 
 F02-A 已确认默认标准 ACE 多群路径存在固定源伴随输运链。
 
-F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。当前冻结作用域（Linux x86_64、serial、`ais=OFF`、standard ASCII MGACE、fixed-source neutron adjoint）为 **A — Ready（有界）**。
+F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。当前冻结作用域（Linux x86_64、**MPI-off serial build**、OpenMP off、`ais=OFF`、standard ASCII MGACE、fixed-source neutron adjoint）为 **A — Ready（有界）**：fresh source—binary provenance、formal raw evidence 和严格统计门槛均已闭合。
 
 1. W5 修复前，局部密度比例 $r\ne1$ 时散射与裂变权重相对正确值多出 $1/r$；当前已改用局部总原子密度并通过 V2 密度不变性验证。
 2. W6 修复前在 `NNUBAR>1` 时混用 total/prompt nubar；当前运行时前驱群抽样已统一使用 total locator。部署双表数据的逐群核与概率差为 0，动态输入完成 10,000 个源历史和 2,487 条 bank 后继。
@@ -55,7 +55,7 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 
 **独立审核后的证据恢复**：原审核正确指出角表示 40 条和 density-mesh 10 条 formal 缺少逐运行原始输出，且 angular analyzer 只强制 aggregate。任务 `20260827_04_f02-formal-evidence-recovery` 已在同一冻结快照下重跑并保留每条 `inp`、stdout、stderr、`inp.out`、exit-code（density 还保留 `inp.Tally`）；独立 strict checker 强制 angular 每 seed + aggregate 和 density 每对 + aggregate。四份 raw/strict report 均由严格 `SHA256SUMS.txt` 经 `sha256sum -c` 验证；独立复核接受恢复 A。
 
-**身份边界**：所有正向证据针对 base commit `6d2087518e0d9f23574d629f5fde361c79f519e4` 加 W9 三行冻结工作树补丁；完整 diff SHA256 为 `5eec92f929ca93caaabeaacd64d5c92f44f1dc89c61c11997ab962fe8957c756`，运行二进制 SHA256 为 `8fff3f0f534d2a2a116e033a26cf4bb62005c5b6d62b29925423b97bb74f13c2`。base commit 单独不含 W9，不能称为本次 verified revision。
+**身份与 serial 闭环**：任务 `20260827_05_f02-binary-source-identity` 的 MPI-enabled one-rank build 已闭合 source—binary 身份，但不再作为严格 serial 标签的唯一证据。任务 `20260828_01_f02-mpi-off-serial-provenance` 从 HEAD `6d208751...` 与 W9 diff SHA256 `5eec...` 用显式 `-Dmpi=OFF` 全新 configure/build；configure 与 runtime banner 都显示 MPI OFF。binary SHA256 `f7354ed9...` 执行 angular 40/40 和 density 10/10 formal；全部 raw reports、strict reports、diff 和 binary 经六项 `SHA256SUMS.txt` 验证，fresh `test_fixed_source_adjoint` 1/1 passed，独立审计 ACCEPT。
 
 **A 的能力边界**：不覆盖完整 photon/耦合粒子、continuous-energy、AIS/HDF5 核数据、delayed、GPT、MPI/OpenMP、Windows、反射边界、任意机制组合，也不替代 F03 伴随源、F04 adjoint+WW 或 F06/F07 field/RE 的独立分类。
 
@@ -98,3 +98,6 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-08-27：最终风险复核确认冻结需求和全部明确 C 门槛已闭合；F02-B 改为 A — Ready（有界、冻结工作树快照）。开放式“更多几何/边界”不再作为无终点门槛，未测边界机制与相邻功能继续明确排除。
 - 2026-08-27：Claude 独立审核确认未发现新的已证实 RMC 物理缺陷，但指出 angular/density formal 未留存逐运行 raw transport 输出，且 angular checker 未强制逐 seed 接受门槛；原 A 结论下调为 C — Verify，建立 `20260827_04_f02-formal-evidence-recovery` 等待用户决定是否重跑恢复可审计证据。
 - 2026-08-27：用户批准方案 A；在同一 frozen snapshot 重跑 40 angular + 10 density formal，逐运行 raw evidence、strict per-seed/aggregate checker 与 checksum manifest 均已归档。独立复核接受证据恢复，F02-B 恢复 A — Ready（有界）。
+- 2026-08-27：Claude 继续审核发现 raw formal binary banner 为 `4d3e1...`，不同于声明 source snapshot 的 `6d208751...`；未发现新物理 defect，但 provenance 不闭合。F02-B 再次下调 C — Verify，等待 fresh-build identity recovery。
+- 2026-08-27：任务 05 在全新隔离构建中捕获 `6d208751... + W9 diff 5eec...`，新 binary banner 与源码一致；其上重跑 angular 40/40、density 10/10，strict gates、fresh CTest 和 checksum 均通过。独立审计 ACCEPT，F02-B 恢复有界 A — Ready。
+- 2026-08-28：独立审计指出 task 05 是 MPI-enabled one-rank execution，与“serial”标签存在歧义。用户采用严格 MPI-off 定义；task 01 显式 `-Dmpi=OFF` fresh build 的 banner 为 MPI OFF，完整 50 条 formal、strict gates、CTest、checksum 与独立审计均通过，F02-B 在严格 serial 范围保持有界 A — Ready。

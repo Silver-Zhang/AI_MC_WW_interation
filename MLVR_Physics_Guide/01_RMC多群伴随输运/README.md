@@ -2,7 +2,7 @@
 
 ## 一句话结论
 
-在当前冻结快照（RMC 3.5.0、`Neural_Network_WW_Iteration`、base `6d208751...` 加 W9 三行 diff `5eec92f9...c756`、binary `8fff3f0f...f13c2`、standard ASCII MGACE、Linux serial、`ais=OFF`）下，RMC 的 fixed-source neutron adjoint 为 **A — Ready（有界）**：angular/density formal 的逐运行原始证据与逐 seed 接受门槛已由任务 04 重跑、归档并独立复核。
+在当前声明冻结快照（RMC 3.5.0、`Neural_Network_WW_Iteration`、base `6d208751...` 加 W9 三行 diff `5eec92f9...c756`）下，RMC 的 fixed-source neutron adjoint 为 **C — Verify**：任务 04 已恢复 raw formal evidence，但所用 binary `8fff...` 的 banner 为 `4d3e1...`，尚不能严密归属到此 source snapshot。
 
 ## 适用范围
 
@@ -27,7 +27,7 @@
 | 其余条件角表示 | 四类 × forward/adjoint × 五 seeds，40/40 clean；40,000 个生产样本通过支持域、矩、方差/Pearson 门槛 |
 | HDF5 density mesh | 两区域读回、位置依赖和 10/10 clean formal 通过，合并 $z=0.0984$ |
 | NNUBAR=1/混合裂变材料 | 20/20 clean formal 通过，合并 $z=0.9563/0.3748$ |
-| 完整能力 | **A — Ready（有界）**；只放行本专题明确的 neutron/serial/standard-ASCII-MGACE 冻结快照 |
+| 完整能力 | **C — Verify**；任务 05 fresh build、banner/source identity 和 formal 重跑完成独立复核前不得升级 A |
 
 ## 技术证据
 

@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /tmp/mlvr_f02_mpi_off_build
+Test project /tmp/mlvr_f02_mpi_off_build
+    Start 62: test_fixed_source_adjoint
+1/1 Test #62: test_fixed_source_adjoint ........   Passed    0.73 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.74 sec

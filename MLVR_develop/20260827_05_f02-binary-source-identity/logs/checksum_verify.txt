@@ -1,0 +1,6 @@
+MLVR_develop/20260827_05_f02-binary-source-identity/logs/angular_formal_fresh_20260827/raw_transport_report.json: 成功
+MLVR_develop/20260827_05_f02-binary-source-identity/logs/angular_formal_fresh_20260827/strict_statistical_report.json: 成功
+MLVR_develop/20260827_05_f02-binary-source-identity/logs/density_formal_fresh_20260827/raw_transport_report.json: 成功
+MLVR_develop/20260827_05_f02-binary-source-identity/logs/density_formal_fresh_20260827/strict_statistical_report.json: 成功
+MLVR_develop/20260827_05_f02-binary-source-identity/changes.diff: 成功
+/tmp/mlvr_f02_identity_build/bin/RMC: 成功

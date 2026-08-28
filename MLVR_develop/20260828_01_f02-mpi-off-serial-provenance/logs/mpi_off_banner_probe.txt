@@ -1,0 +1,30 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 02:04:47 Aug 28 2026
+Git commit  : 6d2087518e0d9f23574d629f5fde361c79f519e4
+Git tag  : v3.5.0-alpha.0-303-g6d208751
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/08/28 02:08:56 Friday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Error: Library index file "/tmp/mlvr_f02_dummy/xsdir" does not exist!
+Press ENTER to exit...

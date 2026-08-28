@@ -1,0 +1,12 @@
+generated_runs=10
+manifest_sha256=42cdfa994c44003400377f98d034d54f6f5d1bf49b97b8fce997fd659e321a96
+seed=17 mode=forward pass=True
+seed=17 mode=adjoint pass=True
+seed=23 mode=forward pass=True
+seed=23 mode=adjoint pass=True
+seed=41 mode=forward pass=True
+seed=41 mode=adjoint pass=True
+seed=59 mode=forward pass=True
+seed=59 mode=adjoint pass=True
+seed=83 mode=forward pass=True
+seed=83 mode=adjoint pass=True

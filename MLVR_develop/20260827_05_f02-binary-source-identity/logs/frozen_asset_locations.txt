@@ -1,0 +1,4 @@
+angular_asset=/tmp/mlvr_f02_angular_formal_20260827_retry2/assets
+angular_probe=/home/workspace/AI_MC_WW_interation/MLVR_develop/20260826_02_f02-remaining-angular-representations/sample_mulab_gdb.py
+density_mesh=/tmp/mlvr_f02_evidence_mesh_build/density_mesh.h5
+density_index=

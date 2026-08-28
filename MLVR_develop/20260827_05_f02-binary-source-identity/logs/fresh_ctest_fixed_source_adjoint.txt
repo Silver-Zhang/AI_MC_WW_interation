@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /tmp/mlvr_f02_identity_build
+Test project /tmp/mlvr_f02_identity_build
+    Start 62: test_fixed_source_adjoint
+1/1 Test #62: test_fixed_source_adjoint ........   Passed    1.21 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.21 sec

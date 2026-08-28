@@ -1,0 +1,4 @@
+ M src/GetMgExitErgMu.cpp
+Neural_Network_WW_Iteration
+6d2087518e0d9f23574d629f5fde361c79f519e4
+v3.5.0-alpha.0-303-g6d208751

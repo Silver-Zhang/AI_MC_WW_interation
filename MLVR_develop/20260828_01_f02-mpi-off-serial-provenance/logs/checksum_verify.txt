@@ -1,0 +1,6 @@
+MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/logs/angular_formal_mpi_off_20260828/raw_transport_report.json: 成功
+MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/logs/angular_formal_mpi_off_20260828/strict_statistical_report.json: 成功
+MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/logs/density_formal_mpi_off_20260828/raw_transport_report.json: 成功
+MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/logs/density_formal_mpi_off_20260828/strict_statistical_report.json: 成功
+MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/changes.diff: 成功
+/tmp/mlvr_f02_mpi_off_build/bin/RMC: 成功

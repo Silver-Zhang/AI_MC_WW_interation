@@ -1,0 +1,31 @@
+diff --git a/src/GetMgExitErgMu.cpp b/src/GetMgExitErgMu.cpp
+index 667b9053..f52d97df 100644
+--- a/src/GetMgExitErgMu.cpp
++++ b/src/GetMgExitErgMu.cpp
+@@ -425,7 +425,7 @@ void CDAceData::GetMgAdjPhoNeuExitErgMu(CDParticleState &cParticleState, double
+           if (p_vNuclides[nNuc].XSS[lx] >= 0) {
+             MuLab = 1 - 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
+           } else {
+-            MuLab = -1 + 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
++            MuLab = -1 + 2 * ORNG.Rand() * (1 + p_vNuclides[nNuc].XSS[lx]);
+           }
+         }
+       } else { //discrete consines
+@@ -482,7 +482,7 @@ void CDAceData::GetMgAdjNeuExitErgMu(CDParticleState &cParticleState, double &Mu
+                 if (p_vNuclides[nNuc].XSS[lx] >= 0) {
+                   MuLab = 1 - 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
+                 } else {
+-                  MuLab = -1 + 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].XSS[lx]);
++                  MuLab = -1 + 2 * ORNG.Rand() * (1 + p_vNuclides[nNuc].XSS[lx]);
+                 }
+               }
+             } else { //discrete consines
+@@ -554,7 +554,7 @@ void CDAceData::GetMgAdjPhoExitErgMu(CDParticleState &cParticleState, double &Mu
+                 if (p_vNuclides[nNuc].PXSS[lx] >= 0) {
+                   MuLab = 1 - 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].PXSS[lx]);
+                 } else {
+-                  MuLab = -1 + 2 * ORNG.Rand() * (1 - p_vNuclides[nNuc].PXSS[lx]);
++                  MuLab = -1 + 2 * ORNG.Rand() * (1 + p_vNuclides[nNuc].PXSS[lx]);
+                 }
+               }
+             } else { //discrete consines
