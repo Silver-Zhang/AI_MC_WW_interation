@@ -145,3 +145,11 @@
 决定：F02 不仅进行功能存在性审查，还需要独立进行伴随输运物理正确性审查（F02-B）。重点验证多群散射转置、碰撞抽样与权重修正、角分布处理、伴随裂变以及离散算子互易性。代码机制明确但缺少关键数值验证时，不升级为 Ready。
 
 状态：Frozen
+
+## D019
+
+日期：2026-08-31
+
+决定：接受 F02 已验证并行范围为 A — Ready（有界）。范围严格限于 Linux x86_64、本机 Open MPI 4.1.6、standard ASCII MGACE、`FIXEDSOURCE` neutron adjoint、`ais=OFF`，以及 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`；原 MPI `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留为风险记录。更多 rank/thread、跨节点、不同 MPI 实现和其他未测机制不在本决定内，首次使用须另行针对性验收。
+
+状态：Frozen
