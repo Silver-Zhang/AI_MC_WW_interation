@@ -38,5 +38,11 @@ MLVR_develop/*/logs/**/inp.Tally
 MLVR_develop/*/logs/**/RMC
 MLVR_develop/*/logs/**/runs/
 
+# ===== 本地并行 formal 运行证据（11 GB，可由任务脚本重建） =====
+MLVR_develop/20260830_01_f02-parallel-mpi-openmp-verification/logs/
+MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/
+MLVR_develop/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
+MLVR_develop/20260831_03_f02-mpi4-angular-seed-replication/logs/
+
 # ===== 编译产物 =====
 *.o

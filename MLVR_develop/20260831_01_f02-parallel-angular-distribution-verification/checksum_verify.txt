@@ -1,0 +1,10 @@
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/gdb_mulab_rank_probe.py: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/run_ranked_angular_formal.py: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/check_ranked_angular_strict.py: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/changes.diff: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/strict_check_summary.txt: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/independent_audit.txt: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/formal_mpi_2x1_retry1/raw_ranked_transport_report.json: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/formal_mpi_2x1_retry1/strict_report.json: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/formal_mpi_4x1_retry1/raw_ranked_transport_report.json: 成功
+/home/workspace/AI_MC_WW_interation/MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/formal_mpi_4x1_retry1/strict_report.json: 成功

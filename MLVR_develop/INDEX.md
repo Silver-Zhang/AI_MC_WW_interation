@@ -6,7 +6,11 @@
 ## 进行中 / 已处理
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+| 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
+| 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
 |---|---|---|---|---|---|
+| 2026-08-31 | [f02-mpi4-angular-seed-replication](20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
+| 2026-08-30 | [f02-parallel-mpi-openmp-verification](20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
 | 2026-08-28 | [f02-mpi-off-serial-provenance](20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
 | 2026-08-27 | [f02-binary-source-identity](20260827_05_f02-binary-source-identity/README.md) | 验证基础设施 / 证据恢复 | 已完成（后续范围收紧） | F02 | 已闭合 source/binary；但该 fresh binary 是 MPI-enabled one-rank execution。task 01 已在严格 MPI-off serial 范围重跑并作为当前 A 证据 |
 | 2026-08-27 | [f02-formal-evidence-recovery](20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 已完成（raw evidence 恢复） | F02 | 50 条 raw outputs 与 strict gates 均通过；但随后发现 binary banner/source snapshot 身份不闭合，不能单独恢复 A |

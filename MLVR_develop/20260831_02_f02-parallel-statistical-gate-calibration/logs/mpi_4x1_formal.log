@@ -1,0 +1,43 @@
+=== mpi_4x1 ===
+generated_runs=40
+manifest_sha256=a05de5527612966fec185fc9e852c1b3fcc50762c4b85302fe8e627bf510c1c1
+01/40 isotropic forward seed=17 pass=True
+02/40 isotropic adjoint seed=17 pass=True
+03/40 isotropic forward seed=23 pass=True
+04/40 isotropic adjoint seed=23 pass=True
+05/40 isotropic forward seed=41 pass=True
+06/40 isotropic adjoint seed=41 pass=True
+07/40 isotropic forward seed=59 pass=True
+08/40 isotropic adjoint seed=59 pass=True
+09/40 isotropic forward seed=83 pass=True
+10/40 isotropic adjoint seed=83 pass=True
+11/40 one_variable_positive forward seed=17 pass=True
+12/40 one_variable_positive adjoint seed=17 pass=True
+13/40 one_variable_positive forward seed=23 pass=True
+14/40 one_variable_positive adjoint seed=23 pass=True
+15/40 one_variable_positive forward seed=41 pass=True
+16/40 one_variable_positive adjoint seed=41 pass=True
+17/40 one_variable_positive forward seed=59 pass=True
+18/40 one_variable_positive adjoint seed=59 pass=True
+19/40 one_variable_positive forward seed=83 pass=True
+20/40 one_variable_positive adjoint seed=83 pass=True
+21/40 equiprobable_multi_bin forward seed=17 pass=True
+22/40 equiprobable_multi_bin adjoint seed=17 pass=True
+23/40 equiprobable_multi_bin forward seed=23 pass=True
+24/40 equiprobable_multi_bin adjoint seed=23 pass=True
+25/40 equiprobable_multi_bin forward seed=41 pass=True
+26/40 equiprobable_multi_bin adjoint seed=41 pass=True
+27/40 equiprobable_multi_bin forward seed=59 pass=True
+28/40 equiprobable_multi_bin adjoint seed=59 pass=True
+29/40 equiprobable_multi_bin forward seed=83 pass=True
+30/40 equiprobable_multi_bin adjoint seed=83 pass=True
+31/40 discrete_cosine forward seed=17 pass=True
+32/40 discrete_cosine adjoint seed=17 pass=True
+33/40 discrete_cosine forward seed=23 pass=True
+34/40 discrete_cosine adjoint seed=23 pass=True
+35/40 discrete_cosine forward seed=41 pass=True
+36/40 discrete_cosine adjoint seed=41 pass=True
+37/40 discrete_cosine forward seed=59 pass=True
+38/40 discrete_cosine adjoint seed=59 pass=True
+39/40 discrete_cosine forward seed=83 pass=True
+40/40 discrete_cosine adjoint seed=83 pass=True

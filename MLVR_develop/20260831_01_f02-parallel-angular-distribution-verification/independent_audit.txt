@@ -1,0 +1,3 @@
+Independent audit: CONDITIONAL
+2x1 passed; 4x1 structural evidence passed but strict per-rank gate failed at seed 41/rank 3 isotropic mean.
+No RMC source changes; mixed configurations were not run after the frozen failure.

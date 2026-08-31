@@ -1,0 +1,6 @@
+mpi_2x1 strict_exit=0
+mpi_4x1 strict_exit=1
+mpi_2x1 status=passed
+mpi_4x1 status=failed
+failure case=isotropic mode=adjoint seed=41 rank=3 mean=-0.05756243182984919 z=-3.1528242378061777
+failure case=isotropic mode=forward seed=41 rank=3 mean=-0.05756243182984919 z=-3.1528242378061777
