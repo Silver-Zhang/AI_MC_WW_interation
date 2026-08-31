@@ -6,9 +6,11 @@
 ## 进行中 / 已处理
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+|---|---|---|---|---|---|
 | 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
 | 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
-|---|---|---|---|---|---|
+| 2026-08-31 | [workflow-mode-c-audit-remediation](20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
+| 2026-08-31 | [workflow-multi-mode-upgrade](20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，未提交；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
 | 2026-08-31 | [f02-mpi4-angular-seed-replication](20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
 | 2026-08-30 | [f02-parallel-mpi-openmp-verification](20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
 | 2026-08-28 | [f02-mpi-off-serial-provenance](20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |

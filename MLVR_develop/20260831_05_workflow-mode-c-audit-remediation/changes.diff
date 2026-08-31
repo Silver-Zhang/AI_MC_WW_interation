@@ -1,0 +1,415 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index b553c1e..e41c06a 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -16,10 +16,10 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 
+ ## 硬规则
+ 
+-1. **任何开发任务 / 缺陷修复 / 算法实验，必须走 `MLVR_develop/README.md` 的五步流程**：
+-   立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。
+-   用 `MLVR_develop/new_task.sh <任务短名> [KB编号]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。
++1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
++   立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
++   用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 947412a..c6a661d 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -16,10 +16,10 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 
+ ## 硬规则
+ 
+-1. **任何开发任务 / 缺陷修复 / 算法实验，必须走 `MLVR_develop/README.md` 的五步流程**：
+-   立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。
+-   用 `MLVR_develop/new_task.sh <任务短名> [KB编号]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。
++1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
++   立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
++   用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git "a/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md" "b/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
+index 0aacc90..770274a 100644
+--- "a/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
++++ "b/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
+@@ -38,6 +38,16 @@ Stage 8  高级机器学习方法扩展
+ 6. 项目方案由用户逐阶段拍板，Agent 负责调查、证据整理、实现和验证，不自行跨阶段扩展方案。
+ 7. Stage 2 严格执行 `Audit ≠ Repair`；审查发现的问题进入 Stage 3 后另立任务。
+ 
++## 任务模式与人的参与
++
++所有任务遵循统一五步关口，具体记录深度按 `MLVR_develop/README.md` 的 A/B/C 模式选择：
++
++- **A — 受约束自动化**：已批准的重复验证和资料整理；
++- **B — 工程协作（默认）**：常规工具、接口与已知缺陷；
++- **C — 深度物理研究与学习**：会影响物理结论、适用边界、统计解释或训练数据治理的任务。
++
++模式 C 不只是要求批准改动：人必须在问题定式、物理—代码因果链、可证伪验证设计和结果解释四个关口确认理解，并留下人类理解确认。审查/验证结论使用 E0–E4 说明证据强度，冻结、可复现、边界和原始证据归档另列治理标签；定义和记录格式以 `MLVR_develop/README.md` 为准。
++
+ ## Stage 状态
+ 
+ ### Stage 0 — 工作流与知识库建立
+@@ -111,3 +121,11 @@ Classification
+ Stage 3 — 功能缺口修复与补充。
+ 
+ 只有当 Stage 2 已形成明确证据和分类、并由用户拍板后，相关 B/D/E/F 项才可进入 Stage 3 另立修改任务。
++
++### Stage 7 — 简单场重构方法验证
++
++进入本阶段前应建立训练/验证数据的溯源记录：输入问题、RMC 版本与运行配置、随机种子、场网格与能群定义、数据筛选规则以及数据集哈希。数据变化不得悄然替代已冻结比较基线。
++
++### Stage 8 — 高级机器学习方法扩展
++
++模型、权重、训练配置与评估结果必须一一绑定；FOM/RE 的比较基线、数据划分、随机性控制和适用范围应在模式 C 档案中说明。模型或基准更新须经用户明确批准并保留旧版本可追溯性。
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index c279e77..6e28d40 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -6,9 +6,11 @@
+ ## 进行中 / 已处理
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
++|---|---|---|---|---|---|
+ | 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
+ | 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
+-|---|---|---|---|---|---|
++| 2026-08-31 | [workflow-mode-c-audit-remediation](20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
++| 2026-08-31 | [workflow-multi-mode-upgrade](20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，未提交；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
+ | 2026-08-31 | [f02-mpi4-angular-seed-replication](20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
+ | 2026-08-30 | [f02-parallel-mpi-openmp-verification](20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
+ | 2026-08-28 | [f02-mpi-off-serial-provenance](20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
+diff --git a/MLVR_develop/README.md b/MLVR_develop/README.md
+index 7c88f31..20bca1f 100644
+--- a/MLVR_develop/README.md
++++ b/MLVR_develop/README.md
+@@ -3,6 +3,35 @@
+ > 目的：每一个开发任务 / 缺陷修复 / 算法实验都留下**可追溯、人可复核**的处理档案。
+ > 原则：**证据先行、人拍板、改动留痕**。Agent 负责定位与实施，最终决定权在人。
+ 
++## 任务模式：先选参与深度，再走同一套五步关口
++
++所有任务仍必须走五步工作流；任务模式只规定人需要理解什么、档案需要增加什么，**不降低** RMC 修改、基准冻结、提交/push 等硬规则。
++
++| 模式 | 适用任务 | 人的参与重点 | 额外必填产物 |
++|---|---|---|---|
++| A — 受约束自动化 | 已批准的重复验证、资料整理、机械性汇总 | 确认范围、输入和最终产物 | 无；保留五步记录与真实输出 |
++| B — 工程协作（默认） | 常规工具、接口、已知缺陷修复、原型实现 | 方案、接口/兼容性、验证覆盖 | 变更卡；需要时记录回滚方案 |
++| C — 深度物理研究与学习 | 伴随、核数据、WW、互易性、统计、训练数据和会改变物理结论/边界的任务 | 问题定式、因果链、可证伪假设、结果解释和结论边界 | L0 人类阅读摘要、物理解释与可证伪假设、物理—代码因果图、人类理解确认、结果解释卡、会话纪要 |
++
++**选择规则**：未特别说明时使用模式 B。用户可直接说“用模式 A/B/C”；出现新的物理结论、改变适用范围、未知统计异常、基准/模型更新或跨越既有冻结边界时，Agent 必须建议升级到模式 C。任务可升级，不得在未记录理由的情况下从 C 降级到 A/B。
++
++**证据等级（E0–E4）与治理标签**：仅标注审查/验证类结论，避免给一般文档与实现流水账增加形式负担。证据等级只说明证据强度；冻结、可复现、边界和原始证据归档另列为治理标签，不能单独提升证据等级。
++
++| 等级 | 含义 |
++|---|---|
++| E0 | 假设、计划或未验证主张 |
++| E1 | 静态代码/文档证据 |
++| E2 | 最小动态路径：构建、运行或 smoke 证据 |
++| E3 | 针对性、预定义的数值/统计验证证据 |
++| E4 | 独立复现或多维交叉验证证据 |
++
++| 治理标签 | 含义 |
++|---|---|
++| 已冻结 / 未冻结 | 计划、配置或结论是否已由人决策冻结 |
++| 可复现 / 部分可复现 | 运行所需输入、环境和步骤的可复现程度 |
++| 边界已定义 / 未完全定义 | 结论适用范围是否明确记录 |
++| 原始证据已归档 / 未完整归档 | 支撑结论的原始输出是否可追溯 |
++
+ ## 任务类型
+ 
+ | 类型 | 典型场景 | 第 ② 步重点 |
+@@ -23,7 +52,7 @@ MLVR_develop/
+   _template/README.md              单任务记录模板
+   YYYYMMDD_NN_<任务短名>/          ★ 一个任务一个文件夹（NN=当天工作顺序，01 起两位）
+     README.md                      ★ 全过程记录（唯一主文档，含工作日志第 9 节）
+-    会话纪要.md                    可选：人机讨论要点（Q&A 脉络 + 共识 + 未决事项，脱敏）
++    会话纪要.md                    模式 C 必填；其他模式可选的人机讨论要点（脱敏）
+     logs/                          原始报错、训练日志、失败产物（原样保存，不加工）
+     changes.diff                   本次代码改动快照（人复核用）
+ ```
+@@ -39,17 +68,17 @@ MLVR_develop/
+ ## 五步工作流
+ 
+ ```
+- ① 立项  ──► ② 设计/定位  ──►  ⛔ 停 · 你拍板  ──► ④ 实施+自验 ──► ⑤ 归档
++ 选 A/B/C 模式 ─► ① 立项 ─► ② 设计/定位 ─► ⛔ 停 · 你拍板 ─► ④ 实施+自验 ─► ⑤ 归档
+  (Agent)      (Agent)            (人)              (Agent)        (Agent+人)
+ ```
+ 
+ | 步 | 谁 | 做什么 | 产出 |
+ |---|---|---|---|
+-| ① 立项 | Agent | 你提出任务 → 建文件夹，原始材料**原样**存进 `logs/`，填写"任务定义"（目标/范围/验收标准） | 文件夹 + README 前两节 |
+-| ② 设计/定位 | Agent | 读代码/查知识库/跑小实验 → 给出证据（`文件:行号` / 实验数据）、影响面、**2~3 个可选方案+代价** | README"调研与设计""方案选项" |
+-| ⛔ 停 | **你** | 选方案、给约束（能不能动接口、能不能更新基准、算力预算…） | README"决策"（记谁决定的、为什么） |
++| ① 立项 | Agent | 你提出任务 → 确定 A/B/C 模式 → 建文件夹，原始材料**原样**存进 `logs/`，填写目标/范围/验收标准 | 文件夹 + README 前两节；C 增加 L0 摘要 |
++| ② 设计/定位 | Agent | 读代码/查知识库/跑小实验 → 给出证据、影响面、**2~3 个可选方案+代价**；C 还须建立物理—代码因果链和可证伪假设 | README"调研与设计""方案选项"；C 的 2A 节 |
++| ⛔ 停 | **你** | 选方案、给约束（能不能动接口、能不能更新基准、算力预算…）；C 须以自己的表述确认问题定式、因果链、验伪条件和结论边界 | README"决策"、变更卡与人类理解确认 |
+ | ④ 实施 | Agent | 改代码 → `git diff > changes.diff` → 跑验证/实验 → 贴真实输出 | 代码改动 + `changes.diff` + "验证/实验记录" |
+-| ⑤ 归档 | Agent→你 | 更新 INDEX 状态、同步知识库 06 条目状态；**你决定是否 commit/push** | README"结论与遗留" |
++| ⑤ 归档 | Agent→你 | 更新 INDEX 状态、同步知识库 06 条目状态；C 还须解释结果是否支持假设及结论边界；**你决定是否 commit/push** | README"结论与遗留"；C 的结果解释卡 |
+ 
+ **硬规则**：第 ③ 步必须停下等你。Agent 不得在未拍板前改 `../RMC` 下的任何文件。
+ （只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+@@ -90,11 +119,22 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ | 4 | 基准对比基线（模拟 MC / 指数 WW / 原型同变体） | 档案 README"结论" |
+ | 5 | 模型/权重产物（`.h5`）与生成它的配置一一对应 | 任务文件夹或知识库登记 |
+ 
+-### 5. 归档检查清单（⑤ 归档时逐项自检，避免人提醒才补）
++### 5. 变更卡与模式 C 的人工理解关口
++
++模式 B/C 的决策节必须包含一张**变更卡**：问题与风险、拟改动对象、不改什么、预期因果链、验证与回滚方式。模式 C 还应在下列关口停下让人确认理解，而不是只批准 Agent 操作：
++
++1. **问题定式**：物理量、正确关系、成功/失败可观测量是什么；
++2. **因果链**：从物理假设到代码位置、再到可观测偏差的路径是否成立；
++3. **验伪设计**：什么结果会推翻当前根因或结论；
++4. **结果解释**：验证通过/失败分别代表什么，不外推到哪些机制、平台或统计范围。
++
++模式 C 的“人类理解确认”必须由人直接填写，或由 Agent 转述后获得人明确确认；Agent 不得把自己的推断伪装成人的理解。
++
++### 6. 归档检查清单（⑤ 归档时逐项自检，避免人提醒才补）
+ 
+ | # | 检查项 | 位置 |
+ |---|---|---|
+-| 1 | 会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论 | 档案 `会话纪要.md` |
++| 1 | 模式 C 的会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论；A/B 可选 | 档案 `会话纪要.md` |
+ | 2 | README 的 状态/时间线/工作日志/结论与遗留 与新事实一致 | 档案 `README.md` |
+ | 3 | INDEX.md 状态已更新 | `MLVR_develop/INDEX.md` |
+ | 4 | 知识库 06 条目状态（已修复/🟢）与变更记录已同步 | `MLVR_Knowledge/06_…` |
+@@ -102,8 +142,9 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ | 6 | `changes.diff` 是最新（改过 `RMC/` 或 `AIMC_WWiteration/` 才有） | 档案 `changes.diff` |
+ | 7 | 验证记录贴的是真实输出（哈希/diff/退出码/训练曲线），未覆盖项如实写明 | 档案 README 第 6 节 |
+ | 8 | 实验可复现性五项（种子/配置/依赖/命令/基准）齐全 | 档案 README |
++| 9 | 模式 C 的 L0、因果图、可证伪假设、人类理解确认、结果解释卡和会话纪要完整；审查/验证结论标明适当 E 等级与治理标签 | 档案 README / `会话纪要.md` |
+ 
+-### 6. 归档体积规范
++### 7. 归档体积规范
+ 
+ - `logs/` 不存可再生成的产物：构建目录、二进制、RMC 运行产物、训练中间 checkpoint 等，
+   需要时写重现命令而不是存文件；
+@@ -136,5 +177,6 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ cd /home/workspace/AI_MC_WW_interation/MLVR_develop
+ ./new_task.sh rmc-ww-mesh读入            # 建档
+ ./new_task.sh A1_xxx修复 A1              # 建档并关联知识库条目 A1
++./new_task.sh f03-source-audit F03 C     # 建档并指定模式 C
+ # 然后把原始材料（报错/数据/日志）存进 <文件夹>/logs/
+ ```
+diff --git a/MLVR_develop/_template/README.md b/MLVR_develop/_template/README.md
+index 494082b..9d59d20 100644
+--- a/MLVR_develop/_template/README.md
++++ b/MLVR_develop/_template/README.md
+@@ -5,6 +5,7 @@
+ | 立项日期 | YYYY-MM-DD |
+ | 状态 | 待设计 / 待决策 / 实施中 / 待验证 / 已完成 / 已关闭 |
+ | 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
++| 任务模式 | B — 工程协作（默认）／ A — 受约束自动化 ／ C — 深度物理研究与学习 |
+ | 报告人 | |
+ | 关联知识库条目 | 例：`06_已知问题与改进建议.md` A1 ／ 无 |
+ | 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+@@ -12,6 +13,16 @@
+ 
+ ---
+ 
++## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
++
++**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
++
++**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
++
++**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++
++---
++
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+ **目标**：这次要做什么？解决什么问题？
+@@ -39,6 +50,27 @@
+ 
+ ---
+ 
++## 2A. 物理解释与可证伪假设（模式 C 必填）
++
++**问题定式**：物理对象、正确关系、可观测量及成功判据。
++
++**可证伪假设**：如果根因/机制判断正确，应观察到什么？什么结果会推翻它？
++
++**物理—代码因果图**：
++```text
++物理假设/输入
++	↓
++代码路径（文件:function）
++	↓
++中间量/统计量
++	↓
++可观测结果与判据
++```
++
++**证据等级与治理标签**：E0 / E1 / E2 / E3 / E4；已冻结/未冻结、可复现/部分可复现、边界已定义/未完全定义、原始证据已归档/未完整归档（仅审查/验证结论填写；定义见 `MLVR_develop/README.md`）。
++
++---
++
+ ## 3. 方案选项（② 设计/定位 · Agent 填，给 2~3 个）
+ 
+ | 方案 | 做法 | 代价 / 风险 | 推荐度 |
+@@ -55,6 +87,22 @@
+ - **决定人 / 日期**：
+ - **理由与约束**：（例：不允许更新基准结果；不得改变 RMC 输入卡格式；算力预算…）
+ 
++**人类理解确认（模式 C 必填，由人确认或转述后确认）**：
++- 我理解本任务要判断/修复的物理关系是：
++- 我理解当前根因假设是：
++- 若该假设错误，预期会看到：
++- 本次即使验证通过，仍不能推出：
++- 我批准的范围，以及明确不批准的扩展：
++
++**变更卡（模式 B/C 必填）**：
++| 项 | 内容 |
++|---|---|
++| 问题与风险 | |
++| 拟改动 / 不改动 | |
++| 预期因果链 | |
++| 验证与失败停止条件 | |
++| 回滚方式（若适用） | |
++
+ > 未填写本节前，Agent 不得改动 `../RMC` 下的任何文件。
+ 
+ ---
+@@ -97,6 +145,18 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
++## 6A. 结果解释卡（模式 C 必填）
++
++| 问题 | 解释 |
++|---|---|
++| 结果支持/否定了哪个假设？ | |
++| 证据等级与治理标签及其依据？ | |
++| 通过/失败在物理或工程上分别意味着什么？ | |
++| 不可外推的边界是什么？ | |
++| 下一步是否需要升级范围或另立任务？ | |
++
++---
++
+ ## 7. 结论与遗留（⑤ 归档）
+ 
+ - **结论**：
+@@ -124,6 +184,6 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ |---|---|---|---|
+ | 1 | 立项建档 | `new_task.sh` | 生成文件夹 + logs/ + 模板 |
+ 
+-**可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
++**模式 C 必填；A/B 可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
+ （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含
+ 口令/token 等凭据，纪要必须脱敏。
+diff --git a/MLVR_develop/new_task.sh b/MLVR_develop/new_task.sh
+index 1a7053d..6b6917f 100755
+--- a/MLVR_develop/new_task.sh
++++ b/MLVR_develop/new_task.sh
+@@ -1,17 +1,27 @@
+ #!/usr/bin/env bash
+ # 建立一个任务处理档案。
+-# 用法: ./new_task.sh <任务短名> [关联知识库条目]
++# 用法: ./new_task.sh <任务短名> [关联知识库条目] [任务模式 A|B|C]
+ #   ./new_task.sh rmc-ww-mesh读入
+-#   ./new_task.sh A1_xxx修复 A1
++#   ./new_task.sh A1_xxx修复 A1 B
+ set -euo pipefail
+ 
+-if [ $# -lt 1 ]; then
+-  echo "用法: $0 <任务短名> [关联知识库条目]" >&2
++if [ $# -lt 1 ] || [ $# -gt 3 ]; then
++  echo "用法: $0 <任务短名> [关联知识库条目] [任务模式 A|B|C]" >&2
+   exit 1
+ fi
+ 
+ SLUG="$1"
+ KB="${2:-无}"
++MODE="${3:-B}"
++case "$MODE" in
++  A) MODE_LABEL='A — 受约束自动化' ;;
++  B) MODE_LABEL='B — 工程协作（默认）' ;;
++  C) MODE_LABEL='C — 深度物理研究与学习' ;;
++  *)
++    echo "任务模式必须是 A、B 或 C: $MODE" >&2
++    exit 1
++    ;;
++esac
+ BASE="$(cd "$(dirname "$0")" && pwd)"
+ DATE="$(date +%Y%m%d)"
+ STAMP="$(date '+%Y-%m-%d %H:%M')"
+@@ -31,38 +41,59 @@ if [ -e "$DIR" ]; then
+   exit 1
+ fi
+ 
++# 先验证主台账结构，避免失败时留下半建档目录。
++python3 - "$BASE/INDEX.md" <<'PY'
++import sys
++path = sys.argv[1]
++lines = open(path, encoding='utf-8').read().splitlines(keepends=True)
++header = '| 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |\n'
++divider = '|---|---|---|---|---|---|\n'
++try:
++  header_index = lines.index(header)
++except ValueError:
++  raise SystemExit('INDEX.md 缺少主任务台账表头，未创建任务。')
++if header_index + 1 >= len(lines) or lines[header_index + 1] != divider:
++  raise SystemExit('INDEX.md 主表头后缺少唯一分隔行，未创建任务。')
++PY
++
+ mkdir -p "$DIR/logs"
+ cp "$BASE/_template/README.md" "$DIR/README.md"
+ 
+-python3 - "$DIR/README.md" "$SLUG" "$STAMP" "$KB" <<'PY'
++python3 - "$DIR/README.md" "$SLUG" "$STAMP" "$KB" "$MODE_LABEL" <<'PY'
+ import sys
+-path, slug, stamp, kb = sys.argv[1:5]
++path, slug, stamp, kb, mode_label = sys.argv[1:6]
+ s = open(path, encoding='utf-8').read()
+ s = s.replace('# <任务短名>', '# ' + slug, 1)
+ s = s.replace('| 立项日期 | YYYY-MM-DD |', '| 立项日期 | %s |' % stamp.split()[0])
+ s = s.replace('| 状态 | 待设计 / 待决策 / 实施中 / 待验证 / 已完成 / 已关闭 |',
+               '| 状态 | 待设计 |')
++s = s.replace('| 任务模式 | B — 工程协作（默认）／ A — 受约束自动化 ／ C — 深度物理研究与学习 |',
++              '| 任务模式 | %s |' % mode_label)
+ s = s.replace('| 关联知识库条目 | 例：`06_已知问题与改进建议.md` A1 ／ 无 |',
+               '| 关联知识库条目 | %s |' % kb)
+ s = s.replace('| YYYY-MM-DD HH:MM | 立项 |', '| %s | 立项 |' % stamp)
+ open(path, 'w', encoding='utf-8').write(s)
+ PY
+ 
+-# 追加一行到台账的"进行中"表格（定位到表头分隔行之后）
++# 追加一行到主台账表头紧随的分隔行之后。
+ python3 - "$BASE/INDEX.md" "$SLUG" "${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
+ import sys, datetime
+ path, slug, folder, kb = sys.argv[1:5]
+ row = '| %s | [%s](%s/README.md) |  | 待设计 | %s | |\n' % (
+     datetime.date.today().isoformat(), slug, folder, kb)
+ lines = open(path, encoding='utf-8').read().splitlines(keepends=True)
+-for i, l in enumerate(lines):
+-    if l.startswith('|---|---|---|---|---|---|'):
+-        lines.insert(i + 1, row)
+-        break
+-else:
+-    lines.append(row)
++header = '| 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |\n'
++divider = '|---|---|---|---|---|---|\n'
++try:
++    header_index = lines.index(header)
++except ValueError:
++    raise SystemExit('INDEX.md 缺少主任务台账表头，未创建任务。')
++if header_index + 1 >= len(lines) or lines[header_index + 1] != divider:
++    raise SystemExit('INDEX.md 主表头后缺少唯一分隔行，未创建任务。')
++lines.insert(header_index + 2, row)
+ open(path, 'w', encoding='utf-8').writelines(lines)
+ PY
+ 
+ echo "已建档: $DIR"
++echo "任务模式: $MODE_LABEL"
+ echo "下一步: 把原始材料（报错/数据/日志）保存到 $DIR/logs/"
