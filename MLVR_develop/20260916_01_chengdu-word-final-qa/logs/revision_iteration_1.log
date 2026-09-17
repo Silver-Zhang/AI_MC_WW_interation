@@ -1,0 +1,70 @@
+=== Regenerate DOCX ===
+/home/silver/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 format_docx.py
+
+COUNTS 8 4 29
+/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/成都会议论文投稿版.docx math 220 tables 4 images 8
+=== Audit template ===
+/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/word_conversion/template_audit.md
+=== Audit content ===
+FAIL /home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/word_conversion/content_audit.md
+=== Render QA ===
+PAGES 19; FIGURE_PLACEMENT FAIL; /home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/word_conversion/qa_render.md
+=== Validate render metadata ===
+Pages:           19
+Page size:       595.304 x 841.89 pts (A4)
+rendered JPEG count: 19
+=== QA report ===
+# 成都会议 Word 渲染 QA
+
+- Word：`article/成都会议/成都会议论文投稿版.docx`，SHA-256：`595b9a08fac3b79ddb8f5ef39b9cb57f3db6870c206c43b0c9f9b59b69d2c2c7`
+- 渲染器：`/home/silver/.cache/codex-runtimes/codex-runtime-install-kvDKl1/payload/codex-primary-runtime/dependencies/bin/override/soffice`
+- 渲染器版本：`LibreOfficeDev 26.8.0.0.alpha0 2c87e51eeaa2b413ff4ae097b2705eea1995d8e5`
+- 渲染方式：LibreOffice headless → PDF → pdftoppm 170 dpi JPEG
+- PDF 页数（pdfinfo）：**19**；JPEG 页数：**19**
+- 图 / 数据表 / 显示公式：8 / 4 / 29（最终内容语义见 `content_audit.md`）
+- 公式格式：原生 OMML；公式编号使用同段的中心与右对齐制表位。
+- 自动空白页检测：NONE
+- 自动测量不会替代逐页人工视觉判断。Page balance、图片清晰度和无解释留白应仅在完成逐页检查后于 `final_review.md` 判定。
+- 页面 JPEG、PDF 和 contact sheet：`article/成都会议/word_conversion/build/qa_preview`（gitignore，不提交）
+
+| 页 | 像素尺寸 | JPEG 字节数 | 墨迹像素比例 | 内容高度比例 | SHA-256 |
+| ---: | --- | ---: | ---: | ---: | --- |
+| 1 | 1406×1988 | 430050 | 0.0769 | 0.8325 | `82e8c047fb9953f818dac7275687342d6f8d22e720bc080504fe4dcbd429d541` |
+| 2 | 1406×1988 | 576851 | 0.0900 | 0.8521 | `b2fb8fad078620928b83fe3a1034d57ac13312d27c464d8538c8737afbaf0273` |
+| 3 | 1406×1988 | 613051 | 0.1006 | 0.8239 | `27c1d3b6864f6aee750c0fb9666bca12bbe86803c66eb80bc38bb99d7435c482` |
+| 4 | 1406×1988 | 376918 | 0.0589 | 0.8521 | `6c51eb0a32718d871e0e968a8aed7ee59023e1fcb380cb9c1bcc7566aea0fd82` |
+| 5 | 1406×1988 | 355526 | 0.0710 | 0.8506 | `3c80ddb53aa089d60e9702f642e9d046d2aa5bc3d2d8ac4a9d2fe7c3ab820c15` |
+| 6 | 1406×1988 | 393723 | 0.0599 | 0.7998 | `ab16515a1bb036a590ade5328eda78c10fe1fb4f0c51b35e7b7f2d604b6cecec` |
+| 7 | 1406×1988 | 394393 | 0.0618 | 0.8124 | `b7506cd023aff8967b89a22bad310a586e80bc8c3e1dcddc6f4addd55e79000e` |
+| 8 | 1406×1988 | 515343 | 0.0811 | 0.8395 | `987633249e1dd64f6d9b4cb9585bc37ec22b24dd9e92749cd50d5e9f3903f2bd` |
+| 9 | 1406×1988 | 471392 | 0.0735 | 0.8481 | `cabaf95e857c88dde5b520f9be9bf69cff84e8440ae2b8611436ea0fa8454cdd` |
+| 10 | 1406×1988 | 403874 | 0.0632 | 0.7088 | `462d2793af95b002be533be5df4388d07b9acce8dbb16a91a915c4f26937b99c` |
+| 11 | 1406×1988 | 358226 | 0.0591 | 0.8496 | `2652dad38a5b05465431c503e3becd9b10f3285c57cf30d152b63d5823b6b818` |
+| 12 | 1406×1988 | 446018 | 0.1250 | 0.8521 | `51ab44bbed8eee6f865bb59b8c7c28f20b79eaca88494f8d08953a4962f369cd` |
+| 13 | 1406×1988 | 514441 | 0.0839 | 0.7797 | `b13a0641d98e9f239e021100988207971544cb48d68ff979efde3e0197018044` |
+| 14 | 1406×1988 | 253019 | 0.2205 | 0.6901 | `d6212f955c61b392e40fffb8d6f03326b9daa4b09aae2609bb2e6862d9cce82e` |
+| 15 | 1406×1988 | 418991 | 0.1825 | 0.8400 | `848467d47683fa90bd7e6425fcddd345b9916a7ebb2240e25f69b829faef3dfd` |
+| 16 | 1406×1988 | 405910 | 0.0739 | 0.8234 | `3e733387df251250ba164b52ee4e91a83928e6d37cd02682893d6dac3dede025` |
+| 17 | 1406×1988 | 482879 | 0.0773 | 0.8360 | `bfd819b0fc3ed12e1cfc5312b5cf9691548ad1a0d966d64be0679bd7ae4e5b92` |
+| 18 | 1406×1988 | 473777 | 0.0711 | 0.8551 | `014e67573503d011186de3fed665ac02fe2cb01d8dc56d4541a1d782c43dd83d` |
+| 19 | 1406×1988 | 353490 | 0.0498 | 0.5966 | `c65c47d372e3e4027d5eab6df65d8aaefc907c6a37b8fb56bf9f40e95a616724` |
+
+## Figure Placement QA
+
+`页差 = 图片页 − 首次正文引用页`。图片页以 PDF 中大型光栅对象的出现顺序与 DOCX 图关系顺序映射。映射不唯一时明确报告 UNKNOWN，不以旧报告硬编码值代替。
+
+| 图号 | 首次引用页 | 图片页 | 图题页 | 页差 | 图片宽度 | 映射方法 | 结果 |
+| ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |
+| 1 | 5 | — | 5 | — | 78% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 2 | 10 | — | 10 | — | 82% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 3 | 12 | — | 12 | — | 92% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 4 | 13 | — | 13 | — | 86% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 5 | 13 | — | 13 | — | 94% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 6 | 13 | — | 13 | — | 94% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 7 | 13 | — | 13 | — | 94% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+| 8 | 15 | — | 15 | — | 90% | UNKNOWN: PDF image mapping ambiguous | UNKNOWN |
+
+- Figure placement: **FAIL**
+- Page balance: **MANUAL REVIEW REQUIRED**
+- Large unexplained whitespace: **MANUAL REVIEW REQUIRED**
+- 是否逐页视觉检查：**待 `final_review.md` 记录人工逐页检查后确认**

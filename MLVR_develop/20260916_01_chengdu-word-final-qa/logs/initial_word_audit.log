@@ -1,0 +1,7 @@
+=== independent baseline audits ===
+$ python audit_template.py
+/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/word_conversion/template_audit.md
+$ python content_audit.py
+PASS /home/workspace/AI_MC_WW_interation/AIMC_WWiteration/article/成都会议/word_conversion/content_audit.md
+$ SOFFICE=... python qa_preview.py
+LibreOffice/soffice not found
