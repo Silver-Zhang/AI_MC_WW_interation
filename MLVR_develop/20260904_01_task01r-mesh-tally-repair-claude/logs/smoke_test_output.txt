@@ -1,0 +1,121 @@
+============================================================
+  AI-MC Weight Window — Smoke Test
+============================================================
+
+=== 1. 几何与特征工程 ===
+  [PASS] box_center
+  [PASS] box_equivalent_radius
+  [PASS] smooth_center_distance@center==0
+  [PASS] smooth_center_distance monotone inside
+  [PASS] smooth_center_distance >= 0
+  [PASS] build_dnn_features plain shape
+  [PASS] build_dnn_features feature shape
+  [PASS] features no NaN/Inf
+  [PASS] log_flux_prior shape
+  [PASS] log_flux_prior monotone (no flat top)
+
+=== 2. HPO 控制逻辑 ===
+  [PASS] FluxNet.prior_kappa_g default None
+  [PASS] FluxNet.prior_kappa_scale default 1.0
+  [PASS] const ENABLE_KAPPA_HPO importable
+  [PASS] const HPO_START_ITER importable
+  [PASS] const HPO_INTERVAL importable
+  [PASS] const HPO_QUICK_EPOCHS importable
+  [PASS] const HPO_KAPPA_SCALE_MIN importable
+  [PASS] const HPO_KAPPA_SCALE_MAX importable
+  [PASS] select_kappa_scale_hpo callable
+  [PASS] make_train_val_split callable
+  [PASS] HPO skips before HPO_START_ITER
+  [PASS] HPO skips for plain_dnn
+  [PASS] HPO executes at HPO_START_ITER
+  [PASS] HPO selected scale in range
+  [PASS] train/val split covers all
+  [PASS] train/val split no overlap
+
+=== 3. PINN 扩散参数 / PDE / 训练 / 预测 ===
+  [PASS] D_G length
+  [PASS] D_G > 0
+  [PASS] SIGMA_R_G >= 0
+  [PASS] SIGMA_S_OUT_G length
+  [PASS] collocation shape (fwd)
+  [PASS] collocation z fixed (fwd)
+  [PASS] collocation deterministic (fwd)
+  [PASS] collocation shape (adj)
+  [PASS] collocation z fixed (adj)
+  [PASS] collocation deterministic (adj)
+  [PASS] pde_loss finite
+  [PASS] pde_loss >= 0
+  [PASS] training mask non-empty
+    ep 1/5  [███░░░░░░░░░░░░░]  loss=2.8177e-01
+    ep 2/5  [██████░░░░░░░░░░]  loss=2.5770e-01
+    ep 3/5  [█████████░░░░░░░]  loss=2.3419e-01
+    ep 4/5  [████████████░░░░]  loss=2.0633e-01
+    ep 5/5  [████████████████]  loss=1.7234e-01
+    ep 1/5  [███░░░░░░░░░░░░░]  loss=1.3257e-01
+    ep 2/5  [██████░░░░░░░░░░]  loss=8.5895e-02  pde=3.894e-01  λ=2.50e-04
+    ep 3/5  [█████████░░░░░░░]  loss=3.2001e-02  pde=3.876e-01  λ=5.00e-04
+    ep 4/5  [████████████░░░░]  loss=7.5651e-02  pde=3.844e-01  λ=7.50e-04
+    ep 5/5  [████████████████]  loss=7.6045e-02  pde=3.851e-01  λ=1.00e-03
+    └─ PINN  data=7.6045e-02  pde=3.8506e-01  λ_final=1.00e-03  total=7.6430e-02
+    └─ 完成  residual_log_flux  loss=7.6045e-02  κ_scale=1.000
+  [PASS] PINN train success
+  [PASS] PINN total_loss finite
+  [PASS] predict shape
+  [PASS] predict finite & positive
+
+=== 4. 配置系统与模型工厂 ===
+  [PASS] quick_config.run.quick is True
+  [PASS] quick_config n_iterations == 3
+  [PASS] quick_config n_particles_train small
+  [PASS] quick_config epochs small
+  [PASS] default_config.run.quick is False
+  [PASS] default_config n_iterations == 30
+  [PASS] default n_particles_final divisible by n_batches_final
+  [PASS] default early_stop_on_re is False
+  [PASS] default stop_on_fom_plateau is False
+  [PASS] build_model(plain_dnn) output shape
+  [PASS] build_model(feature_dnn) output shape
+  [PASS] build_model(prior_residual_dnn) output shape
+  [PASS] build_model(prior_residual_pinn) output shape
+  [PASS] build_model unknown variant raises
+
+=== 5. U-Net Field 模型 ===
+  [PASS] build_model unet 构造成功
+  [PASS] unet forward shape
+  [PASS] unet forward finite
+  [PASS] field X shape
+  [PASS] field Y shape
+  [PASS] field mask shape
+  [PASS] field weights shape
+  [PASS] field X finite
+  [PASS] field Y finite
+  [PASS] field weights >= 0
+  [PASS] field mask has valid cells
+  [PASS] unet prior_info is None
+  [PASS] unet train success
+  [PASS] unet train data_loss finite
+  [PASS] unet train total_loss finite
+  [PASS] unet predict shape
+  [PASS] unet predict finite
+  [PASS] unet predict positive
+
+=== 6. prior_residual_unet 变体 ===
+  [PASS] prior_residual_unet build_model 成功
+  [PASS] prior_residual_unet forward shape
+  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[-4.644 -4.265]
+  [PASS] prior_residual_unet prior_info not None
+  [PASS] prior_residual_unet prior_C_g shape
+  [PASS] prior_residual_unet log_prior_field shape
+  [PASS] prior_residual_unet Y (residual) finite
+  [PASS] prior_residual_unet Y residual bounded
+  [PASS] prior_residual_unet train success
+  [PASS] prior_residual_unet data_loss finite
+  [PASS] prior_residual_unet predict shape
+  [PASS] prior_residual_unet predict finite
+  [PASS] prior_residual_unet predict positive
+  [PASS] FOM gate: zero-response 不更新 best_fom
+  [PASS] FOM gate: 有效响应允许更新 best_fom
+
+============================================================
+  SUMMARY: 89 PASS  0 FAIL
+============================================================

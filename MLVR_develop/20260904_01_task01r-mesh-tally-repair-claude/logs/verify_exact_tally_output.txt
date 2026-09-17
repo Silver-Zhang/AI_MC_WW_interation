@@ -1,0 +1,28 @@
+Task 01-R Claude exact tally verification
+constants: domain=(0.0,120.0)x(0.0,60.0)x(0.0,2) mesh=(1.0,1.0,2.0)
+same-cell: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
++x-multi-cell: PASS max_err=2.220e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+-x-multi-cell: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
++y: PASS max_err=2.220e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+-y: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
++z: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+-z: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+xy-diagonal: PASS max_err=2.220e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+xz-diagonal: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+yz-diagonal: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+xyz-diagonal: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+edge-crossing: PASS max_err=2.220e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+corner-crossing: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+internal-face-start-positive: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+internal-face-start-negative: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+endpoint-internal-face: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+endpoint-domain-boundary: PASS max_err=2.887e-15 total_err=0.000e+00 touched_equal=True group_isolated=True
+very-short: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+nonunit-weight-group0: PASS max_err=4.441e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+nonunit-weight-group1: PASS max_err=4.441e-16 total_err=0.000e+00 touched_equal=True group_isolated=True
+zero-length: PASS max_err=0.000e+00 total_err=0.000e+00 touched_equal=True group_isolated=True
+randomized differential: N=10000 failures=0 max_cell_err=1.709e-10 mean_cell_err=1.235e-13 max_total_err=3.638e-12 touched_mismatches=0
+fixed trace totals repaired=9.225000000000 old=9.225000000000 expected=9.225000000000 cellwise_different=True
+noninvasiveness: scorer_random_calls=False scalar_state_unchanged=True tally_sum=0.425000000000
+benchmark segments=20000 old_midpoint_s=0.025740 exact_dda_s=0.048190 slowdown=1.87x
+GATES deterministic=True randomized=True trace=True noninvasive=True

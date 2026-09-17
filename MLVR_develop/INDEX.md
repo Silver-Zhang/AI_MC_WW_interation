@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-17 | [workspace-repo-hygiene](20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，未提交；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
 | 2026-09-17 | [root-legacy-assets-cleanup](20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
 | 2026-09-16 | [chengdu-word-final-qa](20260916_01_chengdu-word-final-qa/README.md) |  | 待设计 | B | |
 | 2026-09-05 | [task08a-r2-closure-blocker-repair](20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |

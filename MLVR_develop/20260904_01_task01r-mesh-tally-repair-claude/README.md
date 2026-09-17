@@ -29,8 +29,8 @@ Final classification: **A — Repair verified**, strictly limited to exact per-c
 ## 变更与证据
 
 - Production diff: [`changes.diff`](changes.diff)
-- Claude report: `AIMC_WWiteration/docs/journal_revision/task01r_mesh_tally_repair_claude/task01r_mesh_tally_repair_claude.md`
-- Raw verification outputs: `AIMC_WWiteration/docs/journal_revision/task01r_mesh_tally_repair_claude/assets/`
+- Raw verification outputs（2026-09-17 从 Claude 工作副本补录）: [`logs/`](logs/) —— `verify_exact_tally_output.txt`（exact tally 全矩阵 PASS + 10,000 条 randomized differential）、`smoke_test_output.txt`（89 PASS 0 FAIL）
+- Claude report: `AIMC_WWiteration/docs/journal_revision/task01r_mesh_tally_repair_claude/task01r_mesh_tally_repair_claude.md`（**该路径在 AIMC 工作区与已提交历史中均不存在，引用待修复**）
 - Existing relevant smoke test: `tests/smoke_test.py` → `89 PASS 0 FAIL`
 
 ## 范围外
