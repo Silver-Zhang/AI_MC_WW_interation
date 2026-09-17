@@ -1,0 +1,35 @@
+diff --git a/.gitignore b/.gitignore
+index 59e3b69..a3397b9 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -46,3 +46,7 @@ MLVR_develop/20260831_03_f02-mpi4-angular-seed-replication/logs/
+ 
+ # ===== 编译产物 =====
+ *.o
++
++# ===== 根目录遗留实验资产（不得堆放在仓库根目录；仅匹配根目录，防御规则）=====
++# 依据: MLVR_develop/20260917_01_root-legacy-assets-cleanup/
++/task*/
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index 6e28d40..c7f91d8 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -7,6 +7,18 @@
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
++| 2026-09-17 | [root-legacy-assets-cleanup](20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
++| 2026-09-16 | [chengdu-word-final-qa](20260916_01_chengdu-word-final-qa/README.md) |  | 待设计 | B | |
++| 2026-09-05 | [task08a-r2-closure-blocker-repair](20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |
++| 2026-09-05 | [task08a-experiment-freeze-harness](20260905_03_task08a-experiment-freeze-harness/README.md) |  | 待设计 | 无 | |
++| 2026-09-05 | [task07-field-reconstruction-audit](20260905_02_task07-field-reconstruction-audit/README.md) | C | 已完成 | field reconstruction / importance mapping | 956f951 |
++| 2026-09-05 | [task06-iteration-history-audit](20260905_01_task06-iteration-history-audit/README.md) | C | 已完成 | AIMC iteration history / WW provenance | 7c87fa2 |
++| 2026-09-04 | [task05-ww-event-semantics](20260904_05_task05-ww-event-semantics/README.md) |  | 待设计 | 无 | |
++| 2026-09-04 | [task04-forward-adjoint-reciprocity](20260904_04_task04-forward-adjoint-reciprocity/README.md) | 物理审查 / 条件修复 / 数值验证 | 已完成（A，限定 observable/source contract） | 无 | `8acd615` + report |
++| 2026-09-04 | [task03-adjoint-transport-audit](20260904_03_task03-adjoint-transport-audit/README.md) |  | 待设计 | 无 | |
++| 2026-09-04 | [task02r-final-metrics-pipeline-repair](20260904_02_task02r-final-metrics-pipeline-repair/README.md) |  | 待设计 | 无 | |
++| 2026-09-04 | [task01r-mesh-tally-repair-claude](20260904_01_task01r-mesh-tally-repair-claude/README.md) |  | 待设计 | 无 | |
++| 2026-09-03 | [forward-transport-tally-audit](20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 未提交 |
+ | 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
+ | 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
+ | 2026-08-31 | [workflow-mode-c-audit-remediation](20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
