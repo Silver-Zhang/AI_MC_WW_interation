@@ -23,7 +23,7 @@
 
 **目标**：整理工作区多仓库结构：清理 AI 工具遗留的 worktree 与游离副本，补录被遗漏的原始验证证据，并提供一条命令查看三个主仓库状态的只读脚本。RMC 自带的依赖 submodule 不做任何改动。
 
-**范围**：`AIMC_WWiteration/.claude/worktrees/`（清理）、`MLVR_develop/20260904_01_task01r-mesh-tally-repair-claude/`（证据补录与引用修正）、新建 `tools/repo-status.sh`。不修改 `RMC/`（含其 submodule 配置）与 AIMC 的代码或历史。
+**范围**：`AIMC_WWiteration/.claude/worktrees/`（清理）、`MLVR_develop/2026-09/20260904_01_task01r-mesh-tally-repair-claude/`（证据补录与引用修正）、新建 `tools/repo-status.sh`。不修改 `RMC/`（含其 submodule 配置）与 AIMC 的代码或历史。
 
 **验收标准**：
 1. 两个遗留 worktree 目录清除，AIMC `git worktree list` 仅剩主工作区；
@@ -99,13 +99,13 @@
 | 1 | 盘点仓库结构 | `find . -name .git`、`git worktree list`、`submodule status` | 确认 3 个主仓库 + 11 个 RMC submodule（5 个未初始化）+ 1 个注册 worktree |
 | 2 | 判定 worktree 提交去留 | `git cherry`、`patch-id`、`diff` | `3c74a11` 未合入主线 → 采用“先 tag 后删除” |
 | 3 | 补录唯一证据 | `cp` 两个日志到 task01r 档案 `logs/` | 日志为唯一副本，已纳入档案（SHA256 见第 6 节） |
-| 4 | 修正档案引用 | `MLVR_develop/20260904_01_…/README.md` | 标注补录来源与两个失效的 AIMC 路径 |
+| 4 | 修正档案引用 | `MLVR_develop/2026-09/20260904_01_…/README.md` | 标注补录来源与两个失效的 AIMC 路径 |
 | 5 | 清理 worktree | `git tag` → `worktree remove` → `branch -D` → `rm -rf` → `worktree prune` | 仅剩主工作区 |
 | 6 | 新增状态脚本 | `tools/repo-status.sh` | 三个仓库状态一键可查，只读 |
 
 **代码改动**：见 [changes.diff](changes.diff)，摘要：
 - 新增 `tools/repo-status.sh` —— 只读多仓库状态检查
-- 更新 `MLVR_develop/20260904_01_…/README.md` —— 证据引用修正
+- 更新 `MLVR_develop/2026-09/20260904_01_…/README.md` —— 证据引用修正
 - 新增 `MLVR_develop/20260904_01_…/logs/` —— 补录的原始验证输出
 - 未改动 RMC/AIMC 任何源码或历史
 

@@ -3,50 +3,47 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-09-04 |
-| 状态 | 待设计 |
-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
-| 任务模式 | C — 深度物理研究与学习 |
-| 报告人 | |
+| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
+| 任务类型 | 物理审查 / 无偏性验证 |
+| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
+| 报告人 | Claude（journal_revision 系列） |
 | 关联知识库条目 | 无 |
-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
+| 涉及文件 | `AIMC_WWiteration` 的 WW 事件时序、查找、split/roulette 与栈 |
+| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_weight_window_semantics_codex/` |
 
 ---
 
 ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
 
-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
-
-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
-
-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
+多群 WW 事件语义与无偏性审查：覆盖固定 WW 的事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性与固定非平凡 WW 的期望测试；**在证明修复前的事件顺序缺陷之后**才改动代码。不含 WW 生成、迭代、神经重构、FOM 适用性与 Task 06 的历史累计。
 
 ---
 
 ## 1. 任务定义（① 立项 · Agent 填）
 
-**目标**：这次要做什么？解决什么问题？
+**目标**：审查固定 WW 的事件语义并验证无偏性，在证据充分时做条件修复。
 
-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
+**范围**：事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性。
 
-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
+**本仓库产出**：5 份局部 oracle 输出与 `changes.diff`（见 `logs/`）。
 
-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
+**权威记录**：`AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_..._codex/`。
 
 ---
 
 ## 2. 调研与设计（② 设计/定位 · Agent 填）
 
-**背景**：相关代码/知识库条目/原型笔记的现状。
+**背景**：Task 05 由外部 Agent 在 AIMC 侧完成，本仓库保留了局部 oracle 输出。
 
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `文件:行号` / 实验数据 | |
+| 1 | `logs/ww_unbiasedness_output.txt` | 固定非平凡 WW 的期望测试 |
+| 2 | `logs/local_oracle_output.txt`、`deterministic_state_oracle_output.txt` | 局部数学与确定性状态 oracle |
+| 3 | `logs/split_state_oracle_output.txt`、`persistent_test_output.txt` | 后代状态与持久化测试 |
+| 4 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/` | 权威推导与缺陷确认 |
 
-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
-
-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
+**边界**：本档案不重复裁定证据等级；WW 生成、迭代、神经重构与 FOM 适用性不在本任务范围。
 
 ---
 
@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 
 ---
 
-## 7. 结论与遗留（⑤ 归档）
+## 7. 结论与遗留
 
-- **结论**：
-- **遗留问题 / 后续待办**：
-- **知识库同步**：更新了哪些文档的哪些章节
-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
+- **结论**：WW 事件语义审查完成，修复前的事件顺序缺陷已确认并条件修复；本仓库保存了 5 份局部 oracle 输出。
+- **遗留**：本档案为登记型，未套用完整模板；如需证据等级裁定应在 AIMC 侧文档基础上进行。
+- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
+- **是否已提交**：随根仓库提交。
 
 ---
 

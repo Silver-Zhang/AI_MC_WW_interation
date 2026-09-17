@@ -1,0 +1,491 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index e41c06a..6eca523 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -19,7 +19,7 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
+    立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
+    用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释；存在未决事项或分歧时补脱敏会话纪要。审查/验证结论按需标注 E0–E4 证据等级与治理标签。任何档案至少含结论、证据、边界三要素（`tools/check-archives.sh` 可自检）。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git a/CLAUDE.md b/CLAUDE.md
+index c6a661d..5a4b939 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -19,7 +19,7 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
+    立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
+    用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释；存在未决事项或分歧时补脱敏会话纪要。审查/验证结论按需标注 E0–E4 证据等级与治理标签。任何档案至少含结论、证据、边界三要素（`tools/check-archives.sh` 可自检）。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git a/MLVR_develop/20260904_03_task03-adjoint-transport-audit/README.md b/MLVR_develop/20260904_03_task03-adjoint-transport-audit/README.md
+index 41fe447..2621ac7 100644
+--- a/MLVR_develop/20260904_03_task03-adjoint-transport-audit/README.md
++++ b/MLVR_develop/20260904_03_task03-adjoint-transport-audit/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-04 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 物理审查 / 条件修复 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | `AIMC_WWiteration` 伴随输运算子与索引约定 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_03_adjoint_transport_repair_claude/`、`task_03v_adjoint_transport_verification_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++多群伴随输运的物理审查与条件修复：覆盖当前笛卡尔几何下的同质两群、非裂变、各向同性散射伴随 MC。审查建立了前向/伴随算子的索引与权重约定，并**在证明修复前的算子缺陷之后**才改动代码。不含完整可观测量互易性、WW、探测器响应、迭代或神经重构。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：审查多群伴随输运的物理实现，并在证据充分时做条件修复。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：伴随算子与索引约定、隐式碰撞估计、单碰撞/自由飞行 oracle、边界条件与伴随源语义；限定同质两群、非裂变、各向同性散射。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：本登记档案；`logs/` 为空（无独立原始输出）。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：见基本信息表的 AIMC 路径（推导、静态审计、oracle 与缺陷确认）。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 03 由外部 Agent 在 AIMC 侧完成，本仓库仅保留登记行。
+ 
+-**证据链**：
++**材料位置**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
++| 1 | `AIMC_WWiteration/docs/journal_revision/task_03_adjoint_transport_repair_claude/` | Claude 侧推导与修复记录（14 节） |
++| 2 | `AIMC_WWiteration/docs/journal_revision/task_03v_adjoint_transport_verification_codex/` | Codex 侧独立验证 |
+ 
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++**边界**：本档案只登记产出位置与范围，不重复裁定证据等级；物理结论以 AIMC 侧文档为准。
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**为什么之前没做/没发现**：本仓库归档时未同步该外部任务的内容，只留下空模板。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：任务已由外部 Agent 完成，产出归档于 AIMC；范围限同质两群、非裂变、各向同性散射伴随 MC。
++- **遗留**：本仓库无原始输出可复核；如需在本工作区裁定证据等级，应先补录 oracle 输出。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：AIMC 侧文档随其仓库提交；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/20260904_05_task05-ww-event-semantics/README.md b/MLVR_develop/20260904_05_task05-ww-event-semantics/README.md
+index 7cda1a1..8444cf1 100644
+--- a/MLVR_develop/20260904_05_task05-ww-event-semantics/README.md
++++ b/MLVR_develop/20260904_05_task05-ww-event-semantics/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-04 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 物理审查 / 无偏性验证 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | `AIMC_WWiteration` 的 WW 事件时序、查找、split/roulette 与栈 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_weight_window_semantics_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++多群 WW 事件语义与无偏性审查：覆盖固定 WW 的事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性与固定非平凡 WW 的期望测试；**在证明修复前的事件顺序缺陷之后**才改动代码。不含 WW 生成、迭代、神经重构、FOM 适用性与 Task 06 的历史累计。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：审查固定 WW 的事件语义并验证无偏性，在证据充分时做条件修复。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：5 份局部 oracle 输出与 `changes.diff`（见 `logs/`）。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：`AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_..._codex/`。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 05 由外部 Agent 在 AIMC 侧完成，本仓库保留了局部 oracle 输出。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `logs/ww_unbiasedness_output.txt` | 固定非平凡 WW 的期望测试 |
++| 2 | `logs/local_oracle_output.txt`、`deterministic_state_oracle_output.txt` | 局部数学与确定性状态 oracle |
++| 3 | `logs/split_state_oracle_output.txt`、`persistent_test_output.txt` | 后代状态与持久化测试 |
++| 4 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/` | 权威推导与缺陷确认 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案不重复裁定证据等级；WW 生成、迭代、神经重构与 FOM 适用性不在本任务范围。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：WW 事件语义审查完成，修复前的事件顺序缺陷已确认并条件修复；本仓库保存了 5 份局部 oracle 输出。
++- **遗留**：本档案为登记型，未套用完整模板；如需证据等级裁定应在 AIMC 侧文档基础上进行。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/20260905_03_task08a-experiment-freeze-harness/README.md b/MLVR_develop/20260905_03_task08a-experiment-freeze-harness/README.md
+index 75e5b77..e080f07 100644
+--- a/MLVR_develop/20260905_03_task08a-experiment-freeze-harness/README.md
++++ b/MLVR_develop/20260905_03_task08a-experiment-freeze-harness/README.md
+@@ -3,50 +3,46 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-05 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 算法实验 / 实验冻结 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | AIMC 配置校验、种子命名空间、manifest、计时与 FOM 指标 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_08a_experiment_freeze_claude/`、`task_08av_experiment_freeze_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++Task 08A 冻结修正版期刊实验：历史 `results/` 不可变，修正输出限定在 `results/task08_corrected/<experiment_id>/`。正式矩阵为 J0 Analog、J1 指数经验 WW、J2 plain、J3 feature、J4 prior-residual DNN、J5 prior-residual PINN，以及 A1 one-shot PINN 与 A2 current-only PINN（U-Net 仅会后补充）。确认并修复了使实验不可复现的多个缺陷（全局种子、训练数静默截断、缺失的 manifest/计时/响应样本等）。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：冻结可复现的正式实验矩阵，并修复阻止实验可复现的缺陷。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：配置校验、种子命名空间派生、MC 种子基线、训练种子挂钩、正式输出门、manifest 与 HDF5 镜像、current-only 训练时域、粒子数语义、最终响应样本、计时与 FOM 字段、修正后的 manifest 收集器。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：`task_08a_experiment_freeze_claude/`（主报告 + 6 份 assets）与 `logs/baseline_and_status.txt`。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：见基本信息表的 AIMC 路径。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 08A 由外部 Agent 在 AIMC 侧执行；本档案补齐此前缺失的登记。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `task_08a_experiment_freeze_claude/task_08a_experiment_freeze_claude.md` | 冻结规则、缺陷确认、修复清单、计时与指标定义 |
++| 2 | `…/assets/experiment_matrix.csv`、`corrected_experiment_protocol.md` | 正式矩阵与修正协议 |
++| 3 | `…/assets/runtime_truth_matrix.md`、`hdf5_provenance_matrix.md`、`timing_contract.md`、`task08b_launch_plan.md` | 运行真值、HDF5 溯源、计时契约与后续计划 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案不重复裁定实验结论；正式实验（Task 08B）需单独授权。
+ 
+ ---
+ 
+@@ -157,12 +153,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：实验冻结完成；种子命名空间、粒子数语义、manifest/计时契约与响应样本等缺陷已修复；`FOM_transport=1/(RE²·T_transport)`、`FOM_e2e=1/(RE²·T_total)` 已定义。
++- **遗留**：Task 08B 正式矩阵需单独授权；`task08_corrected` legacy 产物已排除出权威集（见 20260917_01）。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：AIMC 侧文档随其仓库提交；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/20260916_01_chengdu-word-final-qa/README.md b/MLVR_develop/20260916_01_chengdu-word-final-qa/README.md
+index c6cb5e4..78c564a 100644
+--- a/MLVR_develop/20260916_01_chengdu-word-final-qa/README.md
++++ b/MLVR_develop/20260916_01_chengdu-word-final-qa/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-16 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | B — 工程协作（默认） |
+-| 报告人 | |
+-| 关联知识库条目 | B |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 状态 | 已完成（外部工具链执行；本档案为登记） |
++| 任务类型 | 文档 / 论文终稿质量检查 |
++| 任务模式 | B — 工程协作（默认，登记型档案） |
++| 报告人 | Codex（Word 转换工具链） |
++| 关联知识库条目 | 无 |
++| 涉及文件 | `AIMC_WWiteration/article/成都会议/` 的 DOCX/PDF 与 `word_conversion/` 工具链 |
++| 权威材料 | `AIMC_WWiteration/article/成都会议/word_conversion/`（审计与格式脚本、审计报告） |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++成都会议论文投稿版（DOCX/PDF）的最终质量检查与再生成：独立模板审计与内容审计、DOCX 重建（math 220、tables 4、images 8），并记录受保护输入的 SHA256。预览渲染因缺少 LibreOffice 未完成。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：确保投稿版 Word/PDF 与论文源一致，并留下可复核的审计记录。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：`AIMC_WWiteration/article/成都会议/` 的 Word 转换链与产物。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：`logs/` 下的初始 git 状态、Word 审计、受保护输入哈希与修订迭代记录。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**已知未完成项**：`qa_preview.py` 因缺少 LibreOffice/soffice 未运行（见 `logs/initial_word_audit.log`）。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：该任务由外部工具链在 AIMC 侧执行；本档案补齐登记。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `logs/initial_git_state.log` | 起始仓库状态与 HEAD |
++| 2 | `logs/initial_word_audit.log` | 模板审计与内容审计输出（含 soffice 缺失） |
++| 3 | `logs/protected_inputs_initial.sha256` | 受保护输入基线哈希 |
++| 4 | `logs/revision_iteration_1.log` | DOCX 重建：COUNTS 8 4 29，math 220 / tables 4 / images 8 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案只登记质量检查证据，不主张论文科学结论。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：投稿版 DOCX 重建完成并通过模板/内容审计；受保护输入哈希与修订记录已留档。
++- **遗留**：预览渲染（`qa_preview.py`）因缺 LibreOffice 未执行；PDF 产物位于 AIMC `article/成都会议/`。
++- **知识库同步**：无。
++- **是否已提交**：产物在 AIMC 侧；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index fbe7eeb..d557bb0 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -7,18 +7,19 @@
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
++| 2026-09-17 | [workflow-hardening](20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，未提交；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
+ | 2026-09-17 | [workspace-repo-hygiene](20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，未提交；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
+ | 2026-09-17 | [root-legacy-assets-cleanup](20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
+-| 2026-09-16 | [chengdu-word-final-qa](20260916_01_chengdu-word-final-qa/README.md) |  | 待设计 | B | |
++| 2026-09-16 | [chengdu-word-final-qa](20260916_01_chengdu-word-final-qa/README.md) | 文档 / 论文终稿质检 | 已完成（登记） | 无 | Codex 工具链执行；产物在 AIMC `article/成都会议/` |
+ | 2026-09-05 | [task08a-r2-closure-blocker-repair](20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |
+-| 2026-09-05 | [task08a-experiment-freeze-harness](20260905_03_task08a-experiment-freeze-harness/README.md) |  | 待设计 | 无 | |
++| 2026-09-05 | [task08a-experiment-freeze-harness](20260905_03_task08a-experiment-freeze-harness/README.md) | 算法实验 / 实验冻结 | 已完成（登记） | 无 | Claude 执行；主报告与 6 份 assets 已存本档案 |
+ | 2026-09-05 | [task07-field-reconstruction-audit](20260905_02_task07-field-reconstruction-audit/README.md) | C | 已完成 | field reconstruction / importance mapping | 956f951 |
+ | 2026-09-05 | [task06-iteration-history-audit](20260905_01_task06-iteration-history-audit/README.md) | C | 已完成 | AIMC iteration history / WW provenance | 7c87fa2 |
+-| 2026-09-04 | [task05-ww-event-semantics](20260904_05_task05-ww-event-semantics/README.md) |  | 待设计 | 无 | |
++| 2026-09-04 | [task05-ww-event-semantics](20260904_05_task05-ww-event-semantics/README.md) | 物理审查 / 无偏性验证 | 已完成（登记） | 无 | Claude 执行；5 份局部 oracle 输出已存 `logs/` |
+ | 2026-09-04 | [task04-forward-adjoint-reciprocity](20260904_04_task04-forward-adjoint-reciprocity/README.md) | 物理审查 / 条件修复 / 数值验证 | 已完成（A，限定 observable/source contract） | 无 | `8acd615` + report |
+-| 2026-09-04 | [task03-adjoint-transport-audit](20260904_03_task03-adjoint-transport-audit/README.md) |  | 待设计 | 无 | |
+-| 2026-09-04 | [task02r-final-metrics-pipeline-repair](20260904_02_task02r-final-metrics-pipeline-repair/README.md) |  | 待设计 | 无 | |
+-| 2026-09-04 | [task01r-mesh-tally-repair-claude](20260904_01_task01r-mesh-tally-repair-claude/README.md) |  | 待设计 | 无 | |
++| 2026-09-04 | [task03-adjoint-transport-audit](20260904_03_task03-adjoint-transport-audit/README.md) | 物理审查 / 条件修复 | 已完成（登记） | 无 | Claude 执行；权威材料在 AIMC `journal_revision/task_03*` |
++| 2026-09-04 | [task02r-final-metrics-pipeline-repair](20260904_02_task02r-final-metrics-pipeline-repair/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair implemented and locally verified） | 无 | Claude 执行 |
++| 2026-09-04 | [task01r-mesh-tally-repair-claude](20260904_01_task01r-mesh-tally-repair-claude/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair verified，限定 exact per-cell tally） | 无 | Claude 执行；原始验证日志于 2026-09-17 补录（见 20260917_02） |
+ | 2026-09-03 | [forward-transport-tally-audit](20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 未提交 |
+ | 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
+ | 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
+diff --git a/MLVR_develop/README.md b/MLVR_develop/README.md
+index 20bca1f..652500f 100644
+--- a/MLVR_develop/README.md
++++ b/MLVR_develop/README.md
+@@ -11,7 +11,7 @@
+ |---|---|---|---|
+ | A — 受约束自动化 | 已批准的重复验证、资料整理、机械性汇总 | 确认范围、输入和最终产物 | 无；保留五步记录与真实输出 |
+ | B — 工程协作（默认） | 常规工具、接口、已知缺陷修复、原型实现 | 方案、接口/兼容性、验证覆盖 | 变更卡；需要时记录回滚方案 |
+-| C — 深度物理研究与学习 | 伴随、核数据、WW、互易性、统计、训练数据和会改变物理结论/边界的任务 | 问题定式、因果链、可证伪假设、结果解释和结论边界 | L0 人类阅读摘要、物理解释与可证伪假设、物理—代码因果图、人类理解确认、结果解释卡、会话纪要 |
++| C — 深度物理研究与学习 | 伴随、核数据、WW、互易性、统计、训练数据和会改变物理结论/边界的任务 | 问题定式、因果链、可证伪假设、结果解释和结论边界 | L0 人类阅读摘要、物理解释与可证伪假设、物理—代码因果图、人类理解确认、结果解释卡；**存在未决事项或分歧时**加会话纪要 |
+ 
+ **选择规则**：未特别说明时使用模式 B。用户可直接说“用模式 A/B/C”；出现新的物理结论、改变适用范围、未知统计异常、基准/模型更新或跨越既有冻结边界时，Agent 必须建议升级到模式 C。任务可升级，不得在未记录理由的情况下从 C 降级到 A/B。
+ 
+@@ -52,7 +52,7 @@ MLVR_develop/
+   _template/README.md              单任务记录模板
+   YYYYMMDD_NN_<任务短名>/          ★ 一个任务一个文件夹（NN=当天工作顺序，01 起两位）
+     README.md                      ★ 全过程记录（唯一主文档，含工作日志第 9 节）
+-    会话纪要.md                    模式 C 必填；其他模式可选的人机讨论要点（脱敏）
++    会话纪要.md                    存在未决事项/分歧时必填；其余可选（脱敏）
+     logs/                          原始报错、训练日志、失败产物（原样保存，不加工）
+     changes.diff                   本次代码改动快照（人复核用）
+ ```
+@@ -130,11 +130,23 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ 
+ 模式 C 的“人类理解确认”必须由人直接填写，或由 Agent 转述后获得人明确确认；Agent 不得把自己的推断伪装成人的理解。
+ 
++### 5b. 档案最小要素与异构来源
++
++档案允许异构（例如其他 Agent 按其工作流产出的报告），但**任何**档案都必须回答三件事：
++
++| 要素 | 含义 | 常见章节名 |
++|---|---|---|
++| 结论 | 本任务判定/实现了什么 | 结论、Classification、Verdict |
++| 证据 | 支撑结论的真实输出位置 | 验证/实验记录、变更与证据、Verification |
++| 边界 | 结论不外推到哪些范围 | 范围外、限制、Restrictions、Limitations |
++
++不满足三要素的档案必须先转写成模板；满足的可以保留原结构，但需在基本信息区标注来源与格式（例如“外部 Agent 执行，登记型档案”）。`bash tools/check-archives.sh` 会按三要素检查模式 C 档案。
++
+ ### 6. 归档检查清单（⑤ 归档时逐项自检，避免人提醒才补）
+ 
+ | # | 检查项 | 位置 |
+ |---|---|---|
+-| 1 | 模式 C 的会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论；A/B 可选 | 档案 `会话纪要.md` |
++| 1 | 若存在未决事项或分歧：会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论；否则可省 | 档案 `会话纪要.md` |
+ | 2 | README 的 状态/时间线/工作日志/结论与遗留 与新事实一致 | 档案 `README.md` |
+ | 3 | INDEX.md 状态已更新 | `MLVR_develop/INDEX.md` |
+ | 4 | 知识库 06 条目状态（已修复/🟢）与变更记录已同步 | `MLVR_Knowledge/06_…` |
+@@ -143,6 +155,7 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ | 7 | 验证记录贴的是真实输出（哈希/diff/退出码/训练曲线），未覆盖项如实写明 | 档案 README 第 6 节 |
+ | 8 | 实验可复现性五项（种子/配置/依赖/命令/基准）齐全 | 档案 README |
+ | 9 | 模式 C 的 L0、因果图、可证伪假设、人类理解确认、结果解释卡和会话纪要完整；审查/验证结论标明适当 E 等级与治理标签 | 档案 README / `会话纪要.md` |
++| 10 | `bash tools/check-archives.sh` 无“需处理”项 | 工作区根目录 |
+ 
+ ### 7. 归档体积规范
+ 
+@@ -178,5 +191,7 @@ cd /home/workspace/AI_MC_WW_interation/MLVR_develop
+ ./new_task.sh rmc-ww-mesh读入            # 建档
+ ./new_task.sh A1_xxx修复 A1              # 建档并关联知识库条目 A1
+ ./new_task.sh f03-source-audit F03 C     # 建档并指定模式 C
++# 归档前自检（台账一致性、空白模板、三要素、空快照）
++bash tools/check-archives.sh
+ # 然后把原始材料（报错/数据/日志）存进 <文件夹>/logs/
+ ```
+diff --git a/MLVR_develop/_template/README.md b/MLVR_develop/_template/README.md
+index 9d59d20..72df80d 100644
+--- a/MLVR_develop/_template/README.md
++++ b/MLVR_develop/_template/README.md
+@@ -184,6 +184,6 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ |---|---|---|---|
+ | 1 | 立项建档 | `new_task.sh` | 生成文件夹 + logs/ + 模板 |
+ 
+-**模式 C 必填；A/B 可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
++**存在未决事项或分歧时必填；其余可选**：另写一份 [会话纪要.md](会话纪要.md)
+ （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含
+ 口令/token 等凭据，纪要必须脱敏。

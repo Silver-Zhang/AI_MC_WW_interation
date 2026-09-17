@@ -117,7 +117,7 @@
 
 ### 供独立审查者复核的 prompt
 
-> 请只读审查 `MLVR_develop/20260825_10_f02-extended-physics-readiness/`。核对 `logs/baseline.txt` 的 RMC SHA/哈希、`logs/coverage_feasibility.csv` 的强制维度、两次 pilot 日志与 `cases/pilot/manifest.json`，确认本任务没有冻结或运行 formal manifest。特别检查：NNUBAR=1 pilot 为何无法得到有效伴随响应；真实 density mesh 与强 P1/P2 方向性是否确有可运行读回证据。判定这些缺口是否足以阻止 standard MGACE fixed-source neutron adjoint 从 C — Verify 升级为 A — Ready；不得把 prior local tests 或本任务 NNUBAR=2 pilot 当作全范围证明。
+> 请只读审查 `MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/`。核对 `logs/baseline.txt` 的 RMC SHA/哈希、`logs/coverage_feasibility.csv` 的强制维度、两次 pilot 日志与 `cases/pilot/manifest.json`，确认本任务没有冻结或运行 formal manifest。特别检查：NNUBAR=1 pilot 为何无法得到有效伴随响应；真实 density mesh 与强 P1/P2 方向性是否确有可运行读回证据。判定这些缺口是否足以阻止 standard MGACE fixed-source neutron adjoint 从 C — Verify 升级为 A — Ready；不得把 prior local tests 或本任务 NNUBAR=2 pilot 当作全范围证明。
 
 ---
 

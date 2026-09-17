@@ -1,0 +1,1064 @@
+diff --git a/.gitignore b/.gitignore
+index a3397b9..5f34a97 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -12,8 +12,8 @@ AIMC_WWiteration/
+ .DS_Store
+ .vscode/
+ *.log
+-!MLVR_develop/*/logs/*.log
+-!MLVR_develop/*/logs/**/*.log
++!MLVR_develop/*/*/logs/*.log
++!MLVR_develop/*/*/logs/**/*.log
+ .venv/
+ venv/
+ __pycache__/
+@@ -22,31 +22,31 @@ build/
+ dist/
+ 
+ # ===== 任务档案中的 RMC 运行产物（可再生成，见 MLVR_develop/README.md 归档体积规范）=====
+-MLVR_develop/*/cases/
+-MLVR_develop/*/runs/
+-MLVR_develop/*/formal/
+-MLVR_develop/*/pilot/
+-MLVR_develop/*/pilot_aborted_high_density/
+-MLVR_develop/*/**/*.h5
+-MLVR_develop/*/logs/**/inp.PTRAC
+-MLVR_develop/*/logs/**/inp.cumrossialpha
+-MLVR_develop/*/logs/**/inp.fissmul
+-MLVR_develop/*/logs/**/inp.material
+-MLVR_develop/*/logs/**/inp.rossialpha
+-MLVR_develop/*/logs/**/inp.out
+-MLVR_develop/*/logs/**/inp.Tally
+-MLVR_develop/*/logs/**/RMC
+-MLVR_develop/*/logs/**/runs/
++MLVR_develop/*/*/cases/
++MLVR_develop/*/*/runs/
++MLVR_develop/*/*/formal/
++MLVR_develop/*/*/pilot/
++MLVR_develop/*/*/pilot_aborted_high_density/
++MLVR_develop/*/*/**/*.h5
++MLVR_develop/*/*/logs/**/inp.PTRAC
++MLVR_develop/*/*/logs/**/inp.cumrossialpha
++MLVR_develop/*/*/logs/**/inp.fissmul
++MLVR_develop/*/*/logs/**/inp.material
++MLVR_develop/*/*/logs/**/inp.rossialpha
++MLVR_develop/*/*/logs/**/inp.out
++MLVR_develop/*/*/logs/**/inp.Tally
++MLVR_develop/*/*/logs/**/RMC
++MLVR_develop/*/*/logs/**/runs/
+ 
+ # ===== 本地并行 formal 运行证据（11 GB，可由任务脚本重建） =====
+-MLVR_develop/20260830_01_f02-parallel-mpi-openmp-verification/logs/
+-MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/
+-MLVR_develop/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
+-MLVR_develop/20260831_03_f02-mpi4-angular-seed-replication/logs/
++MLVR_develop/2026-08/20260830_01_f02-parallel-mpi-openmp-verification/logs/
++MLVR_develop/2026-08/20260831_01_f02-parallel-angular-distribution-verification/logs/
++MLVR_develop/2026-08/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
++MLVR_develop/2026-08/20260831_03_f02-mpi4-angular-seed-replication/logs/
+ 
+ # ===== 编译产物 =====
+ *.o
+ 
+ # ===== 根目录遗留实验资产（不得堆放在仓库根目录；仅匹配根目录，防御规则）=====
+-# 依据: MLVR_develop/20260917_01_root-legacy-assets-cleanup/
++# 依据: MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/
+ /task*/
+diff --git a/AGENTS.md b/AGENTS.md
+index e41c06a..6eca523 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -19,7 +19,7 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
+    立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
+    用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释；存在未决事项或分歧时补脱敏会话纪要。审查/验证结论按需标注 E0–E4 证据等级与治理标签。任何档案至少含结论、证据、边界三要素（`tools/check-archives.sh` 可自检）。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git a/CLAUDE.md b/CLAUDE.md
+index c6a661d..5a4b939 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -19,7 +19,7 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读
+ 1. **任何开发任务 / 缺陷修复 / 算法实验，必须先按 `MLVR_develop/README.md` 选择 A/B/C 任务模式，再走五步流程**：
+    立项 → 设计/定位 → ⛔ 人拍板 → 实施+自验 → 归档。默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时，必须建议 C。
+    用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料（报错/数据/日志）
+-   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释和脱敏会话纪要；审查/验证结论按需标注 E0–E4 证据等级与治理标签。
++   **原样**存进任务文件夹的 `logs/`。模式 C 还必须记录问题定式、物理—代码因果链、可证伪假设、人类理解确认、结果解释；存在未决事项或分歧时补脱敏会话纪要。审查/验证结论按需标注 E0–E4 证据等级与治理标签。任何档案至少含结论、证据、边界三要素（`tools/check-archives.sh` 可自检）。
+ 2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
+    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
+diff --git "a/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md" "b/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
+index 770274a..1e0b48d 100644
+--- "a/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
++++ "b/MLVR_Knowledge/00_\345\274\200\345\217\221\346\200\273\347\272\262\344\270\216\351\230\266\346\256\265\350\267\257\347\272\277.md"
+@@ -112,7 +112,7 @@ Classification
+ 
+ > F02 — Multigroup Adjoint Transport Audit
+ 
+-任务档案：`MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`
++任务档案：`MLVR_develop/2026-08/20260824_04_f02-mg-adjoint-transport-audit/`
+ 
+ 本阶段只读审查 RMC，禁止在审查任务中顺手修改源码或提前设计最终接口。
+ 
+diff --git "a/MLVR_Knowledge/03_RMC\345\212\237\350\203\275\345\256\241\346\237\245\350\247\204\350\214\203.md" "b/MLVR_Knowledge/03_RMC\345\212\237\350\203\275\345\256\241\346\237\245\350\247\204\350\214\203.md"
+index f682857..226da3f 100644
+--- "a/MLVR_Knowledge/03_RMC\345\212\237\350\203\275\345\256\241\346\237\245\350\247\204\350\214\203.md"
++++ "b/MLVR_Knowledge/03_RMC\345\212\237\350\203\275\345\256\241\346\237\245\350\247\204\350\214\203.md"
+@@ -186,7 +186,7 @@ Stage 2 第一项任务固定为：
+ 
+ > **F02 — Multigroup Adjoint Transport Audit**
+ 
+-任务档案：`MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`
++任务档案：`MLVR_develop/2026-08/20260824_04_f02-mg-adjoint-transport-audit/`
+ 
+ 第一轮以只读源码审查为主。若静态证据不足以确认关键物理正确性，应记录为 C — Verify，并提出最小验证方案，而不是在未验证情况下直接判定正确。
+ 
+@@ -194,4 +194,4 @@ Stage 2 第一项任务固定为：
+ 
+ ## 变更记录
+ 
+-- 2026-08-24 · 建立 Stage 2 统一审查协议与 A–F 分类体系 · 关联 `MLVR_develop/20260824_03_stage2-audit-protocol/`
++- 2026-08-24 · 建立 Stage 2 统一审查协议与 A–F 分类体系 · 关联 `MLVR_develop/2026-08/20260824_03_stage2-audit-protocol/`
+diff --git "a/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md" "b/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
+index 41961ec..0d6aa4f 100644
+--- "a/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
++++ "b/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
+@@ -17,10 +17,10 @@
+ | 编号 | 问题                                                                                                                                                                                                                                                                                                                                       | 级别      | 状态                                                                                | 来源                                                                                                                                  |
+ | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+ | W1   | **RMC WWG 效率差 / 内存过大**：ShieldRMC 时代的 WWG 因效率差、可能内存过大卡死被放弃，RMC 重构中删除该功能。ML-VR 的目标正是提供更好的替代                                                                                                                                                                                           | 🔴        | 待处理                                                                              | `RMC/src/WeightWindow.h` 头部注释                                                                                                   |
+-| W5   | **MG fixed-source adjoint 在非单位局部密度下权重多出 $1/r$**：修复前自由飞行宏观总截面包含局部比例 $r$，伴随权重却用未缩放基准密度归一化。现已让散射与裂变都使用当前位置总原子密度 $N_0r$，共同密度因子正确抵消 | 🟢 已修复 | `已修复 → MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix`；首碰撞权重恢复为 $1:1:1$；`响应级验证 → MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification`，1M 双区域批次全部严格判据通过 | 修复前：F02-B D.3、V2；修复后：`RMC/src/GetExitState.cpp`、`SampleColliType.cpp` 与两项任务档案 |
+-| W6   | **MG fixed-source adjoint 双 nubar 裂变核不一致**：修复前 `NNUBAR>1` 时初始化使用第二组 total nubar，运行时前驱群抽样硬编码第一组 prompt nubar。现已统一到既有 total getter；单表 locator 不变 | 🟢 已修复 | `已修复 → MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix`；部署双表逐群核/概率差为 0，10,000 历史产生 2,487 条 bank 后继；`响应级验证 → MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification`，正式五组及合并互易性判据通过 | 修复前：F02-B A.4/F.3、V3；修复后：`RMC/src/SampleColliType.cpp` 与两项任务档案 |
+-| W7   | **neutron-only MGACE fixed-source adjoint 初始化无条件定位 photon 能群**：修复前 `CDFixedSource::InitiateAll()` 在 `p_bIsAdjoint` 时同时调用 neutron/photon `LocateMgErgGrp()`，导致仅有 7 群 neutron 数据的 `c5g7td` 访问空 photon 群数组并 SIGSEGV。现已按实际粒子模式分别定位两类上限 | 🟢 已修复 | `已修复 → MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix`；同一输入退出 0，10,000 个源历史，既有回归 1/1 通过 | `RMC/src/InitiateAll.cpp`；修复任务档案 |
+-| W9   | **MGACE fixed-source adjoint 负单变量角核曾使用错误区间宽度**：修复前 `ISANG=0,NLEG=1,x<0` 的 neutron、photon 与 photon→neutron 次级伴随分支使用 `1-x`，与前向 `1+x` 不一致；现已统一为 `1+x` | 🟢 已修复 | `neutron 修复 → MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix`；1438 对前/伴随样本逐项一致。`photon/secondary 修复 → MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit`；两群 6/6 整程零 Warning/零 Error，两路径三 seed 共 1800 样本零越界，普通 photon 900 对逐项一致 | 修复前动态确认：任务 11 与 20260826_01；修复后：`RMC/src/GetMgExitErgMu.cpp` 与两项修复档案 |
++| W5   | **MG fixed-source adjoint 在非单位局部密度下权重多出 $1/r$**：修复前自由飞行宏观总截面包含局部比例 $r$，伴随权重却用未缩放基准密度归一化。现已让散射与裂变都使用当前位置总原子密度 $N_0r$，共同密度因子正确抵消 | 🟢 已修复 | `已修复 → MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix`；首碰撞权重恢复为 $1:1:1$；`响应级验证 → MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification`，1M 双区域批次全部严格判据通过 | 修复前：F02-B D.3、V2；修复后：`RMC/src/GetExitState.cpp`、`SampleColliType.cpp` 与两项任务档案 |
++| W6   | **MG fixed-source adjoint 双 nubar 裂变核不一致**：修复前 `NNUBAR>1` 时初始化使用第二组 total nubar，运行时前驱群抽样硬编码第一组 prompt nubar。现已统一到既有 total getter；单表 locator 不变 | 🟢 已修复 | `已修复 → MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix`；部署双表逐群核/概率差为 0，10,000 历史产生 2,487 条 bank 后继；`响应级验证 → MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification`，正式五组及合并互易性判据通过 | 修复前：F02-B A.4/F.3、V3；修复后：`RMC/src/SampleColliType.cpp` 与两项任务档案 |
++| W7   | **neutron-only MGACE fixed-source adjoint 初始化无条件定位 photon 能群**：修复前 `CDFixedSource::InitiateAll()` 在 `p_bIsAdjoint` 时同时调用 neutron/photon `LocateMgErgGrp()`，导致仅有 7 群 neutron 数据的 `c5g7td` 访问空 photon 群数组并 SIGSEGV。现已按实际粒子模式分别定位两类上限 | 🟢 已修复 | `已修复 → MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix`；同一输入退出 0，10,000 个源历史，既有回归 1/1 通过 | `RMC/src/InitiateAll.cpp`；修复任务档案 |
++| W9   | **MGACE fixed-source adjoint 负单变量角核曾使用错误区间宽度**：修复前 `ISANG=0,NLEG=1,x<0` 的 neutron、photon 与 photon→neutron 次级伴随分支使用 `1-x`，与前向 `1+x` 不一致；现已统一为 `1+x` | 🟢 已修复 | `neutron 修复 → MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix`；1438 对前/伴随样本逐项一致。`photon/secondary 修复 → MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit`；两群 6/6 整程零 Warning/零 Error，两路径三 seed 共 1800 样本零越界，普通 photon 900 对逐项一致 | 修复前动态确认：任务 11 与 20260826_01；修复后：`RMC/src/GetMgExitErgMu.cpp` 与两项修复档案 |
+ | M1   | **深穿透 quick 模式零响应污染 best-WW**：探测器响应可能为零（RE=100%、flux=0），原实现可能把零响应 WW 存入 best 池                                                                                                                                                                                                                   | 🟢 已修复 | `已修复 →` 原型 notes/2026-06-05（FOM gate）                                     | `AIMC_WWiteration` notes                                                                                                            |
+ 
+ 
+diff --git a/MLVR_Knowledge/AGENT_CONTEXT.md b/MLVR_Knowledge/AGENT_CONTEXT.md
+index acd0b7b..f9006df 100644
+--- a/MLVR_Knowledge/AGENT_CONTEXT.md
++++ b/MLVR_Knowledge/AGENT_CONTEXT.md
+@@ -121,20 +121,20 @@ Requirement → Existence → Actual Behavior → Requirement Match
+ 
+ 任务档案：
+ 
+-- `MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
+-- `MLVR_develop/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
+-- `MLVR_develop/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
+-- `MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
+-- `MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
+-- `MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
+-- `MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
+-- `MLVR_develop/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
+-- `MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
+-- `MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
+-- `MLVR_develop/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
+-- `MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
+-- `MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
+-- `MLVR_develop/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
++- `MLVR_develop/2026-08/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
++- `MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
++- `MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
++- `MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
++- `MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
++- `MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
++- `MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
++- `MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
++- `MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
++- `MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
++- `MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
++- `MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
++- `MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
++- `MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
+ 
+ 当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**。作用域为 Linux x86_64、`ais=OFF`：MPI-off serial build（OpenMP off），以及本机 Open MPI 4.1.6 的 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`。MPI-off task 01 已闭合 40 angular + 10 density raw formal、逐 seed/aggregate strict gates、fixed-source CTest、SHA256 manifest 和独立审计；并行专项完成响应级、条件角 aggregate 与独立 seed 复验。原 `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留为风险记录。
+ 
+@@ -142,7 +142,7 @@ W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `s
+ 
+ 有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、Windows、反射边界或任意机制组合；并行范围也不覆盖更多 rank/thread、跨节点或其他 MPI 实现；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测机制，应另立针对性审查。
+ 
+-F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
++F03 已立项为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
+ 
+ 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
+ 
+diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/01_\345\212\237\350\203\275\351\200\273\350\276\221\344\270\216\347\211\251\347\220\206\345\257\271\350\261\241.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/01_\345\212\237\350\203\275\351\200\273\350\276\221\344\270\216\347\211\251\347\220\206\345\257\271\350\261\241.md"
+index 904a30a..198d4cb 100644
+--- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/01_\345\212\237\350\203\275\351\200\273\350\276\221\344\270\216\347\211\251\347\220\206\345\257\271\350\261\241.md"
++++ "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/01_\345\212\237\350\203\275\351\200\273\350\276\221\344\270\216\347\211\251\347\220\206\345\257\271\350\261\241.md"
+@@ -73,4 +73,4 @@ RMC 在每一段实际飞行上累积径迹长度 tally，在到达碰撞点后
+ | 反应、权重、群角 | `SampleColliType.cpp:156-197`；`GetExitState.cpp:162-197`；`GetMgExitErgMu.cpp:446-501` |
+ | 裂变与银行 | `GetFissionNeuState.cpp:550-736` |
+ 
+-详细行号、静态审查和真实运行证据见 [F02-B 静态复核](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md) 与 [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)。
++详细行号、静态审查和真实运行证据见 [F02-B 静态复核](../../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) 与 [F02 数值验证](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)。
+diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/02_\346\265\201\347\250\213\345\233\276\344\270\216\346\227\266\345\272\217\345\233\276.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/02_\346\265\201\347\250\213\345\233\276\344\270\216\346\227\266\345\272\217\345\233\276.md"
+index ee7f522..5b2f743 100644
+--- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/02_\346\265\201\347\250\213\345\233\276\344\270\216\346\227\266\345\272\217\345\233\276.md"
++++ "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/02_\346\265\201\347\250\213\345\233\276\344\270\216\346\227\266\345\272\217\345\233\276.md"
+@@ -190,4 +190,4 @@ flowchart LR
+ 
+ ## 技术证据
+ 
+-图中流程对应的主要实现位置见 [功能逻辑与物理对象](01_功能逻辑与物理对象.md)。W5/W6/W7/W9 的源码、核数据与运行证据边界见 [缺陷解读](04_三个已确认缺陷的物理解读.md)、[F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md) 和 [W9 动态确认](../../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)。
++图中流程对应的主要实现位置见 [功能逻辑与物理对象](01_功能逻辑与物理对象.md)。W5/W6/W7/W9 的源码、核数据与运行证据边界见 [缺陷解读](04_三个已确认缺陷的物理解读.md)、[F02 数值验证](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md) 和 [W9 动态确认](../../MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/README.md)。
+diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md"
+index 66b01c1..854df79 100644
+--- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md"
++++ "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/03_\345\275\223\345\211\215\350\203\275\345\212\233\344\270\216\351\252\214\350\257\201\347\273\223\350\256\272.md"
+@@ -101,22 +101,22 @@ W9 修复消除了负单变量角核对空间—能群重要性传播的已确
+ 
+ ## 证据入口
+ 
+-- [F02-B 静态复核](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+-- [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
+-- [W5 修复与验证](../../MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)
+-- [W5 非均匀密度响应级验证](../../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
+-- [W7 修复与验证](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
+-- [W6 修复与验证](../../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
+-- [可裂变响应级互易性验证](../../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
+-- [W9 私有角资产与动态确认](../../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
+-- [W9 修复与验证](../../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
+-- [W9 photon/secondary 修复与验证](../../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
+-- [其余条件角表示 formal](../../MLVR_develop/20260826_02_f02-remaining-angular-representations/README.md)
+-- [真实 density mesh formal](../../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
+-- [NNUBAR=1/混合材料 formal](../../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
+-- [最终 A 复核](../../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
+-- [MPI-off serial provenance](../../MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/README.md)
+-- [V2 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/tools/analyze_source_trace.py)
+-- [V3 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/tools/analyze_double_nubar.py)
+-- [V4 分析脚本](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/tools/analyze_reciprocity.py)
++- [F02-B 静态复核](../../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md)
++- [F02 数值验证](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)
++- [W5 修复与验证](../../MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)
++- [W5 非均匀密度响应级验证](../../MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
++- [W7 修复与验证](../../MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
++- [W6 修复与验证](../../MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
++- [可裂变响应级互易性验证](../../MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
++- [W9 私有角资产与动态确认](../../MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/README.md)
++- [W9 修复与验证](../../MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
++- [W9 photon/secondary 修复与验证](../../MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
++- [其余条件角表示 formal](../../MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/README.md)
++- [真实 density mesh formal](../../MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
++- [NNUBAR=1/混合材料 formal](../../MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md)
++- [最终 A 复核](../../MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/README.md)
++- [MPI-off serial provenance](../../MLVR_develop/2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md)
++- [V2 分析脚本](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/tools/analyze_source_trace.py)
++- [V3 分析脚本](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/tools/analyze_double_nubar.py)
++- [V4 分析脚本](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/tools/analyze_reciprocity.py)
+ - [审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md) 与 [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)
+diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md"
+index aeb08c7..179ea50 100644
+--- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md"
++++ "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/04_\344\270\211\344\270\252\345\267\262\347\241\256\350\256\244\347\274\272\351\231\267\347\232\204\347\211\251\347\220\206\350\247\243\350\257\273.md"
+@@ -155,7 +155,7 @@ V4 使用 $r=1$、非裂变 H/O、带 photon 群数据和未触发 W9 的 P0 角
+ 
+ ## 技术证据
+ 
+-- W5：[F02-B D.3](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)；[V2 修复前证据](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)；[修复与验证档案](../../MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)；[非均匀响应级验证](../../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)；`RMC/src/SampleFreeFlyDist.cpp`、`GetExitState.cpp`、`SampleColliType.cpp`、`MaterialFunctions.cpp`。
+-- W6：[F02-B F.3](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)；[V3](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)；[修复与验证档案](../../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)；`RMC/src/Nuclide.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`。
+-- W7：[V3 修复前动态记录](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；[修复与验证档案](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
+-- W9：[私有角资产与动态确认](../../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)；[neutron 修复与验证](../../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)；[photon/secondary 修复与验证](../../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)；`RMC/src/GetMgExitErgMu.cpp`、`ParticleStateFun.cpp`。
++- W5：[F02-B D.3](../../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md)；[V2 修复前证据](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)；[修复与验证档案](../../MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)；[非均匀响应级验证](../../MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)；`RMC/src/SampleFreeFlyDist.cpp`、`GetExitState.cpp`、`SampleColliType.cpp`、`MaterialFunctions.cpp`。
++- W6：[F02-B F.3](../../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md)；[V3](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)；[修复与验证档案](../../MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)；`RMC/src/Nuclide.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`。
++- W7：[V3 修复前动态记录](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/logs/v3_dynamic_reachability_summary.txt)；[修复与验证档案](../../MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)；`RMC/src/InitiateAll.cpp`、`GetMgCs.cpp`。
++- W9：[私有角资产与动态确认](../../MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/README.md)；[neutron 修复与验证](../../MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)；[photon/secondary 修复与验证](../../MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)；`RMC/src/GetMgExitErgMu.cpp`、`ParticleStateFun.cpp`。
+diff --git "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md" "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md"
+index 9c03771..0fd2eac 100644
+--- "a/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md"
++++ "b/MLVR_Physics_Guide/01_RMC\345\244\232\347\276\244\344\274\264\351\232\217\350\276\223\350\277\220/README.md"
+@@ -31,20 +31,20 @@
+ 
+ ## 技术证据
+ 
+-- [F02-B 静态审查](../../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+-- [F02 数值验证](../../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
+-- [W5 修复与验证](../../MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)
+-- [W5 非均匀密度响应级验证](../../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
+-- [W7 修复与验证](../../MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
+-- [W6 修复与验证](../../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
+-- [可裂变响应级互易性验证](../../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
+-- [W9 私有角资产与动态确认](../../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
+-- [W9 修复与验证](../../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
+-- [W9 photon/secondary 修复与验证](../../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
+-- [其余条件角表示 formal](../../MLVR_develop/20260826_02_f02-remaining-angular-representations/README.md)
+-- [真实 density mesh formal](../../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
+-- [NNUBAR=1/混合材料 formal](../../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
+-- [最终 A 复核](../../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
+-- [MPI-off serial provenance](../../MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/README.md)
++- [F02-B 静态审查](../../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md)
++- [F02 数值验证](../../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)
++- [W5 修复与验证](../../MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md)
++- [W5 非均匀密度响应级验证](../../MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
++- [W7 修复与验证](../../MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md)
++- [W6 修复与验证](../../MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
++- [可裂变响应级互易性验证](../../MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
++- [W9 私有角资产与动态确认](../../MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/README.md)
++- [W9 修复与验证](../../MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
++- [W9 photon/secondary 修复与验证](../../MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
++- [其余条件角表示 formal](../../MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/README.md)
++- [真实 density mesh formal](../../MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
++- [NNUBAR=1/混合材料 formal](../../MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md)
++- [最终 A 复核](../../MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/README.md)
++- [MPI-off serial provenance](../../MLVR_develop/2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md)
+ - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
+ - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)
+diff --git a/MLVR_Physics_Guide/README.md b/MLVR_Physics_Guide/README.md
+index 2715ace..a6be4c0 100644
+--- a/MLVR_Physics_Guide/README.md
++++ b/MLVR_Physics_Guide/README.md
+@@ -32,19 +32,19 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready
+ 
+ ## 证据入口
+ 
+-- [F02 静态物理复核](../MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md)
+-- [F02 第一阶段数值验证](../MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md)
+-- [W5 非均匀密度响应级验证](../MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
+-- [W6 双 nubar 核一致性修复](../MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
+-- [可裂变响应级互易性验证](../MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
+-- [W9 私有角资产与动态确认](../MLVR_develop/20260825_11_f02-angular-density-asset-qualification/README.md)
+-- [W9 修复与验证](../MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
+-- [W9 photon/secondary 修复与验证](../MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
+-- [其余条件角表示 formal](../MLVR_develop/20260826_02_f02-remaining-angular-representations/README.md)
+-- [真实 density mesh formal](../MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
+-- [NNUBAR=1/混合材料 formal](../MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/README.md)
+-- [F02 最终 A 复核](../MLVR_develop/20260827_03_f02-final-a-readiness-review/README.md)
+-- [MPI-off serial provenance](../MLVR_develop/20260828_01_f02-mpi-off-serial-provenance/README.md)
++- [F02 静态物理复核](../MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md)
++- [F02 第一阶段数值验证](../MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md)
++- [W5 非均匀密度响应级验证](../MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md)
++- [W6 双 nubar 核一致性修复](../MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md)
++- [可裂变响应级互易性验证](../MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification/README.md)
++- [W9 私有角资产与动态确认](../MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/README.md)
++- [W9 修复与验证](../MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md)
++- [W9 photon/secondary 修复与验证](../MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md)
++- [其余条件角表示 formal](../MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/README.md)
++- [真实 density mesh formal](../MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/README.md)
++- [NNUBAR=1/混合材料 formal](../MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md)
++- [F02 最终 A 复核](../MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/README.md)
++- [MPI-off serial provenance](../MLVR_develop/2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md)
+ - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
+ - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
+ 
+diff --git a/MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md b/MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md
+index 7219185..44a2ac3 100644
+--- a/MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md
++++ b/MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md
+@@ -58,7 +58,7 @@
+ 
+ 新增：
+ 
+-- `MLVR_develop/20260824_02_stage1-framework-requirements/README.md`
++- `MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md`
+ 
+ ## 5. Stage 1 结论
+ 
+diff --git a/MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md b/MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md
+index 8e9fef7..f91a525 100644
+--- a/MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md
++++ b/MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md
+@@ -46,7 +46,7 @@
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md` D.3 | W5 的局部密度数据流与 $1/r$ 后果已由静态证据闭合。 |
++| 1 | `MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md` D.3 | W5 的局部密度数据流与 $1/r$ 后果已由静态证据闭合。 |
+ | 2 | 同上 F.3 / A.4 | W6 在已登记 `c5g7td` 双 nubar 表上可达，两个核的累计裂变产生量不一致。 |
+ | 3 | `RMC/tests/fixed_source_adjoint/inp` | V0/V2 可复用的现有 30 群 H/O 非裂变基础输入；只读。 |
+ | 4 | `RMC/tests/ptrac_grp/inp`、`RMC/src/ParticleTrack.cpp` | PTRAC 具有群号、方向和权重输出能力；实际是否足够区分 bank child 需运行确认。 |
+diff --git a/MLVR_develop/2026-08/20260825_03_physics-guide-topic-refactor/README.md b/MLVR_develop/2026-08/20260825_03_physics-guide-topic-refactor/README.md
+index efa8ef9..eaf13f1 100644
+--- a/MLVR_develop/2026-08/20260825_03_physics-guide-topic-refactor/README.md
++++ b/MLVR_develop/2026-08/20260825_03_physics-guide-topic-refactor/README.md
+@@ -34,8 +34,8 @@
+ 
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `MLVR_develop/20260824_05_f02-adjoint-physics-verification/README.md` | W5/W6/W7 的源码数据流与分类。 |
+-| 2 | `MLVR_develop/20260825_01_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实运行边界。 |
++| 1 | `MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md` | W5/W6/W7 的源码数据流与分类。 |
++| 2 | `MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/README.md` | V0/V2/V3/V4 的真实运行边界。 |
+ | 3 | `RMC/src/InitiateAll.cpp`、`SampleFreeFlyDist.cpp`、`TreatAdjointMaterial.cpp`、`SampleColliType.cpp`、`GetExitState.cpp`、`GetFissionNeuState.cpp` | 本专题功能逻辑的只读源码依据。 |
+ | 4 | `MLVR_Knowledge/02_RMC功能审查矩阵.md`、`06_已知问题与改进建议.md` | 当前正式台账结论。 |
+ 
+diff --git a/MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/README.md b/MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/README.md
+index 19e94ef..5983c55 100644
+--- a/MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/README.md
++++ b/MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/README.md
+@@ -117,7 +117,7 @@
+ 
+ ### 供独立审查者复核的 prompt
+ 
+-> 请只读审查 `MLVR_develop/20260825_10_f02-extended-physics-readiness/`。核对 `logs/baseline.txt` 的 RMC SHA/哈希、`logs/coverage_feasibility.csv` 的强制维度、两次 pilot 日志与 `cases/pilot/manifest.json`，确认本任务没有冻结或运行 formal manifest。特别检查：NNUBAR=1 pilot 为何无法得到有效伴随响应；真实 density mesh 与强 P1/P2 方向性是否确有可运行读回证据。判定这些缺口是否足以阻止 standard MGACE fixed-source neutron adjoint 从 C — Verify 升级为 A — Ready；不得把 prior local tests 或本任务 NNUBAR=2 pilot 当作全范围证明。
++> 请只读审查 `MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/`。核对 `logs/baseline.txt` 的 RMC SHA/哈希、`logs/coverage_feasibility.csv` 的强制维度、两次 pilot 日志与 `cases/pilot/manifest.json`，确认本任务没有冻结或运行 formal manifest。特别检查：NNUBAR=1 pilot 为何无法得到有效伴随响应；真实 density mesh 与强 P1/P2 方向性是否确有可运行读回证据。判定这些缺口是否足以阻止 standard MGACE fixed-source neutron adjoint 从 C — Verify 升级为 A — Ready；不得把 prior local tests 或本任务 NNUBAR=2 pilot 当作全范围证明。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md b/MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md
+index eb650ea..1a684b0 100644
+--- a/MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md
++++ b/MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md
+@@ -31,9 +31,9 @@
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `MLVR_develop/20260825_10_f02-extended-physics-readiness/logs/deployed_mgace_inventory.csv:2-9` | 部署 7 群表中 `10005.01m` 是 fissile 且 NNUBAR locator count=1；`10001.01m` 是 fissile 且 count=2。 |
++| 1 | `MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/logs/deployed_mgace_inventory.csv:2-9` | 部署 7 群表中 `10005.01m` 是 fissile 且 NNUBAR locator count=1；`10001.01m` 是 fissile 且 count=2。 |
+ | 2 | `logs/nnubar_data_audit.txt` | 与 RMC 一基 XSS 访问一致的只读解析显示：`10005` 的最大裂变迁移为 g4→g1，强度 $6.32308961777\times10^{-6}$；历史失败 g6→g1 仅 $8.62086251911\times10^{-7}$。 |
+-| 3 | `MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/results/formal/summary.csv:2` | 单核 NNUBAR>1 先验 formal 的合并 $z=-0.7026348520546188$，不能代替混合材料和 NNUBAR=1 证据。 |
++| 3 | `MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification/results/formal/summary.csv:2` | 单核 NNUBAR>1 先验 formal 的合并 $z=-0.7026348520546188$，不能代替混合材料和 NNUBAR=1 证据。 |
+ 
+ **影响面**：只影响 F02 的证据覆盖范围与分类建议；不涉及接口、基准结果或兼容性改动。该试验不覆盖 delayed、CE、photon、AIS、MPI/OpenMP、Windows 或完整 MLVR 工作流。
+ 
+diff --git a/MLVR_develop/2026-09/20260904_03_task03-adjoint-transport-audit/README.md b/MLVR_develop/2026-09/20260904_03_task03-adjoint-transport-audit/README.md
+index 41fe447..2621ac7 100644
+--- a/MLVR_develop/2026-09/20260904_03_task03-adjoint-transport-audit/README.md
++++ b/MLVR_develop/2026-09/20260904_03_task03-adjoint-transport-audit/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-04 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 物理审查 / 条件修复 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | `AIMC_WWiteration` 伴随输运算子与索引约定 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_03_adjoint_transport_repair_claude/`、`task_03v_adjoint_transport_verification_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++多群伴随输运的物理审查与条件修复：覆盖当前笛卡尔几何下的同质两群、非裂变、各向同性散射伴随 MC。审查建立了前向/伴随算子的索引与权重约定，并**在证明修复前的算子缺陷之后**才改动代码。不含完整可观测量互易性、WW、探测器响应、迭代或神经重构。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：审查多群伴随输运的物理实现，并在证据充分时做条件修复。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：伴随算子与索引约定、隐式碰撞估计、单碰撞/自由飞行 oracle、边界条件与伴随源语义；限定同质两群、非裂变、各向同性散射。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：本登记档案；`logs/` 为空（无独立原始输出）。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：见基本信息表的 AIMC 路径（推导、静态审计、oracle 与缺陷确认）。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 03 由外部 Agent 在 AIMC 侧完成，本仓库仅保留登记行。
+ 
+-**证据链**：
++**材料位置**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
++| 1 | `AIMC_WWiteration/docs/journal_revision/task_03_adjoint_transport_repair_claude/` | Claude 侧推导与修复记录（14 节） |
++| 2 | `AIMC_WWiteration/docs/journal_revision/task_03v_adjoint_transport_verification_codex/` | Codex 侧独立验证 |
+ 
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++**边界**：本档案只登记产出位置与范围，不重复裁定证据等级；物理结论以 AIMC 侧文档为准。
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**为什么之前没做/没发现**：本仓库归档时未同步该外部任务的内容，只留下空模板。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：任务已由外部 Agent 完成，产出归档于 AIMC；范围限同质两群、非裂变、各向同性散射伴随 MC。
++- **遗留**：本仓库无原始输出可复核；如需在本工作区裁定证据等级，应先补录 oracle 输出。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：AIMC 侧文档随其仓库提交；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/2026-09/20260904_05_task05-ww-event-semantics/README.md b/MLVR_develop/2026-09/20260904_05_task05-ww-event-semantics/README.md
+index 7cda1a1..8444cf1 100644
+--- a/MLVR_develop/2026-09/20260904_05_task05-ww-event-semantics/README.md
++++ b/MLVR_develop/2026-09/20260904_05_task05-ww-event-semantics/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-04 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 物理审查 / 无偏性验证 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | `AIMC_WWiteration` 的 WW 事件时序、查找、split/roulette 与栈 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_weight_window_semantics_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++多群 WW 事件语义与无偏性审查：覆盖固定 WW 的事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性与固定非平凡 WW 的期望测试；**在证明修复前的事件顺序缺陷之后**才改动代码。不含 WW 生成、迭代、神经重构、FOM 适用性与 Task 06 的历史累计。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：审查固定 WW 的事件语义并验证无偏性，在证据充分时做条件修复。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：事件时序、空间/能群查找、split/roulette 局部数学、后代状态、栈容量、WW 为零的中立性。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：5 份局部 oracle 输出与 `changes.diff`（见 `logs/`）。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：`AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/`、`task_05v_..._codex/`。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 05 由外部 Agent 在 AIMC 侧完成，本仓库保留了局部 oracle 输出。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `logs/ww_unbiasedness_output.txt` | 固定非平凡 WW 的期望测试 |
++| 2 | `logs/local_oracle_output.txt`、`deterministic_state_oracle_output.txt` | 局部数学与确定性状态 oracle |
++| 3 | `logs/split_state_oracle_output.txt`、`persistent_test_output.txt` | 后代状态与持久化测试 |
++| 4 | `AIMC_WWiteration/docs/journal_revision/task_05_weight_window_semantics_claude/` | 权威推导与缺陷确认 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案不重复裁定证据等级；WW 生成、迭代、神经重构与 FOM 适用性不在本任务范围。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：WW 事件语义审查完成，修复前的事件顺序缺陷已确认并条件修复；本仓库保存了 5 份局部 oracle 输出。
++- **遗留**：本档案为登记型，未套用完整模板；如需证据等级裁定应在 AIMC 侧文档基础上进行。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md b/MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md
+index 75e5b77..e080f07 100644
+--- a/MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md
++++ b/MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md
+@@ -3,50 +3,46 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-05 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | C — 深度物理研究与学习 |
+-| 报告人 | |
++| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
++| 任务类型 | 算法实验 / 实验冻结 |
++| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
++| 报告人 | Claude（journal_revision 系列） |
+ | 关联知识库条目 | 无 |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 涉及文件 | AIMC 配置校验、种子命名空间、manifest、计时与 FOM 指标 |
++| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_08a_experiment_freeze_claude/`、`task_08av_experiment_freeze_codex/` |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++Task 08A 冻结修正版期刊实验：历史 `results/` 不可变，修正输出限定在 `results/task08_corrected/<experiment_id>/`。正式矩阵为 J0 Analog、J1 指数经验 WW、J2 plain、J3 feature、J4 prior-residual DNN、J5 prior-residual PINN，以及 A1 one-shot PINN 与 A2 current-only PINN（U-Net 仅会后补充）。确认并修复了使实验不可复现的多个缺陷（全局种子、训练数静默截断、缺失的 manifest/计时/响应样本等）。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：冻结可复现的正式实验矩阵，并修复阻止实验可复现的缺陷。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：配置校验、种子命名空间派生、MC 种子基线、训练种子挂钩、正式输出门、manifest 与 HDF5 镜像、current-only 训练时域、粒子数语义、最终响应样本、计时与 FOM 字段、修正后的 manifest 收集器。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：`task_08a_experiment_freeze_claude/`（主报告 + 6 份 assets）与 `logs/baseline_and_status.txt`。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**权威记录**：见基本信息表的 AIMC 路径。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：Task 08A 由外部 Agent 在 AIMC 侧执行；本档案补齐此前缺失的登记。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `task_08a_experiment_freeze_claude/task_08a_experiment_freeze_claude.md` | 冻结规则、缺陷确认、修复清单、计时与指标定义 |
++| 2 | `…/assets/experiment_matrix.csv`、`corrected_experiment_protocol.md` | 正式矩阵与修正协议 |
++| 3 | `…/assets/runtime_truth_matrix.md`、`hdf5_provenance_matrix.md`、`timing_contract.md`、`task08b_launch_plan.md` | 运行真值、HDF5 溯源、计时契约与后续计划 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案不重复裁定实验结论；正式实验（Task 08B）需单独授权。
+ 
+ ---
+ 
+@@ -157,12 +153,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：实验冻结完成；种子命名空间、粒子数语义、manifest/计时契约与响应样本等缺陷已修复；`FOM_transport=1/(RE²·T_transport)`、`FOM_e2e=1/(RE²·T_total)` 已定义。
++- **遗留**：Task 08B 正式矩阵需单独授权；`task08_corrected` legacy 产物已排除出权威集（见 20260917_01）。
++- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
++- **是否已提交**：AIMC 侧文档随其仓库提交；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/2026-09/20260916_01_chengdu-word-final-qa/README.md b/MLVR_develop/2026-09/20260916_01_chengdu-word-final-qa/README.md
+index c6cb5e4..78c564a 100644
+--- a/MLVR_develop/2026-09/20260916_01_chengdu-word-final-qa/README.md
++++ b/MLVR_develop/2026-09/20260916_01_chengdu-word-final-qa/README.md
+@@ -3,50 +3,47 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-09-16 |
+-| 状态 | 待设计 |
+-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
+-| 任务模式 | B — 工程协作（默认） |
+-| 报告人 | |
+-| 关联知识库条目 | B |
+-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
+-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
++| 状态 | 已完成（外部工具链执行；本档案为登记） |
++| 任务类型 | 文档 / 论文终稿质量检查 |
++| 任务模式 | B — 工程协作（默认，登记型档案） |
++| 报告人 | Codex（Word 转换工具链） |
++| 关联知识库条目 | 无 |
++| 涉及文件 | `AIMC_WWiteration/article/成都会议/` 的 DOCX/PDF 与 `word_conversion/` 工具链 |
++| 权威材料 | `AIMC_WWiteration/article/成都会议/word_conversion/`（审计与格式脚本、审计报告） |
+ 
+ ---
+ 
+ ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
+ 
+-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
+-
+-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
+-
+-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
++成都会议论文投稿版（DOCX/PDF）的最终质量检查与再生成：独立模板审计与内容审计、DOCX 重建（math 220、tables 4、images 8），并记录受保护输入的 SHA256。预览渲染因缺少 LibreOffice 未完成。
+ 
+ ---
+ 
+ ## 1. 任务定义（① 立项 · Agent 填）
+ 
+-**目标**：这次要做什么？解决什么问题？
++**目标**：确保投稿版 Word/PDF 与论文源一致，并留下可复核的审计记录。
+ 
+-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
++**范围**：`AIMC_WWiteration/article/成都会议/` 的 Word 转换链与产物。
+ 
+-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
++**本仓库产出**：`logs/` 下的初始 git 状态、Word 审计、受保护输入哈希与修订迭代记录。
+ 
+-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
++**已知未完成项**：`qa_preview.py` 因缺少 LibreOffice/soffice 未运行（见 `logs/initial_word_audit.log`）。
+ 
+ ---
+ 
+ ## 2. 调研与设计（② 设计/定位 · Agent 填）
+ 
+-**背景**：相关代码/知识库条目/原型笔记的现状。
++**背景**：该任务由外部工具链在 AIMC 侧执行；本档案补齐登记。
+ 
+ **证据链**：
+ | # | 位置 | 说明 |
+ |---|---|---|
+-| 1 | `文件:行号` / 实验数据 | |
+-
+-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
++| 1 | `logs/initial_git_state.log` | 起始仓库状态与 HEAD |
++| 2 | `logs/initial_word_audit.log` | 模板审计与内容审计输出（含 soffice 缺失） |
++| 3 | `logs/protected_inputs_initial.sha256` | 受保护输入基线哈希 |
++| 4 | `logs/revision_iteration_1.log` | DOCX 重建：COUNTS 8 4 29，math 220 / tables 4 / images 8 |
+ 
+-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
++**边界**：本档案只登记质量检查证据，不主张论文科学结论。
+ 
+ ---
+ 
+@@ -157,12 +154,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ 
+ ---
+ 
+-## 7. 结论与遗留（⑤ 归档）
++## 7. 结论与遗留
+ 
+-- **结论**：
+-- **遗留问题 / 后续待办**：
+-- **知识库同步**：更新了哪些文档的哪些章节
+-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
++- **结论**：投稿版 DOCX 重建完成并通过模板/内容审计；受保护输入哈希与修订记录已留档。
++- **遗留**：预览渲染（`qa_preview.py`）因缺 LibreOffice 未执行；PDF 产物位于 AIMC `article/成都会议/`。
++- **知识库同步**：无。
++- **是否已提交**：产物在 AIMC 侧；本登记档案随根仓库提交。
+ 
+ ---
+ 
+diff --git a/MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/README.md b/MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/README.md
+index e1e609c..14315b3 100644
+--- a/MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/README.md
++++ b/MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/README.md
+@@ -122,7 +122,7 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ | 验证项 | 命令 | 结果 |
+ |---|---|---|
+ | 规则命中 | `git check-ignore -v task08x_probe/` | `.gitignore:52:/task*/   task08x_probe/` —— 命中 |
+-| 误伤检查 | `git check-ignore -v MLVR_develop/20260905_03_task08a-experiment-freeze-harness/task_08a_experiment_freeze_claude/` | 未命中，未误伤任务档案 |
++| 误伤检查 | `git check-ignore -v MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/task_08a_experiment_freeze_claude/` | 未命中，未误伤任务档案 |
+ | 删除结果 | `ls -1` / `ls -d task*` | 根目录只剩既有文档与仓库；无 `task*` |
+ | 追踪状态 | `git status --short` | 不再出现三份遗留目录 |
+ 
+diff --git a/MLVR_develop/2026-09/20260917_02_workspace-repo-hygiene/README.md b/MLVR_develop/2026-09/20260917_02_workspace-repo-hygiene/README.md
+index 38dfdb8..cd45e36 100644
+--- a/MLVR_develop/2026-09/20260917_02_workspace-repo-hygiene/README.md
++++ b/MLVR_develop/2026-09/20260917_02_workspace-repo-hygiene/README.md
+@@ -23,7 +23,7 @@
+ 
+ **目标**：整理工作区多仓库结构：清理 AI 工具遗留的 worktree 与游离副本，补录被遗漏的原始验证证据，并提供一条命令查看三个主仓库状态的只读脚本。RMC 自带的依赖 submodule 不做任何改动。
+ 
+-**范围**：`AIMC_WWiteration/.claude/worktrees/`（清理）、`MLVR_develop/20260904_01_task01r-mesh-tally-repair-claude/`（证据补录与引用修正）、新建 `tools/repo-status.sh`。不修改 `RMC/`（含其 submodule 配置）与 AIMC 的代码或历史。
++**范围**：`AIMC_WWiteration/.claude/worktrees/`（清理）、`MLVR_develop/2026-09/20260904_01_task01r-mesh-tally-repair-claude/`（证据补录与引用修正）、新建 `tools/repo-status.sh`。不修改 `RMC/`（含其 submodule 配置）与 AIMC 的代码或历史。
+ 
+ **验收标准**：
+ 1. 两个遗留 worktree 目录清除，AIMC `git worktree list` 仅剩主工作区；
+@@ -99,13 +99,13 @@
+ | 1 | 盘点仓库结构 | `find . -name .git`、`git worktree list`、`submodule status` | 确认 3 个主仓库 + 11 个 RMC submodule（5 个未初始化）+ 1 个注册 worktree |
+ | 2 | 判定 worktree 提交去留 | `git cherry`、`patch-id`、`diff` | `3c74a11` 未合入主线 → 采用“先 tag 后删除” |
+ | 3 | 补录唯一证据 | `cp` 两个日志到 task01r 档案 `logs/` | 日志为唯一副本，已纳入档案（SHA256 见第 6 节） |
+-| 4 | 修正档案引用 | `MLVR_develop/20260904_01_…/README.md` | 标注补录来源与两个失效的 AIMC 路径 |
++| 4 | 修正档案引用 | `MLVR_develop/2026-09/20260904_01_…/README.md` | 标注补录来源与两个失效的 AIMC 路径 |
+ | 5 | 清理 worktree | `git tag` → `worktree remove` → `branch -D` → `rm -rf` → `worktree prune` | 仅剩主工作区 |
+ | 6 | 新增状态脚本 | `tools/repo-status.sh` | 三个仓库状态一键可查，只读 |
+ 
+ **代码改动**：见 [changes.diff](changes.diff)，摘要：
+ - 新增 `tools/repo-status.sh` —— 只读多仓库状态检查
+-- 更新 `MLVR_develop/20260904_01_…/README.md` —— 证据引用修正
++- 更新 `MLVR_develop/2026-09/20260904_01_…/README.md` —— 证据引用修正
+ - 新增 `MLVR_develop/20260904_01_…/logs/` —— 补录的原始验证输出
+ - 未改动 RMC/AIMC 任何源码或历史
+ 
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index fbe7eeb..7128ab4 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -7,45 +7,47 @@
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
+-| 2026-09-17 | [workspace-repo-hygiene](20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，未提交；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
+-| 2026-09-17 | [root-legacy-assets-cleanup](20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
+-| 2026-09-16 | [chengdu-word-final-qa](20260916_01_chengdu-word-final-qa/README.md) |  | 待设计 | B | |
+-| 2026-09-05 | [task08a-r2-closure-blocker-repair](20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |
+-| 2026-09-05 | [task08a-experiment-freeze-harness](20260905_03_task08a-experiment-freeze-harness/README.md) |  | 待设计 | 无 | |
+-| 2026-09-05 | [task07-field-reconstruction-audit](20260905_02_task07-field-reconstruction-audit/README.md) | C | 已完成 | field reconstruction / importance mapping | 956f951 |
+-| 2026-09-05 | [task06-iteration-history-audit](20260905_01_task06-iteration-history-audit/README.md) | C | 已完成 | AIMC iteration history / WW provenance | 7c87fa2 |
+-| 2026-09-04 | [task05-ww-event-semantics](20260904_05_task05-ww-event-semantics/README.md) |  | 待设计 | 无 | |
+-| 2026-09-04 | [task04-forward-adjoint-reciprocity](20260904_04_task04-forward-adjoint-reciprocity/README.md) | 物理审查 / 条件修复 / 数值验证 | 已完成（A，限定 observable/source contract） | 无 | `8acd615` + report |
+-| 2026-09-04 | [task03-adjoint-transport-audit](20260904_03_task03-adjoint-transport-audit/README.md) |  | 待设计 | 无 | |
+-| 2026-09-04 | [task02r-final-metrics-pipeline-repair](20260904_02_task02r-final-metrics-pipeline-repair/README.md) |  | 待设计 | 无 | |
+-| 2026-09-04 | [task01r-mesh-tally-repair-claude](20260904_01_task01r-mesh-tally-repair-claude/README.md) |  | 待设计 | 无 | |
+-| 2026-09-03 | [forward-transport-tally-audit](20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 未提交 |
+-| 2026-08-31 | [f02-parallel-statistical-gate-calibration](20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
+-| 2026-08-31 | [f02-parallel-angular-distribution-verification](20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
+-| 2026-08-31 | [workflow-mode-c-audit-remediation](20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
+-| 2026-08-31 | [workflow-multi-mode-upgrade](20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，未提交；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
+-| 2026-08-31 | [f02-mpi4-angular-seed-replication](20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
+-| 2026-08-30 | [f02-parallel-mpi-openmp-verification](20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
+-| 2026-08-28 | [f02-mpi-off-serial-provenance](20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
+-| 2026-08-27 | [f02-binary-source-identity](20260827_05_f02-binary-source-identity/README.md) | 验证基础设施 / 证据恢复 | 已完成（后续范围收紧） | F02 | 已闭合 source/binary；但该 fresh binary 是 MPI-enabled one-rank execution。task 01 已在严格 MPI-off serial 范围重跑并作为当前 A 证据 |
+-| 2026-08-27 | [f02-formal-evidence-recovery](20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 已完成（raw evidence 恢复） | F02 | 50 条 raw outputs 与 strict gates 均通过；但随后发现 binary banner/source snapshot 身份不闭合，不能单独恢复 A |
+-| 2026-08-27 | [f02-final-a-readiness-review](20260827_03_f02-final-a-readiness-review/README.md) | 物理审查 / 证据归并 | 已完成（后续证据恢复） | F02 | 原 binary provenance 问题已由 task 05 闭合；serial 定义由 task 01 的 MPI-off fresh matrix 进一步闭合，当前 F02 为有界 A |
+-| 2026-08-27 | [f02-nnubar-material-reciprocity](20260827_02_f02-nnubar-material-reciprocity/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 部署 `10005` NNUBAR=1 及 NNUBAR=1 主导的 `10005/10001` 混合裂变材料，各五对 formal 共 20/20 clean；合并 $z=0.9563$ 与 $0.3748$；最终 A 复核已纳入 |
+-| 2026-08-27 | [f02-density-mesh-hdf5-readiness](20260827_01_f02-density-mesh-hdf5-readiness/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 私有 HDF5 两区域 mesh 读回、位置依赖 pilot 与五 seed 10/10 clean formal 通过；合并互易性 $z=0.0984$；最终 A 复核已纳入 |
+-| 2026-08-26 | [f02-remaining-angular-representations](20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 已完成 | F02 | 四类 × 前向/伴随 × 五 seeds 的 40/40 clean formal 通过；40,000 样本支持域/矩/离散频数通过；最终 A 复核已纳入；RMC 只读且暂不同步 |
+-| 2026-08-26 | [f02-adjoint-photon-negative-angular-audit](20260826_01_f02-adjoint-photon-negative-angular-audit/README.md) | 缺陷修复 / 数值验证 | 已完成 | F02 / W9 | photon 与 photon→neutron 两处分支修复；两群 6/6 整程零 Warning/零 Error，三 seed 共 1800 样本零越界；配对/CTest/reference 通过；未 commit |
+-| 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
+-| 2026-08-25 | [f02-angular-density-asset-qualification](20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |
+-| 2026-08-25 | [f02-extended-physics-readiness](20260825_10_f02-extended-physics-readiness/README.md) | 物理验证 | 已完成（C — Verify） | F02 | A 门禁 pilot 暴露 NNUBAR=1 有效响应、真实 density mesh 和强 P1/P2 验证缺口；未修改 RMC |
+-| 2026-08-25 | [f03-adjoint-source-definition-audit](20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 待设计 | F03 | 已进入 F03；初始定位为通用外源采样后标记伴随，尚不预判分类 |
+-| 2026-08-25 | [f02-fissile-response-reciprocity-verification](20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
+-| 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；已随 W5/W7 提交为 RMC `6d208751...` |
+-| 2026-08-25 | [f02-w5-nonuniform-density-reciprocity-verification](20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md) | 算法实验 / 现有能力验证 | 已完成 | W5 | 200k 原批次严格门槛失败；1M 全量精度升级通过逐种子、分组与总体判据 |
+-| 2026-08-25 | [f02-w5-local-density-adjoint-weight-fix](20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md) | 缺陷修复 | 已完成 | W5 | 两处权重分母使用局部总原子密度；三种密度权重恢复 $1:1:1$；已随 W6/W7 提交为 RMC `6d208751...` |
+-| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；崩溃输入和回归通过；已随 W5/W6 提交为 RMC `6d208751...` |
+-| 2026-08-25 | [physics-guide-topic-refactor](20260825_03_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
+-| 2026-08-25 | [human-physics-guide](20260825_02_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
+-| 2026-08-25 | [f02-adjoint-numerical-verification](20260825_01_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
++| 2026-09-17 | [monthly-archive-layout](2026-09/20260917_04_monthly-archive-layout/README.md) | 工作区治理 / 目录结构 | 已完成 | 无 | 根工作区 `main`，未提交；任务档案按月分层（2026-08/2026-09），引用与忽略规则同步更新 |
++| 2026-09-17 | [workflow-hardening](2026-09/20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，未提交；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
++| 2026-09-17 | [workspace-repo-hygiene](2026-09/20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，未提交；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
++| 2026-09-17 | [root-legacy-assets-cleanup](2026-09/20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
++| 2026-09-16 | [chengdu-word-final-qa](2026-09/20260916_01_chengdu-word-final-qa/README.md) | 文档 / 论文终稿质检 | 已完成（登记） | 无 | Codex 工具链执行；产物在 AIMC `article/成都会议/` |
++| 2026-09-05 | [task08a-r2-closure-blocker-repair](2026-09/20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |
++| 2026-09-05 | [task08a-experiment-freeze-harness](2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) | 算法实验 / 实验冻结 | 已完成（登记） | 无 | Claude 执行；主报告与 6 份 assets 已存本档案 |
++| 2026-09-05 | [task07-field-reconstruction-audit](2026-09/20260905_02_task07-field-reconstruction-audit/README.md) | C | 已完成 | field reconstruction / importance mapping | 956f951 |
++| 2026-09-05 | [task06-iteration-history-audit](2026-09/20260905_01_task06-iteration-history-audit/README.md) | C | 已完成 | AIMC iteration history / WW provenance | 7c87fa2 |
++| 2026-09-04 | [task05-ww-event-semantics](2026-09/20260904_05_task05-ww-event-semantics/README.md) | 物理审查 / 无偏性验证 | 已完成（登记） | 无 | Claude 执行；5 份局部 oracle 输出已存 `logs/` |
++| 2026-09-04 | [task04-forward-adjoint-reciprocity](2026-09/20260904_04_task04-forward-adjoint-reciprocity/README.md) | 物理审查 / 条件修复 / 数值验证 | 已完成（A，限定 observable/source contract） | 无 | `8acd615` + report |
++| 2026-09-04 | [task03-adjoint-transport-audit](2026-09/20260904_03_task03-adjoint-transport-audit/README.md) | 物理审查 / 条件修复 | 已完成（登记） | 无 | Claude 执行；权威材料在 AIMC `journal_revision/task_03*` |
++| 2026-09-04 | [task02r-final-metrics-pipeline-repair](2026-09/20260904_02_task02r-final-metrics-pipeline-repair/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair implemented and locally verified） | 无 | Claude 执行 |
++| 2026-09-04 | [task01r-mesh-tally-repair-claude](2026-09/20260904_01_task01r-mesh-tally-repair-claude/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair verified，限定 exact per-cell tally） | 无 | Claude 执行；原始验证日志于 2026-09-17 补录（见 20260917_02） |
++| 2026-09-03 | [forward-transport-tally-audit](2026-09/20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 未提交 |
++| 2026-08-31 | [f02-parallel-statistical-gate-calibration](2026-08/20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
++| 2026-08-31 | [f02-parallel-angular-distribution-verification](2026-08/20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
++| 2026-08-31 | [workflow-mode-c-audit-remediation](2026-08/20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
++| 2026-08-31 | [workflow-multi-mode-upgrade](2026-08/20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，未提交；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
++| 2026-08-31 | [f02-mpi4-angular-seed-replication](2026-08/20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
++| 2026-08-30 | [f02-parallel-mpi-openmp-verification](2026-08/20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
++| 2026-08-28 | [f02-mpi-off-serial-provenance](2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
++| 2026-08-27 | [f02-binary-source-identity](2026-08/20260827_05_f02-binary-source-identity/README.md) | 验证基础设施 / 证据恢复 | 已完成（后续范围收紧） | F02 | 已闭合 source/binary；但该 fresh binary 是 MPI-enabled one-rank execution。task 01 已在严格 MPI-off serial 范围重跑并作为当前 A 证据 |
++| 2026-08-27 | [f02-formal-evidence-recovery](2026-08/20260827_04_f02-formal-evidence-recovery/README.md) | 物理验证 / 证据恢复 | 已完成（raw evidence 恢复） | F02 | 50 条 raw outputs 与 strict gates 均通过；但随后发现 binary banner/source snapshot 身份不闭合，不能单独恢复 A |
++| 2026-08-27 | [f02-final-a-readiness-review](2026-08/20260827_03_f02-final-a-readiness-review/README.md) | 物理审查 / 证据归并 | 已完成（后续证据恢复） | F02 | 原 binary provenance 问题已由 task 05 闭合；serial 定义由 task 01 的 MPI-off fresh matrix 进一步闭合，当前 F02 为有界 A |
++| 2026-08-27 | [f02-nnubar-material-reciprocity](2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 部署 `10005` NNUBAR=1 及 NNUBAR=1 主导的 `10005/10001` 混合裂变材料，各五对 formal 共 20/20 clean；合并 $z=0.9563$ 与 $0.3748$；最终 A 复核已纳入 |
++| 2026-08-27 | [f02-density-mesh-hdf5-readiness](2026-08/20260827_01_f02-density-mesh-hdf5-readiness/README.md) | 物理验证 / 输入数据资格化 | 已完成 | F02 | 私有 HDF5 两区域 mesh 读回、位置依赖 pilot 与五 seed 10/10 clean formal 通过；合并互易性 $z=0.0984$；最终 A 复核已纳入 |
++| 2026-08-26 | [f02-remaining-angular-representations](2026-08/20260826_02_f02-remaining-angular-representations/README.md) | 物理验证 / 验证资产复用 | 已完成 | F02 | 四类 × 前向/伴随 × 五 seeds 的 40/40 clean formal 通过；40,000 样本支持域/矩/离散频数通过；最终 A 复核已纳入；RMC 只读且暂不同步 |
++| 2026-08-26 | [f02-adjoint-photon-negative-angular-audit](2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/README.md) | 缺陷修复 / 数值验证 | 已完成 | F02 / W9 | photon 与 photon→neutron 两处分支修复；两群 6/6 整程零 Warning/零 Error，三 seed 共 1800 样本零越界；配对/CTest/reference 通过；未 commit |
++| 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
++| 2026-08-25 | [f02-angular-density-asset-qualification](2026-08/20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |
++| 2026-08-25 | [f02-extended-physics-readiness](2026-08/20260825_10_f02-extended-physics-readiness/README.md) | 物理验证 | 已完成（C — Verify） | F02 | A 门禁 pilot 暴露 NNUBAR=1 有效响应、真实 density mesh 和强 P1/P2 验证缺口；未修改 RMC |
++| 2026-08-25 | [f03-adjoint-source-definition-audit](2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 待设计 | F03 | 已进入 F03；初始定位为通用外源采样后标记伴随，尚不预判分类 |
++| 2026-08-25 | [f02-fissile-response-reciprocity-verification](2026-08/20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
++| 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；已随 W5/W7 提交为 RMC `6d208751...` |
++| 2026-08-25 | [f02-w5-nonuniform-density-reciprocity-verification](2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md) | 算法实验 / 现有能力验证 | 已完成 | W5 | 200k 原批次严格门槛失败；1M 全量精度升级通过逐种子、分组与总体判据 |
++| 2026-08-25 | [f02-w5-local-density-adjoint-weight-fix](2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/README.md) | 缺陷修复 | 已完成 | W5 | 两处权重分母使用局部总原子密度；三种密度权重恢复 $1:1:1$；已随 W6/W7 提交为 RMC `6d208751...` |
++| 2026-08-25 | [f02-w7-neutron-only-adjoint-init-fix](2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/README.md) | 缺陷修复 | 已完成 | W7 | 按粒子模式隔离伴随能群上限；崩溃输入和回归通过；已随 W5/W6 提交为 RMC `6d208751...` |
++| 2026-08-25 | [physics-guide-topic-refactor](2026-08/20260825_03_physics-guide-topic-refactor/README.md) | 文档 | 已完成（复核校正） | F02 / W5 / W6 / W7 | 按物理功能重构导读；校正 tally/银行/吸收语义；补充 W7 修复逻辑与门控图 |
++| 2026-08-25 | [human-physics-guide](2026-08/20260825_02_human-physics-guide/README.md) | 文档 | 已完成 | F02 / W5 / W6 / W7 | 建立 `MLVR_Physics_Guide/`，整理当前结论及三缺陷物理解读；未修改 RMC |
++| 2026-08-25 | [f02-adjoint-numerical-verification](2026-08/20260825_01_f02-adjoint-numerical-verification/README.md) | 算法实验 / 现有能力验证 | 已完成（第一阶段） | F02 / W5 / W6 / W7 | V0 通过；V2 数值确认 W5；V4 两群对互易性通过；V3 功效不足且被 W7 阻断；未修改 RMC/reference |
+ | 2026-08-24 | `20260824_01_workflow-baseline` | 工作流/知识库基线 | 已完成 | 00 / AGENT_CONTEXT / DECISIONS | GitHub history |
+ | 2026-08-24 | `20260824_02_stage1-framework-requirements` | 功能需求基线 | 已完成并确认 | 01 / 02 / DECISIONS | GitHub history |
+ | 2026-08-24 | `20260824_03_stage2-audit-protocol` | 审查规范 | 已完成 | 02 / 03 / DECISIONS | GitHub history |
+diff --git a/MLVR_develop/README.md b/MLVR_develop/README.md
+index 20bca1f..777bfbf 100644
+--- a/MLVR_develop/README.md
++++ b/MLVR_develop/README.md
+@@ -11,7 +11,7 @@
+ |---|---|---|---|
+ | A — 受约束自动化 | 已批准的重复验证、资料整理、机械性汇总 | 确认范围、输入和最终产物 | 无；保留五步记录与真实输出 |
+ | B — 工程协作（默认） | 常规工具、接口、已知缺陷修复、原型实现 | 方案、接口/兼容性、验证覆盖 | 变更卡；需要时记录回滚方案 |
+-| C — 深度物理研究与学习 | 伴随、核数据、WW、互易性、统计、训练数据和会改变物理结论/边界的任务 | 问题定式、因果链、可证伪假设、结果解释和结论边界 | L0 人类阅读摘要、物理解释与可证伪假设、物理—代码因果图、人类理解确认、结果解释卡、会话纪要 |
++| C — 深度物理研究与学习 | 伴随、核数据、WW、互易性、统计、训练数据和会改变物理结论/边界的任务 | 问题定式、因果链、可证伪假设、结果解释和结论边界 | L0 人类阅读摘要、物理解释与可证伪假设、物理—代码因果图、人类理解确认、结果解释卡；**存在未决事项或分歧时**加会话纪要 |
+ 
+ **选择规则**：未特别说明时使用模式 B。用户可直接说“用模式 A/B/C”；出现新的物理结论、改变适用范围、未知统计异常、基准/模型更新或跨越既有冻结边界时，Agent 必须建议升级到模式 C。任务可升级，不得在未记录理由的情况下从 C 降级到 A/B。
+ 
+@@ -50,18 +50,19 @@ MLVR_develop/
+   INDEX.md                         ★ 任务总台账，一行一个任务，先看这里
+   new_task.sh                      建档脚本
+   _template/README.md              单任务记录模板
+-  YYYYMMDD_NN_<任务短名>/          ★ 一个任务一个文件夹（NN=当天工作顺序，01 起两位）
+-    README.md                      ★ 全过程记录（唯一主文档，含工作日志第 9 节）
+-    会话纪要.md                    模式 C 必填；其他模式可选的人机讨论要点（脱敏）
+-    logs/                          原始报错、训练日志、失败产物（原样保存，不加工）
+-    changes.diff                   本次代码改动快照（人复核用）
++  YYYY-MM/                         ★ 按月份归档（new_task.sh 自动创建）
++    YYYYMMDD_NN_<任务短名>/        ★ 一个任务一个文件夹（NN=当天工作顺序，01 起两位）
++      README.md                    ★ 全过程记录（唯一主文档，含工作日志第 9 节）
++      会话纪要.md                  存在未决事项/分歧时必填；其余可选（脱敏）
++      logs/                        原始报错、训练日志、失败产物（原样保存，不加工）
++      changes.diff                 本次代码改动快照（人复核用）
+ ```
+ 
+ > ⚠️ 原始聊天转储**不要**存进仓库（可能含口令/token）；留纪要即可，且必须脱敏。
+ 
+-命名示例（`NN` 为当天序号，由 `new_task.sh` 自动生成，`ls` 即见工作顺序）：
+-- `20260824_01_workflow-baseline/`（当天第 1 个任务）
+-- `20260825_04_f02-w7-neutron-only-adjoint-init-fix/`（当天第 4 个任务）
++命名示例（`NN` 为当天序号，由 `new_task.sh` 自动生成；任务放入对应月份目录）：
++- `2026-08/20260824_01_workflow-baseline/`（8 月 24 日第 1 个任务）
++- `2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`（8 月 25 日第 4 个任务）
+ 
+ 同一天多个任务靠 `NN` 序号区分先后；短名要能"看名字就知道是什么事"。
+ 
+@@ -98,7 +99,7 @@ git -C ../AIMC_WWiteration diff > <任务文件夹>/changes.diff
+ ### 2. 一任务 = 一分支 = 一提交，消息里带文件夹名
+ ```bash
+ git -C ../RMC checkout -b feat/mlvr-<任务短名>
+-git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
++git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/2026-08/20260824_01_xxx)"
+ ```
+ 好处：**双向可查**——从 git 历史能找到档案，从档案能找到提交。
+ 不想开分支时至少保证 commit message 里带文件夹名。
+@@ -130,11 +131,23 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ 
+ 模式 C 的“人类理解确认”必须由人直接填写，或由 Agent 转述后获得人明确确认；Agent 不得把自己的推断伪装成人的理解。
+ 
++### 5b. 档案最小要素与异构来源
++
++档案允许异构（例如其他 Agent 按其工作流产出的报告），但**任何**档案都必须回答三件事：
++
++| 要素 | 含义 | 常见章节名 |
++|---|---|---|
++| 结论 | 本任务判定/实现了什么 | 结论、Classification、Verdict |
++| 证据 | 支撑结论的真实输出位置 | 验证/实验记录、变更与证据、Verification |
++| 边界 | 结论不外推到哪些范围 | 范围外、限制、Restrictions、Limitations |
++
++不满足三要素的档案必须先转写成模板；满足的可以保留原结构，但需在基本信息区标注来源与格式（例如“外部 Agent 执行，登记型档案”）。`bash tools/check-archives.sh` 会按三要素检查模式 C 档案。
++
+ ### 6. 归档检查清单（⑤ 归档时逐项自检，避免人提醒才补）
+ 
+ | # | 检查项 | 位置 |
+ |---|---|---|
+-| 1 | 模式 C 的会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论；A/B 可选 | 档案 `会话纪要.md` |
++| 1 | 若存在未决事项或分歧：会话纪要（Q&A/共识/未决，脱敏）已补到最新一轮讨论；否则可省 | 档案 `会话纪要.md` |
+ | 2 | README 的 状态/时间线/工作日志/结论与遗留 与新事实一致 | 档案 `README.md` |
+ | 3 | INDEX.md 状态已更新 | `MLVR_develop/INDEX.md` |
+ | 4 | 知识库 06 条目状态（已修复/🟢）与变更记录已同步 | `MLVR_Knowledge/06_…` |
+@@ -143,6 +156,7 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/20260824_01_xxx)"
+ | 7 | 验证记录贴的是真实输出（哈希/diff/退出码/训练曲线），未覆盖项如实写明 | 档案 README 第 6 节 |
+ | 8 | 实验可复现性五项（种子/配置/依赖/命令/基准）齐全 | 档案 README |
+ | 9 | 模式 C 的 L0、因果图、可证伪假设、人类理解确认、结果解释卡和会话纪要完整；审查/验证结论标明适当 E 等级与治理标签 | 档案 README / `会话纪要.md` |
++| 10 | `bash tools/check-archives.sh` 无“需处理”项 | 工作区根目录 |
+ 
+ ### 7. 归档体积规范
+ 
+@@ -178,5 +192,7 @@ cd /home/workspace/AI_MC_WW_interation/MLVR_develop
+ ./new_task.sh rmc-ww-mesh读入            # 建档
+ ./new_task.sh A1_xxx修复 A1              # 建档并关联知识库条目 A1
+ ./new_task.sh f03-source-audit F03 C     # 建档并指定模式 C
++# 归档前自检（台账一致性、空白模板、三要素、空快照）
++bash tools/check-archives.sh
+ # 然后把原始材料（报错/数据/日志）存进 <文件夹>/logs/
+ ```
+diff --git a/MLVR_develop/_template/README.md b/MLVR_develop/_template/README.md
+index 9d59d20..72df80d 100644
+--- a/MLVR_develop/_template/README.md
++++ b/MLVR_develop/_template/README.md
+@@ -184,6 +184,6 @@ git -C ../../AIMC_WWiteration diff > changes.diff
+ |---|---|---|---|
+ | 1 | 立项建档 | `new_task.sh` | 生成文件夹 + logs/ + 模板 |
+ 
+-**模式 C 必填；A/B 可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
++**存在未决事项或分歧时必填；其余可选**：另写一份 [会话纪要.md](会话纪要.md)
+ （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含
+ 口令/token 等凭据，纪要必须脱敏。
+diff --git a/MLVR_develop/clean_generated.sh b/MLVR_develop/clean_generated.sh
+index 1a3dd75..4cd803e 100755
+--- a/MLVR_develop/clean_generated.sh
++++ b/MLVR_develop/clean_generated.sh
+@@ -12,7 +12,7 @@ elif [[ $# -gt 0 ]]; then
+ fi
+ 
+ mapfile -d '' TARGETS < <(
+-    find "$ROOT" -mindepth 2 -maxdepth 2 -type d \( -name runs -o -name cases \) -print0
++    find "$ROOT" -mindepth 3 -maxdepth 3 -type d \( -name runs -o -name cases \) -print0
+     find "$ROOT" -type d -name __pycache__ -print0
+ )
+ 
+diff --git a/MLVR_develop/new_task.sh b/MLVR_develop/new_task.sh
+index 6b6917f..d21d419 100755
+--- a/MLVR_develop/new_task.sh
++++ b/MLVR_develop/new_task.sh
+@@ -24,17 +24,18 @@ case "$MODE" in
+ esac
+ BASE="$(cd "$(dirname "$0")" && pwd)"
+ DATE="$(date +%Y%m%d)"
++MONTH="$(date +%Y-%m)"
+ STAMP="$(date '+%Y-%m-%d %H:%M')"
+ 
+-# 按天序号：当天已有编号文件夹的最大序号 + 1（YYYYMMDD_NN_短名，NN 为两位）
++# 按月归档：任务放入 YYYY-MM/ 子目录；NN 在当月内按天递增
+ shopt -s nullglob
+-TODAY_DIRS=("$BASE"/${DATE}_[0-9][0-9]_*)
++TODAY_DIRS=("$BASE/$MONTH/${DATE}_"[0-9][0-9]_*)
+ MAX_SEQ=""
+ if (( ${#TODAY_DIRS[@]} > 0 )); then
+   MAX_SEQ="$(printf '%s\n' "${TODAY_DIRS[@]}" | sed -E "s#.*/${DATE}_([0-9]+)_.*#\1#" | sort -n | tail -1)"
+ fi
+ SEQ="$(printf '%02d' "$(( 10#${MAX_SEQ:-0} + 1 ))")"
+-DIR="$BASE/${DATE}_${SEQ}_${SLUG}"
++DIR="$BASE/$MONTH/${DATE}_${SEQ}_${SLUG}"
+ 
+ if [ -e "$DIR" ]; then
+   echo "已存在: $DIR" >&2
+@@ -76,7 +77,7 @@ open(path, 'w', encoding='utf-8').write(s)
+ PY
+ 
+ # 追加一行到主台账表头紧随的分隔行之后。
+-python3 - "$BASE/INDEX.md" "$SLUG" "${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
++python3 - "$BASE/INDEX.md" "$SLUG" "${MONTH}/${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
+ import sys, datetime
+ path, slug, folder, kb = sys.argv[1:5]
+ row = '| %s | [%s](%s/README.md) |  | 待设计 | %s | |\n' % (

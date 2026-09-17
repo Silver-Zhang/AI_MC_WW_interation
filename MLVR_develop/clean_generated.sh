@@ -12,7 +12,7 @@ elif [[ $# -gt 0 ]]; then
 fi
 
 mapfile -d '' TARGETS < <(
-    find "$ROOT" -mindepth 2 -maxdepth 2 -type d \( -name runs -o -name cases \) -print0
+    find "$ROOT" -mindepth 3 -maxdepth 3 -type d \( -name runs -o -name cases \) -print0
     find "$ROOT" -type d -name __pycache__ -print0
 )
 

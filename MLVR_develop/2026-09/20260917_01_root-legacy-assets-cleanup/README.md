@@ -122,7 +122,7 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 | 验证项 | 命令 | 结果 |
 |---|---|---|
 | 规则命中 | `git check-ignore -v task08x_probe/` | `.gitignore:52:/task*/   task08x_probe/` —— 命中 |
-| 误伤检查 | `git check-ignore -v MLVR_develop/20260905_03_task08a-experiment-freeze-harness/task_08a_experiment_freeze_claude/` | 未命中，未误伤任务档案 |
+| 误伤检查 | `git check-ignore -v MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/task_08a_experiment_freeze_claude/` | 未命中，未误伤任务档案 |
 | 删除结果 | `ls -1` / `ls -d task*` | 根目录只剩既有文档与仓库；无 `task*` |
 | 追踪状态 | `git status --short` | 不再出现三份遗留目录 |
 

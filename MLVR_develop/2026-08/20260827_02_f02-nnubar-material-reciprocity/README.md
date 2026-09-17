@@ -31,9 +31,9 @@
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `MLVR_develop/20260825_10_f02-extended-physics-readiness/logs/deployed_mgace_inventory.csv:2-9` | 部署 7 群表中 `10005.01m` 是 fissile 且 NNUBAR locator count=1；`10001.01m` 是 fissile 且 count=2。 |
+| 1 | `MLVR_develop/2026-08/20260825_10_f02-extended-physics-readiness/logs/deployed_mgace_inventory.csv:2-9` | 部署 7 群表中 `10005.01m` 是 fissile 且 NNUBAR locator count=1；`10001.01m` 是 fissile 且 count=2。 |
 | 2 | `logs/nnubar_data_audit.txt` | 与 RMC 一基 XSS 访问一致的只读解析显示：`10005` 的最大裂变迁移为 g4→g1，强度 $6.32308961777\times10^{-6}$；历史失败 g6→g1 仅 $8.62086251911\times10^{-7}$。 |
-| 3 | `MLVR_develop/20260825_08_f02-fissile-response-reciprocity-verification/results/formal/summary.csv:2` | 单核 NNUBAR>1 先验 formal 的合并 $z=-0.7026348520546188$，不能代替混合材料和 NNUBAR=1 证据。 |
+| 3 | `MLVR_develop/2026-08/20260825_08_f02-fissile-response-reciprocity-verification/results/formal/summary.csv:2` | 单核 NNUBAR>1 先验 formal 的合并 $z=-0.7026348520546188$，不能代替混合材料和 NNUBAR=1 证据。 |
 
 **影响面**：只影响 F02 的证据覆盖范围与分类建议；不涉及接口、基准结果或兼容性改动。该试验不覆盖 delayed、CE、photon、AIS、MPI/OpenMP、Windows 或完整 MLVR 工作流。
 

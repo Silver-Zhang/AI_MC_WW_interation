@@ -24,17 +24,18 @@ case "$MODE" in
 esac
 BASE="$(cd "$(dirname "$0")" && pwd)"
 DATE="$(date +%Y%m%d)"
+MONTH="$(date +%Y-%m)"
 STAMP="$(date '+%Y-%m-%d %H:%M')"
 
-# 按天序号：当天已有编号文件夹的最大序号 + 1（YYYYMMDD_NN_短名，NN 为两位）
+# 按月归档：任务放入 YYYY-MM/ 子目录；NN 在当月内按天递增
 shopt -s nullglob
-TODAY_DIRS=("$BASE"/${DATE}_[0-9][0-9]_*)
+TODAY_DIRS=("$BASE/$MONTH/${DATE}_"[0-9][0-9]_*)
 MAX_SEQ=""
 if (( ${#TODAY_DIRS[@]} > 0 )); then
   MAX_SEQ="$(printf '%s\n' "${TODAY_DIRS[@]}" | sed -E "s#.*/${DATE}_([0-9]+)_.*#\1#" | sort -n | tail -1)"
 fi
 SEQ="$(printf '%02d' "$(( 10#${MAX_SEQ:-0} + 1 ))")"
-DIR="$BASE/${DATE}_${SEQ}_${SLUG}"
+DIR="$BASE/$MONTH/${DATE}_${SEQ}_${SLUG}"
 
 if [ -e "$DIR" ]; then
   echo "已存在: $DIR" >&2
@@ -76,7 +77,7 @@ open(path, 'w', encoding='utf-8').write(s)
 PY
 
 # 追加一行到主台账表头紧随的分隔行之后。
-python3 - "$BASE/INDEX.md" "$SLUG" "${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
+python3 - "$BASE/INDEX.md" "$SLUG" "${MONTH}/${DATE}_${SEQ}_${SLUG}" "$KB" <<'PY'
 import sys, datetime
 path, slug, folder, kb = sys.argv[1:5]
 row = '| %s | [%s](%s/README.md) |  | 待设计 | %s | |\n' % (

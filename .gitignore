@@ -12,8 +12,8 @@ AIMC_WWiteration/
 .DS_Store
 .vscode/
 *.log
-!MLVR_develop/*/logs/*.log
-!MLVR_develop/*/logs/**/*.log
+!MLVR_develop/*/*/logs/*.log
+!MLVR_develop/*/*/logs/**/*.log
 .venv/
 venv/
 __pycache__/
@@ -22,31 +22,31 @@ build/
 dist/
 
 # ===== 任务档案中的 RMC 运行产物（可再生成，见 MLVR_develop/README.md 归档体积规范）=====
-MLVR_develop/*/cases/
-MLVR_develop/*/runs/
-MLVR_develop/*/formal/
-MLVR_develop/*/pilot/
-MLVR_develop/*/pilot_aborted_high_density/
-MLVR_develop/*/**/*.h5
-MLVR_develop/*/logs/**/inp.PTRAC
-MLVR_develop/*/logs/**/inp.cumrossialpha
-MLVR_develop/*/logs/**/inp.fissmul
-MLVR_develop/*/logs/**/inp.material
-MLVR_develop/*/logs/**/inp.rossialpha
-MLVR_develop/*/logs/**/inp.out
-MLVR_develop/*/logs/**/inp.Tally
-MLVR_develop/*/logs/**/RMC
-MLVR_develop/*/logs/**/runs/
+MLVR_develop/*/*/cases/
+MLVR_develop/*/*/runs/
+MLVR_develop/*/*/formal/
+MLVR_develop/*/*/pilot/
+MLVR_develop/*/*/pilot_aborted_high_density/
+MLVR_develop/*/*/**/*.h5
+MLVR_develop/*/*/logs/**/inp.PTRAC
+MLVR_develop/*/*/logs/**/inp.cumrossialpha
+MLVR_develop/*/*/logs/**/inp.fissmul
+MLVR_develop/*/*/logs/**/inp.material
+MLVR_develop/*/*/logs/**/inp.rossialpha
+MLVR_develop/*/*/logs/**/inp.out
+MLVR_develop/*/*/logs/**/inp.Tally
+MLVR_develop/*/*/logs/**/RMC
+MLVR_develop/*/*/logs/**/runs/
 
 # ===== 本地并行 formal 运行证据（11 GB，可由任务脚本重建） =====
-MLVR_develop/20260830_01_f02-parallel-mpi-openmp-verification/logs/
-MLVR_develop/20260831_01_f02-parallel-angular-distribution-verification/logs/
-MLVR_develop/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
-MLVR_develop/20260831_03_f02-mpi4-angular-seed-replication/logs/
+MLVR_develop/2026-08/20260830_01_f02-parallel-mpi-openmp-verification/logs/
+MLVR_develop/2026-08/20260831_01_f02-parallel-angular-distribution-verification/logs/
+MLVR_develop/2026-08/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
+MLVR_develop/2026-08/20260831_03_f02-mpi4-angular-seed-replication/logs/
 
 # ===== 编译产物 =====
 *.o
 
 # ===== 根目录遗留实验资产（不得堆放在仓库根目录；仅匹配根目录，防御规则）=====
-# 依据: MLVR_develop/20260917_01_root-legacy-assets-cleanup/
+# 依据: MLVR_develop/2026-09/20260917_01_root-legacy-assets-cleanup/
 /task*/

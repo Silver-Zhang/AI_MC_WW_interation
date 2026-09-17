@@ -1,52 +1,48 @@
-# chengdu-word-final-qa
+# task08a-experiment-freeze-harness
 
 | 项 | 内容 |
 |---|---|
-| 立项日期 | 2026-09-16 |
-| 状态 | 待设计 |
-| 任务类型 | 新功能 / 算法实验 / 缺陷修复 / 性能优化 / 文档 |
-| 任务模式 | B — 工程协作（默认） |
-| 报告人 | |
-| 关联知识库条目 | B |
-| 涉及文件 | 例：`RMC/src/WeightWindow.h` ／ `AIMC_WWiteration/src/solver.py` |
-| 分支 / 提交 | 例：`feat/mlvr-xxx` ／ `abc1234` |
+| 立项日期 | 2026-09-05 |
+| 状态 | 已完成（外部 Agent 执行；本档案为登记） |
+| 任务类型 | 算法实验 / 实验冻结 |
+| 任务模式 | C — 深度物理研究与学习（外部执行，登记型档案） |
+| 报告人 | Claude（journal_revision 系列） |
+| 关联知识库条目 | 无 |
+| 涉及文件 | AIMC 配置校验、种子命名空间、manifest、计时与 FOM 指标 |
+| 权威材料 | `AIMC_WWiteration/docs/journal_revision/task_08a_experiment_freeze_claude/`、`task_08av_experiment_freeze_codex/` |
 
 ---
 
 ## 0. 人类阅读摘要（模式 C 必填；A/B 按需）
 
-**要回答的问题**：用非代码语言说明本任务要判断或改变的物理/工程事实。
-
-**当前判断与边界**：目前知道什么、尚不知道什么；结论不得超出哪些机制、平台、统计或输入范围。
-
-**人需要在什么关口确认理解**：问题定式／因果链／验伪条件／结果解释（填写适用项）。
+Task 08A 冻结修正版期刊实验：历史 `results/` 不可变，修正输出限定在 `results/task08_corrected/<experiment_id>/`。正式矩阵为 J0 Analog、J1 指数经验 WW、J2 plain、J3 feature、J4 prior-residual DNN、J5 prior-residual PINN，以及 A1 one-shot PINN 与 A2 current-only PINN（U-Net 仅会后补充）。确认并修复了使实验不可复现的多个缺陷（全局种子、训练数静默截断、缺失的 manifest/计时/响应样本等）。
 
 ---
 
 ## 1. 任务定义（① 立项 · Agent 填）
 
-**目标**：这次要做什么？解决什么问题？
+**目标**：冻结可复现的正式实验矩阵，并修复阻止实验可复现的缺陷。
 
-**范围**：涉及哪些仓库（`RMC/` / `AIMC_WWiteration/` / 仅文档）、哪些模块。
+**范围**：配置校验、种子命名空间派生、MC 种子基线、训练种子挂钩、正式输出门、manifest 与 HDF5 镜像、current-only 训练时域、粒子数语义、最终响应样本、计时与 FOM 字段、修正后的 manifest 收集器。
 
-**验收标准**：怎样算完成？（例：smoke test 通过；某算例 RE/FOM 达标；接口可用）
+**本仓库产出**：`task_08a_experiment_freeze_claude/`（主报告 + 6 份 assets）与 `logs/baseline_and_status.txt`。
 
-**原始材料**：`logs/` 下有哪些文件，分别是什么（报错原文/数据/日志，**原样保存**）。
+**权威记录**：见基本信息表的 AIMC 路径。
 
 ---
 
 ## 2. 调研与设计（② 设计/定位 · Agent 填）
 
-**背景**：相关代码/知识库条目/原型笔记的现状。
+**背景**：Task 08A 由外部 Agent 在 AIMC 侧执行；本档案补齐此前缺失的登记。
 
 **证据链**：
 | # | 位置 | 说明 |
 |---|---|---|
-| 1 | `文件:行号` / 实验数据 | |
+| 1 | `task_08a_experiment_freeze_claude/task_08a_experiment_freeze_claude.md` | 冻结规则、缺陷确认、修复清单、计时与指标定义 |
+| 2 | `…/assets/experiment_matrix.csv`、`corrected_experiment_protocol.md` | 正式矩阵与修正协议 |
+| 3 | `…/assets/runtime_truth_matrix.md`、`hdf5_provenance_matrix.md`、`timing_contract.md`、`task08b_launch_plan.md` | 运行真值、HDF5 溯源、计时契约与后续计划 |
 
-**影响面**：还有哪些功能/算例/接口会受影响？是否涉及基准结果或兼容性？
-
-**为什么之前没做/没发现**：（可选，但对改进机制很有价值）
+**边界**：本档案不重复裁定实验结论；正式实验（Task 08B）需单独授权。
 
 ---
 
@@ -157,12 +153,12 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 
 ---
 
-## 7. 结论与遗留（⑤ 归档）
+## 7. 结论与遗留
 
-- **结论**：
-- **遗留问题 / 后续待办**：
-- **知识库同步**：更新了哪些文档的哪些章节
-- **是否已提交**：分支 / commit hash ／ 由谁在何时 push
+- **结论**：实验冻结完成；种子命名空间、粒子数语义、manifest/计时契约与响应样本等缺陷已修复；`FOM_transport=1/(RE²·T_transport)`、`FOM_e2e=1/(RE²·T_total)` 已定义。
+- **遗留**：Task 08B 正式矩阵需单独授权；`task08_corrected` legacy 产物已排除出权威集（见 20260917_01）。
+- **知识库同步**：本轮未改动 `MLVR_Knowledge/`。
+- **是否已提交**：AIMC 侧文档随其仓库提交；本登记档案随根仓库提交。
 
 ---
 
@@ -170,7 +166,7 @@ git -C ../../AIMC_WWiteration diff > changes.diff
 
 | 时间 | 事件 |
 |---|---|
-| 2026-09-16 06:25 | 立项 |
+| 2026-09-05 11:11 | 立项 |
 
 ---
 

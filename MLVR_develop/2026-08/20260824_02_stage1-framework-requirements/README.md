@@ -58,7 +58,7 @@
 
 新增：
 
-- `MLVR_develop/20260824_02_stage1-framework-requirements/README.md`
+- `MLVR_develop/2026-08/20260824_02_stage1-framework-requirements/README.md`
 
 ## 5. Stage 1 结论
 

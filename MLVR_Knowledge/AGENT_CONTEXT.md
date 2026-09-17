@@ -121,20 +121,20 @@ Requirement → Existence → Actual Behavior → Requirement Match
 
 任务档案：
 
-- `MLVR_develop/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
-- `MLVR_develop/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
-- `MLVR_develop/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
-- `MLVR_develop/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
-- `MLVR_develop/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
-- `MLVR_develop/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
-- `MLVR_develop/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
-- `MLVR_develop/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
-- `MLVR_develop/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
-- `MLVR_develop/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
-- `MLVR_develop/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
-- `MLVR_develop/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
-- `MLVR_develop/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
-- `MLVR_develop/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
+- `MLVR_develop/2026-08/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
+- `MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
+- `MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
+- `MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
+- `MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
+- `MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
+- `MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
+- `MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
+- `MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
+- `MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
+- `MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
+- `MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
+- `MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
+- `MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
 
 当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**。作用域为 Linux x86_64、`ais=OFF`：MPI-off serial build（OpenMP off），以及本机 Open MPI 4.1.6 的 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`。MPI-off task 01 已闭合 40 angular + 10 density raw formal、逐 seed/aggregate strict gates、fixed-source CTest、SHA256 manifest 和独立审计；并行专项完成响应级、条件角 aggregate 与独立 seed 复验。原 `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留为风险记录。
 
@@ -142,7 +142,7 @@ W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `s
 
 有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、Windows、反射边界或任意机制组合；并行范围也不覆盖更多 rank/thread、跨节点或其他 MPI 实现；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测机制，应另立针对性审查。
 
-F03 已立项为 `MLVR_develop/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
+F03 已立项为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
