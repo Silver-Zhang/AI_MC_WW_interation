@@ -9,7 +9,7 @@
 | 报告人 | 用户 + Agent |
 | 关联知识库条目 | 无 |
 | 涉及文件 | `AIMC_WWiteration/.claude/worktrees/`、`MLVR_develop/20260904_01_…`、新建 `tools/repo-status.sh` |
-| 分支 / 提交 | 根工作区 `main` ／ 待提交 |
+| 分支 / 提交 | 根工作区 `main` ／ 已提交 `6c09e3b` 并推送 |
 
 ---
 
@@ -177,7 +177,7 @@ archive/worktree-agent-a97cdf8e33723c40c 实现 prior_residual_unet 及 FOM 有�
 - **结论**：工作区仓库结构已理清：3 个主仓库保持独立（现状正确，不建议 submodule 化）；RMC 的 11 个依赖 submodule 保持不动（未初始化 5 个属正常）；AI 工具遗留的 worktree 与游离副本已清理，未合入提交以 tag 保留，唯一证据已补录进档案。新增 `tools/repo-status.sh` 供日常一键核查。
 - **遗留问题 / 后续待办**：1) `20260904_01` 档案引用的 Claude 报告路径在 AIMC 缺失（仅有 Codex 版本），如需恢复应从会话转录或另存副本；2) AIMC 有 1 个未跟踪的会议论文 PDF，由其自身仓库决定是否纳入版本控制；3) `RMC/dependencies` 有 5 个未初始化 submodule，完整编译前需 `submodule update --init --recursive`。
 - **知识库同步**：无需更新 `MLVR_Knowledge/`。
-- **是否已提交**：待提交（根仓库 `main`）。
+- **是否已提交**：已提交 `6c09e3b` 并推送（根仓库 `main`）。
 
 ---
 
@@ -206,7 +206,7 @@ archive/worktree-agent-a97cdf8e33723c40c 实现 prior_residual_unet 及 FOM 有�
 | 4 | 证据唯一性核查 | 全仓查找 + AIMC 历史 | 两个日志为唯一副本 → 补录而非删除 |
 | 5 | 清理与补录 | tag / remove / branch -D / rm -rf / prune + cp | 完成 |
 | 6 | 新增脚本并验证 | `tools/repo-status.sh` | 语法与运行均通过 |
-| 7 | 归档 | INDEX + 本档案 | 待提交 |
+| 7 | 归档 | INDEX + 本档案 | 已提交 `6c09e3b` |
 
 **模式 C 必填；A/B 可选**：若人机讨论较深入，另写一份 [会话纪要.md](会话纪要.md)
 （Q&A 脉络 + 共识 + 未决事项）。**注意：原始聊天转储不要存仓库**——其中可能含

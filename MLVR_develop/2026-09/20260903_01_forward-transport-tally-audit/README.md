@@ -9,7 +9,7 @@
 | 报告人 | Claude Opus 5 |
 | 关联知识库条目 | 无（新发现：cell-wise midpoint tally） |
 | 涉及文件 | `AIMC_WWiteration/src/mc.py`、`AIMC_WWiteration/docs/journal_revision/task_01_forward_transport_tally_audit_claude/task_01_forward_transport_tally_audit_Claude.md`；生产代码未修改 |
-| 分支 / 提交 | `develop` / 未提交 |
+| 分支 / 提交 | AIMC `develop` ／ 已提交 `6b7bc27`（已并入 `main`）；本仓库登记归档 `5f587cc` |
 
 ---
 
@@ -153,7 +153,7 @@ total preserved but cell-wise field differs from Σ_i w*l_i
 - **结论**：forward free-flight、隐式捕获代数、正向群选择器和各向同性方向公式与当前理论参考一致（限定当前正截面配置）；当前 cell-wise mesh tally 对跨 cell segment 的实现为 midpoint routing。D1 确定性 oracle 给出 exact `[0.8,1.0,1.0,0.7]`、actual `[0,3.5,0,0]`。完整 segment 的总 `weight×dist` 在测试中守恒，但 cell-wise spatial distribution 不正确。Final Classification 为 **D — Defect**，仅针对本任务范围内的 cell-wise tally。
 - **遗留问题 / 后续待办**：斜穿/负方向/多维边界交叉、边界截断、完整 kernel instrumentation、性能和 stack 交互仍待专项验证；下游 detector response/WW/field 影响尚未证明。
 - **知识库同步**：未修改知识库；本结论是当前 AIMC 原型新审查记录，待人工确认后决定是否同步 `MLVR_Knowledge/06_已知问题与改进建议.md`。
-- **是否已提交**：未提交；`develop` 工作树仅新增本任务报告与诊断资产。
+- **是否已提交**：AIMC 仓库已提交 `6b7bc27`（`develop`，已并入 `main`）；本仓库登记归档 `5f587cc`。
 
 ## 8. 时间线
 

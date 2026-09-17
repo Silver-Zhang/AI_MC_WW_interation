@@ -7,10 +7,10 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-09-17 | [monthly-archive-layout](2026-09/20260917_04_monthly-archive-layout/README.md) | 工作区治理 / 目录结构 | 已完成 | 无 | 根工作区 `main`，未提交；任务档案按月分层（2026-08/2026-09），引用与忽略规则同步更新 |
-| 2026-09-17 | [workflow-hardening](2026-09/20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，未提交；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
-| 2026-09-17 | [workspace-repo-hygiene](2026-09/20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，未提交；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
-| 2026-09-17 | [root-legacy-assets-cleanup](2026-09/20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，未提交；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
+| 2026-09-17 | [monthly-archive-layout](2026-09/20260917_04_monthly-archive-layout/README.md) | 工作区治理 / 目录结构 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3` 并推送；任务档案按月分层（2026-08/2026-09），引用与忽略规则同步更新 |
+| 2026-09-17 | [workflow-hardening](2026-09/20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3`（台账登记 `7307b10`）并推送；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
+| 2026-09-17 | [workspace-repo-hygiene](2026-09/20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，已提交 `6c09e3b` 并推送；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
+| 2026-09-17 | [root-legacy-assets-cleanup](2026-09/20260917_01_root-legacy-assets-cleanup/README.md) | 工作区治理 / 遗留资产清理 | 已完成 | 无 | 根工作区 `main`，已提交 `9280bc2` 并推送；删除三份根目录遗留实验资产并新增 `/task*/` 忽略规则 |
 | 2026-09-16 | [chengdu-word-final-qa](2026-09/20260916_01_chengdu-word-final-qa/README.md) | 文档 / 论文终稿质检 | 已完成（登记） | 无 | Codex 工具链执行；产物在 AIMC `article/成都会议/` |
 | 2026-09-05 | [task08a-r2-closure-blocker-repair](2026-09/20260905_04_task08a-r2-closure-blocker-repair/README.md) | C | 已完成 | TASK08A | 1603c70 / a2d2ca2 / b61596e / 67b21f2 / f06aff2 |
 | 2026-09-05 | [task08a-experiment-freeze-harness](2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) | 算法实验 / 实验冻结 | 已完成（登记） | 无 | Claude 执行；主报告与 6 份 assets 已存本档案 |
@@ -21,11 +21,11 @@
 | 2026-09-04 | [task03-adjoint-transport-audit](2026-09/20260904_03_task03-adjoint-transport-audit/README.md) | 物理审查 / 条件修复 | 已完成（登记） | 无 | Claude 执行；权威材料在 AIMC `journal_revision/task_03*` |
 | 2026-09-04 | [task02r-final-metrics-pipeline-repair](2026-09/20260904_02_task02r-final-metrics-pipeline-repair/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair implemented and locally verified） | 无 | Claude 执行 |
 | 2026-09-04 | [task01r-mesh-tally-repair-claude](2026-09/20260904_01_task01r-mesh-tally-repair-claude/README.md) | 缺陷修复 / 物理验证 | 已完成（A — Repair verified，限定 exact per-cell tally） | 无 | Claude 执行；原始验证日志于 2026-09-17 补录（见 20260917_02） |
-| 2026-09-03 | [forward-transport-tally-audit](2026-09/20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 未提交 |
+| 2026-09-03 | [forward-transport-tally-audit](2026-09/20260903_01_forward-transport-tally-audit/README.md) | 物理审查 / 数值验证 | 已完成（D — Defect，限定 cell-wise tally） | 无 | 本仓库归档 `5f587cc`；AIMC 侧已提交 `6b7bc27`（develop → main） |
 | 2026-08-31 | [f02-parallel-statistical-gate-calibration](2026-08/20260831_02_f02-parallel-statistical-gate-calibration/README.md) | 算法实验 / 统计判据校准 | 已完成 | F02 | `2×1/4×1/2×2/2×4` 共 160/160 结构运行；四配置均 8/8 aggregate 通过；仅 `4×1` seed 41/rank 3 isotropic forward/adjoint Holm 诊断拒绝，保留 strict failed，MPI/OpenMP 仍为 C — Verify |
 | 2026-08-31 | [f02-parallel-angular-distribution-verification](2026-08/20260831_01_f02-parallel-angular-distribution-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（strict failed） | F02 | 2×1 rank-aware angular strict 通过；4×1 的 seed 41/rank 3 isotropic mean $z=-3.15282$ 失败，按停止规则未运行混合矩阵；MPI/OpenMP 保持 C — Verify |
-| 2026-08-31 | [workflow-mode-c-audit-remediation](2026-08/20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，未提交；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
-| 2026-08-31 | [workflow-multi-mode-upgrade](2026-08/20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，未提交；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
+| 2026-08-31 | [workflow-mode-c-audit-remediation](2026-08/20260831_05_workflow-mode-c-audit-remediation/README.md) | 缺陷修复 / 工作流治理 | 已完成 | P2 | 根工作区 `main`，已提交 `2089063` 并推送；修复台账锚点、补齐 C 案例、人类确认与 E0–E4/治理标签 |
+| 2026-08-31 | [workflow-multi-mode-upgrade](2026-08/20260831_04_workflow-multi-mode-upgrade/README.md) | 文档 / 工作流升级 | 已完成 | P2 | 根工作区 `main`，已提交 `2089063` 并推送；模式 A/B/C、C 模式理解关口、E0–E4 与治理标签、建档脚本已升级 |
 | 2026-08-31 | [f02-mpi4-angular-seed-replication](2026-08/20260831_03_f02-mpi4-angular-seed-replication/README.md) | 算法实验 / 独立复现 | 已完成 | F02 | 新 seeds `101,103,107,109,113` 的 `4×1` 全角矩阵 40/40 结构通过；8/8 aggregate 通过、零 Holm 拒绝；不改判原 seed 41 strict failed，MPI/OpenMP 仍为 C — Verify |
 | 2026-08-30 | [f02-parallel-mpi-openmp-verification](2026-08/20260830_01_f02-parallel-mpi-openmp-verification/README.md) | 算法实验 / 并行正确性验证 | 已完成（条件性） | F02 | 六配置 runtime/CTest、density 与 fissile 统计、angular 40/配置输运结构通过；独立审计指出未做 multi-rank angular 分布探针，不能扩展 F02 A 的并行作用域 |
 | 2026-08-28 | [f02-mpi-off-serial-provenance](2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md) | 验证基础设施 / 证据恢复 | 已完成 | F02 | 显式 MPI-off fresh build 上 angular 40/40、density 10/10 strict 通过，CTest 1/1、checksum 和独立审计 ACCEPT；严格 serial F02 恢复有界 A |
