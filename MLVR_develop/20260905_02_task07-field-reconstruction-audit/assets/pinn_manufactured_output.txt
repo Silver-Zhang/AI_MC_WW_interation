@@ -1,0 +1,11 @@
+P1/P2 constant fwd operator: PASS
+  want=3.89812250e-01 got=3.89812320e-01
+P1/P2 constant adj operator: PASS
+  want=3.81312474e-01 got=3.81312490e-01
+P4 quadratic Laplacian/operator: PASS
+  analytic linear-field reference=3.76989816e-01 got=3.89233828e-01
+P3 asymmetric transpose distinguishes modes: PASS
+P6/P7 default source-free collocation exclusions: PASS
+P7 source-term experimental branch is excluded: PASS
+P8 lambda warmup/ramp: PASS
+SUMMARY: 7 PASS, 0 FAIL

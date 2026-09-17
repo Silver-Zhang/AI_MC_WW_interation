@@ -1,0 +1,396 @@
+
+===== tests/test_mesh_tally.py =====
+PASS test_positive_and_negative_axis_traversal
+PASS test_directional_face_semantics_and_face_endpoint
+PASS test_xyz_corner_tie_advances_all_axes
+PASS test_weighted_conservation_and_group_isolation
+PASS test_extremely_short_segment_is_not_dropped
+SUMMARY: 5 PASS 0 FAIL
+
+===== tests/test_final_metrics_pipeline.py =====
+T1 authoritative HDF5 and end-to-end row: PASS
+  EXPECTED: (10.0, 2000000000000.0, 25.0, 4.0)
+  ACTUAL:   (10.0, 2000000000000.0, 25.0, 3.999999999999999)
+T2 HDF5 beats conflicting log: PASS
+  EXPECTED: 10.0
+  ACTUAL:   10.0
+T2b HDF5 group is preserved: PASS
+  EXPECTED: 1
+  ACTUAL:   1
+T3 English log fallback: PASS
+  EXPECTED: (5.0, 12300000000.0, 12.5)
+  ACTUAL:   (5.0, 12300000000.0, 12.5)
+T4 Chinese log fallback: PASS
+  EXPECTED: (10.0, 2500000000.0, 8.0)
+  ACTUAL:   (10.0, 2500000000.0, 8.0)
+T5/T6 no scalar does not use cell-wise fallback: PASS
+  EXPECTED: NaN unavailable
+  ACTUAL:   (nan, nan)
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T7 FOM consistency recomputation: PASS
+  EXPECTED: 2.5
+  ACTUAL:   2.4999999999999996
+T8 optim_group -1 restores total: PASS
+  EXPECTED: None
+  ACTUAL:   None
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T8b consumer restores total semantics: PASS
+  EXPECTED: None
+  ACTUAL:   None
+SUMMARY: 9 PASS, 0 FAIL
+
+===== tests/test_adjoint_transport.py =====
+A1 transpose convention: PASS EXPECTED=[[0.1  0.02]
+ [0.06 0.2 ]] ACTUAL=[[0.1  0.02]
+ [0.06 0.2 ]]
+A2 forward row totals: PASS EXPECTED=[0.16 0.22] ACTUAL=[0.16 0.22]
+A3 adjoint totals=forward columns: PASS EXPECTED=[0.12 0.26] ACTUAL=[0.12 0.26]
+A4 forward one-collision kernel: PASS EXPECTED=[[0.4        0.24      ]
+ [0.05714286 0.57142857]] ACTUAL=[[0.4        0.24      ]
+ [0.05714286 0.57142857]]
+A5 adjoint one-collision kernel: PASS EXPECTED=[[0.4        0.08      ]
+ [0.17142857 0.57142857]] ACTUAL=[[0.4        0.08      ]
+ [0.17142857 0.57142857]]
+A6 asymmetric distinguishes rows: PASS EXPECTED=True ACTUAL=True
+A7 synthetic adjoint amplification allowed: PASS EXPECTED=True ACTUAL=True
+A8 zero-scatter factor: PASS EXPECTED=[[0. 0.]
+ [0. 0.]] ACTUAL=[[0. 0.]
+ [0. 0.]]
+A9 selected-group delta: PASS EXPECTED=[0. 1.] ACTUAL=[0. 1.]
+A10 total-group uniform: PASS EXPECTED=[0.5 0.5] ACTUAL=[0.5 0.5]
+Traceback (most recent call last):
+  File "/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/tests/test_adjoint_transport.py", line 37, in <module>
+    if __name__=='__main__': raise SystemExit(main())
+                                              ^^^^^^
+  File "/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/tests/test_adjoint_transport.py", line 32, in main
+    f=mc.run_simulation_batch_mode(20,2,ww,box,S,np.array([.5,.5]),iter_id=812,direction_offset=0)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/silver/miniforge3/envs/torch/lib/python3.11/site-packages/numba/core/dispatcher.py", line 424, in _compile_for_args
+    error_rewrite(e, 'typing')
+  File "/home/silver/miniforge3/envs/torch/lib/python3.11/site-packages/numba/core/dispatcher.py", line 365, in error_rewrite
+    raise e.with_traceback(None)
+numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+Untyped global name 'effective_mc_seed': Cannot determine Numba type of <class 'function'>
+
+File "src/mc.py", line 368:
+def run_simulation_batch_mode(n_total_particles, n_batches, ww_map, source_box, s_matrix, source_spectrum,
+    <source elided>
+    for b in prange(n_batches):
+        batch_seed = effective_mc_seed(seed_base, direction_offset, iter_id, b)
+        ^
+
+During: Pass nopython_type_inference
+
+===== tests/test_forward_adjoint_reciprocity.py =====
+T1 exact A/AT: PASS EXPECTED=0.1739797148207895 ACTUAL=0.17397971482078955
+T2 wrong adjoint rejected: PASS EXPECTED=True ACTUAL=True
+T3 response batch-first: PASS EXPECTED=[5.0, 4.0, 3.0] ACTUAL=[5. 4. 3.]
+T4 adjoint weighted batch-first: PASS EXPECTED=[0.5, 0.5, 0.5] ACTUAL=[0.5 0.5 0.5]
+T5 selected C=1: PASS EXPECTED=1.0 ACTUAL=1.0
+T6 total C=G: PASS EXPECTED=2.0 ACTUAL=2.0
+T7 unequal normalized averages: PASS EXPECTED=3.0 ACTUAL=3.0
+T8 covariance cancellation: PASS EXPECTED=0.0 ACTUAL=0.0
+T9 normalized spectrum: PASS EXPECTED=1.0 ACTUAL=1.0
+T10 WW zero contract: PASS EXPECTED=no split/roulette ACTUAL=target_w=0 branch skipped
+SUMMARY: 10 PASS, 0 FAIL
+
+===== tests/test_weight_window_semantics.py =====
+W1 collision cell + outgoing group lookup: PASS EXPECTED=0.01 ACTUAL=0.01
+W2 split cap n<=8: PASS EXPECTED=8 ACTUAL=8
+W3 split total weight: PASS EXPECTED=8.1 ACTUAL=8.1
+W4-W6 descendants inherit post-collision state: PASS EXPECTED=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1) ACTUAL=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1)
+W7 roulette expectation: PASS EXPECTED=0.2 ACTUAL=0.19932
+W8 exact thresholds bypass: PASS EXPECTED=True ACTUAL=True
+W9 exact stack capacity: PASS EXPECTED=True ACTUAL=True
+W10/W12 zero-WW bypass: PASS EXPECTED=True ACTUAL=True
+W11 group-dependent targets: PASS EXPECTED=True ACTUAL=True
+SUMMARY: 9 PASS, 0 FAIL
+
+===== tests/test_flux_accumulator_history.py =====
+H1 mean == concatenate: PASS
+  maxerr=1.421e-14
+H2 M2/sample variance: PASS
+  maxerr=3.638e-12
+H3 RE == production oracle: PASS
+  maxerr=2.220e-16
+H4 zero batch retained: PASS
+H5 update chunks == one update: PASS
+H6 n_batches_total: PASS
+  n=7
+H7 adj/fwd pools independent: PASS
+SUMMARY: 7 PASS, 0 FAIL
+
+===== tests/test_iteration_dataflow.py =====
+
+═════════════════════════ 迭代  1 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=1.1576e+09  det_flux=2.015e+18  det_RE=0.2%  ★最佳@iter1
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=2.20e+01,max=2.20e+01  g1:p50=2.20e+01,max=2.20e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  2 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.3631e+09  det_flux=2.025e+18  det_RE=0.2%  ★最佳@iter2
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=4.40e+01,max=4.40e+01  g1:p50=4.40e+01,max=4.40e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  3 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.7558e+09  det_flux=2.035e+18  det_RE=0.2%  ★最佳@iter3
+  [WW]  fwd g0:p50=6.60e+01,max=6.60e+01  g1:p50=6.60e+01,max=6.60e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════ 迭代完成  —  最佳 WW 汇总 ══════════════════════
+  最佳迭代: 3   FOM: 2.7558e+09   训练 RE: 0.25%
+  → 使用 iter 3 的 best FOM WW 进行 Final Run
+I1/I10 adj_ww_used: PASS
+I1/I11 fwd_ww_used: PASS
+I1/I12 adj_ww_next: PASS
+I1/I13 cumulative counts: PASS
+I1/I14 historical fields: PASS
+I2/I10 adj_ww_used: PASS
+I2/I11 fwd_ww_used: PASS
+I2/I12 adj_ww_next: PASS
+I2/I13 cumulative counts: PASS
+I2/I14 historical fields: PASS
+I3/I10 adj_ww_used: PASS
+I3/I11 fwd_ww_used: PASS
+I3/I12 no unused next WW: PASS
+I3/I13 cumulative counts: PASS
+I3/I14 historical fields: PASS
+I1/I2 next handoff: PASS
+I8 no current-best lookahead: PASS
+I15 final WW from best copy: PASS
+I16 HDF5 raw/cumulative distinction: PASS
+SUMMARY: 19 PASS, 0 FAIL
+
+===== tests/test_field_reconstruction_semantics.py =====
+F1/F2 point grid and group alignment: PASS
+F1/F2 field tensor orientation: PASS
+F1/F2 field target group order: PASS
+F5 zero-censored mask: PASS
+F5/F6 zero and high-RE cells masked: PASS
+F7 prior numpy/torch fwd: PASS
+F7 prior numpy/torch adj: PASS
+F6/F8 point prediction reshape/group: PASS
+F6/F8 field prediction orientation: PASS
+  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[1.619 2.032]
+F8 prior-residual field identity: PASS
+SUMMARY: 11 PASS, 0 FAIL
+
+===== tests/test_pinn_operator.py =====
+P1/P2 constant fwd operator: PASS
+  want=3.89812250e-01 got=3.89812320e-01
+P1/P2 constant adj operator: PASS
+  want=3.81312474e-01 got=3.81312490e-01
+P4 quadratic Laplacian/operator: PASS
+  analytic linear-field reference=3.76989816e-01 got=3.89233828e-01
+P3 asymmetric transpose distinguishes modes: PASS
+P6/P7 default source-free collocation exclusions: PASS
+P7 source-term experimental branch is excluded: PASS
+P8 lambda warmup/ramp: PASS
+SUMMARY: 7 PASS, 0 FAIL
+
+===== tests/test_importance_to_ww.py =====
+W1 inverse monotonicity: PASS
+W2 global scale invariance: PASS
+W3 cross-group ratio preservation: PASS
+  ratio=10.00000000
+W4 source reference weighted normalization: PASS
+W5 positivity/finite: PASS
+W6 clipping: PASS
+W7 alpha endpoints: PASS
+W8 log relaxation: PASS
+SUMMARY: 8 PASS, 0 FAIL
+
+===== tests/test_task08_runtime_manifest.py =====
+M1 valid total-history contract: PASS
+M3 rejects indivisible training: PASS
+M4 manifest fields/hash: PASS
+SUMMARY: 3 PASS, 0 FAIL
+
+===== tests/test_task08_seed_namespace.py =====
+S1 deterministic: PASS
+S2 root seeds separated: PASS
+S3-S6 full matrix declared unique: PASS
+S7 full matrix valid range: PASS
+S8 full matrix effective MC unique: PASS
+S9 production effective seed match: PASS
+root_seed_oracle={2026: 2145597883, 2027: 2145777883, 12026: 2145957883}
+effective_seed_oracle=2128269
+planned=871200 effective_mc=331200 declared_collisions=0 effective_collisions=0
+SUMMARY: 6 PASS, 0 FAIL
+
+===== tests/test_task08_ablation_semantics.py =====
+A1 cumulative default unchanged: PASS
+A4 one-shot forces one iteration: PASS
+A2/A3 current-only fresh accumulator: PASS
+SUMMARY: 3 PASS, 0 FAIL
+
+===== tests/test_task08_metrics.py =====
+T1 response samples mean: PASS
+T2 response SE: PASS
+T3 response RE: PASS
+T4 transport FOM: PASS
+T5 e2e FOM: PASS
+T7 pairwise z: PASS
+SUMMARY: 6 PASS, 0 FAIL
+
+===== tests/test_task08_runtime_consistency.py =====
+M1 runtime config equality: PASS
+M2 runtime mismatch rejected: PASS
+SUMMARY: 2 PASS, 0 FAIL
+
+===== tests/test_task08_collector.py =====
+Traceback (most recent call last):
+  File "/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/tests/test_task08_collector.py", line 2, in <module>
+    from tests.test_task08_formal_collector import *  # noqa: F401,F403
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests'
+
+===== tests/test_task08_formal_collector.py =====
+Traceback (most recent call last):
+  File "/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/tests/test_task08_formal_collector.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+===== tests/smoke_test.py =====
+============================================================
+  AI-MC Weight Window — Smoke Test
+============================================================
+
+=== 1. 几何与特征工程 ===
+  [PASS] box_center
+  [PASS] box_equivalent_radius
+  [PASS] smooth_center_distance@center==0
+  [PASS] smooth_center_distance monotone inside
+  [PASS] smooth_center_distance >= 0
+  [PASS] build_dnn_features plain shape
+  [PASS] build_dnn_features feature shape
+  [PASS] features no NaN/Inf
+  [PASS] log_flux_prior shape
+  [PASS] log_flux_prior monotone (no flat top)
+
+=== 2. HPO 控制逻辑 ===
+  [PASS] FluxNet.prior_kappa_g default None
+  [PASS] FluxNet.prior_kappa_scale default 1.0
+  [PASS] const ENABLE_KAPPA_HPO importable
+  [PASS] const HPO_START_ITER importable
+  [PASS] const HPO_INTERVAL importable
+  [PASS] const HPO_QUICK_EPOCHS importable
+  [PASS] const HPO_KAPPA_SCALE_MIN importable
+  [PASS] const HPO_KAPPA_SCALE_MAX importable
+  [PASS] select_kappa_scale_hpo callable
+  [PASS] make_train_val_split callable
+  [PASS] HPO skips before HPO_START_ITER
+  [PASS] HPO skips for plain_dnn
+  [PASS] HPO executes at HPO_START_ITER
+  [PASS] HPO selected scale in range
+  [PASS] train/val split covers all
+  [PASS] train/val split no overlap
+
+=== 3. PINN 扩散参数 / PDE / 训练 / 预测 ===
+  [PASS] D_G length
+  [PASS] D_G > 0
+  [PASS] SIGMA_R_G >= 0
+  [PASS] SIGMA_S_OUT_G length
+  [PASS] collocation shape (fwd)
+  [PASS] collocation z fixed (fwd)
+  [PASS] collocation deterministic (fwd)
+  [PASS] collocation shape (adj)
+  [PASS] collocation z fixed (adj)
+  [PASS] collocation deterministic (adj)
+  [PASS] pde_loss finite
+  [PASS] pde_loss >= 0
+  [PASS] training mask non-empty
+    ep 1/5  [███░░░░░░░░░░░░░]  loss=2.8177e-01
+    ep 2/5  [██████░░░░░░░░░░]  loss=2.5770e-01
+    ep 3/5  [█████████░░░░░░░]  loss=2.3419e-01
+    ep 4/5  [████████████░░░░]  loss=2.0633e-01
+    ep 5/5  [████████████████]  loss=1.7234e-01
+    ep 1/5  [███░░░░░░░░░░░░░]  loss=1.3257e-01
+    ep 2/5  [██████░░░░░░░░░░]  loss=8.5895e-02  pde=3.894e-01  λ=2.50e-04
+    ep 3/5  [█████████░░░░░░░]  loss=3.2001e-02  pde=3.876e-01  λ=5.00e-04
+    ep 4/5  [████████████░░░░]  loss=7.5651e-02  pde=3.844e-01  λ=7.50e-04
+    ep 5/5  [████████████████]  loss=7.6045e-02  pde=3.851e-01  λ=1.00e-03
+    └─ PINN  data=7.6045e-02  pde=3.8506e-01  λ_final=1.00e-03  total=7.6430e-02
+    └─ 完成  residual_log_flux  loss=7.6045e-02  κ_scale=1.000
+  [PASS] PINN train success
+  [PASS] PINN total_loss finite
+  [PASS] predict shape
+  [PASS] predict finite & positive
+
+=== 4. 配置系统与模型工厂 ===
+  [PASS] quick_config.run.quick is True
+  [PASS] quick_config n_iterations == 3
+  [PASS] quick_config n_particles_train small
+  [PASS] quick_config epochs small
+  [PASS] default_config.run.quick is False
+  [PASS] default_config n_iterations == 30
+  [PASS] default n_particles_final divisible by n_batches_final
+  [PASS] default early_stop_on_re is False
+  [PASS] default stop_on_fom_plateau is False
+  [PASS] build_model(plain_dnn) output shape
+  [PASS] build_model(feature_dnn) output shape
+  [PASS] build_model(prior_residual_dnn) output shape
+  [PASS] build_model(prior_residual_pinn) output shape
+  [PASS] build_model unknown variant raises
+
+=== 5. U-Net Field 模型 ===
+  [PASS] build_model unet 构造成功
+  [PASS] unet forward shape
+  [PASS] unet forward finite
+  [PASS] field X shape
+  [PASS] field Y shape
+  [PASS] field mask shape
+  [PASS] field weights shape
+  [PASS] field X finite
+  [PASS] field Y finite
+  [PASS] field weights >= 0
+  [PASS] field mask has valid cells
+  [PASS] unet prior_info is None
+  [PASS] unet train success
+  [PASS] unet train data_loss finite
+  [PASS] unet train total_loss finite
+  [PASS] unet predict shape
+  [PASS] unet predict finite
+  [PASS] unet predict positive
+
+=== 6. prior_residual_unet 变体 ===
+  [PASS] prior_residual_unet build_model 成功
+  [PASS] prior_residual_unet forward shape
+  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[-4.644 -4.265]
+  [PASS] prior_residual_unet prior_info not None
+  [PASS] prior_residual_unet prior_C_g shape
+  [PASS] prior_residual_unet log_prior_field shape
+  [PASS] prior_residual_unet Y (residual) finite
+  [PASS] prior_residual_unet Y residual bounded
+  [PASS] prior_residual_unet train success
+  [PASS] prior_residual_unet data_loss finite
+  [PASS] prior_residual_unet predict shape
+  [PASS] prior_residual_unet predict finite
+  [PASS] prior_residual_unet predict positive
+  [PASS] FOM gate: zero-response 不更新 best_fom
+  [PASS] FOM gate: 有效响应允许更新 best_fom
+
+============================================================
+  SUMMARY: 89 PASS  0 FAIL
+============================================================
+
+[aggregate_exit=1]

@@ -1,0 +1,10 @@
+W1 inverse monotonicity: PASS
+W2 global scale invariance: PASS
+W3 cross-group ratio preservation: PASS
+  ratio=10.00000000
+W4 source reference weighted normalization: PASS
+W5 positivity/finite: PASS
+W6 clipping: PASS
+W7 alpha endpoints: PASS
+W8 log relaxation: PASS
+SUMMARY: 8 PASS, 0 FAIL

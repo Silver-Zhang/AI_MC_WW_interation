@@ -1,0 +1,18 @@
+/home/workspace/AI_MC_WW_interation/AIMC_WWiteration
+develop
+2db8881c1dc1a8abf44881d37f2446f558e7d610
+2db8881 docs: verify adaptive iteration history
+7c87fa2 fix(solver): correct iteration history and WW provenance
+7c9a2d2 docs: verify weight-window transport semantics
+dd7d81d fix(mc): correct weight-window collision state semantics
+513f131 docs: verify forward-adjoint reciprocity
+dcaf26f fix(mc): enforce forward-adjoint response normalization
+46f8ed7 docs: verify multigroup adjoint transport repair
+8acd615 fix(mc): correct multigroup adjoint scattering normalization
+2544de8 docs: verify Task 02 final metrics pipeline repair
+95d8f5d docs: archive Task 02-R metrics pipeline repair
+917335d fix(results): persist and consume final detector metrics
+4462e50 docs: independently review Task 02 response audit
+970ee36 docs: audit detector response and batch statistics
+32861a6 docs: verify Task 01 mesh tally integration
+824bb41 docs: archive Task 01-V integration verification

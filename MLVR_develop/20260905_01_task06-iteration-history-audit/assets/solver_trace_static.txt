@@ -1,0 +1,6 @@
+CALL ORDER (src/solver.py):
+iter k: adj_ww_used = copy(_current_adj_ww) -> run_adjoint_mc(adj_ww_used) -> _adj_accumulator.update(adj_batch_g) -> cumulative adj training/prediction -> generate _current_fwd_ww -> fwd_ww_used = copy(_current_fwd_ww) -> run_forward_mc(fwd_ww_used) -> current opt/real response and FOM -> best copy if improved -> _fwd_accumulator.update(fwd_batch_g) occurs before forward training -> generate _current_adj_ww -> adj_ww_next = copy(_current_adj_ww) -> HDF5.
+iter k+1 consumes the prior iter's adj_ww_next through _current_adj_ww.
+HDF5 fields are snapshots, not mutable aliases: adj_ww_used, fwd_ww_used, adj_ww_next.
+Historical fields are cumulative means/RE after raw batch update: adj_acc_flux_g, adj_acc_re_g, fwd_acc_flux_g, fwd_acc_re_g.
+Current metrics remain based on fwd_batch_g only: opt_re, real_re, fom.

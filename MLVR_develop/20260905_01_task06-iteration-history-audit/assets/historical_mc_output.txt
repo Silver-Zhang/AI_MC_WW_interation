@@ -1,0 +1,4 @@
+forward batches=24 n=24 max_mean_err=2.082e-17 max_var_err=2.711e-20 max_re_err=1.110e-15
+forward reference=4.913551310409e-02 accumulated=4.969146072090e-02 z=2.424625 combined_rel_SE=4.614318e-03
+adjoint batches=24 n=24 max_mean_err=1.388e-17 max_var_err=3.388e-20 max_re_err=1.443e-15
+adjoint reference=2.348897844349e-02 accumulated=2.355679224689e-02 z=0.277046 combined_rel_SE=1.039084e-02

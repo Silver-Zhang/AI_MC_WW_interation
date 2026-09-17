@@ -1,0 +1,15 @@
+/home/workspace/AI_MC_WW_interation/AIMC_WWiteration
+develop
+13e0db852a5d22f84b3acb673194c8289eba5c3f
+ M scripts/main.py
+ M src/config.py
+ M src/learning.py
+ M src/mc.py
+ M src/solver.py
+?? docs/journal_revision/task_08a_experiment_freeze_claude/
+?? scripts/task08/
+?? src/experiment.py
+?? tests/test_task08_ablation_semantics.py
+?? tests/test_task08_metrics.py
+?? tests/test_task08_runtime_manifest.py
+?? tests/test_task08_seed_namespace.py

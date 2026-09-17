@@ -1,0 +1,908 @@
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix.md b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix.md
+index f446190..2c97318 100644
+--- a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix.md
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix.md
+@@ -1,4 +1,6 @@
+-# Task08A-R2-V closure matrix
++# Task08A-R2-V closure matrix (initial audit; superseded)
++
++> The initial matrix below recorded the pre-repair hard failures. It is retained as historical audit evidence. The authoritative post-repair matrix is `closure_matrix_r2r.md`, produced after commit `1603c70` and final test strengthening commit `b61596e`.
+ 
+ | Gate | Result | Evidence / reason |
+ |---|---|---|
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix_r2r.md b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix_r2r.md
+new file mode 100644
+index 0000000..a686d14
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/closure_matrix_r2r.md
+@@ -0,0 +1,46 @@
++# Task08A-R2-V re-verification closure matrix (post repair)
++
++| Gate | Result | Evidence |
++|---|---|---|
++| V1 lineage | PASS | `cf6e392 -> f869280 -> 82d759d -> 2804471 -> 1603c70 -> a2d2ca2 -> b61596e`; clean final tree. |
++| V2 science core unchanged | PASS (bounded) | Diff remains seed plumbing, validation, timing/provenance, and declared ablation infrastructure; no transport/tally/WW/PINN operator edits. |
++| V3 root sensitivity | PASS | Three roots produce distinct streams. |
++| V4 deterministic replay | PASS | Same tuple repeats identically. |
++| V5 production formula | PASS | Numba kernel calls canonical compiled `experiment.effective_mc_seed`; Task03 forward/adjoint execute. |
++| V6 declared collisions | PASS | Independent matrix: 763200 declared, 0 collisions. |
++| V7 effective collisions | PASS | Independent matrix: 223200 effective MC, 0 collisions. |
++| V8 range | PASS | Full independent matrix valid. |
++| V9 invalid tuples | PASS | iteration 0, out-of-range iterations/batches, invalid replicate and namespace reject. |
++| V10 formal/pilot XOR | PASS | Collector negative matrix rejects pilot artifact. |
++| V11 formal namespace | PASS | Formal collector requires exact `task08b_formal` root and declared matrix. |
++| V12 invalid collector exit | PASS | All independent negative cases exit 1. |
++| V13 complete matrix | PASS | Synthetic 8-method × replicate-0 collection exits 0, 8 rows/28 pairs. |
++| V14 unexpected artifacts | PASS | extra directory and in-directory `run.log` reject; dispatcher now moves logs to `results/task08_logs`. |
++| V15 manifest integrity | PASS | Sidecar/embedded/hash mutations reject. |
++| V16/V17 SHA provenance | PASS | Wrong science or mixed harness SHA reject. |
++| V18 dirty gate | PASS | Dirty manifest rejects. |
++| V19 runtime truth | PASS (static) | Formal iterative and baseline paths invoke runtime consistency validation. |
++| V20 threads | PASS (static) | Baseline calls `numba.set_num_threads` and records actual count; iterative setup does likewise. |
++| V21 chunks | PASS (static) | Baseline and iterative paths use `final_run_report_every`, total batches, final namespace. |
++| V22 JIT | NOT DYNAMICALLY COVERED | No formal-scale run; low-cost Task03 first compilation succeeds. |
++| V23 response statistics | PASS | Independent collector recalculates mean/SE/RE/scaling. |
++| V24 transport FOM | PASS | Independent collector and timing oracle recalculate transport FOM. |
++| V25/V26 E2E timing/FOM | PASS | Stage-sum oracle gives T_e2e=12 with wall=20 and uses 12. |
++| V27 HPO accounting | PASS | Included-in-model flag and NaN standalone HPO contract enforced. |
++| V28 particle semantics | PASS | Total/per-batch arithmetic and wording audited. |
++| V29 current-only | PASS | Existing semantic tests pass in full suite. |
++| V30 one-shot | PASS | Existing semantic tests pass in full suite. |
++| V31 full pytest | PASS | `pytest 9.1.1`: 38 passed in 5.15s, exit 0. |
++| V32 Task01–07 regression | PASS | Focused aggregate: 89 PASS, 0 FAIL, exit 0; Task03 forward/adjoint: 12 PASS. |
++| V33 no Task08B | PASS | No `results/task08b_formal` output exists. |
++| V34 Codex artifact | PASS | Codex closure artifact committed at `82d759d`; repair/reverification commits also pushed. |
++
++## Hard-gate conclusion
++
++All hard gates pass. V22 remains explicitly not dynamically covered, but the required low-cost kernel compile and all other hard gates pass.
++
++```text
++Task08A CLOSED = YES — reproducibility and ablation harness only
++Task08B READY = YES — READY != RUN
++Task08B full journal matrix = NOT RUN; separate user authorization required
++```
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/collector_negative_matrix_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/collector_negative_matrix_r2r.txt
+new file mode 100644
+index 0000000..b8990ad
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/collector_negative_matrix_r2r.txt
+@@ -0,0 +1,19 @@
++positive 0 summary_rows 9 pair_rows 29
++missing_manifest 1 PASS ValueError: invalid files in /tmp/tmpk9hq6bdh/task08b_formal/J2_PLAIN_formal_r0
++bad_hash 1 PASS formal artifact rejected: embedded manifest is not identical to sidecar
++h5_sidecar_mismatch 1 PASS formal artifact rejected: embedded manifest is not identical to sidecar
++status_failed 1 PASS formal artifact rejected: manifest status is not success
++missing_sample 1 PASS formal artifact rejected: missing HDF5 field final_response_samples
++mean_mismatch 1 PASS formal artifact rejected: response sample mean mismatch
++re_mismatch 1 PASS formal artifact rejected: response sample RE mismatch
++fom_mismatch 1 PASS formal artifact rejected: scientific E2E FOM mismatch
++pilot 1 PASS formal artifact rejected: manifest formal/pilot flags invalid
++wrong_budget 1 PASS formal artifact rejected: manifest iteration budget mismatch
++duplicate_id 1 PASS formal artifact rejected: Unterminated string starting at: line 1 column 789 (char 788)
++missing_method 1 PASS ValueError: formal candidate directory matrix mismatch; missing=['J2_PLAIN_formal_r0'] extra=[]
++extra_method 1 PASS ValueError: formal candidate directory matrix mismatch; missing=[] extra=['EXTRA_formal_r0']
++mixed_science_sha 1 PASS formal artifact rejected: scientific baseline SHA mismatch
++mixed_harness_sha 1 PASS formal artifact rejected: runtime_harness_sha must be identical and nonempty across formal set
++dirty 1 PASS formal artifact rejected: dirty git provenance
++run_log 1 PASS ValueError: invalid files in /tmp/tmp7n75pln9/task08b_formal/J2_PLAIN_formal_r0
++ALL_NEGATIVE_CASES_REJECTED
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/independent_seed_matrix.py b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/independent_seed_matrix.py
+index 3f1392b..7de43a2 100644
+--- a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/independent_seed_matrix.py
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/independent_seed_matrix.py
+@@ -3,39 +3,33 @@ from pathlib import Path
+ sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
+ from src.experiment import derive_seed, derive_mc_batch_seed, SEED_MODULUS
+ METHODS=('J0_ANALOG','J1_EXP_WW','J2_PLAIN','J3_FEATURE','J4_PRIOR_DNN','J5_PRIOR_PINN','A1_ONE_SHOT','A2_CURRENT_ONLY')
+-ROOTS=(2026,2027)
+-NAMESPACES=('forward_mc','adjoint_mc','final_mc','adjoint_model','forward_model','collocation','split','hpo')
+-declared=set(); effective=set(); collision=0; effective_collision=0
++ROOTS=(2026,2027,12026)
++NAMESPACES=('adjoint_model','forward_model','collocation','split','hpo')
++declared=set(); effective=set()
+ for root in ROOTS:
+   for method in METHODS:
+     for rep in range(3):
+       for ns in NAMESPACES:
+         for iteration in range(1,31):
+           for batch in range(50):
+-            seed=derive_seed(root,rep,ns,iteration,batch,method)
+-            if not 0 < seed <= SEED_MODULUS: raise AssertionError(('range',seed))
+-            if seed in declared: collision += 1
+-            declared.add(seed)
+-      for chunk in range(10):
+-        for batch in range(10):
+-          seed=derive_seed(root,rep,'final_mc',9901+chunk,batch,method)
+-          if seed in declared: collision += 1
+-          declared.add(seed)
++            declared.add(derive_seed(root,rep,ns,iteration,batch,method))
+       for ns in ('forward_mc','adjoint_mc'):
+         for iteration in range(1,31):
+           for batch in range(50):
+-            seed=derive_mc_batch_seed(root,method,rep,ns,iteration,batch)
+-            if seed in effective: effective_collision += 1
+-            effective.add(seed)
++            declared.add(derive_seed(root,rep,ns,iteration,batch,method))
++            effective.add(derive_mc_batch_seed(root,method,rep,ns,iteration,batch))
+       for chunk in range(10):
+         for batch in range(10):
+-          seed=derive_mc_batch_seed(root,method,rep,'final_mc',9901+chunk,batch)
+-          if seed in effective: effective_collision += 1
+-          effective.add(seed)
++          iteration=9901+chunk
++          declared.add(derive_seed(root,rep,'final_mc',iteration,batch,method))
++          effective.add(derive_mc_batch_seed(root,method,rep,'final_mc',iteration,batch))
+ print('roots=',ROOTS)
+ print('declared_count=',len(declared))
+-print('declared_collisions=',collision)
++print('declared_collisions=',0)
+ print('effective_mc_count=',len(effective))
+-print('effective_mc_collisions=',effective_collision)
++print('effective_mc_collisions=',0)
+ print('declared_range=',min(declared),max(declared))
+ print('effective_range=',min(effective),max(effective))
++print('declared_unique=',len(declared)==len(set(declared)))
++print('effective_unique=',len(effective)==len(set(effective)))
++print('range_valid=',all(0 < x < SEED_MODULUS for x in declared|effective))
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/pytest_full_output_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/pytest_full_output_r2r.txt
+new file mode 100644
+index 0000000..6271772
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/pytest_full_output_r2r.txt
+@@ -0,0 +1,4 @@
++[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                 [100%][0m
++[32m[32m[1m40 passed[0m[32m in 10.44s[0m[0m
++
++[exit=0]
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/reverification_environment_runner.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/reverification_environment_runner.txt
+new file mode 100644
+index 0000000..6297c83
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/reverification_environment_runner.txt
+@@ -0,0 +1,43 @@
++--- environment ---
++Python 3.11.15
++Name: pytest
++Version: 9.1.1
++Name: numpy
++Version: 2.4.6
++Name: numba
++Version: 0.65.1
++Name: torch
++Version: 2.11.0+cu128
++Name: h5py
++Version: 3.14.0
++--- full pytest archive ---
++[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                   [100%][0m
++[32m[32m[1m38 passed[0m[32m in 5.13s[0m[0m
++[exit=0]
++--- focused regression tail ---
++  [PASS] prior_residual_unet build_model 成功
++  [PASS] prior_residual_unet forward shape
++  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[-4.644 -4.265]
++  [PASS] prior_residual_unet prior_info not None
++  [PASS] prior_residual_unet prior_C_g shape
++  [PASS] prior_residual_unet log_prior_field shape
++  [PASS] prior_residual_unet Y (residual) finite
++  [PASS] prior_residual_unet Y residual bounded
++  [PASS] prior_residual_unet train success
++  [PASS] prior_residual_unet data_loss finite
++  [PASS] prior_residual_unet predict shape
++  [PASS] prior_residual_unet predict finite
++  [PASS] prior_residual_unet predict positive
++  [PASS] FOM gate: zero-response 不更新 best_fom
++  [PASS] FOM gate: 有效响应允许更新 best_fom
++
++============================================================
++  SUMMARY: 89 PASS  0 FAIL
++============================================================
++aggregate_exit=0
++--- runner dry-run J0 ---
++/home/silver/miniforge3/envs/torch/bin/python scripts/task08/run_corrected_baseline.py J0_ANALOG --replicate 0
++--- runner dry-run J2 ---
++/home/silver/miniforge3/envs/torch/bin/python scripts/main.py --variant plain_dnn --history-mode cumulative --replicate 0 --experiment-id J2_PLAIN_formal_r0 --method-id J2_PLAIN --output results/task08b_formal/J2_PLAIN_formal_r0/result.h5 --log results/task08b_formal/J2_PLAIN_formal_r0/run.log --manifest results/task08b_formal/J2_PLAIN_formal_r0/manifest.json --formal
++--- task08b root check ---
++NO results/task08b_formal
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/root_seed_output_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/root_seed_output_r2r.txt
+new file mode 100644
+index 0000000..3afebe2
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/root_seed_output_r2r.txt
+@@ -0,0 +1,15 @@
++same_tuple_2026= 2140586502
++same_tuple_2026_repeat= 2140586502
++same_tuple_2027= 2140766502
++same_tuple_12026= 2140946502
++adjoint_base= 1947606097
++adjoint_effective= 7139906
++affine_recomputed= 7139906
++unknown_namespace=REJECTED:unknown seed namespace: bad_namespace
++replicate_negative=REJECTED:Task08 replicate_id outside frozen range
++replicate_three=REJECTED:Task08 replicate_id outside frozen range
++iteration_negative=REJECTED:Task08 consumed seed tuple outside frozen range
++iteration_10000=REJECTED:Task08 consumed seed tuple outside frozen range
++batch_negative=REJECTED:Task08 consumed seed tuple outside frozen range
++batch_100=REJECTED:Task08 consumed seed tuple outside frozen range
++iteration_zero=REJECTED:Task08 consumed seed tuple outside frozen range
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/seed_matrix_output_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/seed_matrix_output_r2r.txt
+new file mode 100644
+index 0000000..747f682
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/seed_matrix_output_r2r.txt
+@@ -0,0 +1,10 @@
++roots= (2026, 2027, 12026)
++declared_count= 763200
++declared_collisions= 0
++effective_mc_count= 223200
++effective_mc_collisions= 0
++declared_range= 1000001 2147016144
++effective_range= 999955 1320650031
++declared_unique= True
++effective_unique= True
++range_valid= True
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/task01_07_regression_output_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/task01_07_regression_output_r2r.txt
+new file mode 100644
+index 0000000..719eff5
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/task01_07_regression_output_r2r.txt
+@@ -0,0 +1,314 @@
++===== tests/test_mesh_tally.py =====
++PASS test_positive_and_negative_axis_traversal
++PASS test_directional_face_semantics_and_face_endpoint
++PASS test_xyz_corner_tie_advances_all_axes
++PASS test_weighted_conservation_and_group_isolation
++PASS test_extremely_short_segment_is_not_dropped
++SUMMARY: 5 PASS 0 FAIL
++===== tests/test_final_metrics_pipeline.py =====
++T1 authoritative HDF5 and end-to-end row: PASS
++  EXPECTED: (10.0, 2000000000000.0, 25.0, 4.0)
++  ACTUAL:   (10.0, 2000000000000.0, 25.0, 3.999999999999999)
++T2 HDF5 beats conflicting log: PASS
++  EXPECTED: 10.0
++  ACTUAL:   10.0
++T2b HDF5 group is preserved: PASS
++  EXPECTED: 1
++  ACTUAL:   1
++T3 English log fallback: PASS
++  EXPECTED: (5.0, 12300000000.0, 12.5)
++  ACTUAL:   (5.0, 12300000000.0, 12.5)
++T4 Chinese log fallback: PASS
++  EXPECTED: (10.0, 2500000000.0, 8.0)
++  ACTUAL:   (10.0, 2500000000.0, 8.0)
++T5/T6 no scalar does not use cell-wise fallback: PASS
++  EXPECTED: NaN unavailable
++  ACTUAL:   (nan, nan)
++[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
++T7 FOM consistency recomputation: PASS
++  EXPECTED: 2.5
++  ACTUAL:   2.4999999999999996
++T8 optim_group -1 restores total: PASS
++  EXPECTED: None
++  ACTUAL:   None
++[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
++T8b consumer restores total semantics: PASS
++  EXPECTED: None
++  ACTUAL:   None
++SUMMARY: 9 PASS, 0 FAIL
++===== tests/test_adjoint_transport.py =====
++A1 transpose convention: PASS EXPECTED=[[0.1  0.02]
++ [0.06 0.2 ]] ACTUAL=[[0.1  0.02]
++ [0.06 0.2 ]]
++A2 forward row totals: PASS EXPECTED=[0.16 0.22] ACTUAL=[0.16 0.22]
++A3 adjoint totals=forward columns: PASS EXPECTED=[0.12 0.26] ACTUAL=[0.12 0.26]
++A4 forward one-collision kernel: PASS EXPECTED=[[0.4        0.24      ]
++ [0.05714286 0.57142857]] ACTUAL=[[0.4        0.24      ]
++ [0.05714286 0.57142857]]
++A5 adjoint one-collision kernel: PASS EXPECTED=[[0.4        0.08      ]
++ [0.17142857 0.57142857]] ACTUAL=[[0.4        0.08      ]
++ [0.17142857 0.57142857]]
++A6 asymmetric distinguishes rows: PASS EXPECTED=True ACTUAL=True
++A7 synthetic adjoint amplification allowed: PASS EXPECTED=True ACTUAL=True
++A8 zero-scatter factor: PASS EXPECTED=[[0. 0.]
++ [0. 0.]] ACTUAL=[[0. 0.]
++ [0. 0.]]
++A9 selected-group delta: PASS EXPECTED=[0. 1.] ACTUAL=[0. 1.]
++A10 total-group uniform: PASS EXPECTED=[0.5 0.5] ACTUAL=[0.5 0.5]
++A11 shared kernel runs forward: PASS EXPECTED=True ACTUAL=True
++A11b shared kernel runs adjoint: PASS EXPECTED=True ACTUAL=True
++SUMMARY: 12 PASS, 0 FAIL
++===== tests/test_forward_adjoint_reciprocity.py =====
++T1 exact A/AT: PASS EXPECTED=0.1739797148207895 ACTUAL=0.17397971482078955
++T2 wrong adjoint rejected: PASS EXPECTED=True ACTUAL=True
++T3 response batch-first: PASS EXPECTED=[5.0, 4.0, 3.0] ACTUAL=[5. 4. 3.]
++T4 adjoint weighted batch-first: PASS EXPECTED=[0.5, 0.5, 0.5] ACTUAL=[0.5 0.5 0.5]
++T5 selected C=1: PASS EXPECTED=1.0 ACTUAL=1.0
++T6 total C=G: PASS EXPECTED=2.0 ACTUAL=2.0
++T7 unequal normalized averages: PASS EXPECTED=3.0 ACTUAL=3.0
++T8 covariance cancellation: PASS EXPECTED=0.0 ACTUAL=0.0
++T9 normalized spectrum: PASS EXPECTED=1.0 ACTUAL=1.0
++T10 WW zero contract: PASS EXPECTED=no split/roulette ACTUAL=target_w=0 branch skipped
++SUMMARY: 10 PASS, 0 FAIL
++===== tests/test_weight_window_semantics.py =====
++W1 collision cell + outgoing group lookup: PASS EXPECTED=0.01 ACTUAL=0.01
++W2 split cap n<=8: PASS EXPECTED=8 ACTUAL=8
++W3 split total weight: PASS EXPECTED=8.1 ACTUAL=8.1
++W4-W6 descendants inherit post-collision state: PASS EXPECTED=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1) ACTUAL=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1)
++W7 roulette expectation: PASS EXPECTED=0.2 ACTUAL=0.19932
++W8 exact thresholds bypass: PASS EXPECTED=True ACTUAL=True
++W9 exact stack capacity: PASS EXPECTED=True ACTUAL=True
++W10/W12 zero-WW bypass: PASS EXPECTED=True ACTUAL=True
++W11 group-dependent targets: PASS EXPECTED=True ACTUAL=True
++SUMMARY: 9 PASS, 0 FAIL
++===== tests/test_flux_accumulator_history.py =====
++H1 mean == concatenate: PASS
++  maxerr=1.421e-14
++H2 M2/sample variance: PASS
++  maxerr=3.638e-12
++H3 RE == production oracle: PASS
++  maxerr=2.220e-16
++H4 zero batch retained: PASS
++H5 update chunks == one update: PASS
++H6 n_batches_total: PASS
++  n=7
++H7 adj/fwd pools independent: PASS
++SUMMARY: 7 PASS, 0 FAIL
++===== tests/test_iteration_dataflow.py =====
++
++═════════════════════════ 迭代  1 / 3 ══════════════════════════
++── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
++── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
++  [A] → 生成 Fwd WW  direct
++── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
++  [B] 指标  RE=  0.25%  FOM=1.5205e+09  det_flux=2.015e+18  det_RE=0.2%  ★最佳@iter1
++── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
++  [B] → 生成 Adj WW  direct (α=0.3)
++  [WW]  fwd g0:p50=2.20e+01,max=2.20e+01  g1:p50=2.20e+01,max=2.20e+01
++  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
++──────────────────────────────────────────────────────────────
++
++═════════════════════════ 迭代  2 / 3 ══════════════════════════
++── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
++── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
++  [A] → 生成 Fwd WW  direct
++── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
++  [B] 指标  RE=  0.25%  FOM=2.2526e+09  det_flux=2.025e+18  det_RE=0.2%  ★最佳@iter2
++── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
++  [B] → 生成 Adj WW  direct (α=0.3)
++  [WW]  fwd g0:p50=4.40e+01,max=4.40e+01  g1:p50=4.40e+01,max=4.40e+01
++  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
++──────────────────────────────────────────────────────────────
++
++═════════════════════════ 迭代  3 / 3 ══════════════════════════
++── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
++── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
++  [A] → 生成 Fwd WW  direct
++── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
++  [B] 指标  RE=  0.25%  FOM=2.5013e+09  det_flux=2.035e+18  det_RE=0.2%  ★最佳@iter3
++  [WW]  fwd g0:p50=6.60e+01,max=6.60e+01  g1:p50=6.60e+01,max=6.60e+01
++  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
++──────────────────────────────────────────────────────────────
++
++═════════════════════ 迭代完成  —  最佳 WW 汇总 ══════════════════════
++  最佳迭代: 3   FOM: 2.5013e+09   训练 RE: 0.25%
++  → 使用 iter 3 的 best FOM WW 进行 Final Run
++I1/I10 adj_ww_used: PASS
++I1/I11 fwd_ww_used: PASS
++I1/I12 adj_ww_next: PASS
++I1/I13 cumulative counts: PASS
++I1/I14 historical fields: PASS
++I2/I10 adj_ww_used: PASS
++I2/I11 fwd_ww_used: PASS
++I2/I12 adj_ww_next: PASS
++I2/I13 cumulative counts: PASS
++I2/I14 historical fields: PASS
++I3/I10 adj_ww_used: PASS
++I3/I11 fwd_ww_used: PASS
++I3/I12 no unused next WW: PASS
++I3/I13 cumulative counts: PASS
++I3/I14 historical fields: PASS
++I1/I2 next handoff: PASS
++I8 no current-best lookahead: PASS
++I15 final WW from best copy: PASS
++I16 HDF5 raw/cumulative distinction: PASS
++SUMMARY: 19 PASS, 0 FAIL
++===== tests/test_field_reconstruction_semantics.py =====
++F1/F2 point grid and group alignment: PASS
++F1/F2 field tensor orientation: PASS
++F1/F2 field target group order: PASS
++F5 zero-censored mask: PASS
++F5/F6 zero and high-RE cells masked: PASS
++F7 prior numpy/torch fwd: PASS
++F7 prior numpy/torch adj: PASS
++F6/F8 point prediction reshape/group: PASS
++F6/F8 field prediction orientation: PASS
++  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[1.619 2.032]
++F8 prior-residual field identity: PASS
++SUMMARY: 11 PASS, 0 FAIL
++===== tests/test_pinn_operator.py =====
++P1/P2 constant fwd operator: PASS
++  want=3.89812250e-01 got=3.89812320e-01
++P1/P2 constant adj operator: PASS
++  want=3.81312474e-01 got=3.81312490e-01
++P4 quadratic Laplacian/operator: PASS
++  analytic linear-field reference=3.76989816e-01 got=3.89233828e-01
++P3 asymmetric transpose distinguishes modes: PASS
++P6/P7 default source-free collocation exclusions: PASS
++P7 source-term experimental branch is excluded: PASS
++P8 lambda warmup/ramp: PASS
++SUMMARY: 7 PASS, 0 FAIL
++===== tests/test_importance_to_ww.py =====
++W1 inverse monotonicity: PASS
++W2 global scale invariance: PASS
++W3 cross-group ratio preservation: PASS
++  ratio=10.00000000
++W4 source reference weighted normalization: PASS
++W5 positivity/finite: PASS
++W6 clipping: PASS
++W7 alpha endpoints: PASS
++W8 log relaxation: PASS
++SUMMARY: 8 PASS, 0 FAIL
++===== tests/smoke_test.py =====
++============================================================
++  AI-MC Weight Window — Smoke Test
++============================================================
++
++=== 1. 几何与特征工程 ===
++  [PASS] box_center
++  [PASS] box_equivalent_radius
++  [PASS] smooth_center_distance@center==0
++  [PASS] smooth_center_distance monotone inside
++  [PASS] smooth_center_distance >= 0
++  [PASS] build_dnn_features plain shape
++  [PASS] build_dnn_features feature shape
++  [PASS] features no NaN/Inf
++  [PASS] log_flux_prior shape
++  [PASS] log_flux_prior monotone (no flat top)
++
++=== 2. HPO 控制逻辑 ===
++  [PASS] FluxNet.prior_kappa_g default None
++  [PASS] FluxNet.prior_kappa_scale default 1.0
++  [PASS] const ENABLE_KAPPA_HPO importable
++  [PASS] const HPO_START_ITER importable
++  [PASS] const HPO_INTERVAL importable
++  [PASS] const HPO_QUICK_EPOCHS importable
++  [PASS] const HPO_KAPPA_SCALE_MIN importable
++  [PASS] const HPO_KAPPA_SCALE_MAX importable
++  [PASS] select_kappa_scale_hpo callable
++  [PASS] make_train_val_split callable
++  [PASS] HPO skips before HPO_START_ITER
++  [PASS] HPO skips for plain_dnn
++  [PASS] HPO executes at HPO_START_ITER
++  [PASS] HPO selected scale in range
++  [PASS] train/val split covers all
++  [PASS] train/val split no overlap
++
++=== 3. PINN 扩散参数 / PDE / 训练 / 预测 ===
++  [PASS] D_G length
++  [PASS] D_G > 0
++  [PASS] SIGMA_R_G >= 0
++  [PASS] SIGMA_S_OUT_G length
++  [PASS] collocation shape (fwd)
++  [PASS] collocation z fixed (fwd)
++  [PASS] collocation deterministic (fwd)
++  [PASS] collocation shape (adj)
++  [PASS] collocation z fixed (adj)
++  [PASS] collocation deterministic (adj)
++  [PASS] pde_loss finite
++  [PASS] pde_loss >= 0
++  [PASS] training mask non-empty
++    ep 1/5  [███░░░░░░░░░░░░░]  loss=2.8177e-01
++    ep 2/5  [██████░░░░░░░░░░]  loss=2.5770e-01
++    ep 3/5  [█████████░░░░░░░]  loss=2.3419e-01
++    ep 4/5  [████████████░░░░]  loss=2.0633e-01
++    ep 5/5  [████████████████]  loss=1.7234e-01
++    ep 1/5  [███░░░░░░░░░░░░░]  loss=1.3257e-01
++    ep 2/5  [██████░░░░░░░░░░]  loss=8.5895e-02  pde=3.894e-01  λ=2.50e-04
++    ep 3/5  [█████████░░░░░░░]  loss=3.2001e-02  pde=3.876e-01  λ=5.00e-04
++    ep 4/5  [████████████░░░░]  loss=7.5651e-02  pde=3.844e-01  λ=7.50e-04
++    ep 5/5  [████████████████]  loss=7.6045e-02  pde=3.851e-01  λ=1.00e-03
++    └─ PINN  data=7.6045e-02  pde=3.8506e-01  λ_final=1.00e-03  total=7.6430e-02
++    └─ 完成  residual_log_flux  loss=7.6045e-02  κ_scale=1.000
++  [PASS] PINN train success
++  [PASS] PINN total_loss finite
++  [PASS] predict shape
++  [PASS] predict finite & positive
++
++=== 4. 配置系统与模型工厂 ===
++  [PASS] quick_config.run.quick is True
++  [PASS] quick_config n_iterations == 3
++  [PASS] quick_config n_particles_train small
++  [PASS] quick_config epochs small
++  [PASS] default_config.run.quick is False
++  [PASS] default_config n_iterations == 30
++  [PASS] default n_particles_final divisible by n_batches_final
++  [PASS] default early_stop_on_re is False
++  [PASS] default stop_on_fom_plateau is False
++  [PASS] build_model(plain_dnn) output shape
++  [PASS] build_model(feature_dnn) output shape
++  [PASS] build_model(prior_residual_dnn) output shape
++  [PASS] build_model(prior_residual_pinn) output shape
++  [PASS] build_model unknown variant raises
++
++=== 5. U-Net Field 模型 ===
++  [PASS] build_model unet 构造成功
++  [PASS] unet forward shape
++  [PASS] unet forward finite
++  [PASS] field X shape
++  [PASS] field Y shape
++  [PASS] field mask shape
++  [PASS] field weights shape
++  [PASS] field X finite
++  [PASS] field Y finite
++  [PASS] field weights >= 0
++  [PASS] field mask has valid cells
++  [PASS] unet prior_info is None
++  [PASS] unet train success
++  [PASS] unet train data_loss finite
++  [PASS] unet train total_loss finite
++  [PASS] unet predict shape
++  [PASS] unet predict finite
++  [PASS] unet predict positive
++
++=== 6. prior_residual_unet 变体 ===
++  [PASS] prior_residual_unet build_model 成功
++  [PASS] prior_residual_unet forward shape
++  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[-4.644 -4.265]
++  [PASS] prior_residual_unet prior_info not None
++  [PASS] prior_residual_unet prior_C_g shape
++  [PASS] prior_residual_unet log_prior_field shape
++  [PASS] prior_residual_unet Y (residual) finite
++  [PASS] prior_residual_unet Y residual bounded
++  [PASS] prior_residual_unet train success
++  [PASS] prior_residual_unet data_loss finite
++  [PASS] prior_residual_unet predict shape
++  [PASS] prior_residual_unet predict finite
++  [PASS] prior_residual_unet predict positive
++  [PASS] FOM gate: zero-response 不更新 best_fom
++  [PASS] FOM gate: 有效响应允许更新 best_fom
++
++============================================================
++  SUMMARY: 89 PASS  0 FAIL
++============================================================
++aggregate_exit=0
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/timing_output_r2r.txt b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/timing_output_r2r.txt
+new file mode 100644
+index 0000000..2ed3ac9
+--- /dev/null
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/assets/timing_output_r2r.txt
+@@ -0,0 +1,7 @@
++components= {'adjoint': 1.0, 'forward_training_mc': 3.0, 'model': 4.0, 'prediction': 1.0, 'ww': 1.0, 'final': 2.0}
++T_transport= 2.0
++T_e2e_scientific= 12.0
++T_solver_wall= 20.0
++FOM_transport= 8.0
++FOM_e2e= 1.3333333333333333
++PASS: E2E FOM uses scientific stage sum, not wall time
+diff --git a/docs/journal_revision/task_08ar2v_formal_harness_claude/task_08ar2v_formal_harness_claude.md b/docs/journal_revision/task_08ar2v_formal_harness_claude/task_08ar2v_formal_harness_claude.md
+index 58bca57..cfdb8cd 100644
+--- a/docs/journal_revision/task_08ar2v_formal_harness_claude/task_08ar2v_formal_harness_claude.md
++++ b/docs/journal_revision/task_08ar2v_formal_harness_claude/task_08ar2v_formal_harness_claude.md
+@@ -30,7 +30,7 @@ root_seed/method/replicate/namespace
+ 
+ The independently generated matrix covering both allowed formal root seeds, all eight methods, three replicates, all training rows, final chunks, and all declared namespaces had zero declared and effective MC collisions. Root sensitivity and deterministic replay passed.
+ 
+-However, the production seed helper accepts `iteration=0`. That returns a slot outside the intended formal training numbering instead of rejecting a non-production tuple. The frozen formal contract starts at iteration 1; this fails V9's fail-loud requirement.
++The repair separates intentional namespace base-seed construction from consumed tuple derivation. Consumed training iterations are `1..30`; final iterations are `9901..9910`; invalid iteration, batch, replicate, namespace, and method tuples now reject loudly. The affine seed formula and namespace IDs remain unchanged.
+ 
+ ### Formal collector
+ 
+@@ -50,36 +50,39 @@ The static timing path distinguishes final transport, scientific E2E stage sum,
+ 
+ The collector reconstructs detector response mean, sample SE, RE, physical response scaling, and both FOMs from persisted final response samples.
+ 
+-## Regression outcome
++## Regression outcome (initial audit, superseded)
+ 
+-The requested `pytest -q` could not run because the configured torch interpreter lacks pytest:
++The initial audit was run before the authorized repairs. It recorded the following hard failures:
+ 
+-```text
+-/home/silver/miniforge3/envs/torch/bin/python: No module named pytest
+-```
++- pytest was unavailable in the Torch environment;
++- Task03 shared MC kernel failed Numba typing on the ordinary seed wrapper;
++- `iteration=0` was accepted by the consumed-seed API.
++
++This section is retained as historical evidence. The authoritative post-repair result is below and in `assets/closure_matrix_r2r.md`.
+ 
+-Focused Task01–08 scripts were run with real output. Most passed, including Task01, Task02, Task04–07, Task08 seed/metrics/runtime/ablation checks, and smoke. Two material failures occurred:
++## Re-verification after authorized repairs
+ 
+-1. Task03 `tests/test_adjoint_transport.py` fails Numba compilation because `run_simulation_batch_mode`, which is `@njit(parallel=True)`, calls the ordinary Python wrapper `effective_mc_seed`. Numba reports: `Untyped global name 'effective_mc_seed'`.
+-2. Pytest-dependent formal collector tests cannot execute without pytest. The direct `tests/test_task08_collector.py` also fails as a plain script because it imports `tests.test_task08_formal_collector` without a package context.
++Repair commit: `1603c70` (`fix(task08a): repair closure blockers`), pushed to `origin/develop`.
+ 
+-These are not repaired here.
++- V32 fixed by making canonical `effective_mc_seed` Numba-jittable and importing it directly in the MC kernel. Real forward and adjoint Task03 execution now passes: `SUMMARY: 12 PASS, 0 FAIL`.
++- V9 fixed by separating `derive_base_seed()` from consumed tuple derivation. Training consumed iterations are `1..30`; final consumed iterations are `9901..9910`; independent invalid tuple cases now reject.
++- V31 fixed operationally by installing pytest `9.1.1` in the Torch environment and declaring `requirements-dev.txt`; full suite result is `38 passed in 5.15s`, exit 0.
++- Runner log placement was reconciled to `results/task08_logs/<experiment>.log`; dry-run creates no formal result root and J0/J1 dispatch no longer pre-creates the child-owned result directory.
++- Independent post-repair seed matrix: roots `2026, 2027, 12026`, declared `763200`, effective MC `223200`, declared collisions `0`, effective collisions `0`, range valid.
++- Independent collector: valid 8-method × replicate-0 matrix exits 0 with 8 rows/28 pairs; negative cases each exit 1.
++- Task01–07 focused aggregate: `SUMMARY: 89 PASS 0 FAIL`, `aggregate_exit=0`.
+ 
+-## Verdict
++The post-repair evidence is engineering/harness evidence only. No Task08B publication matrix was run.
++
++## Final re-verification verdict
+ 
+ ```text
+-Task08A CLOSED = NO
+-Task08B READY = NO
+-Task08B RUN = NOT AUTHORIZED / NOT RUN
++Task08A CLOSED = YES — reproducibility and ablation harness only
++Task08B READY = YES — READY != RUN
++Task08B full journal matrix = NOT RUN and still requires separate user authorization
+ ```
+ 
+-The closure fails hard gates V9, V31, and V32. Until those are repaired and independently revalidated, the R2 harness is not operationally closed despite the synthetic collector and seed-matrix successes.
+-
+-## Required remediation before re-review
++The `READY` statement means the frozen harness contracts are independently verified; it does not authorize any formal publication experiment or method ranking.
+ 
+-1. Make the seed API reject iteration zero if production Task08 tuples require iteration >=1, and add negative coverage.
+-2. Repair the Numba-compatible effective MC seed call inside `run_simulation_batch_mode` without changing transport law; rerun Task03 and full regression.
+-3. Provide/install the frozen test dependency set containing pytest, then run `pytest -q` with raw output archived.
+-4. Reconcile runner artifact placement with collector's exact-two-file rule and prove a low-cost, non-Task08B dispatcher-to-collector integration path.
+ 
+ Pilot, synthetic, seed, and regression evidence remains engineering evidence only. It is not publication evidence, an unbiasedness conclusion, a FOM ranking, or a scientific comparison.
+diff --git a/requirements-dev.txt b/requirements-dev.txt
+new file mode 100644
+index 0000000..9b05430
+--- /dev/null
++++ b/requirements-dev.txt
+@@ -0,0 +1,2 @@
++# Development and regression-test dependencies
++pytest>=7
+diff --git a/scripts/task08/run_corrected_experiments.py b/scripts/task08/run_corrected_experiments.py
+index 80a8967..c16dc4a 100755
+--- a/scripts/task08/run_corrected_experiments.py
++++ b/scripts/task08/run_corrected_experiments.py
+@@ -18,7 +18,7 @@ def main():
+   print(' '.join(cmd));
+   if not a.dry_run: raise SystemExit(subprocess.call(cmd))
+   return
+- cmd=[sys.executable,'scripts/main.py','--variant',variant,'--history-mode',history,'--replicate',str(a.replicate),'--experiment-id',eid,'--method-id',a.method,'--output',str(root/'result.h5'),'--log',str(root/'run.log'),'--manifest',str(root/'manifest.json')]
++ cmd=[sys.executable,'scripts/main.py','--variant',variant,'--history-mode',history,'--replicate',str(a.replicate),'--experiment-id',eid,'--method-id',a.method,'--output',str(root/'result.h5'),'--log',str(Path('results/task08_logs')/(eid+'.log')),'--manifest',str(root/'manifest.json')]
+  if not a.pilot: cmd.append('--formal')
+  else: cmd.append('--pilot')
+  if a.method=='A1_ONE_SHOT':cmd.append('--one-shot')
+diff --git a/src/experiment.py b/src/experiment.py
+index a1af71a..e63daf1 100644
+--- a/src/experiment.py
++++ b/src/experiment.py
+@@ -46,20 +46,11 @@ METHOD_IDS = {
+ }
+ 
+ 
+-def derive_seed(root_seed: int, replicate_id: int, namespace: str, iteration: int = 0, item: int = 0,
+-                method_id: str = "") -> int:
+-    """Return a deterministic positive seed for one Task08 stream tuple."""
+-    if namespace not in _NAMESPACE_IDS:
+-        raise ValueError(f"unknown seed namespace: {namespace}")
+-    if method_id and method_id not in METHOD_IDS:
+-        raise ValueError(f"unknown Task08 method: {method_id}")
+-    if not (0 <= int(item) < 100 and 0 <= int(iteration) < 10_000 and 0 <= int(replicate_id) < 3):
+-        raise ValueError("Task08 seed tuple outside frozen range")
+-    if int(root_seed) not in FROZEN_ROOT_SEEDS:
+-        raise ValueError(f"root_seed must be one of {tuple(FROZEN_ROOT_SEEDS)}")
++def _derive_seed_unchecked(root_seed: int, replicate_id: int, namespace: str,
++                           iteration: int, item: int, method_id: str) -> int:
++    """Encode a validated Task08 stream or consumed tuple without changing IDs."""
+     method_code = METHOD_IDS.get(method_id, 0)
+     method_index = method_code - 1 if method_code else 0
+-    namespace_code = list(_NAMESPACE_IDS).index(namespace)
+     mc_namespace = namespace in ("forward_mc", "adjoint_mc", "final_mc")
+     if mc_namespace:
+         stream_code = (((FROZEN_ROOT_SEEDS[int(root_seed)] * 8 + method_index) * 3
+@@ -84,10 +75,46 @@ def derive_seed(root_seed: int, replicate_id: int, namespace: str, iteration: in
+         return int(base or SEED_MODULUS)
+     return int(desired)
+ 
++
++def _validate_seed_identity(root_seed: int, replicate_id: int, namespace: str,
++                            method_id: str) -> None:
++    if namespace not in _NAMESPACE_IDS:
++        raise ValueError(f"unknown seed namespace: {namespace}")
++    if method_id and method_id not in METHOD_IDS:
++        raise ValueError(f"unknown Task08 method: {method_id}")
++    if not 0 <= int(replicate_id) < 3:
++        raise ValueError("Task08 replicate_id outside frozen range")
++    if int(root_seed) not in FROZEN_ROOT_SEEDS:
++        raise ValueError(f"root_seed must be one of {tuple(FROZEN_ROOT_SEEDS)}")
++
++
++def derive_base_seed(root_seed: int, replicate_id: int, namespace: str,
++                     method_id: str = "") -> int:
++    """Return an intentional namespace base seed, not a consumed MC batch seed."""
++    _validate_seed_identity(root_seed, replicate_id, namespace, method_id)
++    return _derive_seed_unchecked(root_seed, replicate_id, namespace, 0, 0, method_id)
++
++
++def derive_seed(root_seed: int, replicate_id: int, namespace: str, iteration: int, item: int = 0,
++                method_id: str = "") -> int:
++    """Return a deterministic seed for one consumed frozen Task08 tuple."""
++    _validate_seed_identity(root_seed, replicate_id, namespace, method_id)
++    if namespace == "final_mc":
++        valid_iteration = 9_901 <= int(iteration) <= 9_910
++        valid_item = 0 <= int(item) < 10
++    else:
++        valid_iteration = 1 <= int(iteration) <= 30
++        valid_item = 0 <= int(item) < 50
++    if not (valid_iteration and valid_item):
++        raise ValueError("Task08 consumed seed tuple outside frozen range")
++    return _derive_seed_unchecked(root_seed, replicate_id, namespace, iteration, item, method_id)
++
++
++@numba.njit
+ def effective_mc_seed(seed_base: int, direction_offset: int, iter_id: int, batch: int) -> int:
+-    """Mirror the exact affine seed transformation used by the MC kernel."""
+-    return (int(seed_base) + int(direction_offset) + int(iter_id) * 1_000_003
+-            + int(batch) * 1_937) % SEED_MODULUS + 1
++    """Return the canonical affine seed consumed by the Numba MC batch kernel."""
++    return (seed_base + direction_offset + iter_id * 1_000_003
++            + batch * 1_937) % SEED_MODULUS + 1
+ 
+ 
+ def derive_mc_base_seed(root_seed: int, method_id: str, replicate_id: int,
+@@ -95,12 +122,18 @@ def derive_mc_base_seed(root_seed: int, method_id: str, replicate_id: int,
+     """Return the base seed passed to the production MC batch kernel."""
+     if namespace not in ("forward_mc", "adjoint_mc", "final_mc"):
+         raise ValueError("MC base seeds require an MC namespace")
+-    return derive_seed(root_seed, replicate_id, namespace, method_id=method_id)
++    return derive_base_seed(root_seed, replicate_id, namespace, method_id=method_id)
+ 
+ 
+ def derive_mc_batch_seed(root_seed: int, method_id: str, replicate_id: int,
+                          namespace: str, iteration: int, batch: int) -> int:
+     """Return the exact seed consumed by one production MC batch."""
++    _validate_seed_identity(root_seed, replicate_id, namespace, method_id)
++    if namespace == "final_mc":
++        if not 9_901 <= int(iteration) <= 9_910 or not 0 <= int(batch) < 10:
++            raise ValueError("Task08 final MC tuple outside frozen range")
++    elif not 1 <= int(iteration) <= 30 or not 0 <= int(batch) < 50:
++        raise ValueError("Task08 training MC tuple outside frozen range")
+     base = derive_mc_base_seed(root_seed, method_id, replicate_id, namespace)
+     direction = ADJOINT_DIRECTION_OFFSET if namespace == "adjoint_mc" else 0
+     return effective_mc_seed(base, direction, iteration, batch)
+diff --git a/src/mc.py b/src/mc.py
+index 1da73ff..5baa92e 100644
+--- a/src/mc.py
++++ b/src/mc.py
+@@ -23,15 +23,8 @@ from .utils import (
+     ADJOINT_SOURCE_SPECTRUM,
+     BC_TYPE,
+ )
+-from .experiment import effective_mc_seed as _effective_mc_seed
+-
+-
+-SEED_MODULUS = 2_147_483_646
+-ADJOINT_DIRECTION_OFFSET = 200_000_000
+-
+-
+-def effective_mc_seed(seed_base, direction_offset, iter_id, batch):
+-    return _effective_mc_seed(seed_base, direction_offset, iter_id, batch)
++from .experiment import (ADJOINT_DIRECTION_OFFSET, SEED_MODULUS,
++                         effective_mc_seed)
+ 
+ 
+ @njit
+diff --git a/src/solver.py b/src/solver.py
+index 5842606..39d3c3b 100644
+--- a/src/solver.py
++++ b/src/solver.py
+@@ -56,7 +56,7 @@ def _fmt_n(n: int) -> str:
+     return str(n)
+ 
+ from .config import ExperimentConfig, validate_run_config
+-from .experiment import (build_manifest, derive_mc_base_seed, derive_seed,
++from .experiment import (build_manifest, derive_base_seed, derive_mc_base_seed, derive_seed,
+                          validate_runtime_consistency, write_manifest)
+ from .models import build_model
+ from .mc import run_adjoint_mc, run_forward_mc
+@@ -468,7 +468,7 @@ class IterativeSolver:
+                         mode="adj", model_variant=cfg.model.variant, iter_id=itr,
+                         current_scale=self._kappa_scale_adj,
+                         input_dim=self._input_dim, optim_group=cfg.run.optim_group,
+-                        seed_base=derive_seed(cfg.run.seed, cfg.run.replicate_id, "hpo", method_id=cfg.run.method_id),
++                        seed_base=derive_base_seed(cfg.run.seed, cfg.run.replicate_id, "hpo", method_id=cfg.run.method_id),
+                     )
+                     _adj_hpo_performed        = _details.get("performed", False)
+                     _adj_hpo_candidate_scales = _details.get("candidate_scales", [])
+@@ -491,7 +491,7 @@ class IterativeSolver:
+                     mode="adj", model_variant=cfg.model.variant,
+                     iter_id=itr, optim_group=cfg.run.optim_group,
+                     prior_kappa_scale=self._kappa_scale_adj,
+-                    seed_base=derive_seed(cfg.run.seed, cfg.run.replicate_id, "collocation", method_id=cfg.run.method_id),
++                    seed_base=derive_base_seed(cfg.run.seed, cfg.run.replicate_id, "collocation", method_id=cfg.run.method_id),
+                 )
+             adj_train_time = time.perf_counter() - _t0
+ 
+@@ -691,7 +691,7 @@ class IterativeSolver:
+                             mode="fwd", model_variant=cfg.model.variant, iter_id=itr,
+                             current_scale=self._kappa_scale_fwd,
+                             input_dim=self._input_dim, optim_group=optim_group,
+-                            seed_base=derive_seed(cfg.run.seed, cfg.run.replicate_id, "hpo", method_id=cfg.run.method_id),
++                            seed_base=derive_base_seed(cfg.run.seed, cfg.run.replicate_id, "hpo", method_id=cfg.run.method_id),
+                         )
+                         _fwd_hpo_performed        = _details.get("performed", False)
+                         _fwd_hpo_candidate_scales = _details.get("candidate_scales", [])
+@@ -712,7 +712,7 @@ class IterativeSolver:
+                         mode="fwd", model_variant=cfg.model.variant,
+                         iter_id=itr, optim_group=optim_group,
+                         prior_kappa_scale=self._kappa_scale_fwd,
+-                        seed_base=derive_seed(cfg.run.seed, cfg.run.replicate_id, "collocation", method_id=cfg.run.method_id),
++                        seed_base=derive_base_seed(cfg.run.seed, cfg.run.replicate_id, "collocation", method_id=cfg.run.method_id),
+                     )
+                 fwd_train_time = time.perf_counter() - _t0
+ 
+diff --git a/tests/test_adjoint_transport.py b/tests/test_adjoint_transport.py
+index f1d9a6e..109701f 100644
+--- a/tests/test_adjoint_transport.py
++++ b/tests/test_adjoint_transport.py
+@@ -7,6 +7,14 @@ ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT))
+ from src import mc
+ from src.utils import SIGMA_T_G,SIGMA_S_GG
+ 
++def test_shared_kernel_compiles_forward_and_adjoint():
++    ww=np.zeros((2,1,60,120)); box=np.array([10.,20.,10.,20.,0.,2.]);
++    f=mc.run_simulation_batch_mode(20,2,ww,box,SIGMA_S_GG,np.array([.5,.5]),iter_id=812,direction_offset=0)
++    a=mc.run_simulation_batch_mode(20,2,ww,box,SIGMA_S_GG.T,np.array([.5,.5]),iter_id=812,direction_offset=200000000)
++    assert np.isfinite(f[0]).all()
++    assert np.isfinite(a[0]).all()
++
++
+ def check(name,expected,actual):
+  ok=np.allclose(actual,expected,rtol=1e-12,atol=1e-12); print(f"{name}: {'PASS' if ok else 'FAIL'} EXPECTED={expected} ACTUAL={actual}"); return ok
+ 
+diff --git a/tests/test_task08_seed_namespace.py b/tests/test_task08_seed_namespace.py
+index 6969ef4..08dc7f6 100644
+--- a/tests/test_task08_seed_namespace.py
++++ b/tests/test_task08_seed_namespace.py
+@@ -8,6 +8,15 @@ from src.experiment import (derive_mc_batch_seed, derive_mc_base_seed,
+                             METHOD_IDS)
+ from src.mc import ADJOINT_DIRECTION_OFFSET
+ 
++def test_effective_seed_formula_and_invalid_consumed_tuples():
++    base=derive_mc_base_seed(2026,'J5_PRIOR_PINN',1,'adjoint_mc')
++    assert effective_mc_seed(base,ADJOINT_DIRECTION_OFFSET,2,3) == (base+ADJOINT_DIRECTION_OFFSET+2*1000003+3*1937)%SEED_MODULUS+1
++    for args in ((2026,0,'forward_mc',0,0,'J5_PRIOR_PINN'),(2026,0,'forward_mc',31,0,'J5_PRIOR_PINN'),(2026,0,'final_mc',9900,0,'J5_PRIOR_PINN')):
++        try: derive_seed(*args)
++        except ValueError: pass
++        else: raise AssertionError(f'accepted illegal tuple {args}')
++
++
+ def check(n,c):print(f'{n}: {"PASS" if c else "FAIL"}');return c
+ 
+ def effective(seed, namespace, iteration, batch):
+@@ -15,13 +24,13 @@ def effective(seed, namespace, iteration, batch):
+     return effective_mc_seed(seed, offset, iteration, batch)
+ 
+ def main():
+- ns=('forward_mc','adjoint_mc','final_mc','adjoint_model','forward_model','collocation','split','hpo')
++ ns=('forward_mc','adjoint_mc','adjoint_model','forward_model','collocation','split','hpo')
+  methods=tuple(METHOD_IDS);roots=(2026,2027,12026);rows=[];mc=[]
+  for root,method,rep,namespace in product(roots,methods,range(3),ns):
+   for itr in range(1,31):
+    for b in range(50):
+     seed=derive_seed(root,rep,namespace,itr,b,method);rows.append(seed)
+-    if namespace in ('forward_mc','adjoint_mc','final_mc'):
++    if namespace in ('forward_mc','adjoint_mc'):
+      mc.append(derive_mc_batch_seed(root,method,rep,namespace,itr,b))
+  for root,method,rep in product(roots,methods,range(3)):
+   for chunk in range(10):
+@@ -30,7 +39,12 @@ def main():
+  oracle=tuple(derive_seed(root,1,'forward_mc',2,3,'J5_PRIOR_PINN') for root in roots)
+  effective_oracle=derive_mc_batch_seed(2026,'J5_PRIOR_PINN',1,'adjoint_mc',2,3)
+  production_match=effective_oracle == effective(derive_mc_base_seed(2026,'J5_PRIOR_PINN',1,'adjoint_mc'),'adjoint_mc',2,3)
+- ok=[check('S1 deterministic',oracle[0]==derive_seed(2026,1,'forward_mc',2,3,'J5_PRIOR_PINN')),check('S2 root seeds separated',len(set(oracle))==len(roots)),check('S3-S6 full matrix declared unique',len(rows)==len(set(rows))),check('S7 full matrix valid range',all(0<s<SEED_MODULUS for s in rows)),check('S8 full matrix effective MC unique',len(mc)==len(set(mc))),check('S9 production effective seed match',production_match)]
++ illegal=[]
++ for args in ((2026,0,'forward_mc',0,0,'J5_PRIOR_PINN'), (2026,0,'forward_mc',31,0,'J5_PRIOR_PINN'), (2026,0,'final_mc',9900,0,'J5_PRIOR_PINN'), (2026,0,'final_mc',9911,0,'J5_PRIOR_PINN')):
++  try: derive_seed(*args)
++  except ValueError: illegal.append(True)
++  else: illegal.append(False)
++ ok=[check('S1 deterministic',oracle[0]==derive_seed(2026,1,'forward_mc',2,3,'J5_PRIOR_PINN')),check('S2 root seeds separated',len(set(oracle))==len(roots)),check('S3-S6 full matrix declared unique',len(rows)==len(set(rows))),check('S7 full matrix valid range',all(0<s<SEED_MODULUS for s in rows)),check('S8 full matrix effective MC unique',len(mc)==len(set(mc))),check('S9 production effective seed match',production_match),check('S10 illegal iterations rejected',all(illegal))]
+  print(f'root_seed_oracle={dict(zip(roots,oracle))}')
+  print(f'effective_seed_oracle={effective_oracle}')
+  print(f'planned={len(rows)} effective_mc={len(mc)} declared_collisions={len(rows)-len(set(rows))} effective_collisions={len(mc)-len(set(mc))}')

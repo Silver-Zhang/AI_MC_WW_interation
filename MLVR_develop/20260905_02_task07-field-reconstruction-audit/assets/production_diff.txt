@@ -1,0 +1,91 @@
+diff --git a/src/learning.py b/src/learning.py
+index d2990ea..1412225 100644
+--- a/src/learning.py
++++ b/src/learning.py
+@@ -694,10 +694,16 @@ def compute_pde_loss(model, coords_c_t, mode, model_variant, device="cpu", optim
+         # ── 归一化 ──
+         if PDE_RESIDUAL_NORMALIZE:
+             if N_GROUPS > 1:
+-                scatter_abs = sum(
+-                    SIGMA_S_t[h, g].abs() * phi_t[:, h].abs()
+-                    for h in range(N_GROUPS) if h != g
+-                )
++                if mode == "fwd":
++                    scatter_abs = sum(
++                        SIGMA_S_t[h, g].abs() * phi_t[:, h].abs()
++                        for h in range(N_GROUPS) if h != g
++                    )
++                else:
++                    scatter_abs = sum(
++                        SIGMA_S_t[g, h].abs() * phi_t[:, h].abs()
++                        for h in range(N_GROUPS) if h != g
++                    )
+             else:
+                 scatter_abs = torch.zeros_like(phi_g)
+             scale = (SIGMA_R_t[g] * phi_g.abs()
+diff --git a/src/utils.py b/src/utils.py
+index dafdca8..8d22b3b 100644
+--- a/src/utils.py
++++ b/src/utils.py
+@@ -336,6 +336,7 @@ def generate_ww_from_flux_g(
+     best_anchor_ww_g=None,
+     use_best_anchor=False,
+     best_anchor_alpha=0.25,
++    normalization_spectrum=None,
+ ):
+     """
+     基于逐群预测通量生成群相关权窗：WW_g ~ 1/flux_g。
+@@ -354,6 +355,11 @@ def generate_ww_from_flux_g(
+ 
+     输入：pred_flux_g (G, Z, Y, X)
+     输出：ww_g        (G, Z, Y, X)
++
++    normalization_spectrum: optional normalized source spectrum used to choose
++        one common reference scalar C.  If omitted, groups are weighted equally.
++        The common scalar preserves cross-group importance ratios; it does not
++        change the within-group inverse-flux shape.
+     """
+     WW_MAX = 1e5
+     G = pred_flux_g.shape[0]
+@@ -366,6 +372,17 @@ def generate_ww_from_flux_g(
+ 
+     ww_g = np.zeros_like(pred_flux_g)
+ 
++    if normalization_spectrum is None:
++        ref_prob = np.full(G, 1.0 / G, dtype=np.float64)
++    else:
++        ref_prob = np.asarray(normalization_spectrum, dtype=np.float64)
++        if ref_prob.shape != (G,) or not np.isfinite(ref_prob).all() or np.any(ref_prob < 0.0):
++            raise ValueError("normalization_spectrum must be a finite nonnegative vector of length G")
++        prob_sum = ref_prob.sum()
++        if prob_sum <= 0.0:
++            raise ValueError("normalization_spectrum must have positive sum")
++        ref_prob = ref_prob / prob_sum
++
+     cx = (source_box[0] + source_box[1]) / 2
+     cy = (source_box[2] + source_box[3]) / 2
+     cz = (source_box[4] + source_box[5]) / 2
+@@ -374,13 +391,18 @@ def generate_ww_from_flux_g(
+     iy = min(int((cy - Y_MIN) / Mesh_DY), Mesh_NY - 1)
+     iz = min(int((cz - Z_MIN) / Mesh_DZ), Mesh_NZ - 1)
+ 
++    safe_flux_g = np.maximum(pred_flux_g, 1e-30)
++    ref_flux_g = safe_flux_g[:, iz, iy, ix]
++    # Choose C so the source-spectrum-weighted reference WW is one while
++    # preserving the relative group amplitudes (harmonic reference).
++    inv_ref = np.sum(ref_prob / ref_flux_g)
++    common_ref = float(1.0 / inv_ref) if inv_ref > 0.0 else 1.0
++
+     for g in range(G):
+         # ── 1) 由预测通量生成候选 WW_pred ──
+-        safe_flux = np.maximum(pred_flux_g[g], 1e-30)
+-        ww_pred   = 1.0 / safe_flux
+-        ref_flux  = safe_flux[iz, iy, ix]
+-        ww_pred   = ww_pred * ref_flux
+-        ww_pred   = np.clip(ww_pred, ww_clip_min, WW_MAX)
++        safe_flux = safe_flux_g[g]
++        # One common C preserves relative group importance at the reference.
++        ww_pred = np.clip(common_ref / safe_flux, ww_clip_min, WW_MAX)
+ 
+         # ── 2) 按优先级选择更新策略 ──
+         if use_best_anchor and best_anchor_ww_g is not None:

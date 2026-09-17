@@ -1,0 +1,12 @@
+H1 mean == concatenate: PASS
+  maxerr=1.421e-14
+H2 M2/sample variance: PASS
+  maxerr=3.638e-12
+H3 RE == production oracle: PASS
+  maxerr=2.220e-16
+H4 zero batch retained: PASS
+H5 update chunks == one update: PASS
+H6 n_batches_total: PASS
+  n=7
+H7 adj/fwd pools independent: PASS
+SUMMARY: 7 PASS, 0 FAIL

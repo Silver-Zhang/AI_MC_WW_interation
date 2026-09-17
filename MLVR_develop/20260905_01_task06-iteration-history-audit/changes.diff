@@ -1,0 +1,109 @@
+diff --git a/scripts/compute_results.py b/scripts/compute_results.py
+index 4a0d4db..2fc7288 100644
+--- a/scripts/compute_results.py
++++ b/scripts/compute_results.py
+@@ -112,6 +112,11 @@ ITER_ARRAY_FIELDS = [
+     'adj_flux_g',
+     'ai_flux_adj_g',
+     'adj_ww_used',
++    'adj_ww_next',
++    'adj_acc_flux_g',
++    'adj_acc_re_g',
++    'fwd_acc_flux_g',
++    'fwd_acc_re_g',
+     'prior_C_fwd_g',
+     'prior_C_adj_g',
+     'prior_kappa_g',
+diff --git a/src/solver.py b/src/solver.py
+index 96bb9bc..d69d774 100644
+--- a/src/solver.py
++++ b/src/solver.py
+@@ -334,11 +334,15 @@ class IterativeSolver:
+             _fwd_hpo_candidate_scores = []
+ 
+             # ─── Step 1: Adjoint MC ───────────────────────────────────
++            # Snapshot the exact WW consumed by this iteration.  The mutable
++            # current map may be replaced later when the next-adjoint WW is built.
++            adj_ww_used = self._current_adj_ww.copy()
++            adj_ww_next = None
+             _t0 = time.perf_counter()
+             adj_flux_g, adj_re_g, adj_mean, adj_re, adj_batch_g, _ = run_adjoint_mc(
+                 cfg.run.n_particles_train,
+                 cfg.run.n_batches_train,
+-                self._current_adj_ww,
++                adj_ww_used,
+                 BOX_OPTIM_TARGET,
+                 adj_source_spectrum=self._adj_spectrum,
+                 iter_id=itr,
+@@ -492,11 +496,13 @@ class IterativeSolver:
+                     _fwd_ww_update_mode = -2  # fallback 指数 WW
+ 
+             # ─── Step 5: Forward MC ───────────────────────────────────
++            # This snapshot is the exact map handed to the forward kernel.
++            fwd_ww_used = self._current_fwd_ww.copy()
+             _t0 = time.perf_counter()
+             fwd_flux_g, fwd_re_g, fwd_mean, fwd_re, fwd_batch_g, fwd_batch_total = run_forward_mc(
+                 cfg.run.n_particles_train,
+                 cfg.run.n_batches_train,
+-                self._current_fwd_ww,
++                fwd_ww_used,
+                 BOX_SOURCE,
+                 iter_id=itr,
+             )
+@@ -672,14 +678,21 @@ class IterativeSolver:
+                         best_anchor_ww_g=None,   # 伴随 WW 不使用 best-anchor
+                         use_best_anchor=False,
+                     )
++                    adj_ww_next = self._current_adj_ww.copy()
+                     adj_ww_build_time = time.perf_counter() - _t0
+                     print(f"  [B] → 生成 Adj WW  "
+                           f"{'old-relax' if cfg.ww.use_relaxation else 'direct'}"
+                           f" (α={cfg.ww.relaxation_alpha})")
+ 
++            # If forward training is skipped or fails, the next iteration
++            # deliberately reuses the current valid adjoint WW.  Persist that
++            # unchanged snapshot so the fallback remains auditable.
++            if itr < n_itr and adj_ww_next is None:
++                adj_ww_next = self._current_adj_ww.copy()
++
+             # ─── Step 9: HDF5 保存 ───────────────────────────────────
+-            fwd_ww_stats = summarize_ww(self._current_fwd_ww, clip_min=cfg.ww.clip_min)
+-            adj_ww_stats = summarize_ww(self._current_adj_ww, clip_min=cfg.ww.clip_min)
++            fwd_ww_stats = summarize_ww(fwd_ww_used, clip_min=cfg.ww.clip_min)
++            adj_ww_stats = summarize_ww(adj_ww_used, clip_min=cfg.ww.clip_min)
+ 
+             _t0 = time.perf_counter()
+             _variant       = cfg.model.variant
+@@ -692,8 +705,8 @@ class IterativeSolver:
+                 "adj_re":      adj_re,
+                 "adj_flux_g":  adj_flux_g,
+                 "adj_re_g":    adj_re_g,
+-                "adj_ww_used": self._current_adj_ww,
+-                "fwd_ww_used": self._current_fwd_ww,
++                "adj_ww_used": adj_ww_used,
++                "fwd_ww_used": fwd_ww_used,
+                 "fwd_flux":    fwd_mean,
+                 "fwd_re":      fwd_re,
+                 "fwd_flux_g":  fwd_flux_g,
+@@ -714,6 +727,11 @@ class IterativeSolver:
+                 "time_fwd_train":    np.array(fwd_train_time),
+                 "time_fwd_predict":  np.array(fwd_predict_time),
+                 "time_adj_ww_build": np.array(adj_ww_build_time),
++                # 历史 MC 统计（训练实际看到的累计 sufficient statistics）
++                "adj_acc_flux_g": adj_acc_mean_g,
++                "adj_acc_re_g":   adj_acc_re_g,
++                "fwd_acc_flux_g": fwd_acc_mean_g,
++                "fwd_acc_re_g":   fwd_acc_re_g,
+                 # 累加器规模
+                 "adj_buffer_size":   np.array(adj_buffer_size),
+                 "fwd_buffer_size":   np.array(fwd_buffer_size),
+@@ -758,7 +776,8 @@ class IterativeSolver:
+                 iter_data["ai_flux_adj_g"] = pred_adj_g
+             if pred_fwd_g is not None:
+                 iter_data["ai_flux_fwd_g"] = pred_fwd_g
+-                iter_data["adj_ww_next"]   = self._current_adj_ww
++            if adj_ww_next is not None:
++                iter_data["adj_ww_next"] = adj_ww_next
+ 
+             # prior_residual 变体额外字段
+             if _variant in ("prior_residual_dnn", "prior_residual_pinn"):

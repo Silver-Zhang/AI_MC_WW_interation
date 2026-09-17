@@ -1,0 +1,9 @@
+method_id,variant,history_mode,iterations,role
+J0_ANALOG,analog_mc,none,0,baseline
+J1_EXP_WW,exp_empirical_ww,none,0,baseline
+J2_PLAIN,plain_dnn,cumulative,30,primary
+J3_FEATURE,feature_dnn,cumulative,30,primary
+J4_PRIOR_DNN,prior_residual_dnn,cumulative,30,primary
+J5_PRIOR_PINN,prior_residual_pinn,cumulative,30,primary
+A1_ONE_SHOT,prior_residual_pinn,cumulative,1,ablation
+A2_CURRENT_ONLY,prior_residual_pinn,current_only,30,ablation

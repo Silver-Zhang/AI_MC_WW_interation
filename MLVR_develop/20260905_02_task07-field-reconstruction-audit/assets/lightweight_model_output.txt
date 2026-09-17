@@ -1,0 +1,12 @@
+F1/F2 point grid and group alignment: PASS
+F1/F2 field tensor orientation: PASS
+F1/F2 field target group order: PASS
+F5 zero-censored mask: PASS
+F5/F6 zero and high-RE cells masked: PASS
+F7 prior numpy/torch fwd: PASS
+F7 prior numpy/torch adj: PASS
+F6/F8 point prediction reshape/group: PASS
+F6/F8 field prediction orientation: PASS
+  [prior fit] mode=adj  kappa_g=[0.03 0.05] (base [0.03 0.05])  C_g=[1.619 2.032]
+F8 prior-residual field identity: PASS
+SUMMARY: 11 PASS, 0 FAIL

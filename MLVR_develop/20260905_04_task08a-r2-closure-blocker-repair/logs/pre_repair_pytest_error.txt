@@ -1,0 +1,3 @@
+/home/silver/miniforge3/envs/torch/bin/python: No module named pytest
+
+[exit=1]

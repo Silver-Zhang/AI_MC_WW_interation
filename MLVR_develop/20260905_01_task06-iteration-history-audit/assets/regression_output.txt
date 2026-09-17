@@ -1,0 +1,290 @@
+=== tests/test_flux_accumulator_history.py ===
+H1 mean == concatenate: PASS
+  maxerr=1.421e-14
+H2 M2/sample variance: PASS
+  maxerr=3.638e-12
+H3 RE == production oracle: PASS
+  maxerr=2.220e-16
+H4 zero batch retained: PASS
+H5 update chunks == one update: PASS
+H6 n_batches_total: PASS
+  n=7
+H7 adj/fwd pools independent: PASS
+SUMMARY: 7 PASS, 0 FAIL
+=== tests/test_iteration_dataflow.py ===
+
+═════════════════════════ 迭代  1 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=1.3356e+09  det_flux=2.015e+18  det_RE=0.2%  ★最佳@iter1
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=2.20e+01,max=2.20e+01  g1:p50=2.20e+01,max=2.20e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  2 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.9008e+09  det_flux=2.025e+18  det_RE=0.2%  ★最佳@iter2
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=4.40e+01,max=4.40e+01  g1:p50=4.40e+01,max=4.40e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  3 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.5722e+09  det_flux=2.035e+18  det_RE=0.2%  (最佳@iter2)
+  [WW]  fwd g0:p50=6.60e+01,max=6.60e+01  g1:p50=6.60e+01,max=6.60e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════ 迭代完成  —  最佳 WW 汇总 ══════════════════════
+  最佳迭代: 2   FOM: 2.9008e+09   训练 RE: 0.25%
+  → 使用 iter 2 的 best FOM WW 进行 Final Run
+I1/I10 adj_ww_used: PASS
+I1/I11 fwd_ww_used: PASS
+I1/I12 adj_ww_next: PASS
+I1/I13 cumulative counts: PASS
+I1/I14 historical fields: PASS
+I2/I10 adj_ww_used: PASS
+I2/I11 fwd_ww_used: PASS
+I2/I12 adj_ww_next: PASS
+I2/I13 cumulative counts: PASS
+I2/I14 historical fields: PASS
+I3/I10 adj_ww_used: PASS
+I3/I11 fwd_ww_used: PASS
+I3/I12 no unused next WW: PASS
+I3/I13 cumulative counts: PASS
+I3/I14 historical fields: PASS
+I1/I2 next handoff: PASS
+I8 no current-best lookahead: PASS
+I15 final WW from best copy: PASS
+I16 HDF5 raw/cumulative distinction: PASS
+SUMMARY: 19 PASS, 0 FAIL
+=== tests/test_mesh_tally.py ===
+PASS test_positive_and_negative_axis_traversal
+PASS test_directional_face_semantics_and_face_endpoint
+PASS test_xyz_corner_tie_advances_all_axes
+PASS test_weighted_conservation_and_group_isolation
+PASS test_extremely_short_segment_is_not_dropped
+SUMMARY: 5 PASS 0 FAIL
+=== tests/test_final_metrics_pipeline.py ===
+T1 authoritative HDF5 and end-to-end row: PASS
+  EXPECTED: (10.0, 2000000000000.0, 25.0, 4.0)
+  ACTUAL:   (10.0, 2000000000000.0, 25.0, 3.999999999999999)
+T2 HDF5 beats conflicting log: PASS
+  EXPECTED: 10.0
+  ACTUAL:   10.0
+T2b HDF5 group is preserved: PASS
+  EXPECTED: 1
+  ACTUAL:   1
+T3 English log fallback: PASS
+  EXPECTED: (5.0, 12300000000.0, 12.5)
+  ACTUAL:   (5.0, 12300000000.0, 12.5)
+T4 Chinese log fallback: PASS
+  EXPECTED: (10.0, 2500000000.0, 8.0)
+  ACTUAL:   (10.0, 2500000000.0, 8.0)
+T5/T6 no scalar does not use cell-wise fallback: PASS
+  EXPECTED: NaN unavailable
+  ACTUAL:   (nan, nan)
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T7 FOM consistency recomputation: PASS
+  EXPECTED: 2.5
+  ACTUAL:   2.4999999999999996
+T8 optim_group -1 restores total: PASS
+  EXPECTED: None
+  ACTUAL:   None
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T8b consumer restores total semantics: PASS
+  EXPECTED: None
+  ACTUAL:   None
+SUMMARY: 9 PASS, 0 FAIL
+=== tests/test_adjoint_transport.py ===
+A1 transpose convention: PASS EXPECTED=[[0.1  0.02]
+ [0.06 0.2 ]] ACTUAL=[[0.1  0.02]
+ [0.06 0.2 ]]
+A2 forward row totals: PASS EXPECTED=[0.16 0.22] ACTUAL=[0.16 0.22]
+A3 adjoint totals=forward columns: PASS EXPECTED=[0.12 0.26] ACTUAL=[0.12 0.26]
+A4 forward one-collision kernel: PASS EXPECTED=[[0.4        0.24      ]
+ [0.05714286 0.57142857]] ACTUAL=[[0.4        0.24      ]
+ [0.05714286 0.57142857]]
+A5 adjoint one-collision kernel: PASS EXPECTED=[[0.4        0.08      ]
+ [0.17142857 0.57142857]] ACTUAL=[[0.4        0.08      ]
+ [0.17142857 0.57142857]]
+A6 asymmetric distinguishes rows: PASS EXPECTED=True ACTUAL=True
+A7 synthetic adjoint amplification allowed: PASS EXPECTED=True ACTUAL=True
+A8 zero-scatter factor: PASS EXPECTED=[[0. 0.]
+ [0. 0.]] ACTUAL=[[0. 0.]
+ [0. 0.]]
+A9 selected-group delta: PASS EXPECTED=[0. 1.] ACTUAL=[0. 1.]
+A10 total-group uniform: PASS EXPECTED=[0.5 0.5] ACTUAL=[0.5 0.5]
+A11 shared kernel runs forward: PASS EXPECTED=True ACTUAL=True
+A11b shared kernel runs adjoint: PASS EXPECTED=True ACTUAL=True
+SUMMARY: 12 PASS, 0 FAIL
+=== tests/test_forward_adjoint_reciprocity.py ===
+T1 exact A/AT: PASS EXPECTED=0.1739797148207895 ACTUAL=0.17397971482078955
+T2 wrong adjoint rejected: PASS EXPECTED=True ACTUAL=True
+T3 response batch-first: PASS EXPECTED=[5.0, 4.0, 3.0] ACTUAL=[5. 4. 3.]
+T4 adjoint weighted batch-first: PASS EXPECTED=[0.5, 0.5, 0.5] ACTUAL=[0.5 0.5 0.5]
+T5 selected C=1: PASS EXPECTED=1.0 ACTUAL=1.0
+T6 total C=G: PASS EXPECTED=2.0 ACTUAL=2.0
+T7 unequal normalized averages: PASS EXPECTED=3.0 ACTUAL=3.0
+T8 covariance cancellation: PASS EXPECTED=0.0 ACTUAL=0.0
+T9 normalized spectrum: PASS EXPECTED=1.0 ACTUAL=1.0
+T10 WW zero contract: PASS EXPECTED=no split/roulette ACTUAL=target_w=0 branch skipped
+SUMMARY: 10 PASS, 0 FAIL
+=== tests/test_weight_window_semantics.py ===
+W1 collision cell + outgoing group lookup: PASS EXPECTED=0.01 ACTUAL=0.01
+W2 split cap n<=8: PASS EXPECTED=8 ACTUAL=8
+W3 split total weight: PASS EXPECTED=8.1 ACTUAL=8.1
+W4-W6 descendants inherit post-collision state: PASS EXPECTED=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1) ACTUAL=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1)
+W7 roulette expectation: PASS EXPECTED=0.2 ACTUAL=0.19932
+W8 exact thresholds bypass: PASS EXPECTED=True ACTUAL=True
+W9 exact stack capacity: PASS EXPECTED=True ACTUAL=True
+W10/W12 zero-WW bypass: PASS EXPECTED=True ACTUAL=True
+W11 group-dependent targets: PASS EXPECTED=True ACTUAL=True
+SUMMARY: 9 PASS, 0 FAIL
+=== tests/test_flux_accumulator_history.py ===
+  n=7
+H7 adj/fwd pools independent: PASS
+SUMMARY: 7 PASS, 0 FAIL
+=== tests/test_iteration_dataflow.py ===
+
+═════════════════════════ 迭代  1 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=1.2990e+09  det_flux=2.015e+18  det_RE=0.2%  ★最佳@iter1
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=2.20e+01,max=2.20e+01  g1:p50=2.20e+01,max=2.20e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  2 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.0163e+09  det_flux=2.025e+18  det_RE=0.2%  ★最佳@iter2
+── [B] 训练正向模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [B] → 生成 Adj WW  direct (α=0.3)
+  [WW]  fwd g0:p50=4.40e+01,max=4.40e+01  g1:p50=4.40e+01,max=4.40e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  3 / 3 ══════════════════════════
+── [A] 伴随 MC ────────────────────────────────── 2粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  1ep  14400样本─
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ────────────────────────────────── 2粒子×2批  0.00s─
+  [B] 指标  RE=  0.25%  FOM=2.3648e+09  det_flux=2.035e+18  det_RE=0.2%  ★最佳@iter3
+  [WW]  fwd g0:p50=6.60e+01,max=6.60e+01  g1:p50=6.60e+01,max=6.60e+01
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════ 迭代完成  —  最佳 WW 汇总 ══════════════════════
+  最佳迭代: 3   FOM: 2.3648e+09   训练 RE: 0.25%
+  → 使用 iter 3 的 best FOM WW 进行 Final Run
+I1/I10 adj_ww_used: PASS
+I1/I11 fwd_ww_used: PASS
+I1/I12 adj_ww_next: PASS
+I1/I13 cumulative counts: PASS
+I1/I14 historical fields: PASS
+I2/I10 adj_ww_used: PASS
+I2/I11 fwd_ww_used: PASS
+I2/I12 adj_ww_next: PASS
+I2/I13 cumulative counts: PASS
+I2/I14 historical fields: PASS
+I3/I10 adj_ww_used: PASS
+I3/I11 fwd_ww_used: PASS
+I3/I12 no unused next WW: PASS
+I3/I13 cumulative counts: PASS
+I3/I14 historical fields: PASS
+I1/I2 next handoff: PASS
+I8 no current-best lookahead: FAIL
+I15 final WW from best copy: FAIL
+I16 HDF5 raw/cumulative distinction: PASS
+SUMMARY: 17 PASS, 2 FAIL
+[Quick 模式] 参数: n_iterations=2  n_train=100  n_batches_train=2  n_final=100  n_batches_final=2  epochs=10
+线程配置：1 核
+优化目标：第 1 群通量
+
+════════════════════ AI-MC 双向迭代求解器  多群原型 ═════════════════════
+  变体      : plain_dnn  (3D features, coord_only)
+  优化目标  : group 1  伴随谱=[0. 1.]
+  迭代计划  : 2 轮  train=100×2批  final=100×2批
+  几何      : X[0.0,120.0] Y[0.0,60.0] Z[0.0,2]  网格 120×60×1
+  Source    : [10.0, 20.0, 10.0, 20.0]
+  Detector  : [100.0, 110.0, 40.0, 50.0]
+  收敛准则: 跑满 2 轮（未启用早停）
+  ⚡ Quick模式 — 仅供功能验证，不用于正式结果
+──────────────────────────────────────────────────────────────
+  Hot Start : 指数型伴随初始 WW  g0:[3.42e-03,9.65e-01]  g1:[3.52e-04,9.52e-01]
+
+═════════════════════════ 迭代  1 / 2 ══════════════════════════
+── [A] 伴随 MC ──────────────────────────────── 100粒子×2批  3.28s─
+── [A] 训练伴随模型 ──────────────────────── plain_dnn  10ep  758样本─
+    ep  2/10  [███░░░░░░░░░░░░░]  loss=2.9920e+00
+    ep  4/10  [██████░░░░░░░░░░]  loss=2.3778e+00
+    ep  6/10  [█████████░░░░░░░]  loss=1.5913e+00
+    ep  8/10  [████████████░░░░]  loss=7.3478e-01
+    ep 10/10  [████████████████]  loss=2.9216e-01
+    └─ 完成  log_flux  loss=2.9216e-01
+  [A] → 生成 Fwd WW  direct
+── [B] 正向 MC ──────────────────────────────── 100粒子×2批  2.11s─
+  [B] 指标  RE=100.00%  FOM=4.7483e-01  det_flux=0.000e+00  det_RE=100.0%  [invalid-response](最佳@iter-1)
+── [B] 训练正向模型 ──────────────────────── plain_dnn  10ep  628样本─
+    ep  2/10  [███░░░░░░░░░░░░░]  loss=3.0358e+00
+    ep  4/10  [██████░░░░░░░░░░]  loss=2.4679e+00
+    ep  6/10  [█████████░░░░░░░]  loss=1.6996e+00
+    ep  8/10  [████████████░░░░]  loss=8.0762e-01
+    ep 10/10  [████████████████]  loss=2.2646e-01
+    └─ 完成  log_flux  loss=2.2646e-01
+  [B] → 生成 Adj WW  old-relax (α=0.3)
+  [WW]  fwd g0:p50=4.76e+00,max=8.68e+01  g1:p50=5.90e+00,max=1.69e+02
+  [耗时]  adj_mc=3.3s  adj_tr=0.4s  fwd_mc=2.1s  fwd_tr=0.0s  total=5.8s
+──────────────────────────────────────────────────────────────
+
+═════════════════════════ 迭代  2 / 2 ══════════════════════════
+── [A] 伴随 MC ──────────────────────────────── 100粒子×2批  0.00s─
+── [A] 训练伴随模型 ─────────────────────── plain_dnn  10ep  1076样本─
+    ep  2/10  [███░░░░░░░░░░░░░]  loss=3.6431e+00
+    ep  4/10  [██████░░░░░░░░░░]  loss=3.0809e+00
+    ep  6/10  [█████████░░░░░░░]  loss=2.3080e+00
+    ep  8/10  [████████████░░░░]  loss=1.3413e+00
+    ep 10/10  [████████████████]  loss=5.0951e-01
+    └─ 完成  log_flux  loss=5.0951e-01
+  [A] → 生成 Fwd WW  old-relax (α=0.3)
+── [B] 正向 MC ──────────────────────────────── 100粒子×2批  0.00s─
+  [B] 指标  RE=100.00%  FOM=5.6926e+03  det_flux=0.000e+00  det_RE=100.0%  [invalid-response](最佳@iter-1)
+  [WW]  fwd g0:p50=4.88e+00,max=7.22e+01  g1:p50=6.18e+00,max=1.43e+02
+  [耗时]  adj_mc=0.0s  adj_tr=0.0s  fwd_mc=0.0s  fwd_tr=0.0s  total=0.0s
+──────────────────────────────────────────────────────────────
+
+═════════════════════ 迭代完成  —  最佳 WW 汇总 ══════════════════════
+  最佳迭代: -1   FOM: -inf   训练 RE: inf%
+  → WARNING: 无 best_fwd_ww 记录，fallback 到 current_fwd_ww
+
+════════════════════ FINAL VALIDATION RUN ════════════════════
+  100 粒子  2 批次  50/批  每 5 批报告
+  [████████████████████]    2/2批  (100%)  2.2s  ETA=0s
+  Final Run 完成  total=2.2s
+
+════════════════════════ FINAL RESULT ════════════════════════
+  评估能群  : group 1
+  探测器通量: 0.000000e+00
+  探测器 RE : 100.0000 %  (batch-level)
+  响应范围  : [0.0000e+00, 0.0000e+00]
+  诊断图已保存：/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/scripts/final_flux_distribution.png
+日志已保存至：/tmp/t06-run/integration.log
