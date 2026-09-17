@@ -1,0 +1,5 @@
+post_collision_state=(position, outgoing_direction, outgoing_group, weight)
+n= 8 child_weight= 0.3 total= 2.4
+all_children_inherit_position_group_direction=True
+EXPECTED descendant state = post-collision state; ACTUAL = post-collision state; PASS
+pre-collision state is not retained by repaired WW branch; PASS

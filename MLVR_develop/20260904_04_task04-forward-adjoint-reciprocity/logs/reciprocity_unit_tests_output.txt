@@ -1,0 +1,11 @@
+T1 exact A/AT PASS EXPECTED= 0.1739797148207895 ACTUAL= 0.17397971482078955
+T2 wrong adjoint rejected PASS EXPECTED= True ACTUAL= True
+T3 response batch-first PASS EXPECTED= [5. 4. 3.] ACTUAL= [5.0, 4.0, 3.0]
+T4 adjoint weighted batch-first PASS EXPECTED= [0.5 0.5 0.5] ACTUAL= [0.5, 0.5, 0.5]
+T5 selected C=1 PASS EXPECTED= 1.0 ACTUAL= 1.0
+T6 total C=G PASS EXPECTED= 2.0 ACTUAL= 2.0
+T7 unequal normalized averages PASS EXPECTED= 3.0 ACTUAL= 3.0
+T8 covariance cancellation PASS EXPECTED= 0.0 ACTUAL= 0.0
+T9 normalized spectrum PASS EXPECTED= 1.0 ACTUAL= 1.0
+T10 WW zero contract: PASS EXPECTED=no split/roulette ACTUAL=target_w=0 <= 1e-15 branch skipped
+SUMMARY 10 PASS 0 FAIL

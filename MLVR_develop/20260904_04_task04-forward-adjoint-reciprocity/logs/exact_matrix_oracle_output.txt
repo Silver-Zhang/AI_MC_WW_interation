@@ -1,0 +1,13 @@
+A=
+[[2.  0.3 0.  0.1]
+ [0.2 1.7 0.4 0. ]
+ [0.  0.5 2.3 0.2]
+ [0.1 0.  0.6 1.9]]
+invertible_det= 13.3895
+q= [1.  0.2 0.  0.5] r= [0.1 1.  0.4 0. ]
+r.T solve(A,q)= 0.10313827999551888
+solve(A.T,r).T q= 0.10313827999551889
+abs_error= 1.3877787807814457e-17
+wrong_adjoint_value= 0.056423127892980166
+wrong_abs_error= 0.04671515210253871
+PASS exact A/A.T reciprocity; wrong adjoint rejected

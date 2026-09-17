@@ -1,0 +1,30 @@
+T1 authoritative HDF5 and end-to-end row: PASS
+  EXPECTED: (10.0, 2000000000000.0, 25.0, 4.0)
+  ACTUAL:   (10.0, 2000000000000.0, 25.0, 3.999999999999999)
+T2 HDF5 beats conflicting log: PASS
+  EXPECTED: 10.0
+  ACTUAL:   10.0
+T2b HDF5 group is preserved: PASS
+  EXPECTED: 1
+  ACTUAL:   1
+T3 English log fallback: PASS
+  EXPECTED: (5.0, 12300000000.0, 12.5)
+  ACTUAL:   (5.0, 12300000000.0, 12.5)
+T4 Chinese log fallback: PASS
+  EXPECTED: (10.0, 2500000000.0, 8.0)
+  ACTUAL:   (10.0, 2500000000.0, 8.0)
+T5/T6 no scalar does not use cell-wise fallback: PASS
+  EXPECTED: NaN unavailable
+  ACTUAL:   (nan, nan)
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T7 FOM consistency recomputation: PASS
+  EXPECTED: 2.5
+  ACTUAL:   2.4999999999999996
+T8 optim_group -1 restores total: PASS
+  EXPECTED: None
+  ACTUAL:   None
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T8b consumer restores total semantics: PASS
+  EXPECTED: None
+  ACTUAL:   None
+SUMMARY: 9 PASS, 0 FAIL

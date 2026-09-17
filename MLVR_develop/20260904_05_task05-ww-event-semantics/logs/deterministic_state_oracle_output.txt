@@ -1,0 +1,8 @@
+start_cell= A collision_cell= B g_in= 0 g_out= 1
+WW map rows group0/group1, cols A/B= [[1.   1.  ]
+ [0.01 0.01]]
+baseline_lookup= 1.0
+post_collision_lookup= 0.01
+EXPECTED baseline lookup=1.0 ACTUAL= 1.0 PASS
+EXPECTED post-state lookup=0.01 ACTUAL= 0.01 PASS
+CONTRACT conclusion: baseline lookup is flight-start + incoming-group; post-collision contract would require collision-cell + outgoing-group

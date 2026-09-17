@@ -1,0 +1,150 @@
+diff --git a/src/mc.py b/src/mc.py
+index 284b56e..e1a43ba 100644
+--- a/src/mc.py
++++ b/src/mc.py
+@@ -93,6 +93,127 @@ def sample_scatter_target_group(g_from, s_matrix):
+     return s_matrix.shape[1] - 1
+ 
+ 
++@njit
++def tally_segment_cells(local_mesh_tally_g, g_idx, x, y, z, u, v, w, dist, weight):
++    """Score one fixed flight segment into every intersected mesh cell.
++
++    The transport kernel samples the collision/boundary segment once and then
++    calls this helper only for scoring.  ``t`` is physical path length along
++    the segment, so a crossed mesh face consumes no RNG and is not a transport
++    event.  Exact internal-face starts use the cell in the travel direction:
++    positive directions enter the upper cell, negative directions remain in
++    the lower cell.
++    """
++    if dist <= 0.0:
++        return
++
++    # A scale-aware tolerance is used only for face ties and zero-length
++    # crossing decisions.  Positive path lengths are never clipped.
++    tol = 1.0e-12 * max(1.0, dist)
++    inf = 1.0e308
++
++    qx = (x - X_MIN) / Mesh_DX
++    qy = (y - Y_MIN) / Mesh_DY
++    qz = (z - Z_MIN) / Mesh_DZ
++    ix = int(np.floor(qx))
++    iy = int(np.floor(qy))
++    iz = int(np.floor(qz))
++
++    # Correct near-face starts before clamping.  At the outer maximum, a
++    # negative direction correctly starts in the last cell; at the minimum,
++    # clamping keeps an in-domain boundary start in cell zero.
++    rx = np.round(qx)
++    ry = np.round(qy)
++    rz = np.round(qz)
++    if abs(qx - rx) <= tol / max(Mesh_DX, 1.0) and u < 0.0:
++        ix -= 1
++    if abs(qy - ry) <= tol / max(Mesh_DY, 1.0) and v < 0.0:
++        iy -= 1
++    if abs(qz - rz) <= tol / max(Mesh_DZ, 1.0) and w < 0.0:
++        iz -= 1
++
++    ix = max(0, min(ix, Mesh_NX - 1))
++    iy = max(0, min(iy, Mesh_NY - 1))
++    iz = max(0, min(iz, Mesh_NZ - 1))
++
++    px, py, pz = x, y, z
++    remaining = dist
++
++    while remaining > 0.0:
++        # A direction pointing out through an outer face has no next internal
++        # face.  This also prevents a zero-time boundary loop.
++        if u > 0.0 and ix < Mesh_NX - 1:
++            tx = (X_MIN + (ix + 1) * Mesh_DX - px) / u
++        elif u < 0.0 and ix > 0:
++            tx = (X_MIN + ix * Mesh_DX - px) / u
++        else:
++            tx = inf
++
++        if v > 0.0 and iy < Mesh_NY - 1:
++            ty = (Y_MIN + (iy + 1) * Mesh_DY - py) / v
++        elif v < 0.0 and iy > 0:
++            ty = (Y_MIN + iy * Mesh_DY - py) / v
++        else:
++            ty = inf
++
++        if w > 0.0 and iz < Mesh_NZ - 1:
++            tz = (Z_MIN + (iz + 1) * Mesh_DZ - pz) / w
++        elif w < 0.0 and iz > 0:
++            tz = (Z_MIN + iz * Mesh_DZ - pz) / w
++        else:
++            tz = inf
++
++        t_next = min(tx, min(ty, tz))
++        if t_next < 0.0:
++            # Defensive recovery for a coordinate just across a face.  The
++            # directional index convention should make this path unreachable.
++            t_next = 0.0
++
++        if t_next >= remaining - tol or t_next >= inf:
++            # Endpoint at a face belongs to the segment just scored; do not
++            # create a zero-length contribution in the next cell.
++            step = remaining
++            if step > 0.0:
++                local_mesh_tally_g[g_idx, iz, iy, ix] += weight * step
++            break
++
++        # A true interior crossing: score only the current-cell portion.
++        if t_next > 0.0:
++            local_mesh_tally_g[g_idx, iz, iy, ix] += weight * t_next
++            px += u * t_next
++            py += v * t_next
++            pz += w * t_next
++            remaining -= t_next
++        # For a numerically zero crossing, position is already on the face;
++        # update indices without scoring a negative/zero path length.
++
++        if abs(tx - t_next) <= tol:
++            if u > 0.0:
++                ix += 1
++            elif u < 0.0:
++                ix -= 1
++        if abs(ty - t_next) <= tol:
++            if v > 0.0:
++                iy += 1
++            elif v < 0.0:
++                iy -= 1
++        if abs(tz - t_next) <= tol:
++            if w > 0.0:
++                iz += 1
++            elif w < 0.0:
++                iz -= 1
++
++        ix = max(0, min(ix, Mesh_NX - 1))
++        iy = max(0, min(iy, Mesh_NY - 1))
++        iz = max(0, min(iz, Mesh_NZ - 1))
++
++        # If t_next was numerically zero and no index could advance, stop
++        # rather than risk an infinite loop.  This can only occur at an outer
++        # boundary; the unscored remainder is outside the assumed domain.
++        if t_next <= 0.0 and abs(tx - t_next) > tol and abs(ty - t_next) > tol and abs(tz - t_next) > tol:
++            break
++
++
+ @njit
+ def run_mc_chunk(seed, n_particles, ww_map, source_box, s_matrix, source_spectrum):
+     """
+@@ -159,12 +280,11 @@ def run_mc_chunk(seed, n_particles, ww_map, source_box, s_matrix, source_spectru
+                 d_bound, b_id = distance_to_boundary_with_id(x, y, z, u, v, w)
+                 dist = min(d_fly, d_bound)
+ 
+-                # 仍按飞行路径中点记账，且按当前群分别累计
+-                mx = x + u * dist * 0.5
+-                my = y + v * dist * 0.5
+-                mz = z + w * dist * 0.5
+-                mix, miy, miz = get_mesh_indices(mx, my, mz)
+-                local_mesh_tally_g[g_idx, miz, miy, mix] += weight * dist
++                # Mesh faces are tally events only: decompose this fixed
++                # segment into exact per-cell path lengths.
++                tally_segment_cells(
++                    local_mesh_tally_g, g_idx, x, y, z, u, v, w, dist, weight
++                )
+ 
+                 x += u * dist
+                 y += v * dist

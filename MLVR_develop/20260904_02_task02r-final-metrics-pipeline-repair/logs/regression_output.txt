@@ -1,0 +1,178 @@
+=== final metrics pipeline ===
+T1 authoritative HDF5 and end-to-end row: PASS
+  EXPECTED: (10.0, 2000000000000.0, 25.0, 4.0)
+  ACTUAL:   (10.0, 2000000000000.0, 25.0, 3.999999999999999)
+T2 HDF5 beats conflicting log: PASS
+  EXPECTED: 10.0
+  ACTUAL:   10.0
+T3 English log fallback: PASS
+  EXPECTED: (5.0, 12300000000.0, 12.5)
+  ACTUAL:   (5.0, 12300000000.0, 12.5)
+T4 Chinese log fallback: PASS
+  EXPECTED: (10.0, 2500000000.0, 8.0)
+  ACTUAL:   (10.0, 2500000000.0, 8.0)
+T5/T6 no scalar does not use cell-wise fallback: PASS
+  EXPECTED: NaN unavailable
+  ACTUAL:   (nan, nan)
+[warning] Synthetic: persisted final_fom=9.990000e+02 differs from RE/time recomputation=2.500000e+00; using recomputation
+T7 FOM consistency recomputation: PASS
+  EXPECTED: 2.5
+  ACTUAL:   2.4999999999999996
+T8 optim_group -1 restores total: PASS
+  EXPECTED: None
+  ACTUAL:   None
+SUMMARY: 7 PASS, 0 FAIL
+=== solver serialization ===
+线程配置：16 核
+优化目标：第 1 群通量
+
+════════════════════ AI-MC 双向迭代求解器  多群原型 ═════════════════════
+  变体      : prior_residual_pinn  (11D features, smooth_center_features)
+  优化目标  : group 1  伴随谱=[0. 1.]
+  迭代计划  : 3 轮  train=10K×10批  final=40×4批
+  几何      : X[0.0,120.0] Y[0.0,60.0] Z[0.0,2]  网格 120×60×1
+  Source    : [10.0, 20.0, 10.0, 20.0]
+  Detector  : [100.0, 110.0, 40.0, 50.0]
+  先验κ     : [0.03 0.05]  scale=1.00(初始)
+  PINN      : colloc=500  λ_max=1.0e-03  warmup=0.2  ramp=0.8
+  收敛准则: 跑满 3 轮（未启用早停）
+  ⚡ Quick模式 — 仅供功能验证，不用于正式结果
+──────────────────────────────────────────────────────────────
+  Hot Start : 指数型伴随初始 WW  g0:[3.42e-03,9.65e-01]  g1:[3.52e-04,9.52e-01]
+
+════════════════════ FINAL VALIDATION RUN ════════════════════
+  40 粒子  4 批次  10/批  每 5 批报告
+  [████████████████████]    4/4批  (100%)  0.0s  ETA=0s
+  Final Run 完成  total=0.0s
+
+════════════════════════ FINAL RESULT ════════════════════════
+  评估能群  : group 1
+  探测器通量: 1.150000e+16
+  探测器 RE : 5.6130 %  (batch-level)
+  响应范围  : [1.0000e+00, 1.3000e+00]
+  诊断图已保存：/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/scripts/final_flux_distribution.png
+solver serialization fields:
+final_detector_re PRESENT 0.05613019342329597
+final_detector_flux PRESENT 1.15e+16
+final_response_mean PRESENT 1.15
+final_time PRESENT 0.000319219077937305
+final_fom PRESENT 994301.4748709253
+n_final PRESENT 40
+n_batch_final PRESENT 4
+optim_group PRESENT 1
+PASS solver authoritative scalar schema
+=== mesh tally ===
+PASS test_positive_and_negative_axis_traversal
+PASS test_directional_face_semantics_and_face_endpoint
+PASS test_xyz_corner_tie_advances_all_axes
+PASS test_weighted_conservation_and_group_isolation
+PASS test_extremely_short_segment_is_not_dropped
+SUMMARY: 5 PASS 0 FAIL
+=== smoke ===
+  [PASS] prior_residual_unet Y residual bounded
+  [PASS] prior_residual_unet train success
+  [PASS] prior_residual_unet data_loss finite
+  [PASS] prior_residual_unet predict shape
+  [PASS] prior_residual_unet predict finite
+  [PASS] prior_residual_unet predict positive
+  [PASS] FOM gate: zero-response 不更新 best_fom
+  [PASS] FOM gate: 有效响应允许更新 best_fom
+
+============================================================
+  SUMMARY: 89 PASS  0 FAIL
+============================================================
+=== task02 codex audit ===
+Task 02 detector response and batch statistics synthetic audit
+PASS S1 known response mean
+PASS S1 known response RE
+PASS S1 known response samples
+PASS S1 mean
+PASS S1 sample variance
+PASS S1 standard error
+PASS S1 relative error
+PASS S2 constant mean
+PASS S2 constant RE
+PASS S3 scaled mean
+PASS S3 RE invariant
+PASS S4 correlated response mean
+PASS S4 correlated response RE
+PASS S4 mean(cell-wise RE) differs from response RE
+PASS S5 anti-correlated response mean
+PASS S5 anti-correlated response RE
+PASS S5 mean_cell_re=0.258198889747 versus response_re=0
+PASS group 0 response
+PASS group 1 response
+PASS total response equals sum of group means
+PASS total response samples equal group sample sums
+PASS group 0/group 1/total selection
+PASS B=0 sentinel response mean
+PASS B=0 sentinel RE
+OBSERVED B=0 returns a sentinel, not a statistical result
+PASS B=1 response mean
+PASS B=1 sentinel RE
+PASS B=1 uses RE=1.0 sentinel
+PASS zero response mean
+PASS zero response sentinel RE
+OBSERVED RE=1.0 is a sentinel, not a derived uncertainty, for zero mean
+PASS detector nx
+PASS detector ny
+PASS detector nz
+PASS detector cell count
+PASS detector volume identity
+PASS detector starts on x mesh face
+PASS detector starts on y mesh face
+PASS detector z spans one mesh cell
+PASS uniform field response_mean is T/N
+PASS uniform field detector flux per source
+PASS uniform field source-normalized detector flux
+PASS source volume
+PASS total source rate
+PASS nonaligned helper selected x cells
+PASS nonaligned helper selected y cells
+OBSERVED nonaligned box uses index truncation [100:110, 40:50], selected_cells=100
+PASS current aligned benchmark geometry
+PASS nondivisible batch count shape
+PASS nondivisible batch count uses floor particles
+OBSERVED n_total_particles=5, n_batches=2 simulates floor(5/2)*2=4 histories
+CLASSIFICATION R10: restricted API behavior; current production configurations are divisible
+ALL SYNTHETIC TASK 02 AUDIT CHECKS PASSED
+=== task02 claude audit ===
+Task 02-RV independent detector-response review
+seed=2026 domain=(0.0,120.0)x(0.0,60.0)x(0.0,2)
+mesh=(1.0,1.0,2.0) shape=(1,60,120)
+C1 known R_b statistics: PASS
+  EXPECTED: (5.0, 0.2581988897471611, 6.666666666666667, 1.2909944487358056)
+  ACTUAL:   (5.0, 0.2581988897471611)
+C2 positive covariance: response-first RE: PASS
+  EXPECTED: (3.25, 0.297921795862109)
+  ACTUAL:   (3.25, 0.297921795862109)
+C3 negative covariance: cancellation retained: PASS
+  EXPECTED: (2.0, 0.0)
+  ACTUAL:   (2.0, 0.0)
+C4 response scaling invariance: PASS
+  EXPECTED: (24.375, 0.297921795862109)
+  ACTUAL:   (24.375, 0.297921795862109)
+C5 aligned detector geometry: PASS
+  EXPECTED: {'Nx': 10, 'Ny': 10, 'Nz': 1, 'Ncells': 100, 'Vcell': 2.0, 'Vdet': 200.0, 'slice': (100, 110, 40, 50, 0, 1)}
+  ACTUAL:   {'Nx': 10, 'Ny': 10, 'Nz': 1, 'Ncells': np.int64(100), 'Vcell': 2.0, 'Vdet': np.float64(200.0), 'slice': (100, 110, 40, 50, 0, 1)}
+C5b non-grid-aligned box behavior: PASS
+  EXPECTED: (100, 110, 40, 50, 0, 1)
+  ACTUAL:   (100, 110, 40, 50, 0, 1)
+C6 group-specific versus total: PASS
+  EXPECTED: (2.0, 5.0, 7.0)
+  ACTUAL:   (2.0, 5.0, 7.0)
+C7 one-cell-volume normalization: PASS
+  EXPECTED: 4e+16
+  ACTUAL:   4e+16
+C8 non-divisible particle count: PASS
+  EXPECTED: {'particles_per_batch': 3, 'actual_histories': 9, 'batch_shape': (3, 2, 1, 60, 120)}
+  ACTUAL:   {'particles_per_batch': 3, 'actual_histories': 9, 'batch_shape': (3, 2, 1, 60, 120)}
+C8b formal divisibility: PASS
+  EXPECTED: True
+  ACTUAL:   True
+C9 B=0 / B=1 / zero-response sentinels: PASS
+  EXPECTED: ((0.0, 1.0), (3.0, 1.0), (0.0, 1.0))
+  ACTUAL:   ((0.0, 1.0), (3.0, 1.0), (0.0, 1.0))
+C9b empty/out-of-domain box: LIMITATION
+  EXPECTED: reject/defined diagnostic behavior; ACTUAL: (nan, nan); finite=False; warnings=2
+SUMMARY: 11 PASS, 0 FAIL

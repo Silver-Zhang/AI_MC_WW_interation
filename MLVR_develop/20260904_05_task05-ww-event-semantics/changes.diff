@@ -1,0 +1,44 @@
+diff --git a/src/mc.py b/src/mc.py
+index 87ca302..5e6bb34 100644
+--- a/src/mc.py
++++ b/src/mc.py
+@@ -274,13 +274,24 @@ def run_mc_chunk(seed, n_particles, ww_map, source_box, s_matrix, source_spectru
+                 if d_fly < d_bound:
+                     # 隐式吸收：保留散射生存概率
+                     weight *= scatter_ratio
++
++                    # WW applies to the post-collision state that continues
++                    # transport: sample its group/direction before lookup.
++                    g_idx = sample_scatter_target_group(g_idx, s_matrix)
++                    mu = 2.0 * np.random.random() - 1.0
++                    phi = 2.0 * np.pi * np.random.random()
++                    st = np.sqrt(1.0 - mu**2)
++                    u, v, w = st * np.cos(phi), st * np.sin(phi), mu
++                    ix, iy, iz = get_mesh_indices(x, y, z)
+                     target_w = ww_map[g_idx, iz, iy, ix]
+ 
+-                    # split / roulette 逻辑保持原结构
++                    # Every pushed descendant inherits the complete valid
++                    # post-collision state.  Siblings may be correlated, but
++                    # none may continue with pre-collision group/direction.
+                     if target_w > 1e-15:
+                         if weight > 3.0 * target_w:
+                             split_n = min(int(weight / target_w), 8)
+-                            if split_n > 1 and (stack_ptr + split_n < STACK_SIZE):
++                            if split_n > 1 and (stack_ptr + split_n - 1 < STACK_SIZE):
+                                 new_w = weight / split_n
+                                 weight = new_w
+                                 for _ in range(split_n - 1):
+@@ -300,12 +311,6 @@ def run_mc_chunk(seed, n_particles, ww_map, source_box, s_matrix, source_spectru
+                                 alive = False
+                                 break
+ 
+-                    # 碰撞后群转移 + 新方向采样
+-                    g_idx = sample_scatter_target_group(g_idx, s_matrix)
+-                    mu = 2.0 * np.random.random() - 1.0
+-                    phi = 2.0 * np.pi * np.random.random()
+-                    st = np.sqrt(1.0 - mu**2)
+-                    u, v, w = st * np.cos(phi), st * np.sin(phi), mu
+                 else:
+                     # 边界处理保持原行为：x/y 泄漏，z 反射
+                     if BC_TYPE[b_id] == 1:

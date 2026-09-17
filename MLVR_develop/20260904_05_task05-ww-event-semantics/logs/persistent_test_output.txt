@@ -1,0 +1,10 @@
+W1 collision cell + outgoing group lookup: PASS EXPECTED=0.01 ACTUAL=0.01
+W2 split cap n<=8: PASS EXPECTED=8 ACTUAL=8
+W3 split total weight: PASS EXPECTED=8.1 ACTUAL=8.1
+W4-W6 descendants inherit post-collision state: PASS EXPECTED=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1) ACTUAL=(array([1., 2., 3.]), array([-0.4,  0.1,  0.8]), 1)
+W7 roulette expectation: PASS EXPECTED=0.2 ACTUAL=0.19932
+W8 exact thresholds bypass: PASS EXPECTED=True ACTUAL=True
+W9 exact stack capacity: PASS EXPECTED=True ACTUAL=True
+W10/W12 zero-WW bypass: PASS EXPECTED=True ACTUAL=True
+W11 group-dependent targets: PASS EXPECTED=True ACTUAL=True
+SUMMARY: 9 PASS, 0 FAIL

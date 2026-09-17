@@ -1,0 +1,38 @@
+线程配置：16 核
+优化目标：第 1 群通量
+
+════════════════════ AI-MC 双向迭代求解器  多群原型 ═════════════════════
+  变体      : prior_residual_pinn  (11D features, smooth_center_features)
+  优化目标  : group 1  伴随谱=[0. 1.]
+  迭代计划  : 3 轮  train=10K×10批  final=40×4批
+  几何      : X[0.0,120.0] Y[0.0,60.0] Z[0.0,2]  网格 120×60×1
+  Source    : [10.0, 20.0, 10.0, 20.0]
+  Detector  : [100.0, 110.0, 40.0, 50.0]
+  先验κ     : [0.03 0.05]  scale=1.00(初始)
+  PINN      : colloc=500  λ_max=1.0e-03  warmup=0.2  ramp=0.8
+  收敛准则: 跑满 3 轮（未启用早停）
+  ⚡ Quick模式 — 仅供功能验证，不用于正式结果
+──────────────────────────────────────────────────────────────
+  Hot Start : 指数型伴随初始 WW  g0:[3.42e-03,9.65e-01]  g1:[3.52e-04,9.52e-01]
+
+════════════════════ FINAL VALIDATION RUN ════════════════════
+  40 粒子  4 批次  10/批  每 5 批报告
+  [████████████████████]    4/4批  (100%)  0.0s  ETA=0s
+  Final Run 完成  total=0.0s
+
+════════════════════════ FINAL RESULT ════════════════════════
+  评估能群  : group 1
+  探测器通量: 1.150000e+16
+  探测器 RE : 5.6130 %  (batch-level)
+  响应范围  : [1.0000e+00, 1.3000e+00]
+  诊断图已保存：/home/workspace/AI_MC_WW_interation/AIMC_WWiteration/scripts/final_flux_distribution.png
+solver serialization fields:
+final_detector_re PRESENT 0.05613019342329597
+final_detector_flux PRESENT 1.15e+16
+final_response_mean PRESENT 1.15
+final_time PRESENT 0.0002775349421426654
+final_fom PRESENT 1143639.779371786
+n_final PRESENT 40
+n_batch_final PRESENT 4
+optim_group PRESENT 1
+PASS solver authoritative scalar schema

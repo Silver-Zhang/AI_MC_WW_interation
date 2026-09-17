@@ -1,0 +1,17 @@
+Task 04 production reciprocity MC; WW all zeros; source spectrum= [0.5, 0.5]
+CASE R1_selected_equal
+ source=[10.0, 20.0, 20.0, 30.0, 0.0, 2.0] detector=[30.0, 40.0, 20.0, 30.0, 0.0, 2.0] c=[0.0, 1.0] C=1.0 p_adj=[0.0, 1.0]
+ particles=500000 batches=50 Rf=1.508821239445e-04 SEf=2.588590e-06 REf=1.715638e-02 timef=8.868s
+ Ra_raw=1.507946203029e-04 Ra=1.507946203029e-04 SEa=2.501469e-06 REa=1.658858e-02 timea=9.539s
+ diff=8.750364e-08 relative_diff=5.801153e-04 ratio=1.00058028 SEdiff=3.599743e-06 z=0.024308 combined_relative_SE=2.386490e-02 status=PASS
+CASE R2_selected_unequal
+ source=[10.0, 20.0, 20.0, 30.0, 0.0, 2.0] detector=[30.0, 50.0, 20.0, 30.0, 0.0, 2.0] c=[1.0, 0.0] C=1.0 p_adj=[1.0, 0.0]
+ particles=500000 batches=50 Rf=7.721081758417e-05 SEf=1.807520e-06 REf=2.341019e-02 timef=5.770s
+ Ra_raw=7.351287392706e-05 Ra=7.351287392706e-05 SEa=1.898656e-06 REa=2.582753e-02 timea=7.373s
+ diff=3.697944e-06 relative_diff=4.906918e-02 ratio=1.05030335 SEdiff=2.621454e-06 z=1.410646 combined_relative_SE=3.478489e-02 status=PASS
+CASE R3_total_equal
+ source=[10.0, 20.0, 20.0, 30.0, 0.0, 2.0] detector=[30.0, 40.0, 20.0, 30.0, 0.0, 2.0] c=[1.0, 1.0] C=2.0 p_adj=[0.5, 0.5]
+ particles=500000 batches=50 Rf=2.947084516259e-04 SEf=4.522162e-06 REf=1.534453e-02 timef=5.816s
+ Ra_raw=1.437952236402e-04 Ra=2.875904472803e-04 SEa=5.002486e-06 REa=1.739448e-02 timea=7.179s
+ diff=7.118004e-06 relative_diff=2.444794e-02 ratio=1.02475049 SEdiff=6.743502e-06 z=1.055535 combined_relative_SE=2.316165e-02 status=PASS
+SUMMARY required_cases= 3 precision_pass= 3 / 3

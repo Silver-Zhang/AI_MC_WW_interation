@@ -1,0 +1,4 @@
+COMPARE U1 forward spatial: neutral=1.5369814658e+01 ww=1.5470354563e+01 RE0=7.080586e-03 REww=5.042479e-03 z=0.750867 combined_rel_SE=8.683374e-03 status=PASS
+COMPARE U2 forward group-dependent: neutral=1.5217338170e+01 ww=1.5431474436e+01 RE0=7.368575e-03 REww=1.749688e-02 z=0.732439 combined_rel_SE=1.907809e-02 status=PASS
+COMPARE U3 adjoint fixed WW: neutral=1.3929672079e+01 ww=1.3940514199e+01 RE0=8.213048e-03 REww=1.693033e-02 z=0.041337 combined_rel_SE=1.882182e-02 status=PASS
+SUMMARY required_cases= 3 z_precision_pass= 3 / 3
