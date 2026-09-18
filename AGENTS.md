@@ -21,7 +21,8 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读�
    用 `MLVR_develop/new_task.sh <任务短名> [KB编号] [A|B|C]` 建档，原始材料**原样**存进 `logs/`。
    档案统一 5 节（目标与范围 / 做法与证据 / 决策 / 结论与边界 / 过程）；模式 C 另在对应节内嵌物理解释、人类理解确认、结果解释。
    任何档案至少含结论、证据、边界三要素（`tools/check-archives.sh` 可自检）。
-2. **未经用户在档案第 4 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
+   **归档时同步更新根目录 `STATUS.md`（进度看板）与 `MLVR_develop/INDEX.md`**，两者是人工查进度的唯一入口。
+2. **未经用户在档案第 3 节"决策"里拍板，不得修改 `RMC/` 下任何文件。**
    只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
    （`AIMC_WWiteration/` 为个人研究原型，改动更宽松，但仍建议按流程留痕。）
 3. **改完必须生成改动快照**，让人能不翻代码就复核：
@@ -56,7 +57,8 @@ MLVR_Physics_Guide/  物理导读：面向懂物理但不要求懂代码的读�
 
 ## 常用入口
 
-- 开新任务：`cd MLVR_develop && ./new_task.sh <任务短名> [KB编号]`
+- 开新任务：`cd MLVR_develop && ./new_task.sh <任务短名> [KB编号] [A|B|C]`
+- 看当前进度：`STATUS.md`（阶段 / 待拍板 / 最近完成 / 下一步）
 - 查台账：`MLVR_develop/INDEX.md`
 - 快速上下文：`MLVR_Knowledge/AGENT_CONTEXT.md`
 - 人类物理导读：`MLVR_Physics_Guide/README.md`

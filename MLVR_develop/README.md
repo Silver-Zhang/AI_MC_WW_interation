@@ -78,7 +78,7 @@ MLVR_develop/
 | ② 设计 | Agent | 读代码/查知识库 → 给出证据、方案与代价；**不确定就直接问人** | 档案第 2 节上半 |
 | ⛔ 停 | **你** | 拍板或改需求；Agent 负责把选项和代价讲清（必要时用问答推进） | 档案第 3 节 |
 | ④ 实施 | Agent | 改代码 → `changes.diff` → 跑验证（物理从严、工程从简）→ 贴真实输出 | 档案第 2 节下半 |
-| ⑤ 归档 | Agent→你 | 更新 INDEX、按需同步知识库；**你决定是否 commit/push** | 档案第 4、5 节 |
+| ⑤ 归档 | Agent→你 | 更新根目录 `STATUS.md` 与 INDEX、按需同步知识库；**你决定是否 commit/push** | 档案第 4、5 节 |
 
 **硬规则**：第 ③ 步必须停下等你。Agent 不得在未拍板前改 `../RMC` 下的任何文件。
 （只读排查、写 `MLVR_develop/` 与 `MLVR_Knowledge/` 下的记录不受此限。
@@ -166,8 +166,7 @@ git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/2026-08/20260824_
 | 3 | 验证输出真实，未覆盖项如实写明 | 档案第 2、4 节 |
 | 4 | `changes.diff` 最新（有代码改动才有）；实验类含种子/配置/命令 | 档案目录 |
 | 5 | 知识库 / 物理导读按需同步（结论或边界变化才必须） | `MLVR_Knowledge/` |
-| 6 | `bash tools/check-archives.sh` 无“需处理”项 | 工作区根目录 |
-
+| 6 | `bash tools/check-archives.sh` 无“需处理”项 | 工作区根目录 || 7 | 根目录 `STATUS.md` 已回写（阶段 / 待拍板 / 最近完成） | `STATUS.md` |
 ### 7. 归档体积规范
 
 - `logs/` 不存可再生成的产物：构建目录、二进制、RMC 运行产物、训练中间 checkpoint 等，

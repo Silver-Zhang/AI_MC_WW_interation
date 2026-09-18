@@ -13,11 +13,13 @@
 | [`MLVR_develop/`](MLVR_develop/) | **ML-VR 开发工作区**：一任务一档，记录从立项到归档全过程 | 本仓库 |
 | [`MLVR_Knowledge/`](MLVR_Knowledge/) | **知识库**：RMC WW 架构、ML 方法、接口规格、已知问题（长期沉淀） | 本仓库 |
 | [`MLVR_Physics_Guide/`](MLVR_Physics_Guide/) | **物理导读**：按物理功能组织，面向懂输运物理但不要求懂代码的读者，解释结论、流程、缺陷和影响 | 本仓库 |
+| [`STATUS.md`](STATUS.md) | **进度看板**：现在做到哪一步（阶段 / 待拍板 / 最近完成 / 下一步），一屏看完 | 本仓库 |
 | [`server_guide.md`](server_guide.md) | **服务器操作通用指南**（组内共享，选机/登录/传文件/长任务/ML·GPU 操作） | 本仓库 |
 | [`sever_info.md`](sever_info.md) | 服务器登录信息（**含凭据，敏感**，已被 `.gitignore` 排除） | 不入 git |
 
 ## 从哪读起
 
+- **现在做到哪一步了** → [`STATUS.md`](STATUS.md)（一屏看完：阶段、待拍板、最近完成、下一步）
 - **人机协作硬规则**（所有 Agent 开工前必读） → [`AGENTS.md`](AGENTS.md)（`CLAUDE.md` 同内容）
 - **一屏上下文**（快速建立认知） → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 - **从物理角度理解当前结论** → [`MLVR_Physics_Guide/README.md`](MLVR_Physics_Guide/)；首个专题为 [`RMC 多群伴随输运`](MLVR_Physics_Guide/01_RMC多群伴随输运/README.md)（不要求理解代码）
