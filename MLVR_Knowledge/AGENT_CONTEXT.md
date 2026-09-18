@@ -142,7 +142,7 @@ W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `s
 
 有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、Windows、反射边界或任意机制组合；并行范围也不覆盖更多 rank/thread、跨节点或其他 MPI 实现；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测机制，应另立针对性审查。
 
-F03 已立项为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/`，当前待设计。初始只读定位显示 `ADJOINT` 卡负责启用模式/最大能量，`SampleFixSource()` 复用通用外源采样后标记伴随粒子；是否存在足够的目标响应到源表达能力仍须完整审查，不得提前评为 Ready。
+F03 已由 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/` 完成，分类 **C — Verify（冻结子域）**：用户拍板方案 A（外部把目标响应映射为显式 RMC 伴随源，RMC 只负责采样、MG 群定位与伴随输运）；首版响应冻结为探测器 cell 内非负、标量、空间×能群的通量/计数型响应，动态验证在该子域内通过。RMC 本体不内建 response→source 转换；反应率、角/表面/时间/符号响应、continuous-energy、耦合粒子、SOURCESUB 与其他平台均不在覆盖范围。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
@@ -177,13 +177,13 @@ F03 已立项为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 2/3（RMC 主线）：F02 多群伴随输运已完成有界 A — Ready；F03 伴随源定义已立项，待设计。**
+- **Stage 2/3（RMC 主线）：F02 多群伴随输运已完成有界 A — Ready；F03 伴随源定义已完成 C — Verify（方案 A：外部映射 + RMC 执行）。**
 
 W5/W6/W7/W9 已在 RMC `Neural_Network_WW_Iteration`（`6d208751`、`76cbfe72`，远端同步至 `b26a81a2`）提交并推送；reference/benchmark 未更新。F02 的 raw-evidence、source—binary provenance 与 serial 语义审计缺口均已由任务 01 解决；已验证 MPI/MPI+OpenMP 矩阵由 20260830 与 20260831 专项闭合。A 严格限于记录的已验证范围，不外推到未审查能力。
 
 ## 并行工作线（2026-09）
 
 - **AIMC 期刊修订系列**（09-03…09-16，外部 Agent 执行、本仓库登记）：forward cell-wise tally 缺陷（D）与 mesh tally / metrics pipeline 修复、伴随输运算子审查、前向—伴随互易性、WW 事件语义、迭代历史与场重构审查、Task 08A 实验冻结；成都会议 Word 终稿质检。**Task 08B 正式实验待授权**。
-- **工作区治理**（09-17，已提交并推送 `f54cad3`）：任务档案按月分层 `MLVR_develop/YYYY-MM/`；新增 `tools/check-archives.sh`、`tools/repo-status.sh`；A/B/C 任务模式与 E0–E4 证据等级生效。
+- **工作区治理**（09-17/18）：任务档案按月分层 `MLVR_develop/YYYY-MM/`；新增 `tools/check-archives.sh`、`tools/repo-status.sh`；**工作流于 2026-09-18 精简为四步**（立项 → ⛔拍板 → 实施+自验 → 归档），取消 A/B/C 模式与 E0–E4 证据等级，验证原则改为“够用就停”，并明确 Agent 应主动提问而非让人通读文档。
 
-**下一步（RMC 主线）**：F03 伴随源定义审查的设计与拍板。
+**下一步（RMC 主线）**：用已有能力搭**端到端最小闭环**（Bootstrap 场 → WW → 迭代），用真实问题驱动后续缺口，而不是继续逐个审查 F04–F12。
