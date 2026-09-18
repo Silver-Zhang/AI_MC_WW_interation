@@ -5,13 +5,23 @@
 #   ./new_task.sh A1_xxx修复 A1 B
 set -euo pipefail
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-  echo "用法: $0 <任务短名> [关联知识库条目]" >&2
+if [ $# -lt 1 ] || [ $# -gt 3 ]; then
+  echo "用法: $0 <任务短名> [关联知识库条目] [任务模式 A|B|C]" >&2
   exit 1
 fi
 
 SLUG="$1"
 KB="${2:-无}"
+MODE="${3:-B}"
+case "$MODE" in
+  A) MODE_LABEL='A — 受约束自动化' ;;
+  B) MODE_LABEL='B — 工程协作（默认）' ;;
+  C) MODE_LABEL='C — 深度物理研究与学习' ;;
+  *)
+    echo "任务模式必须是 A、B 或 C: $MODE" >&2
+    exit 1
+    ;;
+esac
 BASE="$(cd "$(dirname "$0")" && pwd)"
 DATE="$(date +%Y%m%d)"
 MONTH="$(date +%Y-%m)"
@@ -50,14 +60,16 @@ PY
 mkdir -p "$DIR/logs"
 cp "$BASE/_template/README.md" "$DIR/README.md"
 
-python3 - "$DIR/README.md" "$SLUG" "$STAMP" "$KB" <<'PY'
+python3 - "$DIR/README.md" "$SLUG" "$STAMP" "$KB" "$MODE_LABEL" <<'PY'
 import sys
-path, slug, stamp, kb = sys.argv[1:5]
+path, slug, stamp, kb, mode_label = sys.argv[1:6]
 s = open(path, encoding='utf-8').read()
 s = s.replace('# <任务短名>', '# ' + slug, 1)
 s = s.replace('| 立项日期 | YYYY-MM-DD |', '| 立项日期 | %s |' % stamp.split()[0])
 s = s.replace('| 状态 | 待设计 / 待决策 / 实施中 / 待验证 / 已完成 / 已关闭 |',
               '| 状态 | 待设计 |')
+s = s.replace('| 任务模式 | B — 工程协作（默认）／ A — 受约束自动化 ／ C — 深度物理研究与学习 |',
+              '| 任务模式 | %s |' % mode_label)
 s = s.replace('| 关联知识库条目 | 例：`06_已知问题与改进建议.md` A1 ／ 无 |',
               '| 关联知识库条目 | %s |' % kb)
 s = s.replace('| YYYY-MM-DD HH:MM | 立项 |', '| %s | 立项 |' % stamp)
@@ -84,4 +96,5 @@ open(path, 'w', encoding='utf-8').writelines(lines)
 PY
 
 echo "已建档: $DIR"
+echo "任务模式: $MODE_LABEL"
 echo "下一步: 把原始材料（报错/数据/日志）保存到 $DIR/logs/"

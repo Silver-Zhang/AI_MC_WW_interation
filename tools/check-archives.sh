@@ -8,7 +8,7 @@
 #   2. 档案状态与 INDEX 台账不一致
 #   3. 台账未登记 / 缺 README.md
 #   4. 台账悬空（登记了但目录不存在）
-#   5. 档案最小要素缺失（结论 / 证据 / 边界，提示级）
+#   5. 模式 C 档案缺三要素（结论 / 证据 / 边界，提示级）
 #   6. changes.diff 为空文件
 #   7. logs/ 或 assets/ 是空目录
 set -u
@@ -57,12 +57,14 @@ for d in "$DEV"/20[0-9][0-9]-[0-9][0-9]/20[0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0
         fi
     fi
 
-    # 最小要素：结论 / 证据 / 边界（提示级，不阻塞）
-    miss=""
-    grep -qE '结论|[Cc]lassification|[Cc]onclusion|[Vv]erdict' "$f" || miss="$miss 结论"
-    grep -qE '证据|验证|[Vv]erif|[Ee]vidence|[Vv]alidat' "$f" || miss="$miss 证据"
-    grep -qE '边界|范围外|局限|[Rr]estriction|[Ll]imit|[Ss]cope' "$f" || miss="$miss 边界"
-    [ -n "$miss" ] && struct_c+=("$name：缺$miss")
+    if grep -q '^| 任务模式 | C' "$f" 2>/dev/null; then
+        # 异极结构（含英文档案）只要求结论 / 证据 / 边界三要素
+        miss=""
+        grep -qE '结论|[Cc]lassification|[Cc]onclusion|[Vv]erdict' "$f" || miss="$miss 结论"
+        grep -qE '证据|验证|[Vv]erif|[Ee]vidence|[Vv]alidat' "$f" || miss="$miss 证据"
+        grep -qE '边界|范围外|局限|[Rr]estriction|[Ll]imit|[Ss]cope' "$f" || miss="$miss 边界"
+        [ -n "$miss" ] && struct_c+=("$name：缺$miss（模式 C 三要素）")
+    fi
 
     if [ -f "$d/changes.diff" ] && [ ! -s "$d/changes.diff" ]; then
         emptydiff+=("$name")
@@ -94,7 +96,7 @@ section '台账未登记 / 缺 README.md' ${unlisted[@]+"${unlisted[@]}"}
 section '台账悬空（目录不存在）' ${dangling[@]+"${dangling[@]}"}
 section '提示：changes.diff 为空（确认无代码改动后可删除该文件）' ${emptydiff[@]+"${emptydiff[@]}"}
 section '提示：空的 logs/ 或 assets/' ${emptydir[@]+"${emptydir[@]}"}
-section '提示：档案最小要素缺失（结论/证据/边界）' ${struct_c[@]+"${struct_c[@]}"}
+section '提示：模式 C 结构缺失（模板档案缺章节，或异极档案缺三要素）' ${struct_c[@]+"${struct_c[@]}"}
 
 blocking=$(( ${#blank[@]} + ${#mismatch[@]} + ${#unlisted[@]} + ${#dangling[@]} ))
 hints=$(( ${#emptydiff[@]} + ${#emptydir[@]} + ${#struct_c[@]} ))
