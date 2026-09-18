@@ -28,6 +28,7 @@
 | HDF5 density mesh | 两区域读回、位置依赖和 10/10 clean formal 通过，合并 $z=0.0984$ |
 | NNUBAR=1/混合裂变材料 | 20/20 clean formal 通过，合并 $z=0.9563/0.3748$ |
 | 完整能力 | **A — Ready（有界）**；仅 Linux x86_64、MPI-off serial build、OpenMP off、`ais=OFF`、standard ASCII MGACE fixed-source neutron adjoint |
+| F03 首版响应到伴随源 | **C — Verify（冻结子域）**；由 MLVR/人工把 cell 体积积分、空间×MG 群、非负标量响应转换为显式 `SOURCE`，RMC 执行；pilot/formal 已通过，RMC 未提供内建 response-to-source 对象 |
 
 ## 技术证据
 
@@ -46,5 +47,6 @@
 - [NNUBAR=1/混合材料 formal](../../MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/README.md)
 - [最终 A 复核](../../MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/README.md)
 - [MPI-off serial provenance](../../MLVR_develop/2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md)
+- [F03 伴随源定义审查](../../MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md)
 - [功能审查矩阵](../../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [问题台账](../../MLVR_Knowledge/06_已知问题与改进建议.md)

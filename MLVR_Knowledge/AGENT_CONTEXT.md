@@ -142,29 +142,19 @@ W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `s
 
 有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、Windows、反射边界或任意机制组合；并行范围也不覆盖更多 rank/thread、跨节点或其他 MPI 实现；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测机制，应另立针对性审查。
 
-F03 已由 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/` 完成，分类 **C — Verify（冻结子域）**：用户拍板方案 A（外部把目标响应映射为显式 RMC 伴随源，RMC 只负责采样、MG 群定位与伴随输运）；首版响应冻结为探测器 cell 内非负、标量、空间×能群的通量/计数型响应，动态验证在该子域内通过。RMC 本体不内建 response→source 转换；反应率、角/表面/时间/符号响应、continuous-energy、耦合粒子、SOURCESUB 与其他平台均不在覆盖范围。
+F03 已完成冻结首版子域审查，档案为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/`，当前 **C — Verify（冻结子域）**。方案 A 由人/MLVR 外部控制器把非负标量、cell 体积积分、空间×MG 群响应转换为显式 `EXTERNALSOURCE/SOURCE`，RMC 负责采样、MG 定位和伴随输运；pilot/formal 已通过 source support、`E[w·1_i]=H_i`、无偏/有偏纠偏和复合响应级对照。RMC 内建 response-to-source 及反应率、角、表面、时间、符号响应等不在范围内，扩展需另立任务。
 
 面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
 
 ## 开发流程
 
-所有任务遵循：
+所有任务先选 A/B/C 模式（默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时用 C），再走五步：
 
 ```text
-需求分析
- ↓
-设计/定位
- ↓
-用户决策冻结
- ↓
-实施/审查
- ↓
-测试与记录
- ↓
-归档
+选 A/B/C ─► ① 立项 ─► ② 设计/定位 ─► ⛔ 人拍板 ─► ④ 实施+自验 ─► ⑤ 归档
 ```
 
-详细规则见：
+详细规则见 `MLVR_develop/README.md`（模式表、5 节归档清单、验证分场景）。另见：
 
 - `AGENTS.md`
 - `MLVR_Knowledge/00_开发总纲与阶段路线.md`
@@ -177,13 +167,13 @@ F03 已由 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit
 
 - Stage 0：基础工作流已建立。
 - Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 2/3（RMC 主线）：F02 多群伴随输运已完成有界 A — Ready；F03 伴随源定义已完成 C — Verify（方案 A：外部映射 + RMC 执行）。**
+- **Stage 2/3（RMC 主线）：F02 多群伴随输运已完成有界 A — Ready；F03 伴随源定义已完成 C — Verify（冻结首版子域）。**
 
 W5/W6/W7/W9 已在 RMC `Neural_Network_WW_Iteration`（`6d208751`、`76cbfe72`，远端同步至 `b26a81a2`）提交并推送；reference/benchmark 未更新。F02 的 raw-evidence、source—binary provenance 与 serial 语义审计缺口均已由任务 01 解决；已验证 MPI/MPI+OpenMP 矩阵由 20260830 与 20260831 专项闭合。A 严格限于记录的已验证范围，不外推到未审查能力。
 
 ## 并行工作线（2026-09）
 
 - **AIMC 期刊修订系列**（09-03…09-16，外部 Agent 执行、本仓库登记）：forward cell-wise tally 缺陷（D）与 mesh tally / metrics pipeline 修复、伴随输运算子审查、前向—伴随互易性、WW 事件语义、迭代历史与场重构审查、Task 08A 实验冻结；成都会议 Word 终稿质检。**Task 08B 正式实验待授权**。
-- **工作区治理**（09-17/18）：任务档案按月分层 `MLVR_develop/YYYY-MM/`；新增 `tools/check-archives.sh`、`tools/repo-status.sh`；**工作流于 2026-09-18 精简为四步**（立项 → ⛔拍板 → 实施+自验 → 归档），取消 A/B/C 模式与 E0–E4 证据等级，验证原则改为“够用就停”，并明确 Agent 应主动提问而非让人通读文档。
+- **工作区治理**（09-17/18）：任务档案按月分层 `MLVR_develop/YYYY-MM/`、新增 `tools/check-archives.sh` 与 `tools/repo-status.sh`（`f54cad3`）；工作流精简为五步并保留 A/B/C 模式与验证分场景（`769ce4b`）；新增根目录 `STATUS.md` 进度看板（`6e8be1e`）。看当前进度直接读 `STATUS.md`。
 
-**下一步（RMC 主线）**：用已有能力搭**端到端最小闭环**（Bootstrap 场 → WW → 迭代），用真实问题驱动后续缺口，而不是继续逐个审查 F04–F12。
+**下一步（RMC 主线）**：使用 F03 冻结的外部 response→source 契约接入 MLVR 控制器；若需要其他响应类型或 RMC 内建转换，再另立任务。

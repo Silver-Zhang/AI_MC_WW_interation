@@ -18,7 +18,7 @@
 
 ## 当前一句话结论
 
-RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**：验证使用显式 MPI-off fresh build，运行 banner 为 MPI OFF、OpenMP OFF，并完成 40 条条件角表示与 10 条 density-mesh formal；raw evidence、逐 seed/aggregate strict gates、fixed-source CTest、checksum 与独立审计均已闭合。
+RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**；F03 首版 response-to-source 集成为 **C — Verify（冻结子域）**：外部 MLVR/人工映射已在 cell 体积积分、空间×MG 群、非负标量响应上完成 pilot/formal 验证，RMC 继续执行显式伴随源。
 
 该结论不代表完整 photon adjoint、CE、AIS/HDF5 核数据、delayed、并行环境、Windows、反射边界或相邻 F03/F04/F06/F07 能力已验证。W9 的 photon/secondary 两条同形分支虽已修复，但仍只是局部证据。
 
@@ -63,3 +63,4 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready�
 - 2026-08-27：证据恢复任务重跑并保留 40 条条件角表示和 10 条 density-mesh raw outputs；独立 strict checker 与 checksum 完整性验证通过，F02 恢复有界 A — Ready。
 - 2026-08-27：后续 provenance 审核发现 actual formal binary banner 与声明 source snapshot commit 不一致；未发现新的物理 defect，但 F02 下调 C — Verify，等待 fresh-build identity recovery。
 - 2026-08-28：按严格 serial 定义完成 MPI-off fresh build 及 50 条 formal 重跑；strict gates、fixed-source CTest、checksum 与独立审计均通过，F02 在冻结范围恢复 A — Ready（有界）。
+- 2026-09-18：F03 冻结外部 response→source 映射 + RMC 执行的责任边界；20-run formal 通过源支持域、MG 群、一阶矩、无偏/有偏纠偏和复合响应级对照，定为冻结子域 C — Verify。

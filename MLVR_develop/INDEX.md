@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-18 | [workflow-simplification](2026-09/20260918_01_workflow-simplification/README.md) | 工作区治理 / 工作流精简 | 已完成 | 无 | 根工作区 `main`；`769ce4b` + `6e8be1e` + `ed5e33a` 已推送双远端；模板 10→5 节、模式 C 三内嵌、验证分场景、保留 A/B/C；新增根目录 `STATUS.md` 进度看板 |
 | 2026-09-17 | [monthly-archive-layout](2026-09/20260917_04_monthly-archive-layout/README.md) | 工作区治理 / 目录结构 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3` 并推送；任务档案按月分层（2026-08/2026-09），引用与忽略规则同步更新 |
 | 2026-09-17 | [workflow-hardening](2026-09/20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3`（台账登记 `7307b10`）并推送；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
 | 2026-09-17 | [workspace-repo-hygiene](2026-09/20260917_02_workspace-repo-hygiene/README.md) | 工作区治理 / 多仓库卫生 | 已完成 | 无 | 根工作区 `main`，已提交 `6c09e3b` 并推送；清理遗留 worktree（tag 保留提交）、补录 task01r 证据、新增 `tools/repo-status.sh` |
@@ -39,7 +40,7 @@
 | 2026-08-25 | [f02-adjoint-negative-one-variable-angular-fix](2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/README.md) | 缺陷修复 | 已完成 | F02 / W9 | 一行根因修复；三 seed 共 1438 对样本零越界且逐项一致；CTest/reference/oracle 通过；未 commit |
 | 2026-08-25 | [f02-angular-density-asset-qualification](2026-08/20260825_11_f02-angular-density-asset-qualification/README.md) | 物理验证 / 验证资产资格化 | 已完成（E — Defect） | F02 / W9 | 低光学厚度动态确认负单变量伴随角核越界；按停止规则未继续 HDF5/A formal |
 | 2026-08-25 | [f02-extended-physics-readiness](2026-08/20260825_10_f02-extended-physics-readiness/README.md) | 物理验证 | 已完成（C — Verify） | F02 | A 门禁 pilot 暴露 NNUBAR=1 有效响应、真实 density mesh 和强 P1/P2 验证缺口；未修改 RMC |
-| 2026-08-25 | [f03-adjoint-source-definition-audit](2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 已完成（C — Verify，冻结子域；分类待人确认） | F03 | 方案 A 已拍板：外部 response→源映射 + RMC 执行；动态验证通过；其余范围需另立任务 |
+| 2026-08-25 | [f03-adjoint-source-definition-audit](2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) | RMC 只读功能与语义审查 | 已完成（C — Verify，冻结子域） | F03 | E2：外部 response→源映射 + RMC 执行；pilot/formal 源映射与复合响应验证通过；其余范围需另立任务 |
 | 2026-08-25 | [f02-fissile-response-reciprocity-verification](2026-08/20260825_08_f02-fissile-response-reciprocity-verification/README.md) | 数值验证 | 已完成 | F02 | 正式 10/10 运行与 5/5 独立流通过；合并 $z=-0.703$；F02 阶段复核保持 C — Verify |
 | 2026-08-25 | [f02-w6-double-nubar-kernel-consistency-fix](2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/README.md) | 缺陷修复 | 已完成 | W6 | total nubar 核统一；逐群差为 0，动态 bank 可达；已随 W5/W7 提交为 RMC `6d208751...` |
 | 2026-08-25 | [f02-w5-nonuniform-density-reciprocity-verification](2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/README.md) | 算法实验 / 现有能力验证 | 已完成 | W5 | 200k 原批次严格门槛失败；1M 全量精度升级通过逐种子、分组与总体判据 |
