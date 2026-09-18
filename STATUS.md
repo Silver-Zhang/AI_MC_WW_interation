@@ -24,15 +24,14 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
 | 1 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
-| 2 | 推送未同步提交 | 本地 `769ce4b`（工作流精简）领先 `origin/main` 1 个提交，是否现在推送（GitLab + GitHub 双端） | `git log --oneline -1` |
-| 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
-| 4 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
+| 2 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
+| 3 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 09-18 | workflow-simplification | 模板 10→5 节；模式 C 产物 6→3 内嵌；验证分场景；**保留 A/B/C** ；新增本页 |
+| 09-18 | workflow-simplification | 模板 10→5 节；模式 C 产物 6→3 内嵌；验证分场景；**保留 A/B/C**；新增本页 |
 | 09-18 | f03-adjoint-source-definition-audit | 拍板方案 A；外部映射动态验证通过 → C–Verify（冻结子域） |
 | 09-17 | 工作区治理 ×4 | 按月归档、多仓库卫生、遗留资产清理、工作流加固（新增两个自检脚本） |
 | 09-05 | task08a（冻结 + R2 修复） | 实验冻结 harness 与阻塞修复完成（READY ≠ RUN） |
@@ -41,7 +40,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 ## 4. 下一步（Agent 建议，待你点头）
 
 1. **开 Stage 3/4 任务**：把 F02/F03 结论整理成框架接口设计——WW 更新契约、Field 存取规范、正/伴随场迭代调度。
-2. **收尾治理**：推送 `769ce4b`、关闭台账遗留项 `20260824_05`。
+2. **收尾治理**：关闭台账遗留项 `20260824_05`；等并行 Agent 收工后一并提交 `INDEX.md`。
 3. 之后才评估是否要 RMC 内建 response→源（原方案 B）与持续能量/角响应等扩展。
 
 ## 5. 维护方式（Agent 必读）
