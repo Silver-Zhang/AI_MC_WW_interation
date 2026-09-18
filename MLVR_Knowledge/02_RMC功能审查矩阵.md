@@ -22,7 +22,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F01 | Forward fixed-source MC | 待审查 | Bootstrap与正式Forward基础能力 | — |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
 | F02-B | 多群Adjoint物理正确性审查 | A — Ready（有界） | MPI-off serial 与已验证本机 MPI/MPI+OpenMP 配置；raw formal、统计门禁、CTest 与 checksum 已绑定至冻结快照 | `20260828_01_f02-mpi-off-serial-provenance`；`20260830_01`、`20260831_01~03` |
-| F03 | Adjoint source定义 | 已立项（待设计） | 目标响应驱动伴随源；区分通用外源执行与响应到源构造 | `20260825_09_f03-adjoint-source-definition-audit` |
+| F03 | Adjoint source定义 | 已完成设计（待决策，暂不分类） | E1 确认通用外源/Python 可执行显式相空间源，未见内建 response-to-source；待冻结外部控制器责任边界后做动态 probe | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | 待审查 | 组合功能正确性 | — |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
 | F06 | Adjoint spatial-energy field tally | 待审查 | 输出伴随空间×能群场 | — |
@@ -102,3 +102,4 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-08-27：任务 05 在全新隔离构建中捕获 `6d208751... + W9 diff 5eec...`，新 binary banner 与源码一致；其上重跑 angular 40/40、density 10/10，strict gates、fresh CTest 和 checksum 均通过。独立审计 ACCEPT，F02-B 恢复有界 A — Ready。
 - 2026-08-28：独立审计指出 task 05 是 MPI-enabled one-rank execution，与“serial”标签存在歧义。用户采用严格 MPI-off 定义；task 01 显式 `-Dmpi=OFF` fresh build 的 banner 为 MPI OFF，完整 50 条 formal、strict gates、CTest、checksum 与独立审计均通过，F02-B 在严格 serial 范围保持有界 A — Ready。
 - 2026-08-31：并行专项完成本机 Open MPI 4.1.6 的 `2×1/4×1/2×2/2×4` 条件角、响应与运行时矩阵；160/160 条角分布结构运行通过，四配置均 8/8 aggregate 主检验通过，独立 `4×1` 新 seed 40/40 未复现原诊断。用户接受该已验证并行范围为有界 A — Ready；原 `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留，不外推至未测并行环境。
+- 2026-09-18：完成 F03 模式 C 只读设计/定位。E1 调用链确认 RMC 可通过通用外源或条件式 Python `SOURCESUB` 执行显式相空间伴随源，但未见 standard fixed-source 路径从目标 response/tally 自动构造源。因 Stage 1 的“根据目标响应定义并执行”尚未冻结系统责任边界，F03 保持暂不分类，等待人工决定外部构造是否满足第一版需求。

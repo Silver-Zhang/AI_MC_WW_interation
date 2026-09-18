@@ -1,0 +1,62 @@
+F03 read-only source audit snapshot
+Captured: 2026-09-18
+
+[RMC branch]
+Neural_Network_WW_Iteration
+[RMC HEAD]
+b26a81a26f6d43aea405b1c744f0c4cdf4fd8bdf
+[RMC worktree status --short]
+[Source parser variables]
+36:    if (sKeyWord == "FRACTION") {
+57:    if (sKeyWord == "BIASFRAC") {
+77:    if (sKeyWord == "SAMPEFF") {
+98:    else if (sKeyWord == "WEIGHT") {
+120:    else if (sKeyWord == "SURFACE") {
+161:    else if (sKeyWord == "X") {
+202:    else if (sKeyWord == "Y") {
+243:    else if (sKeyWord == "Z") {
+284:    else if (sKeyWord == "POSITION") {
+333:    else if (sKeyWord == "RADIUS") {
+374:    else if (sKeyWord == "AXIS") {
+423:    else if (sKeyWord == "POLAR") {
+472:    else if (sKeyWord == "POLARTHETA") {
+513:    else if (sKeyWord == "EXTENT") {
+554:    else if (sKeyWord == "HEIGHT") {
+595:    else if (sKeyWord == "NORM") {
+636:    else if (sKeyWord == "VECTOR") {
+685:    else if (sKeyWord == "DIRECMIU") {
+726:    else if (sKeyWord == "FAIVECTOR") {
+775:    else if (sKeyWord == "DIRECFAI") {
+816:    else if (sKeyWord == "ENERGY") {
+857:    else if (sKeyWord == "PARTICLE") {
+918:    else if (sKeyWord == "CELL") {
+1063:    else if (sKeyWord == "POINT") {
+1096:    else if (sKeyWord == "SPHERE") {
+1162:    else if (sKeyWord == "CYL/X") {
+1239:    else if (sKeyWord == "CYL/Y") {
+1316:    else if (sKeyWord == "CYL/Z") {
+1434:    else if (sKeyWord == "TIME") {
+[Source samplers]
+RMC/src/SampleVariableFromDistri.cpp:6:void CDSource::SampleVariableFromDistri(double &dWeight, bool bWithCell, CDRNG &ORNG, CDIndex &cIndex,
+RMC/src/SampleParticle.cpp:6:void CDSource::SampleParticle(CDParticleState &cParticleState, CDGeometry &cGeometry, CDAceData &cAceData, CDRNG &ORNG,
+[Python source API]
+RMC/src/PythonInterface/PythonInterface.cpp:94:CDPythonInterface::SampleParticleFromSubroutine(CDParticleState &cParticleState, CDGeometry cGeometry,
+RMC/src/PythonInterface/PythonInterface.h:139:  SampleParticleFromSubroutine(CDParticleState &cParticleState, CDGeometry cGeometry, CDAceData &cAceData,
+RMC/src/ReadFixedSourceBlock.cpp:19:  DefinedCard["SOURCESUB"] = false;
+RMC/src/ReadFixedSourceBlock.cpp:199:    else if (InputCardStr == "SOURCESUB") {
+RMC/src/ReadFixedSourceBlock.cpp:205:      ////////////////////////// read SOURCESUB card ////////////////////////////
+RMC/src/ReadSrcSubBlock.cpp:45:                "The name of source subroutine is not provided in SOURCESUB card in FIXEDSOURCE block.\n");
+RMC/src/ReadSrcSubBlock.cpp:75:                "The name of PTMod subroutine is not provided in SOURCESUB card in FIXEDSOURCE block.\n");
+RMC/src/ReadSrcSubBlock.cpp:94:        sprintf(Output.p_sPrintStr, "Unknown keyword %s in SOURCESUB card!\n", keyword.c_str());
+RMC/src/ReadSrcSubBlock.cpp:106:  [&]() { sprintf(Output.p_sPrintStr, "The SOURCE card is necessary in SOURCESUB card!\n"); },
+RMC/src/ReadCriticalityBlock.cpp:23:  DefinedCard["SOURCESUB"] = false;
+RMC/src/ReadCriticalityBlock.cpp:149:    else if (InputCardStr == "SOURCESUB") {
+RMC/src/ReadCriticalityBlock.cpp:160:      ////////////////////////// read SOURCESUB card ////////////////////////////
+RMC/src/SampleNeutronSource.cpp:34:      OPythonInterface.SampleParticleFromSubroutine(cParticleState, cGeometry, cAceData,
+RMC/src/SampleNeutronSource.cpp:195:      OPythonInterface.SampleParticleFromSubroutine(cParticleState, cGeometry, cAceData,
+RMC/tests/source_subroutine_neutron/inp:40:SOURCESUB source = source_neutron
+RMC/docs/source-en/usersguide/FixedSourceCalculation.rst:180:  SOURCESUB [SOURCE = <source>] [PTMOD = <PTMod>]
+RMC/docs/source-en/usersguide/FixedSourceCalculation.rst:185:-  **SOURCESUB** \ is the keyword indicating the use of an external subroutine. In this case, there is no need to
+RMC/docs/source-en/usersguide/FixedSourceCalculation.rst:190:   **SOURCESUB** \. The input value does not have the suffix .py and is case-sensitive;
+RMC/docs/source-en/usersguide/FixedSourceCalculation.rst:201:  SOURCESUB Source = source PTMod = ptmod
+[Response-to-adjoint-source search]
