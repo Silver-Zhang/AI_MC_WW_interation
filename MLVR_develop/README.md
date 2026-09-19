@@ -98,8 +98,9 @@ git -C ../AIMC_WWiteration diff > <任务文件夹>/changes.diff
 ### 2. 一任务 = 一分支 = 一提交，消息里带文件夹名
 ```bash
 git -C ../RMC checkout -b feat/mlvr-<任务短名>
-git -C ../RMC commit -m "feat(mlvr): <一句话> (MLVR_develop/2026-08/20260824_01_xxx)"
+git -C ../RMC commit -m "fix(ww): 用中文概括改动 (MLVR_develop/2026-08/20260824_01_xxx)"
 ```
+提交信息**优先使用中文**，应简洁描述改动并关联任务档案；仅当外部项目约定强制英文时例外。
 好处：**双向可查**——从 git 历史能找到档案，从档案能找到提交。
 不想开分支时至少保证 commit message 里带文件夹名。
 

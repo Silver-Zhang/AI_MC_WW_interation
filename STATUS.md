@@ -14,7 +14,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native WWP 参数生命周期与 WWMESH 输入形状已修复并完成 MPI-off 回归；异构边界、MPI、状态复制和 adjoint 组合仍待处理 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native WWP、WWMESH 输入形状与异构最大边界已修复并完成 MPI-off 回归；事件时序、MPI、状态复制和 adjoint 组合仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
 一句话：**F08 源码审计发现 WW 不能直接作为可靠基础能力放行；应先处理确定性缺陷和 adjoint 组合边界，再设计双向迭代框架。**
@@ -23,7 +23,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
-| 1 | **F08 后续修复** | 是否继续处理异构 mesh 最大边界 index；之后再审查 point/track mesh 事件时序、MPI shared offset、split 属性与 adjoint+WW | [mesh shape 修复](MLVR_develop/2026-09/20260919_03_f08-mesh-ww-shape-validation/README.md) |
+| 1 | **F08 后续修复** | 是否继续审查 point/track mesh 事件时序；之后处理 MPI shared offset、split 属性与 adjoint+WW | [异构边界修复](MLVR_develop/2026-09/20260919_04_f08-heter-mesh-max-boundary/README.md) |
 | 2 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
@@ -32,6 +32,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |
 | 09-19 | f08-mesh-ww-shape-validation | native `WWMESH` 现强制空间 mesh × 能群数等于 lower-bound 数量；RMC `5ec595e1`，MPI-off 构建成功、mesh WW 3/3 回归通过，9/11 项输入被拒绝；未 push |
 | 09-19 | f08-cell-ww-core-repair | native `WWP:N/P/E` 参数生命周期已修复；MPI-off 构建成功、cell WW 3/3 回归通过，额外 `WWP:P` 不再影响 neutron tally；未 push |
 | 09-18 | f08-weight-window-audit | 源码优先审计完成：E — Defect + D — Integration issue；未修改 RMC，Stage 3 修复候选已登记 W10 |

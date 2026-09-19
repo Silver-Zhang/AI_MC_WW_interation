@@ -1,0 +1,22 @@
+diff --git a/src/MeshFun.cpp b/src/MeshFun.cpp
+index 7fd866db..8bb0a8ad 100644
+--- a/src/MeshFun.cpp
++++ b/src/MeshFun.cpp
+@@ -189,7 +189,7 @@ int CDMesh::GetHeterMeshIndex(const double dPos[3], bool bCheckScope) {
+   int nIndex = 0;     // start from 0,  stored in data array
+   int nCoarseIndex[3] = {0, 0, 0};
+   for ( int i = 0 ; i < 3 ; ++i ) {
+-    if ( dPos[i] < p_vMeshBound[i][0] || dPos[i] > p_vMeshBound[i][ p_vCoarseMeshSize[i] ]) {
++    if (dPos[i] < p_vMeshBound[i][0] || dPos[i] >= p_vMeshBound[i][p_vCoarseMeshSize[i]]) {
+       return -1;
+     }
+ 
+@@ -220,7 +220,7 @@ int CDMesh::GetHeterCylinMeshIndex(const double dPos[3], bool bCheckScope) {
+   GetCylinCoor(dPos, dCylinPos);
+ 
+   for ( int i = 0 ; i < 3 ; ++i ) {
+-    if ( dCylinPos[i] < p_vMeshBound[i][0] || dCylinPos[i] > p_vMeshBound[i][ p_vCoarseMeshSize[i] ]) {
++    if (dCylinPos[i] < p_vMeshBound[i][0] || dCylinPos[i] >= p_vMeshBound[i][p_vCoarseMeshSize[i]]) {
+       return -1;
+     }
+ 

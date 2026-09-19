@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-19 | [f08-heter-mesh-max-boundary](2026-09/20260919_04_f08-heter-mesh-max-boundary/README.md) | 缺陷修复 / mesh 边界语义 | 已完成（异构 mesh 最大边界） | W10 | RMC `41cf4559`；mesh WW 3/3 + 异构 mesh tally 1/1 回归通过；未 push |
 | 2026-09-19 | [f08-mesh-ww-shape-validation](2026-09/20260919_03_f08-mesh-ww-shape-validation/README.md) | 缺陷修复 / 输入物理契约 | 已完成（native WWMESH 输入形状校验） | W10 | RMC `5ec595e1`；MPI-off build + mesh WW 3/3 回归通过；9/11 项输入被拒绝；未 push |
 | 2026-09-19 | [f08-cell-ww-unbiasedness](2026-09/20260919_02_f08-cell-ww-unbiasedness/README.md) | 物理验证（取消） | 已关闭（不做冗余验证） | W10 | 用户决定转入 mesh WW 实际问题；RMC 未修改 |
 | 2026-09-19 | [f08-cell-ww-core-repair](2026-09/20260919_01_f08-cell-ww-core-repair/README.md) | 缺陷修复 / 物理正确性验证 | 已完成（native WWP 参数生命周期） | W10 | RMC `341c0238`；MPI-off build + cell WW 3/3 回归通过；未 push |
