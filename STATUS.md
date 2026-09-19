@@ -14,7 +14,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 cell WW 参数生命周期修复任务已立项，正在 C 模式物理讨论；RMC 修复尚未获拍板 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native cell WW 的 WWP 参数生命周期已修复并完成 MPI-off 回归；其余 cell/mesh/MPI/adjoint 问题仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
 一句话：**F08 源码审计发现 WW 不能直接作为可靠基础能力放行；应先处理确定性缺陷和 adjoint 组合边界，再设计双向迭代框架。**
@@ -23,7 +23,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
-| 1 | **F08 cell WW 核心修复** | 确认 native `WWP` 应按粒子类型独立生效；批准最小修复与粒子级无偏验证。`E=0` 边界防护仅在确认可达后纳入 | [f08-cell-ww-core-repair](MLVR_develop/2026-09/20260919_01_f08-cell-ww-core-repair/README.md) |
+| 1 | **F08 后续修复** | 是否启动 cell WW 的粒子级 roulette/splitting oracle 与 $E=0$ 可达性确认，随后进入 mesh 输入/边界和事件时序修复 | [cell WWP 修复](MLVR_develop/2026-09/20260919_01_f08-cell-ww-core-repair/README.md) |
 | 2 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
@@ -32,7 +32,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 09-19 | f08-cell-ww-core-repair | 已立项：先厘清 native `WWP` 参数生命周期和 cell WW 无偏变换；待 C 模式物理确认后才修改 RMC |
+| 09-19 | f08-cell-ww-core-repair | native `WWP:N/P/E` 参数生命周期已修复；MPI-off 构建成功、cell WW 3/3 回归通过，额外 `WWP:P` 不再影响 neutron tally；未 push |
 | 09-18 | f08-weight-window-audit | 源码优先审计完成：E — Defect + D — Integration issue；未修改 RMC，Stage 3 修复候选已登记 W10 |
 | 09-18 | f08-ww-physics-guide | 完成 `MLVR_Physics_Guide/02_RMC权重窗/README.md`；明确 WW 无偏关系、代码问题、物理影响和证据边界；未修改 RMC |
 | 09-18 | workflow-simplification | 模板 10→5 节；模式 C 产物 6→3 内嵌；验证分场景；**保留 A/B/C**；新增本页 |

@@ -1,0 +1,135 @@
+diff --git a/src/ReadWeightWindow.cpp b/src/ReadWeightWindow.cpp
+index ac956ca7..5e6f2d40 100644
+--- a/src/ReadWeightWindow.cpp
++++ b/src/ReadWeightWindow.cpp
+@@ -13,10 +13,6 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+   int nGmaErgNum = 1;
+   int nElecErgNum = 1;
+ 
+-  double WUPN = 5;  //权窗上限
+-  double WSURVN = 0.6 * WUPN;  //存活权窗
+-  double MXSPLN = 5;  //最大分裂数，目前程序中没有相应的功能，但是在inp中可以读入这个参数
+-
+   // 检查重新定义：
+   map<string, bool> DefinedCard;
+   DefinedCard["WWG:N"] = false; //中子的权窗生成器
+@@ -279,8 +275,15 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+         }
+       }
+     } else if (sInputCardStr == "WWP:N") {
+-      fscanf(p_fpInputFilePtr, "%lf %lf %lf", &WUPN, &WSURVN, &MXSPLN);
+-      Output.CheckInputParas(((WUPN > 1) && (WUPN > WSURVN) && (WSURVN > 1)),
++      // WWP 参数按粒子类型保存，供权窗构造和执行共同使用。
++      fscanf(p_fpInputFilePtr, "%lf %lf %lf",
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WUPN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WSURVN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::MXSPLN]);
++      Output.CheckInputParas((OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WUPN] > 1)
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WUPN]
++                                > OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WSURVN])
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WSURVN] > 1),
+       [&]() {sprintf(Output.p_sPrintStr, "WWP:N Card definition is wrong.\n");}, CDOutput::_ERROR);
+       char nextchar;
+       int nNext_p = CDFileIO::GetNextChar(p_fpInputFilePtr, nextchar);
+@@ -290,8 +293,14 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+         }
+       }
+     } else if (sInputCardStr.compare("WWP:P") == 0) {
+-      fscanf(p_fpInputFilePtr, "%lf %lf %lf", &WUPN, &WSURVN, &MXSPLN);
+-      Output.CheckInputParas(((WUPN > 1) && (WUPN > WSURVN) && (WSURVN > 1)),
++      fscanf(p_fpInputFilePtr, "%lf %lf %lf",
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WUPN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WSURVN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::MXSPLN]);
++      Output.CheckInputParas((OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WUPN] > 1)
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WUPN]
++                                > OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WSURVN])
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WSURVN] > 1),
+       [&]() {sprintf(Output.p_sPrintStr, "WWP:P Card definition is wrong.\n");}, CDOutput::_ERROR);
+       char nextchar;
+       int nNext_p = CDFileIO::GetNextChar(p_fpInputFilePtr, nextchar);
+@@ -301,8 +310,14 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+         }
+       }
+     } else if (sInputCardStr == "WWP:E") {
+-      fscanf(p_fpInputFilePtr, "%lf %lf %lf", &WUPN, &WSURVN, &MXSPLN);
+-      Output.CheckInputParas(((WUPN > 1) && (WUPN > WSURVN) && (WSURVN > 1)),
++      fscanf(p_fpInputFilePtr, "%lf %lf %lf",
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WUPN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WSURVN],
++             &OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::MXSPLN]);
++      Output.CheckInputParas((OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WUPN] > 1)
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WUPN]
++                                > OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WSURVN])
++                            && (OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WSURVN] > 1),
+       [&]() {sprintf(Output.p_sPrintStr, "WWP:E Card definition is wrong.\n");}, CDOutput::_ERROR);
+       char nextchar;
+       int nNext_p = CDFileIO::GetNextChar(p_fpInputFilePtr, nextchar);
+@@ -369,9 +384,9 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+         double LowBound = cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Neutron][i].p_dLowerWeightBound;
+ 
+         cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Neutron][i].p_dUpperWeightBound =
+-            WUPN * LowBound;
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WUPN] * LowBound;
+         cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Neutron][i].p_dSurvivalWeight =
+-            WSURVN * LowBound;
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Neutron][CDWeightWindow::WSURVN] * LowBound;
+       }
+     }
+   }
+@@ -381,8 +396,10 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+       for (int j = 1; j <= nCellNum; j++) {
+         double LowBound = cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Photon][i].p_dLowerWeightBound;
+ 
+-        cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Photon][i].p_dUpperWeightBound = WUPN * LowBound;
+-        cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Photon][i].p_dSurvivalWeight = WSURVN * LowBound;
++        cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Photon][i].p_dUpperWeightBound =
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WUPN] * LowBound;
++        cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Photon][i].p_dSurvivalWeight =
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Photon][CDWeightWindow::WSURVN] * LowBound;
+       }
+     }
+   }
+@@ -393,9 +410,9 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+         double LowBound = cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Electron][i].p_dLowerWeightBound;
+ 
+         cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Electron][i].p_dUpperWeightBound =
+-            WUPN * LowBound;
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WUPN] * LowBound;
+         cGeometry.p_vCell[j].p_vWeightWindowParameter[CDParticleState::Electron][i].p_dSurvivalWeight =
+-            WSURVN * LowBound;
++            OWeightWindow.p_vWeightWindowPara[CDParticleState::Electron][CDWeightWindow::WSURVN] * LowBound;
+       }
+     }
+   }
+@@ -405,15 +422,11 @@ void CDInput::ReadWeightWindowBlock(CDGeometry &cGeometry, CDCalMode &cCalMode)
+       OWeightWindow.p_vEnergyBins[meshParticleType].push_back(
+           INFINITY_ENERGY);// 在指定的粒子的能量区间中加入无限大能量上限
+       OWeightWindow.ProcessWeightWindow(cGeometry, meshParticleType, OWeightWindow.p_vEnergyBins[meshParticleType],
+-                                        vTemporaryWeightWindowPara[meshParticleType], WUPN, WSURVN);
++                                        vTemporaryWeightWindowPara[meshParticleType],
++                                        OWeightWindow.p_vWeightWindowPara[meshParticleType][CDWeightWindow::WUPN],
++                                        OWeightWindow.p_vWeightWindowPara[meshParticleType][CDWeightWindow::WSURVN]);
+     }
+   }
+-
+-  // 网格权窗存库。
+-  for (int j = 0; j < OWeightWindow.p_vMeshInputLowBound.size(); j++) {
+-    OWeightWindow.p_vMeshUpperWgtBound.push_back(WUPN * OWeightWindow.p_vMeshInputLowBound[j]);
+-    OWeightWindow.p_vMeshSurvWgt.push_back(WSURVN * OWeightWindow.p_vMeshInputLowBound[j]);
+-  }
+ }
+ void CDInput::ReadWeightWindowMeshBlock(bool &bIsBlockEnd) {
+ 
+diff --git a/tests/var_reduce_wwn_n/inp b/tests/var_reduce_wwn_n/inp
+index bf4e4e19..b84114ba 100644
+--- a/tests/var_reduce_wwn_n/inp
++++ b/tests/var_reduce_wwn_n/inp
+@@ -44,6 +44,7 @@ Source 1 Point = 2.5 0.0 0.0 fraction = 1.0 ENERGY = 2 Particle = 1
+ WeightWindow
+ wwn:n  0.5  0.25  0.125  0.0625  0.03125  0.015625  0.0078125  0.0039  0.00195  0.000977  0  0  
+ wwp:n 5 3 5
++wwp:p 10 4 2
+ 
+ Tally
+ CellTally 1 particle =1 type = 1 cell = 1:10

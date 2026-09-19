@@ -165,8 +165,8 @@ cell 阶段先解决能量边界和粒子类型参数生命周期；mesh 阶段�
 
 | 类别 | 当前发现 | 可能物理影响 | 当前证据 |
 |---|---|---|---|
-| 参数生命周期 | 原生 `WEIGHTWINDOW` 的 `WWP:N/P/E` 使用公共局部变量，未按粒子类型独立保存；`MXSPLN` 未同步到执行参数数组 | 主要改变 roulette/split 的控制策略和效率；异常参数还可能导致除零或无意义分裂 | **E1，源码确认** |
-| cell 能量索引 | neutron/photon/electron 的 WWE 查找都存在 `nErg-1` 路径；首边界、零能量或不合法边界可能触发负索引 | 可能访问错误权窗、越界或使某些能群完全失去 WW；若程序继续运行，可能产生非预期权重 | **E1，待最小复现** |
+| 参数生命周期 | native `WEIGHTWINDOW` 的 `WWP:N/P/E` 曾使用公共局部变量，`MXSPLN` 未同步到执行参数数组；现已按粒子类型保存，构造与执行共用该参数源 | 修复前会改变 roulette/split 的控制策略和效率；修复后不同粒子类型参数不再串扰 | **E3，已修复：cell-WW 3/3 回归 + cross-particle 对照** |
+| cell 能量索引 | neutron/photon/electron 的 WWE 查找都存在 `nErg-1` 路径；常规 $0<E\le E_1$ 映射到 bin 0，$E=0$、不合法能量或边界表异常仍需确认 | $E=0$ 等可达异常状态可能访问错误权窗或越界；常规首能群不应再表述为错位 | **E1，待最小复现** |
 | mesh 数据长度 | 原生 WWMESH lower bound 数量没有和 mesh 数、能量 bin 数做等长检查；`ProcessWeightWindow()` 使用整数除法计算空间数量 | 参数不足时运行期可能访问不存在的 mesh 参数；参数多余时可能静默丢失 | **E1，源码确认** |
 | mesh 最大边界 | 异构 mesh 坐标等于最大边界时，细网格 index 可能等于网格数量，而不是最后一个合法 index | 可能访问越界参数，导致错误分裂、错误 roulette 或崩溃 | **E1，待最小复现** |
 | MPI shared offset | 多粒子类型共享 mesh 时，实际写入跨度和 offset 计算使用了不同的能群长度约定 | 某粒子类型可能读取另一类型或错误位置的权窗参数；并行结果可能与串行不一致 | **E1，源码确认候选** |
@@ -231,7 +231,7 @@ cell 阶段先解决能量边界和粒子类型参数生命周期；mesh 阶段�
 
 ### P0：先保证数据和状态不会错
 
-1. 统一 native `WEIGHTWINDOW` 与 MCNP 路径的 WWP 参数存储；
+1. 统一 native `WEIGHTWINDOW` 与 MCNP 路径的 WWP 参数存储；**已完成 native 路径，MCNP 原本按粒子类型存储**；
 2. 对 `MXSPLN`、lower/survival/upper、能量边界和 mesh 数量做初始化期校验；
 3. 修复 cell WWE 首边界索引；
 4. 修复异构 mesh 最大边界夹取；
@@ -285,7 +285,7 @@ cell 阶段先解决能量边界和粒子类型参数生命周期；mesh 阶段�
 
 ## 状态
 
-- 证据等级：E1（源码审计为主）
-- RMC 状态：未修改
-- 适用范围：当前 RMC commit `b26a81a26f6d43aea405b1c744f0c4cdf4fd8bdf` 的 Linux 源码审查
-- 下一步：Stage 3 修复和针对性验证
+- 证据等级：E1（源码审计为主）；native WWP 参数生命周期修复具 E3 针对性回归/对照证据
+- RMC 状态：native WWP 参数生命周期已修复；其余 W10 问题未修改
+- 适用范围：当前 RMC commit `b26a81a26f6d43aea405b1c744f0c4cdf4fd8bdf` 的 Linux 源码审查；native WWP 修复在 MPI-off cell-WW 回归范围验证
+- 下一步：cell 粒子级 oracle、$E=0$ 可达性确认，以及 mesh WW 修复和针对性验证
