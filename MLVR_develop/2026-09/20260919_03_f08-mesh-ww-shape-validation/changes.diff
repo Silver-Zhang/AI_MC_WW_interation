@@ -1,0 +1,19 @@
+diff --git a/src/WeightWindows.cpp b/src/WeightWindows.cpp
+index e2f0ca59..a18d9e3f 100644
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -72,7 +72,13 @@ void CDWeightWindow::ProcessWeightWindow(CDGeometry &cGeometry, const int partic
+     vector<double> &WeightWindowParameter, double WUPN, double WSURVN) {
+   int totalWeightWindowParaNum = WeightWindowParameter.size();
+   int ergBinNum = int(ErgBins.size()) - 1;
+-  int spatialNum = totalWeightWindowParaNum / ergBinNum;//计算总的带有权窗的几何数目;
++  int spatialNum = p_OWeightWindowMesh.GetTotMeshNum();
++  Output.CheckInputParas(totalWeightWindowParaNum == spatialNum * ergBinNum,
++  [&]() {
++    sprintf(Output.p_sPrintStr,
++            "WWMESH parameter count (%d) does not match mesh count (%d) times energy-bin count (%d).\n",
++            totalWeightWindowParaNum, spatialNum, ergBinNum);
++  }, CDOutput::_ERROR);
+   p_vMeshInformation[particleType].resize(spatialNum);//初始化带有权窗的几何的数目;
+   for (int i = 0; i < spatialNum; i++) {
+     p_vMeshInformation[particleType][i].resize(ergBinNum);

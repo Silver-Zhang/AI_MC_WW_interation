@@ -167,7 +167,7 @@ cell 阶段先解决能量边界和粒子类型参数生命周期；mesh 阶段�
 |---|---|---|---|
 | 参数生命周期 | native `WEIGHTWINDOW` 的 `WWP:N/P/E` 曾使用公共局部变量，`MXSPLN` 未同步到执行参数数组；现已按粒子类型保存，构造与执行共用该参数源 | 修复前会改变 roulette/split 的控制策略和效率；修复后不同粒子类型参数不再串扰 | **E3，已修复：cell-WW 3/3 回归 + cross-particle 对照** |
 | cell 能量索引 | neutron/photon/electron 的 WWE 查找都存在 `nErg-1` 路径；常规 $0<E\le E_1$ 映射到 bin 0，$E=0$、不合法能量或边界表异常仍需确认 | $E=0$ 等可达异常状态可能访问错误权窗或越界；常规首能群不应再表述为错位 | **E1，待最小复现** |
-| mesh 数据长度 | 原生 WWMESH lower bound 数量没有和 mesh 数、能量 bin 数做等长检查；`ProcessWeightWindow()` 使用整数除法计算空间数量 | 参数不足时运行期可能访问不存在的 mesh 参数；参数多余时可能静默丢失 | **E1，源码确认** |
+| mesh 数据长度 | native WWMESH lower-bound 数量曾未与 mesh 数、能量 bin 数等长检查；现强制 $N_{value}=N_sN_g$，不匹配输入在初始化期拒绝 | 避免参数不足时运行期访问不存在参数，以及参数多余时静默失去空间含义 | **E3，已修复：mesh-WW 3/3 回归 + 9/11 项拒绝对照** |
 | mesh 最大边界 | 异构 mesh 坐标等于最大边界时，细网格 index 可能等于网格数量，而不是最后一个合法 index | 可能访问越界参数，导致错误分裂、错误 roulette 或崩溃 | **E1，待最小复现** |
 | MPI shared offset | 多粒子类型共享 mesh 时，实际写入跨度和 offset 计算使用了不同的能群长度约定 | 某粒子类型可能读取另一类型或错误位置的权窗参数；并行结果可能与串行不一致 | **E1，源码确认候选** |
 | split 状态复制 | 通用 split bank 路径没有完整复制 `ParticleAttr` | delay/capture 等物理属性可能变成默认属性，影响属性过滤的 tally 或后续物理处理 | **E1，源码确认** |
