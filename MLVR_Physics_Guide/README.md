@@ -12,7 +12,7 @@
 |---|---|---|
 | [01 RMC 多群伴随输运](01_RMC多群伴随输运/README.md) | standard MGACE fixed-source neutron adjoint 的物理对象、流程、验证和缺陷修复 | **A — Ready（有界）** |
 | 正向输运 | 后续专题：正向固定源与场统计 | 待建立 |
-| 权重窗迭代 | 后续专题：重要性场到 split/roulette 的物理链路 | 待建立 |
+| [RMC 权重窗](02_RMC权重窗/README.md) | 权重窗的无偏关系、RMC 实际链路、源码审计问题和 Stage 3 修复路线 | **E — Defect + D — Integration issue（源码审计）** |
 | ML 代理模型 | 后续专题：重构模型与物理约束 | 待建立 |
 | 无偏性验证 | 后续专题：估计器、权重与统计检验 | 待建立 |
 
@@ -47,6 +47,7 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready�
 - [MPI-off serial provenance](../MLVR_develop/2026-08/20260828_01_f02-mpi-off-serial-provenance/README.md)
 - [RMC 功能审查矩阵](../MLVR_Knowledge/02_RMC功能审查矩阵.md)
 - [已知问题与改进建议](../MLVR_Knowledge/06_已知问题与改进建议.md)
+- [F08 WW 源码审计](../MLVR_develop/2026-09/20260918_02_f08-weight-window-audit/README.md)
 
 ## 变更记录
 
@@ -64,3 +65,5 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready�
 - 2026-08-27：后续 provenance 审核发现 actual formal binary banner 与声明 source snapshot commit 不一致；未发现新的物理 defect，但 F02 下调 C — Verify，等待 fresh-build identity recovery。
 - 2026-08-28：按严格 serial 定义完成 MPI-off fresh build 及 50 条 formal 重跑；strict gates、fixed-source CTest、checksum 与独立审计均通过，F02 在冻结范围恢复 A — Ready（有界）。
 - 2026-09-18：F03 冻结外部 response→source 映射 + RMC 执行的责任边界；20-run formal 通过源支持域、MG 群、一阶矩、无偏/有偏纠偏和复合响应级对照，定为冻结子域 C — Verify。
+- 2026-09-18：新增 RMC 权重窗专题。F08 源码审计发现 WWP 参数生命周期、mesh/能群边界、split 状态复制、MPI shared mesh 和 adjoint+WW 组合边界问题；专题以 E — Defect + D — Integration issue 作为当前状态，不把静态候选写成动态已复现缺陷。
+- 2026-09-19：将 WW 物理算法讨论沉淀到专题：区分 point mesh 与 track mesh 的触发时序，展开 `DoWeightWindows()` 的 roulette/splitting 逻辑，并记录先理解 cell、再处理 mesh 的审查顺序。

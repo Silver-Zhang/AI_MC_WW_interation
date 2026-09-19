@@ -7,6 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-18 | [f08-ww-physics-guide](2026-09/20260918_03_f08-ww-physics-guide/README.md) | 物理导读 / RMC 功能问题说明 | 已完成（物理导读已建立） | F08 | 新增 `MLVR_Physics_Guide/02_RMC权重窗/README.md`；RMC 未修改 |
+| 2026-09-18 | [f08-weight-window-audit](2026-09/20260918_02_f08-weight-window-audit/README.md) | RMC 只读功能与物理语义审查 | 已完成（E — Defect + D — Integration issue） | F08 | RMC 未修改；Stage 3 修复候选登记 W10 |
 | 2026-09-18 | [workflow-simplification](2026-09/20260918_01_workflow-simplification/README.md) | 工作区治理 / 工作流精简 | 已完成 | 无 | 根工作区 `main`；`769ce4b` + `6e8be1e` + `ed5e33a` 已推送双远端；模板 10→5 节、模式 C 三内嵌、验证分场景、保留 A/B/C；新增根目录 `STATUS.md` 进度看板 |
 | 2026-09-17 | [monthly-archive-layout](2026-09/20260917_04_monthly-archive-layout/README.md) | 工作区治理 / 目录结构 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3` 并推送；任务档案按月分层（2026-08/2026-09），引用与忽略规则同步更新 |
 | 2026-09-17 | [workflow-hardening](2026-09/20260917_03_workflow-hardening/README.md) | 工作区治理 / 工作流加固 | 已完成 | 无 | 根工作区 `main`，已提交 `f54cad3`（台账登记 `7307b10`）并推送；新增 `tools/check-archives.sh`、补齐 4 个登记档案、会话纪要改条件必填 |
