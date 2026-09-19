@@ -27,7 +27,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
 | F06 | Adjoint spatial-energy field tally | 待审查 | 输出伴随空间×能群场 | — |
 | F07 | Field统计与RE输出 | 待审查 | 统计误差定义与输出 | — |
-| F08 | WW输入与应用链路 | 待审查 | splitting/roulette接口 | — |
+| F08 | WW输入与应用链路 | E — Defect + D — Integration issue（源码审计，当前 commit） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合 | `20260918_02_f08-weight-window-audit` |
 | F09 | Response统计与FOM | 待审查 | 响应、RE、时间统计 | — |
 | F10 | Field Reconstruction数据边界 | 待审查 | RMC与外部重构接口 | — |
 | F11 | 固定次数双向迭代调度基础 | 待审查 | 多阶段运行组织 | — |
