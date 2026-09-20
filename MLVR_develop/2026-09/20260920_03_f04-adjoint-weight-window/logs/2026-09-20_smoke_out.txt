@@ -1,0 +1,88 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 19:34:18 Sep 20 2026
+Git commit  : 41cf4559c9f029f3c15d6feef2132e7df4be6928
+MPI parallel: OFF
+
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/09/20 20:57:53 Sunday 
+
+------------------ Input File Start -------------------- 
+UNIVERSE 0
+CELL 1 -1  MAT=1 
+CELL 2 1&-2 MAT=1 
+CELL 3 2&-3 MAT=0 VOID=0
+CELL 4 3 MAT=0  VOID=1 
+
+SURFACE
+SURF 1 SO 20.0
+SURF 2 SO 30.0
+SURF 3 SO 50.0
+
+MATERIAL
+mat 1 -1.0
+    1001.50m 2.0
+    8016.50m 1.0
+MGACE erggrp=30 12
+
+FIXEDSOURCE 
+PARTICLE population=100000
+ADJOINT ADJOINTCALCULATION=1 MaxAdjointEnergy=30 30
+
+EXTERNALSOURCE 
+SOURCE 1 FRACTION=1 PARTICLE=1 Point=0 0 45 Weight=1.3636364 energy=0.6
+Distribution 1 type = 4 value = 1.52E-7 4.14E-7 1.13E-6 3.06E-6 8.32E-6 2.26E-5 6.14E-5 1.67E-4 4.54E-4 1.235E-3 3.35E-3 9.12E-3 0.0248 0.0676 0.184 0.303 0.5 0.823 1.353 1.738 2.232 2.865 3.680 6.070 7.79 10.0 12.0 13.500 15.00 17.00 Probability = 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+
+TALLY
+CELLTALLY 1 TYPE=1 PARTICLE=1 CELL=1 ENERGY=-1
+
+WEIGHTWINDOW
+WWMESH:N 0.1
+WWP:N 5 3 5
+WEIGHTWINDOWMESH ScopeX=1 BoundX=-60 60 ScopeY=1 BoundY=-60 60 ScopeZ=1 BoundZ=-60 60
+
+---------------------- Input File End------------------------ 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Cell-mapping method is used to accelerate tally treatment.
+Warning: particle energy larger than maximum energy group upper bound.
+
+Source Number : 100000.
+
+1 warning found.
+
+Neutron collisions per source particle: 2.35 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0045 minutes
+
+Input File = inp   Output File = inp.out     2026/09/20 20:57:53 Sunday
+ Total Calculation Time                   = 2.7084e-01 seconds
+
+Time spent in each part of calculation:
+ Time in Reading input blocks             = 2.3681e-04 seconds
+ Time in Fixed Source Calculation         = 2.7052e-01 seconds
+ Calculation rate in Fixed Source         = 3.6965e+05 particles/second
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 4.1746e-02 seconds

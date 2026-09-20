@@ -7,8 +7,9 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-09-20 | [f08-mesh-ww-mpi-offset](2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) | 缺陷修复 / MPI shared mesh 参数布局 | 已完成（shared offset 修复 + 双粒子 MPI 回归） | W10 | 已修复：全 rank prefix-sum 位移、worker 元数据顺序、`p_vMeshNum` 广播类型；新增两粒子异能群 WWINP 回归（shared 与非共享参考逐位一致）；修复前红测确认判别力；MPI 2/10 rank + OpenMP + serial 全矩阵通过；native track mesh 无回归；RMC 未 commit |
-| 2026-09-20 | [f08-mesh-ww-event-semantics](2026-09/20260920_01_f08-mesh-ww-event-semantics/README.md) | 物理语义审查 / mesh WW 事件时序 | 已完成（MLVR 限 native track mesh） | W10 | native=track、WWINP=point；track 时序闭环；point 最终余段不触发；用户决定不修复 point，MLVR 排除 WWINP；native mesh WW 3/3 回归通过；RMC 未修改 |
+| 2026-09-20 | [f04-adjoint-weight-window](2026-09/20260920_03_f04-adjoint-weight-window/README.md) | 组合功能审查 / 物理兼容性验证 | 已完成（C — Verify，冻结 neutron native-WWMESH 子域） | F04 | E1 标志/WW/bank 链 + E2 smoke + E3 五独立 seed WW off/on paired oracle：逐 seed 与合并 $|z|≤3$（合并 0.27465），WW-on RE 降低；RMC 未改；不外推至 point mesh/耦合粒子/并行 |
+| 2026-09-20 | [f08-mesh-ww-mpi-offset](2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) | 缺陷修复 / MPI shared mesh 参数布局 | 已完成（shared offset 修复 + 双粒子 MPI 回归） | W10 | RMC `b7d8a946`；全 rank prefix-sum、worker 元数据顺序、`p_vMeshNum` 广播类型修复；新回归 shared≡non-shared；MPI 2/10 rank + OpenMP + serial 通过 |
+| 2026-09-20 | [f08-mesh-ww-event-semantics](2026-09/20260920_01_f08-mesh-ww-event-semantics/README.md) | 物理语义审查 / mesh WW 事件时序 | 已完成（MLVR 限 native track mesh） | W10 | native=track、WWINP=point；track 时序闭环；point 最终余段不触发；用户决定 MLVR 排除 WWINP；native mesh WW 3/3 回归通过；RMC 未修改 |
 | 2026-09-19 | [f08-heter-mesh-max-boundary](2026-09/20260919_04_f08-heter-mesh-max-boundary/README.md) | 缺陷修复 / mesh 边界语义 | 已完成（异构 mesh 最大边界） | W10 | RMC `41cf4559`；mesh WW 3/3 + 异构 mesh tally 1/1 回归通过；未 push |
 | 2026-09-19 | [f08-mesh-ww-shape-validation](2026-09/20260919_03_f08-mesh-ww-shape-validation/README.md) | 缺陷修复 / 输入物理契约 | 已完成（native WWMESH 输入形状校验） | W10 | RMC `5ec595e1`；MPI-off build + mesh WW 3/3 回归通过；9/11 项输入被拒绝；未 push |
 | 2026-09-19 | [f08-cell-ww-unbiasedness](2026-09/20260919_02_f08-cell-ww-unbiasedness/README.md) | 物理验证（取消） | 已关闭（不做冗余验证） | W10 | 用户决定转入 mesh WW 实际问题；RMC 未修改 |

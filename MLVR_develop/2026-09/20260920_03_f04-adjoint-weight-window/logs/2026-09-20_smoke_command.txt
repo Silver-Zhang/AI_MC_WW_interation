@@ -1,0 +1,3 @@
+input=/tmp/rmc-f04-adjoint-ww-smoke.ocXNDw/inp
+command=RMC_DATA_PATH=/home/silver/NucXS_Library/RMC_DATA /tmp/rmc-f08-cell-ww-build/bin/RMC
+exit=0

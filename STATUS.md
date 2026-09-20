@@ -24,15 +24,16 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
 | 1 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
-| 2 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
-| 3 | RMC 提交时机 | `MPISHAREWEIGHTWINDOW` 多粒子 offset 修复已在工作区完成并全矩阵验证，是否/何时 commit+push（含新增两个测试用例）由你决定 | [MPI offset 修复](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
-| 4 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
+| 2 | F04 扩展验证 | F04 已在 neutron native `WWMESH`、MPI-off serial 冻结子域达到 C — Verify；是否扩展至 MPI/OpenMP、耦合粒子或多 mesh，取决于第一版实际问题需求 | [F04 审查](MLVR_develop/2026-09/20260920_03_f04-adjoint-weight-window/README.md) |
+| 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
+| 4 | RMC 提交时机 | `MPISHAREWEIGHTWINDOW` 多粒子 offset 修复已在工作区完成并全矩阵验证，是否/何时 commit+push（含新增两个测试用例）由你决定 | [MPI offset 修复](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
+| 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 09-20 | f08-mesh-ww-mpi-offset | 已修复多粒子 `WWINP + MPISHAREWEIGHTWINDOW` shared offset（全 rank prefix-sum + worker 元数据顺序 + `p_vMeshNum` 广播类型）；新增两粒子异能群回归：修复前红测 photon tally 偏移、修复后 shared≡non-shared 参考逐位一致；MPI 2/10 rank + OpenMP + serial 全通过；native track mesh 无回归；RMC 未 commit |
+| 09-20 | f04-adjoint-weight-window | C — Verify（冻结 neutron native-WWMESH、MPI-off serial）：E1 组合链、E2 smoke 与 E3 五种子 WW off/on paired oracle 通过，合并 $z=0.27465$、WW-on RE 降低；RMC 未修改；不外推至 point mesh/耦合粒子/并行 |
 | 09-20 | f08-mesh-ww-event-semantics | track 时序为段起点 WW→tally→移动；point 最终余段不触发；用户决定 MLVR 仅支持 native track mesh、跳过 point 修复；native mesh WW 3/3 回归通过；RMC 未修改 |
 | 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |
 | 09-19 | f08-mesh-ww-shape-validation | native `WWMESH` 现强制空间 mesh × 能群数等于 lower-bound 数量；RMC `5ec595e1`，MPI-off 构建成功、mesh WW 3/3 回归通过，9/11 项输入被拒绝；未 push |
@@ -47,9 +48,9 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **决定 RMC 提交**：`MPISHAREWEIGHTWINDOW` 多粒子 offset 修复 + 两个新回归已就绪（改动快照见档案），等你决定 commit/push 时机；如需 CI 端复核可在 GitLab 跑一次 MPI/omp 任务。
-2. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
-3. 之后才评估是否要 RMC 内建 response→源（原方案 B）与持续能量/角响应等扩展。
+1. **启动 Stage 3/4 接口设计**：F03 外部 response→source 冻结子域、F04 伴随+native WWMESH C—Verify 子域与 F08 native WW 主路径已具备；是否现在立项「双向迭代 WW 框架接口设计」。
+2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
+3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 
 ## 5. 维护方式（Agent 必读）
 
