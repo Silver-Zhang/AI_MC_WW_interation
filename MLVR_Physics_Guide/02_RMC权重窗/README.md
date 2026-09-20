@@ -8,7 +8,7 @@ F08 源码审查将当前状态暂定为：
 
 - **E — Defect**：已发现若干代码级参数、索引、状态复制和并行数据布局问题；
 - **D — Integration issue**：adjoint + WW 的组合边界没有明确支持契约或输入保护；
-- **C — Verify**：cell WWE 首能群边界、`WWINP` 截断输入、track mesh 事件语义等仍需针对性复现。
+- **C — Verify**：cell WWE 首能群边界、`WWINP` 截断输入等仍需针对性复现。第一版 MLVR 只使用 native track mesh，明确不承诺 `WWINP` point mesh 的事件语义。
 
 这不是说所有正常输入都会失败，而是说“简单案例可以运行”不足以证明权重窗实现满足第一版 MLVR 的物理要求。
 
@@ -101,7 +101,9 @@ mesh WW 通过空间 mesh index 和能量 bin 查找权窗参数。当前实现�
 - **Point mesh**：粒子飞行到一个离散位置后，根据当前位置查找 mesh index 和能量 index，再执行一次 WW。当前 RMC 的 point mesh 路径在若干平均自由程切点检查，而不是保证每次穿过 mesh 几何边界都立即检查。
 - **Track mesh**：先将一段飞行轨迹切成多个 mesh segment，对每个 segment 查找权窗并执行 WW，然后对该 segment 做 tally，最后把粒子移动到 segment 末端。
 
-因此，point mesh 更像“在采样点控制权重”，track mesh 更像“沿轨迹段控制权重”。在屏蔽区进入探测器区的例子中，track mesh 可以在进入探测器 segment 时立即使用探测器权窗；point mesh 可能要等到下一个检查点才调整。这个差异首先影响方差控制发生的位置和 tally 的事件时序，不能仅凭两者都能运行就认为物理语义相同。
+因此，point mesh 更像“在采样点控制权重”，track mesh 更像“沿轨迹段控制权重”。在屏蔽区进入探测器区的例子中，track mesh 可以在进入探测器 segment 时立即使用探测器权窗；point mesh 可能要等到下一个检查点才调整。当前审查进一步确认：point 路径的最终余段不再检查，所以不能假设它在碰撞/表面端点一定执行 WW。这个差异首先影响方差控制发生的位置和 tally 的事件时序，不能仅凭两者都能运行就认为物理语义相同。
+
+**第一版 MLVR 的范围决定**：只生成和使用 native `WWMESH` 的 track mesh；不读取、不生成、也不以 `WWINP` point mesh 作为框架输入。若未来需要 MCNP 权重窗互操作，必须单独审查 point mesh 的触发契约和验证方式。
 
 #### `DoWeightWindows()` 的统一执行逻辑
 

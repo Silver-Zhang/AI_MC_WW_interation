@@ -1,0 +1,102 @@
+diff --git a/src/WeightWindows.cpp b/src/WeightWindows.cpp
+index a18d9e3f..9acc2e6a 100644
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -183,13 +183,6 @@ void CDWeightWindow::InitiateWeightWindow(CDCalMode &cCalMode, CDGeometry &cGeom
+                 * p_vMeshInformation[particleType][j][ergPos].p_dLowerWeightBound;
+           }
+         }
+-#ifdef USE_MPI
+-        if (particleType > 1) {
+-          p_vParticleTypeMeshDisplc[particleType] = p_vParticleTypeMeshDisplc[particleType - 1] + int(
+-                  p_vMeshInformation[particleType].size()) *
+-              int(p_vEnergyBins[particleType].size());
+-        }
+-#endif
+       }
+ 
+ #ifdef USE_MPI
+@@ -233,12 +226,12 @@ void CDWeightWindow::InitiateWeightWindow(CDCalMode &cCalMode, CDGeometry &cGeom
+     //broadcast meshinfo
+     if (p_OWeightWindowMesh.p_nGeoType == CDMesh::CUBOID) {
+       for (int indexSpace = 0; indexSpace < 3; indexSpace++) {
+-        OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshNum[indexSpace], MPI_DOUBLE, 0, MPI_COMM_WORLD);
++        OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshNum[indexSpace], MPI_INT, 0, MPI_COMM_WORLD);
+         OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshBound[indexSpace], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+       }
+     } else if (p_OWeightWindowMesh.p_nGeoType == CDMesh::CYLINDER) {
+       for (int indexSpace = 0; indexSpace < 3; indexSpace++) {
+-        OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshNum[indexSpace], MPI_DOUBLE, 0, MPI_COMM_WORLD);
++        OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshNum[indexSpace], MPI_INT, 0, MPI_COMM_WORLD);
+         OParallel.BroadCastVector(p_OWeightWindowMesh.p_vMeshBound[indexSpace], MPI_DOUBLE, 0, MPI_COMM_WORLD);
+       }
+       MPI_Bcast(p_OWeightWindowMesh.p_dOrigin, 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+@@ -246,6 +239,16 @@ void CDWeightWindow::InitiateWeightWindow(CDCalMode &cCalMode, CDGeometry &cGeom
+       MPI_Bcast(p_OWeightWindowMesh.p_dVector, 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+       MPI_Bcast(p_OWeightWindowMesh.p_dCross, 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+     }
++    if (!OParallel.p_bIsMaster) {
++      p_OWeightWindowMesh.CheckHeterMeshPara();
++    }
++    int displacement = 0;
++    for (int particleType = CDParticleState::Neutron;
++         particleType <= p_nMaxParicleType; particleType++) {
++      p_vParticleTypeMeshDisplc[particleType] = displacement;
++      displacement += p_OWeightWindowMesh.GetTotMeshNum() *
++                      (int(p_vEnergyBins[particleType].size()) - 1);
++    }
+     //开共享内存窗口
+     //只有主进程需要开[有数据]的共享内存窗口
+     int nWindowSize = 0;
+@@ -277,9 +280,4 @@ void CDWeightWindow::InitiateWeightWindow(CDCalMode &cCalMode, CDGeometry &cGeom
+ #endif
+   cCalMode.p_nChangeNeuCutWgt = 2;
+   p_OWeightWindowMesh.p_bIsHeterMesh = true;
+-#ifdef USE_MPI
+-  if ((!OParallel.p_bIsMaster) && p_bUseSharedMPIWeightWindow) {
+-    p_OWeightWindowMesh.CheckHeterMeshPara();
+-  }
+-#endif
+ }
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 0404720f..b1935027 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -173,6 +173,8 @@ add_subdirectory( "var_reduce_wwn_n" )
+ add_subdirectory( "var_reduce_wwn_p" )
+ add_subdirectory( "MCNP_WeightWindow" )
+ add_subdirectory( "MCNP_WeightWindow_MPI_ShareMem" )
++add_subdirectory( "MCNP_WeightWindow_MPI_multi_particle" )
++add_subdirectory( "MCNP_WeightWindow_MPI_ShareMem_multi_particle" )
+ add_subdirectory( "WeightWindowGen_Cell" )
+ add_subdirectory( "WeightWindowGen_Mesh" )
+ add_subdirectory( "test_segmentbin" )
+diff --git a/tests/configure.yaml b/tests/configure.yaml
+index 241e9c3e..1afa027f 100644
+--- a/tests/configure.yaml
++++ b/tests/configure.yaml
+@@ -1657,6 +1657,24 @@ cases:
+       serial: *feature_unsupported
+       mpi: *test_on
+       openmp: *test_on
++  MCNP_WeightWindow_MPI_multi_particle:
++    Windows:
++      serial: *test_on
++      mpi: *test_on
++      openmp: *test_on
++    Linux:
++      serial: *test_on
++      mpi: *test_on
++      openmp: *test_on
++  MCNP_WeightWindow_MPI_ShareMem_multi_particle:
++    Windows:
++      serial: *feature_unsupported
++      mpi: *test_on
++      openmp: *test_on
++    Linux:
++      serial: *feature_unsupported
++      mpi: *test_on
++      openmp: *test_on
+   convergent_source_read:
+     Windows:
+       serial: *test_on

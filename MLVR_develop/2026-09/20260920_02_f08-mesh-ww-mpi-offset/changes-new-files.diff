@@ -1,0 +1,275 @@
+diff --git a/tests/MCNP_WeightWindow_MPI_multi_particle/CMakeLists.txt b/tests/MCNP_WeightWindow_MPI_multi_particle/CMakeLists.txt
+new file mode 100644
+index 00000000..ff9b6b2c
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_multi_particle/CMakeLists.txt
+@@ -0,0 +1,8 @@
++foreach (test_file inp WeightWindowRead reference_result)
++  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${test_file}"
++                 "${CMAKE_CURRENT_BINARY_DIR}/${test_file}" COPYONLY)
++endforeach ()
++
++add_test(NAME "test_MCNP_WeightWindow_MPI_multi_particle"
++         COMMAND ${PYTHON_EXECUTABLE} "../execute.py"
++         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_multi_particle/inp b/tests/MCNP_WeightWindow_MPI_multi_particle/inp
+new file mode 100644
+index 00000000..79f3f93b
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_multi_particle/inp
+@@ -0,0 +1,55 @@
++Universe 0
++cell 1    1  & -2  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 2    2  & -3  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 3    3  & -4  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 4    4  & -5  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 5    5  & -6  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 6    6  & -7  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 7    7  & -8  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 8    8  & -9  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 9    9  & -10 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 10   10 & -11 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 21   -1 : -21 : 22 : -23 : 24             mat = 0   void=1  imp:n = 0
++cell 22   11 : -21 : 22 : -23 : 24             mat = 0   void=1  imp:n = 0
++
++Surface
++surf 1   px   0
++surf 2   px   5
++surf 3   px   10
++surf 4   px   15
++surf 5   px   20
++surf 6   px   25
++surf 7   px   30
++surf 8   px   35
++surf 9   px   40
++surf 10  px   45
++surf 11  px   50
++surf 21  py   -50
++surf 22  py   50
++surf 23  pz   -50
++surf 24  pz   50
++
++Material
++mat 1  -0.5
++       1001.60c  2
++       8016.60c  1
++
++Physics
++ParticleMode n p
++Photon PPRODUCEE=0 TTB=0 ANNIHILATION=0 COHERENT=1 PHOTONNUCLEUS=0 DOPPLER=0 UPERERG=100 ERGCUTGMA=1.0E-3 ELECMULTITIMES=1.0
++
++FixedSource
++particle population = 1000
++
++EXTERNALSOURCE
++Source 1 particle=1 position=4 0 0 energy=2 fraction=0.5
++Source 2 particle=2 position=4 0 0 energy=2 fraction=0.5
++
++Tally
++CellTally 1 particle=1 type=1 cell=1:10
++CellTally 2 particle=2 type=1 cell=1:10
++
++MCNPWeightWindow
++WWINP WeightWindowRead
++WWP:N 5 3 5 0 -1 0 0 0
++WWP:P 5 3 5 0 -1 0 0 0
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_multi_particle/WeightWindowRead b/tests/MCNP_WeightWindow_MPI_multi_particle/WeightWindowRead
+new file mode 100644
+index 00000000..9c9450fd
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_multi_particle/WeightWindowRead
+@@ -0,0 +1,17 @@
++         1         1         2        10
++         2         3
++         10        1         1        0     -50     -50
++         1         1         1        1
++   0.0000        10.000       50.000       1.0000
++  -50.000       1.0000       50.000       1.0000
++  -50.000       1.0000       50.000       1.0000
++      1.0000       3.0000
++      3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01
++      3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01
++   5.0000E-01  1.0000       3.0000
++      1.0000E-03  2.0000E-03  3.0000E-03  4.0000E-03  5.0000E-03
++      6.0000E-03  7.0000E-03  8.0000E-03  9.0000E-03  1.0000E-02
++      1.1000E-02  1.2000E-02  1.3000E-02  1.4000E-02  1.5000E-02
++      1.6000E-02  1.7000E-02  1.8000E-02  1.9000E-02  2.0000E-02
++      2.1000E-02  2.2000E-02  2.3000E-02  2.4000E-02  2.5000E-02
++      2.6000E-02  2.7000E-02  2.8000E-02  2.9000E-02  3.0000E-02
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_multi_particle/reference_result b/tests/MCNP_WeightWindow_MPI_multi_particle/reference_result
+new file mode 100644
+index 00000000..84142518
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_multi_particle/reference_result
+@@ -0,0 +1,30 @@
++
++
++================================ Tally Table Start ================================ 
++============================= 2 cell tally in total ==============================
++
++--------- ID = 1, Particle = neutron, Type = flux, Estimator = track length, Number of cell/surface/point bins  = 10 --------------
++Cell                                 Ave            RE
++1                                6.9523E+00      5.4967E-02
++2                                7.8855E+00      8.1619E-02
++3                                6.4704E+00      1.0808E-01
++4                                5.3582E+00      1.0775E-01
++5                                4.4862E+00      1.1787E-01
++6                                3.5294E+00      1.3510E-01
++7                                1.8891E+00      1.6673E-01
++8                                1.0306E+00      2.0646E-01
++9                                6.4356E-01      2.5718E-01
++10                               2.3312E-01      2.5404E-01
++
++--------- ID = 2, Particle = photon, Type = flux, Estimator = track length, Number of cell/surface/point bins  = 10 --------------
++Cell                                 Ave            RE
++1                                6.2255E+00      5.5886E-02
++2                                5.2836E+00      5.8107E-02
++3                                4.6894E+00      7.2243E-02
++4                                4.0943E+00      7.3204E-02
++5                                3.3413E+00      7.4493E-02
++6                                2.6008E+00      8.8991E-02
++7                                2.2237E+00      9.7099E-02
++8                                1.7704E+00      1.0098E-01
++9                                1.4588E+00      1.0594E-01
++10                               1.0792E+00      1.1524E-01
+diff --git a/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/CMakeLists.txt b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/CMakeLists.txt
+new file mode 100644
+index 00000000..3ac3dfa2
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/CMakeLists.txt
+@@ -0,0 +1,8 @@
++foreach (test_file inp WeightWindowRead reference_result)
++  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${test_file}"
++                 "${CMAKE_CURRENT_BINARY_DIR}/${test_file}" COPYONLY)
++endforeach ()
++
++add_test(NAME "test_MCNP_WeightWindow_MPI_ShareMem_multi_particle"
++         COMMAND ${PYTHON_EXECUTABLE} "../execute.py"
++         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/inp b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/inp
+new file mode 100644
+index 00000000..1b10db98
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/inp
+@@ -0,0 +1,56 @@
++Universe 0
++cell 1    1  & -2  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 2    2  & -3  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 3    3  & -4  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 4    4  & -5  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 5    5  & -6  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 6    6  & -7  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 7    7  & -8  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 8    8  & -9  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 9    9  & -10 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 10   10 & -11 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1
++cell 21   -1 : -21 : 22 : -23 : 24             mat = 0   void=1  imp:n = 0
++cell 22   11 : -21 : 22 : -23 : 24             mat = 0   void=1  imp:n = 0
++
++Surface
++surf 1   px   0
++surf 2   px   5
++surf 3   px   10
++surf 4   px   15
++surf 5   px   20
++surf 6   px   25
++surf 7   px   30
++surf 8   px   35
++surf 9   px   40
++surf 10  px   45
++surf 11  px   50
++surf 21  py   -50
++surf 22  py   50
++surf 23  pz   -50
++surf 24  pz   50
++
++Material
++mat 1  -0.5
++       1001.60c  2
++       8016.60c  1
++
++Physics
++ParticleMode n p
++Photon PPRODUCEE=0 TTB=0 ANNIHILATION=0 COHERENT=1 PHOTONNUCLEUS=0 DOPPLER=0 UPERERG=100 ERGCUTGMA=1.0E-3 ELECMULTITIMES=1.0
++
++FixedSource
++particle population = 1000
++
++EXTERNALSOURCE
++Source 1 particle=1 position=4 0 0 energy=2 fraction=0.5
++Source 2 particle=2 position=4 0 0 energy=2 fraction=0.5
++
++Tally
++CellTally 1 particle=1 type=1 cell=1:10
++CellTally 2 particle=2 type=1 cell=1:10
++
++MCNPWeightWindow
++MPISHAREWEIGHTWINDOW
++WWINP WeightWindowRead
++WWP:N 5 3 5 0 -1 0 0 0
++WWP:P 5 3 5 0 -1 0 0 0
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/WeightWindowRead b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/WeightWindowRead
+new file mode 100644
+index 00000000..9c9450fd
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/WeightWindowRead
+@@ -0,0 +1,17 @@
++         1         1         2        10
++         2         3
++         10        1         1        0     -50     -50
++         1         1         1        1
++   0.0000        10.000       50.000       1.0000
++  -50.000       1.0000       50.000       1.0000
++  -50.000       1.0000       50.000       1.0000
++      1.0000       3.0000
++      3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01
++      3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01  3.0000E-01
++   5.0000E-01  1.0000       3.0000
++      1.0000E-03  2.0000E-03  3.0000E-03  4.0000E-03  5.0000E-03
++      6.0000E-03  7.0000E-03  8.0000E-03  9.0000E-03  1.0000E-02
++      1.1000E-02  1.2000E-02  1.3000E-02  1.4000E-02  1.5000E-02
++      1.6000E-02  1.7000E-02  1.8000E-02  1.9000E-02  2.0000E-02
++      2.1000E-02  2.2000E-02  2.3000E-02  2.4000E-02  2.5000E-02
++      2.6000E-02  2.7000E-02  2.8000E-02  2.9000E-02  3.0000E-02
+\ No newline at end of file
+diff --git a/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/reference_result b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/reference_result
+new file mode 100644
+index 00000000..84142518
+--- /dev/null
++++ b/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/reference_result
+@@ -0,0 +1,30 @@
++
++
++================================ Tally Table Start ================================ 
++============================= 2 cell tally in total ==============================
++
++--------- ID = 1, Particle = neutron, Type = flux, Estimator = track length, Number of cell/surface/point bins  = 10 --------------
++Cell                                 Ave            RE
++1                                6.9523E+00      5.4967E-02
++2                                7.8855E+00      8.1619E-02
++3                                6.4704E+00      1.0808E-01
++4                                5.3582E+00      1.0775E-01
++5                                4.4862E+00      1.1787E-01
++6                                3.5294E+00      1.3510E-01
++7                                1.8891E+00      1.6673E-01
++8                                1.0306E+00      2.0646E-01
++9                                6.4356E-01      2.5718E-01
++10                               2.3312E-01      2.5404E-01
++
++--------- ID = 2, Particle = photon, Type = flux, Estimator = track length, Number of cell/surface/point bins  = 10 --------------
++Cell                                 Ave            RE
++1                                6.2255E+00      5.5886E-02
++2                                5.2836E+00      5.8107E-02
++3                                4.6894E+00      7.2243E-02
++4                                4.0943E+00      7.3204E-02
++5                                3.3413E+00      7.4493E-02
++6                                2.6008E+00      8.8991E-02
++7                                2.2237E+00      9.7099E-02
++8                                1.7704E+00      1.0098E-01
++9                                1.4588E+00      1.0594E-01
++10                               1.0792E+00      1.1524E-01

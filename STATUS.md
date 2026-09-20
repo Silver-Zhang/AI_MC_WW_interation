@@ -1,6 +1,6 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-09-19** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页
+> **最后更新：2026-09-20** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页
 > 详细任务清单（47 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
@@ -14,24 +14,26 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native WWP、WWMESH 输入形状与异构最大边界已修复并完成 MPI-off 回归；事件时序、MPI、状态复制和 adjoint 组合仍待处理 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native WWP、WWMESH 输入形状、异构最大边界与 MCNP `WWINP` MPI shared mesh 多粒子 offset 已修复并完成 MPI-off / MPI 2·10 rank 回归；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F08 源码审计发现 WW 不能直接作为可靠基础能力放行；应先处理确定性缺陷和 adjoint 组合边界，再设计双向迭代框架。**
+一句话：**F08 的主要确定性缺陷（WWP 生命周期、WWMESH 形状校验、异构最大边界、WWINP MPI shared offset）已修复并回归；下一步是状态复制/adjoint 组合边界与双向迭代框架设计。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
-| 1 | **F08 后续修复** | 是否继续审查 point/track mesh 事件时序；之后处理 MPI shared offset、split 属性与 adjoint+WW | [异构边界修复](MLVR_develop/2026-09/20260919_04_f08-heter-mesh-max-boundary/README.md) |
-| 2 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
-| 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
+| 1 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
+| 2 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
+| 3 | RMC 提交时机 | `MPISHAREWEIGHTWINDOW` 多粒子 offset 修复已在工作区完成并全矩阵验证，是否/何时 commit+push（含新增两个测试用例）由你决定 | [MPI offset 修复](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
 | 4 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-20 | f08-mesh-ww-mpi-offset | 已修复多粒子 `WWINP + MPISHAREWEIGHTWINDOW` shared offset（全 rank prefix-sum + worker 元数据顺序 + `p_vMeshNum` 广播类型）；新增两粒子异能群回归：修复前红测 photon tally 偏移、修复后 shared≡non-shared 参考逐位一致；MPI 2/10 rank + OpenMP + serial 全通过；native track mesh 无回归；RMC 未 commit |
+| 09-20 | f08-mesh-ww-event-semantics | track 时序为段起点 WW→tally→移动；point 最终余段不触发；用户决定 MLVR 仅支持 native track mesh、跳过 point 修复；native mesh WW 3/3 回归通过；RMC 未修改 |
 | 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |
 | 09-19 | f08-mesh-ww-shape-validation | native `WWMESH` 现强制空间 mesh × 能群数等于 lower-bound 数量；RMC `5ec595e1`，MPI-off 构建成功、mesh WW 3/3 回归通过，9/11 项输入被拒绝；未 push |
 | 09-19 | f08-cell-ww-core-repair | native `WWP:N/P/E` 参数生命周期已修复；MPI-off 构建成功、cell WW 3/3 回归通过，额外 `WWP:P` 不再影响 neutron tally；未 push |
@@ -45,8 +47,8 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **先开 Stage 3 F08 修复任务**：处理 W10 中的 WWP 参数、mesh 输入/边界、MPI shared offset、split 属性和 adjoint+WW 组合边界；完成后再设计框架接口。
-2. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库与物理导读已随 F03 结论同步。
+1. **决定 RMC 提交**：`MPISHAREWEIGHTWINDOW` 多粒子 offset 修复 + 两个新回归已就绪（改动快照见档案），等你决定 commit/push 时机；如需 CI 端复核可在 GitLab 跑一次 MPI/omp 任务。
+2. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 3. 之后才评估是否要 RMC 内建 response→源（原方案 B）与持续能量/角响应等扩展。
 
 ## 5. 维护方式（Agent 必读）
