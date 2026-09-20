@@ -1,179 +1,60 @@
 # Agent 快速上下文卡片
 
-> 后续 Agent 接手时先读本页；需要细节再翻对应专题文档。
+> **新会话 / 换模型先读这一页，不要通读知识库。** 最后更新：2026-09-20。
+> 本页只留骨架与指针；任何具体事实以任务档案与专题文档为准。
 
-## 当前项目目标
+## 交接包（开场只读这些，≈4–5k token）
 
-本工作区用于 RMC 双向迭代权重窗（Bidirectional Adaptive Weight Window）基础框架开发。
+1. 根目录 [`STATUS.md`](../STATUS.md) —— 现在做到哪一步、等你拍板什么、下一步；
+2. 本页；
+3. 当前任务档案的 **§1 / §3 / §4**（不要读全档案）。
 
-当前核心目标不是立即接入 DNN/PINN 等高级机器学习方法，而是首先建立：
+> 需要某个事实时：先 `grep -n "<关键词>" <文件>` 拿行号再按行区间读；**不要**为求保险通读知识库或历史档案。
 
-```text
-RMC Monte Carlo capability
-        ↓
-Field statistics
-        ↓
-Field processing boundary
-        ↓
-Weight Window update
-        ↓
-Forward–Adjoint iterative framework
-```
+## 项目目标
 
-## 当前开发原则
+RMC 双向迭代权重窗（Bidirectional Adaptive Weight Window）基础框架：
+**RMC MC 能力 → 场统计 → 场处理边界 → WW 更新 → 正–伴随迭代**。
+第一版先搭通框架，不急着接 DNN/PINN；方法与 Field 定义见 `01_双向迭代基础框架_方法与功能需求.md` §2–§3。
 
-1. RMC 是成熟蒙特卡罗软件，优先复用已有功能。
-2. 不提前修改 RMC 架构，先完成需求分析和功能审查。
-3. 先确认算法需求，再检查 RMC 是否满足。
-4. 功能确认后，再分析接口并逐步连接。
-5. 一次只处理一个逻辑功能，并进行记录和验证。
-6. 方案由用户逐阶段拍板，Agent 不得自行跨阶段扩展设计。
-7. Stage 2 严格执行 `Audit ≠ Repair`：发现问题只记录证据和分类，不修改 RMC 源码。
+## 铁律（细则见根目录 `AGENTS.md`）
 
-## 第一版方法边界（已冻结）
+1. 先选 A/B/C 模式再走五步；**第 ③ 步人拍板前不得改 `RMC/`**。
+2. 不擅自更新基准 / 不擅自 commit·push `RMC/`。
+3. 验证分场景：物理从严，工程/文档从简；说不清的写“未验证”。
+4. **结论类事实只在一处维护**：任务档案 §4 + `02 审查矩阵`顶部速览；其它文档只放指针。
+5. 随时问（每次 ≤3 问、给选项），不用长文档代替对话。
 
-- 第一版采用多群 Adjoint transport。
-- 暂不考虑连续能量伴随输运。
-- Field = 空间网格 × 能群上的 mean field + relative error (RE)。
-- Forward/Adjoint Field 数据规范尽量统一，但物理语义和生命周期严格区分。
-- 第一版暂不进行跨 iteration 历史场累计。
-- Field Reconstruction 保持方法无关，不绑定具体 ML 模型。
-- 第一版采用用户给定的固定 iteration 次数，不做自动收敛终止。
+## 到哪读什么（按需取节，别通读）
 
-## Bootstrap Stage（已冻结）
+| 想知道的 | 读 | 规模 |
+|---|---|---|
+| 进度 / 待拍板 / 下一步 | `STATUS.md` | ≤60 行 |
+| 任务怎么做、归档怎么写 | `MLVR_develop/README.md` §任务模式 + §五步工作流 + §6 清单 | 3 节 |
+| F## 功能能不能用、边界在哪 | `02_RMC功能审查矩阵.md` 顶部结论速览 | ~20 行 |
+| 有哪些坑 / 缺陷 | `06_已知问题与改进建议.md` §已知问题 | 1 表 |
+| 某个决定为什么这么定 | `DECISIONS.md`（`grep -n "D0xx"`） | 单条 |
+| 第一版方法与 Field | `01_双向迭代基础框架_方法与功能需求.md` §3 / §5 / §6 | 单节 |
+| 物理上意味着什么（不写代码的人也看得懂） | `MLVR_Physics_Guide/README.md` | ≤70 行 |
+| 审查方法论与证据标准 | `03_RMC功能审查规范.md` §3 / §4 | 单节 |
+| 某任务当时怎么做的 | `MLVR_develop/YYYY-MM/<任务>/README.md`，先读头部导航再取节 | 单节 |
 
-正式 iteration 前设置独立 Bootstrap Stage：
+## 已冻结的第一版边界（一句话）
 
-```text
-Low-particle Analog Forward MC
-        ↓
-Bootstrap Forward Field + RE
-        ↓
-Field Reconstruction
-        ↓
-WW_A(1)
-```
-
-第一版 Bootstrap：
-
-- 使用真实物理问题；
-- 不使用 WW；
-- 不修改材料密度；
-- 与正式 iteration 使用相同 Field mesh 和能群结构；
-- 不属于正式 iteration；
-- 不参与正式 FOM 比较；
-- 不进入跨 iteration 历史统计；
-- 不作为最终物理结果。
-
-后续可研究 reduced-density / auxiliary-VR / external-field / multi-stage Bootstrap，但第一版不实现。
-
-## 第一版正式双向迭代
-
-```text
-WW_A(k)
-  ↓
-Adjoint MC
-  ↓
-Adjoint Field + RE
-  ↓
-Field Reconstruction
-  ↓
-WW_F(k)
-  ↓
-Forward MC
-  ↓
-Forward Field + RE
-  ↓
-Field Reconstruction
-  ↓
-WW_A(k+1)
-```
-
-正式 iteration 从 `k = 1` 开始。
-
-## Stage 2 审查规则
-
-当前已进入 **Stage 2 — RMC Existing Capability Audit**。
-
-统一协议：`MLVR_Knowledge/03_RMC功能审查规范.md`。
-
-审查链：
-
-```text
-Requirement → Existence → Actual Behavior → Requirement Match
-→ Integration Compatibility → Targeted Verification → Classification
-```
-
-分类：
-
-- A Ready
-- B Extend
-- C Verify
-- D Integration issue
-- E Defect
-- F Missing
-
-源码证据必须尽量记录 `RMC commit + file:function:line`。不得仅凭函数名、注释或关键词宣称功能正确。
-
-## 当前正式任务
-
-**F02 — Multigroup Adjoint Transport Audit** 的静态审查、第一阶段 L4 数值验证和 W5/W6/W7/W9 Stage 3 修复均已完成；W9 已补全普通 photon 与 photon→neutron 次级同形分支。
-
-任务档案：
-
-- `MLVR_develop/2026-08/20260824_04_f02-mg-adjoint-transport-audit/`：存在性审查；
-- `MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/`：物理静态复核；
-- `MLVR_develop/2026-08/20260825_01_f02-adjoint-numerical-verification/`：V0/V2/V4/V3 数值验证。
-- `MLVR_develop/2026-08/20260825_05_f02-w5-local-density-adjoint-weight-fix/`：W5 修复与密度不变性验证。
-- `MLVR_develop/2026-08/20260825_06_f02-w5-nonuniform-density-reciprocity-verification/`：W5 等体积双区域响应级互易性验证。
-- `MLVR_develop/2026-08/20260825_04_f02-w7-neutron-only-adjoint-init-fix/`：W7 修复与回归验证。
-- `MLVR_develop/2026-08/20260825_07_f02-w6-double-nubar-kernel-consistency-fix/`：W6 total nubar 核一致性修复与验证。
-- `MLVR_develop/2026-08/20260825_11_f02-angular-density-asset-qualification/`：私有 MGACE 资格化与 W9 低光学厚度动态确认。
-- `MLVR_develop/2026-08/20260825_12_f02-adjoint-negative-one-variable-angular-fix/`：W9 一行根因修复与三种子动态验证，已完成。
-- `MLVR_develop/2026-08/20260826_01_f02-adjoint-photon-negative-angular-audit/`：W9 photon/secondary 两行根因修复、生产 ABI 探针与三种子动态验证，已完成。
-- `MLVR_develop/2026-08/20260826_02_f02-remaining-angular-representations/`：四类其余条件角表示 40/40 clean formal，已完成。
-- `MLVR_develop/2026-08/20260827_01_f02-density-mesh-hdf5-readiness/`：真实 position-dependent density mesh 10/10 clean formal，已完成。
-- `MLVR_develop/2026-08/20260827_02_f02-nnubar-material-reciprocity/`：NNUBAR=1 与双裂变核混合材料 20/20 clean formal，已完成。
-- `MLVR_develop/2026-08/20260827_03_f02-final-a-readiness-review/`：冻结需求、证据矩阵和最终有界 A 裁定。
-
-当前结论：审查范围内的 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready（有界）**。作用域为 Linux x86_64、`ais=OFF`：MPI-off serial build（OpenMP off），以及本机 Open MPI 4.1.6 的 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`。MPI-off task 01 已闭合 40 angular + 10 density raw formal、逐 seed/aggregate strict gates、fixed-source CTest、SHA256 manifest 和独立审计；并行专项完成响应级、条件角 aggregate 与独立 seed 复验。原 `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留为风险记录。
-
-W5/W6/W7 在 RMC `6d208751...`；W9 三行已提交为 `76cbfe72...`，均在 `src/GetMgExitErgMu.cpp`；验证执行时的冻结快照为 `6d208751... +` diff SHA256 `5eec92f9...c756`，MPI-off binary SHA256 为 `f7354ed9...6d3e`。`76cbfe72...` 将该 W9 diff 固化为可追溯提交，并已推送至团队仓库 `origin/Neural_Network_WW_Iteration`（同步至 `b26a81a2`）。A 严格限于已记录的 MPI-off 与本机 `2×1/4×1/2×2/2×4` 冻结范围。
-
-有界 A 不覆盖完整 photon/耦合粒子、CE、AIS/HDF5 核数据、delayed、GPT、Windows、反射边界或任意机制组合；并行范围也不覆盖更多 rank/thread、跨节点或其他 MPI 实现；也不替代 F03、F04、F06/F07。开放式“更多几何/边界”不是冻结 F02 的无限门槛；如真实第一版问题使用当前未测机制，应另立针对性审查。
-
-F03 已完成冻结首版子域审查，档案为 `MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/`，当前 **C — Verify（冻结子域）**。方案 A 由人/MLVR 外部控制器把非负标量、cell 体积积分、空间×MG 群响应转换为显式 `EXTERNALSOURCE/SOURCE`，RMC 负责采样、MG 定位和伴随输运；pilot/formal 已通过 source support、`E[w·1_i]=H_i`、无偏/有偏纠偏和复合响应级对照。RMC 内建 response-to-source 及反应率、角、表面、时间、符号响应等不在范围内，扩展需另立任务。
-
-面向物理读者的解释已按物理专题整理到 `MLVR_Physics_Guide/`；首个专题为 `01_RMC多群伴随输运/`。后续若修复改变 W5/W6/W7/W9 的状态、物理影响或适用边界，除更新技术证据文档外，还必须同步更新该专题。
+多群 Adjoint transport（不含连续能量）；Field = 空间网格 × 能群 mean + RE；正/伴随语义分离；无跨 iteration 历史场；固定迭代次数；Field Reconstruction 与模型无关；Bootstrap 用低粒子 Analog Forward、不参与 FOM 与最终结果。
+完整条款见 `01_…方法与功能需求.md` §6–§7；审查分工与 A–F 分类见 `03_RMC功能审查规范.md`；F02 主线档案在 `MLVR_develop/2026-08/`（`20260824_04` … `20260830_01`），**按需 grep，不要逐个读**。
+F02/F03/F04/F08 的边界条款与 SHA256 证据都在各自档案 §4——要引用时读档案，不要引用本页；结论变化时同步 `MLVR_Physics_Guide/`。
 
 ## 开发流程
 
-所有任务先选 A/B/C 模式（默认 B；涉及物理结论、适用边界、统计解释或训练数据治理时用 C），再走五步：
-
-```text
-选 A/B/C ─► ① 立项 ─► ② 设计/定位 ─► ⛔ 人拍板 ─► ④ 实施+自验 ─► ⑤ 归档
-```
-
-详细规则见 `MLVR_develop/README.md`（模式表、5 节归档清单、验证分场景）。另见：
-
-- `AGENTS.md`
-- `MLVR_Knowledge/00_开发总纲与阶段路线.md`
-- `MLVR_Knowledge/01_双向迭代基础框架_方法与功能需求.md`
-- `MLVR_Knowledge/02_RMC功能审查矩阵.md`
-- `MLVR_Knowledge/03_RMC功能审查规范.md`
-- `MLVR_Knowledge/DECISIONS.md`
+先选 A/B/C 模式（默认 B；涉及物理结论 / 适用边界 / 统计解释 / 训练数据治理时用 C），再走五步：
+**① 立项 → ② 设计 → ⛔ 人拍板 → ④ 实施+自验 → ⑤ 归档**。
+细则见 `MLVR_develop/README.md` 与根目录 `AGENTS.md`；阶段路线见 `00_开发总纲与阶段路线.md`。
 
 ## 当前阶段
 
-- Stage 0：基础工作流已建立。
-- Stage 1：第一版框架功能需求基线已冻结。
-- **Stage 2/3（RMC 主线）：F02 多群伴随输运已完成有界 A — Ready；F03 伴随源定义已完成 C — Verify（冻结首版子域）。**
+- Stage 0 ✅ ／ Stage 1 ✅ 需求基线已冻结 ／ **Stage 2 🟡 主线审查基本收口** ／ Stage 3–4 ⏭ 下一步（缺口修复 → 接口设计）。
+- 结论速览：**F02** 有界 A–Ready；**F03** C–Verify（冻结子域，外部 response→source）；**F04** C–Verify（neutron native WWMESH、MPI-off serial）；**F08** native WW 主路径多处修复完成。
+- 边界与证据以档案 §4 为准：W5/W6/W7/W9 提交 `6d208751`、`76cbfe72`（远端 `b26a81a2`），reference/benchmark 未更新；冻结快照与 binary SHA256 见 `20260828_01`、`20260825_09` 等档案。
 
-W5/W6/W7/W9 已在 RMC `Neural_Network_WW_Iteration`（`6d208751`、`76cbfe72`，远端同步至 `b26a81a2`）提交并推送；reference/benchmark 未更新。F02 的 raw-evidence、source—binary provenance 与 serial 语义审计缺口均已由任务 01 解决；已验证 MPI/MPI+OpenMP 矩阵由 20260830 与 20260831 专项闭合。A 严格限于记录的已验证范围，不外推到未审查能力。
-
-## 并行工作线（2026-09）
-
-- **AIMC 期刊修订系列**（09-03…09-16，外部 Agent 执行、本仓库登记）：forward cell-wise tally 缺陷（D）与 mesh tally / metrics pipeline 修复、伴随输运算子审查、前向—伴随互易性、WW 事件语义、迭代历史与场重构审查、Task 08A 实验冻结；成都会议 Word 终稿质检。**Task 08B 正式实验待授权**。
-- **工作区治理**（09-17/18）：任务档案按月分层 `MLVR_develop/YYYY-MM/`、新增 `tools/check-archives.sh` 与 `tools/repo-status.sh`（`f54cad3`）；工作流精简为五步并保留 A/B/C 模式与验证分场景（`769ce4b`）；新增根目录 `STATUS.md` 进度看板（`6e8be1e`）。看当前进度直接读 `STATUS.md`。
-
-**下一步（RMC 主线）**：使用 F03 冻结的外部 response→source 契约接入 MLVR 控制器；若需要其他响应类型或 RMC 内建转换，再另立任务。
+**下一步（RMC 主线）**：用 F03 冻结的外部 response→source 契约接入 MLVR 控制器；其它响应类型或 RMC 内建转换需另立任务。
