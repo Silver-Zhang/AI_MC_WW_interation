@@ -1,0 +1,15 @@
+Independent-review evidence capture
+Generated: 2026-09-20
+Scope rule: RMC source and test cases only; no knowledge-base, task archive, or prior-review material used.
+
+RMC HEAD: b7d8a946417eea091a30c09c233054aa077570ee
+RMC worktree status:
+
+Tests whose inp contains ADJOINT:
+/home/workspace/AI_MC_WW_interation/RMC/tests/fixed_source_adjoint/inp
+/home/workspace/AI_MC_WW_interation/RMC/tests/pcqs_adj_mg_s/inp
+/home/workspace/AI_MC_WW_interation/RMC/tests/pcqs_adj_mg_d/inp
+
+Tests whose inp contains both ADJOINT and WEIGHTWINDOW/WWMESH/WWP:
+
+Native RMC executable candidates:

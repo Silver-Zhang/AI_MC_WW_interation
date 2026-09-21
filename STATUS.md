@@ -28,12 +28,14 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | RMC 提交时机 | `MPISHAREWEIGHTWINDOW` 多粒子 offset 修复已在工作区完成并全矩阵验证，是否/何时 commit+push（含新增两个测试用例）由你决定 | [MPI offset 修复](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
+| 6 | 独立 MG adjoint+WW 审查 | 审查报告提出 MG 的 `p_dErg` 组号与 native WW 能量边界可能不一致；是否接受为阻塞缺陷并立项最小 identity/无偏性验证 | [独立报告](MLVR_develop/2026-09/20260920_05_independent-adjoint-ww-physics-review/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
 | 09-20 | f04-adjoint-weight-window | C — Verify（冻结 neutron native-WWMESH、MPI-off serial）：E1 组合链、E2 smoke 与 E3 五种子 WW off/on paired oracle 通过，合并 $z=0.27465$、WW-on RE 降低；RMC 未修改；不外推至 point mesh/耦合粒子/并行 |
+| 09-20 | independent-adjoint-ww-physics-review | 独立 E1 源码/测试输入审查：报告认为 MG `p_dErg` 组号与 native WW 物理能量边界的契约未证明一致，且未找到 combined input；结论待人工决定，RMC 未修改 |
 | 09-20 | f08-mesh-ww-event-semantics | track 时序为段起点 WW→tally→移动；point 最终余段不触发；用户决定 MLVR 仅支持 native track mesh、跳过 point 修复；native mesh WW 3/3 回归通过；RMC 未修改 |
 | 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |
 | 09-19 | f08-mesh-ww-shape-validation | native `WWMESH` 现强制空间 mesh × 能群数等于 lower-bound 数量；RMC `5ec595e1`，MPI-off 构建成功、mesh WW 3/3 回归通过，9/11 项输入被拒绝；未 push |
