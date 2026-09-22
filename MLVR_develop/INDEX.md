@@ -7,7 +7,9 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-22 | [f04-independent-ww-verification](2026-09/20260922_01_f04-independent-ww-verification/README.md) | 独立验证 / MG adjoint + native WW | 已完成（独立验证，正式分类待人工决定） | F04 | 验证：群坐标 `WWE:N` 下 paired WW on/off 通过（合并 $z=-1.16537$），但 FOM 比值 0.8522；独立确认 MG group-coordinate 与 physical-MeV `WWE:N` 存在 Potential mismatch；RMC 未修改 |
 | 2026-09-20 | [independent-adjoint-ww-physics-review](2026-09/20260920_05_independent-adjoint-ww-physics-review/README.md) | 独立物理审查 / MG adjoint + native WW | 待决策 | 无 | E1 源码/测试输入独立审查；发现 MG 组号与 WW 能量坐标契约缺口，未运行动态验证，RMC 未修改 |
+| 2026-09-20 | [context-budget](2026-09/20260920_04_context-budget/README.md) | 工作区治理 / 上下文预算与阅读纪律 | 已完成 | 无 | 根工作区 `adaabe8`+`16599a9`；AGENT_CONTEXT 179→60 行、6 份长文档加导航头、硬规则 12；RMC/AIMC 未修改 |
 | 2026-09-20 | [f04-adjoint-weight-window](2026-09/20260920_03_f04-adjoint-weight-window/README.md) | 组合功能审查 / 物理兼容性验证 | 已完成（C — Verify，冻结 neutron native-WWMESH 子域） | F04 | E1 标志/WW/bank 链 + E2 smoke + E3 五独立 seed WW off/on paired oracle：逐 seed 与合并 $|z|≤3$（合并 0.27465），WW-on RE 降低；RMC 未改；不外推至 point mesh/耦合粒子/并行 |
 | 2026-09-20 | [f08-mesh-ww-mpi-offset](2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) | 缺陷修复 / MPI shared mesh 参数布局 | 已完成（shared offset 修复 + 双粒子 MPI 回归） | W10 | RMC `b7d8a946`；全 rank prefix-sum、worker 元数据顺序、`p_vMeshNum` 广播类型修复；新回归 shared≡non-shared；MPI 2/10 rank + OpenMP + serial 通过 |
 | 2026-09-20 | [f08-mesh-ww-event-semantics](2026-09/20260920_01_f08-mesh-ww-event-semantics/README.md) | 物理语义审查 / mesh WW 事件时序 | 已完成（MLVR 限 native track mesh） | W10 | native=track、WWINP=point；track 时序闭环；point 最终余段不触发；用户决定 MLVR 排除 WWINP；native mesh WW 3/3 回归通过；RMC 未修改 |
