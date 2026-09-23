@@ -28,13 +28,14 @@ MLVR_develop/*/*/**/cases/**
 !MLVR_develop/*/*/**/cases/*.sh
 !MLVR_develop/*/*/**/cases/*.inp
 !MLVR_develop/*/*/**/cases/*.block
-MLVR_develop/*/*/runs/
+MLVR_develop/*/*/runs*/
 MLVR_develop/*/*/formal/
 MLVR_develop/*/*/pilot/
 MLVR_develop/*/*/pilot_aborted_high_density/
 MLVR_develop/*/*/**/*.h5
 MLVR_develop/*/*/logs/**/inp.PTRAC
-#   大体积 PTRAC 原件不入库（-event-counts.txt 摘要保留）
+#   大体积 PTRAC 原件不入库（.PTRAC / *-ptrac.txt；摘要与日志保留）
+MLVR_develop/*/*/logs/**/*.PTRAC
 MLVR_develop/*/*/logs/**/*-ptrac.txt
 MLVR_develop/*/*/logs/**/inp.cumrossialpha
 MLVR_develop/*/*/logs/**/inp.fissmul

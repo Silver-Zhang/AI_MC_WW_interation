@@ -1,0 +1,9 @@
+ M docs/source-en/usersguide/VarianceReduction.rst
+ M "docs/source/usersguide/\345\207\217\346\226\271\345\267\256.rst"
+ M src/DoMeshWeightWindow.cpp
+ M src/DoWeightWindow.cpp
+ M src/GmaGeoTracking.cpp
+ M src/RayTracking.cpp
+ M src/TrackWithWeightWindow.cpp
+ M src/WeightWindow.h
+ M src/WeightWindows.cpp

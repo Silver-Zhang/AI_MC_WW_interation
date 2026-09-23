@@ -1,0 +1,8 @@
+Internal ctest changing into directory: /tmp/rmc-f08-cell-ww-build
+Test project /tmp/rmc-f08-cell-ww-build
+    Start 62: test_fixed_source_adjoint
+1/1 Test #62: test_fixed_source_adjoint ........   Passed    0.68 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.69 sec

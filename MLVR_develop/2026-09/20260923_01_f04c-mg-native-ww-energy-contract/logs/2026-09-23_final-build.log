@@ -1,0 +1,7 @@
+[  0%] Built target fmt
+[  0%] Built target RNG
+[  0%] Built target spdlog
+[  6%] Built target Depth
+[  6%] Building CXX object CMakeFiles/RMC.dir/src/WeightWindows.cpp.o
+[  6%] Linking CXX executable bin/RMC
+[100%] Built target RMC

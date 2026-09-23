@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /tmp/rmc-f08-cell-ww-build
+Test project /tmp/rmc-f08-cell-ww-build
+    Start 113: test_var_reduce_wwmesh_e
+1/5 Test #113: test_var_reduce_wwmesh_e .........   Passed    1.12 sec
+    Start 114: test_var_reduce_wwmesh_n
+2/5 Test #114: test_var_reduce_wwmesh_n .........   Passed    5.48 sec
+    Start 115: test_var_reduce_wwmesh_p
+3/5 Test #115: test_var_reduce_wwmesh_p .........   Passed    2.75 sec
+    Start 117: test_var_reduce_wwn_n
+4/5 Test #117: test_var_reduce_wwn_n ............   Passed    4.96 sec
+    Start 118: test_var_reduce_wwn_p
+5/5 Test #118: test_var_reduce_wwn_p ............   Passed    2.41 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  16.73 sec

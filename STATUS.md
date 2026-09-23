@@ -24,20 +24,21 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
 | 1 | **启动 Stage 3/4** | 是否现在开新任务做「双向迭代 WW 框架接口设计」（F03 已拍板：MLVR 侧外部构造 response→源，RMC 只管执行） | [f03 审查](MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit/README.md) |
-| 2 | F04 扩展验证 | F04 已在 neutron native `WWMESH`、MPI-off serial 冻结子域达到 C — Verify；是否扩展至 MPI/OpenMP、耦合粒子或多 mesh，取决于第一版实际问题需求 | [F04 审查](MLVR_develop/2026-09/20260920_03_f04-adjoint-weight-window/README.md) |
+| 2 | F04 扩展验证 | F04 的 MG native `WWE:N` 物理能量坐标契约已修复并在 serial 验证；是否扩展至 MPI/OpenMP、耦合粒子或多 mesh，取决于第一版实际问题需求 | [F04 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
-| 4 | RMC 提交时机 | `MPISHAREWEIGHTWINDOW` 多粒子 offset 修复已在工作区完成并全矩阵验证，是否/何时 commit+push（含新增两个测试用例）由你决定 | [MPI offset 修复](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
+| 4 | RMC push 时机 | 分支 `Neural_Network_WW_Iteration` 现有 5 个本地提交未 push（含 MPI shared offset 与 MG `WWE:N` 修复，均本地验证/复核通过）；何时 push origin 由你决定 | [MG WW 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[MPI offset](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
-| 6 | MG WW 能量坐标契约 | 静态审查已确认（Confirmed mismatch）：MG 群坐标直接查 literal `WWE:N`、无 MeV↔群转换，forward/adjoint 同链；独立无偏性验证（群坐标设计）与深穿透 benchmark（单区间设计）通过但不覆盖该契约——是否升为阻塞缺陷/立项修复待人工决定 | [独立报告](MLVR_develop/2026-09/20260920_05_independent-adjoint-ww-physics-review/README.md)、[独立验证](MLVR_develop/2026-09/20260922_01_f04-independent-ww-verification/README.md)、[静态审查](MLVR_develop/2026-09/20260922_03_f04b-static-ww-contract-audit/README.md)、[深穿透 benchmark](MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/README.md) |
+| 6 | MG WW 输入契约加固 | 修复已实施并经独立复核（“Repair is correct with explicit limitations”）：群内 `WWE:N` 边界无唯一物理含义；复核建议要求群对齐边界或在解析期转 group→bin 表，并补 deterministic bin-selection 测试——是否立项由你决定 | [修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-23 | f04c-mg-native-ww-energy-contract | 修复 MG native `WWE:N` 坐标契约：用户输入保持物理 MeV，MG 查窗转换为群中心物理能量；forward/adjoint bin oracle、native WW 6/6 与 energy-dependent 深穿透 5×1M 通过（$z=0.29571$、FOM 9.27935×）；RMC 本地 commit `5cfb0f77`（未 push） |
+| 09-23 | independent-mg-ww-repair-review | 独立审查：认可 native MG group→physical centre 修复，但群内 WWE boundary 无唯一物理含义、无 direct bin-ID oracle；结论 Repair is correct with explicit limitations；RMC 未修改 |
 | 09-22 | f04b-static-ww-contract-audit | 静态契约审查（Confirmed mismatch）：MG `p_dErg` 离散群坐标直接查 literal `WWE:N`（解析/查找/文档证据链）；forward 与 adjoint 同链；RMC 未修改；修复决策待人工 |
 | 09-22 | f04b-deep-penetration-ww-benchmark | 100 cm water deep-penetration MG adjoint benchmark（5×1M paired，MPI-off/OpenMP-off）：$z=0.29571$，FOM ratio=9.24161，PTRAC 6009 split/31449 roulette；仅 native single-interval track-mesh WW；RMC 未修改 |
 | 09-22 | f04-independent-ww-verification | 独立实验验证（模式 C）：群坐标 `WWE:N` 下 WW on/off 无偏性通过（合并 $z=-1.16537$），FOM 比值 0.8522；独立确认 MG `p_dErg` 与 literal physical-MeV `WWE:N` 存在潜在失配；RMC 未修改；正式分类待人工决定 |
-| 09-20 | f04-adjoint-weight-window | C — Verify（冻结 neutron native-WWMESH、MPI-off serial）：E1 组合链、E2 smoke 与 E3 五种子 WW off/on paired oracle 通过，合并 $z=0.27465$、WW-on RE 降低；RMC 未修改；不外推至 point mesh/耦合粒子/并行 |
 | 09-20 | independent-adjoint-ww-physics-review | 独立 E1 源码/测试输入审查：报告认为 MG `p_dErg` 组号与 native WW 物理能量边界的契约未证明一致，且未找到 combined input；结论待人工决定，RMC 未修改 |
 | 09-20 | f08-mesh-ww-event-semantics | track 时序为段起点 WW→tally→移动；point 最终余段不触发；用户决定 MLVR 仅支持 native track mesh、跳过 point 修复；native mesh WW 3/3 回归通过；RMC 未修改 |
 | 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |

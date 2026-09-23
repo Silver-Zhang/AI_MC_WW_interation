@@ -1,0 +1,47 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 20:44:44 Sep 23 2026
+Git commit  : b7d8a946417eea091a30c09c233054aa077570ee
+Git tag  : v3.5.0-alpha.0-310-gb7d8a946
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/09/23 20:53:14 Wednesday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+neutron : 1000
+
+Source Number : 1000.
+
+Neutron collisions per source particle: 386.03 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0021 minutes
+
+Input File = inp   Output File = inp.out     2026/09/23 20:53:14 Wednesday
+ Total Calculation Time                   = 1.2742e-01 seconds
+ Time in Reading input blocks             = 3.4247e-04 seconds
+ Time in Fixed Source Calculation         = 1.2284e-01 seconds
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 2.0662e-02 seconds

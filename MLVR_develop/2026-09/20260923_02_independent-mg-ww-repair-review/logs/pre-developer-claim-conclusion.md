@@ -1,0 +1,9 @@
+# Pre-developer-claim independent conclusion
+
+This note was written before reading any MLVR_develop repair archive.
+
+1. Native MG transport replaces source physical energy by a reverse-indexed integer group coordinate (`LocateMgErgGrp`), while native WW previously passed that state directly to a user-entered `WWE:N` physical-energy boundary lookup. The coordinate mismatch is therefore real.
+2. Current uncommitted repair introduces a single native lookup helper. It maps the stored MG group to its centre energy through `GetErgValue`; CE returns the original physical energy. The helper is used in neutron cell WW, neutron point/track mesh WW, and photon cell/track paths. It has no adjoint-flag branch, so a given current group maps identically forward and adjoint.
+3. The repair is a plausible and unbiased implementation convention, but it is not a fully specified discrete-group interface: a WWE boundary inside one MG group has no exact interpretation. Centre-energy selection resolves that ambiguity deterministically but may differ from a group-boundary convention. Documentation must make that convention explicit and should require or warn on non-aligned WWE boundaries when users need unambiguous group windows.
+4. Existing source tests contain no native `WWE:N` case. The independent dynamic forward trial shows distinct immediate WW actions consistent with physical centre lookup. The adjoint dynamic trial confirms WW execution, but the current output does not expose the selected energy-bin index; scattering after source makes event counts insufficient as a direct bin-ID oracle. CE native trial runs successfully. Direct bin-selection instrumentation/test is still missing.
+5. This is provisionally "Repair is correct with explicit limitations", not an unconditional correctness finding. Check current repair archive only after this point.

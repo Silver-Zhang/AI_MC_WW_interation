@@ -1,0 +1,5 @@
+RMC -- Reactor Monte Carlo code, version: 3.5.0
+Git tag: v3.5.0-alpha.0-310-gb7d8a946
+Build time: 20:43:53, Sep 23 2026
+Parallel: MPI off, OpenMP off
+Copyright (c) 2000-2026 REAL Tsinghua University. All Rights Reserved.

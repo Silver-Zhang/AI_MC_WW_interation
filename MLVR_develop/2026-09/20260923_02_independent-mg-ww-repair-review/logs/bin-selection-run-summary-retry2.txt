@@ -1,0 +1,11 @@
+| mode | source E (MeV) | rc | split | roulette | warnings | PTRAC lines |
+|---|---:|---:|---:|---:|---:|---:|
+| mg-forward | 0.01 | 0 | 1000 | 3266 | 0 | 7738 |
+| mg-forward | 0.2 | 0 | 1760 | 3783 | 0 | 9566 |
+| mg-forward | 1 | 0 | 2387 | 4534 | 0 | 11933 |
+| mg-adjoint | 0.01 | 1 | 0 | 0 | 0 | 0 |
+| mg-adjoint | 0.2 | 1 | 0 | 0 | 0 | 0 |
+| mg-adjoint | 1 | 1 | 0 | 0 | 0 | 0 |
+| ce-forward | 0.01 | 1 | 0 | 0 | 0 | 0 |
+| ce-forward | 0.2 | 1 | 0 | 0 | 0 | 0 |
+| ce-forward | 1 | 1 | 0 | 0 | 0 | 0 |

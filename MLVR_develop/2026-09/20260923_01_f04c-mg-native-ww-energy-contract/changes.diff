@@ -1,0 +1,249 @@
+diff --git a/docs/source-en/usersguide/VarianceReduction.rst b/docs/source-en/usersguide/VarianceReduction.rst
+index 4724255d..ac023a77 100644
+--- a/docs/source-en/usersguide/VarianceReduction.rst
++++ b/docs/source-en/usersguide/VarianceReduction.rst
+@@ -22,6 +22,7 @@ Weight Window Input Option
+ 
+     WeightWindow
+     WWN:N  W_1  W_2  W_3  W_4 … W_n 
++    WWE:N E_1 E_2 … E_j
+     WWMESH:N  W_1  W_2  W_3  W_4 … W_n
+     WWP:N  WUPN WSUV 
+     [WeightWindowMESH:Geometry Axis Vector Origin 
+@@ -40,11 +41,15 @@ The example is for the neutron's cell weight window and mesh weight window input
+    If the mesh weight window card is being used for photons, replace the keyword with \ **WWMESH:P** \ . If the mesh weight window card is being used for 
+    electrons, replace the keyword with \ **WWMESH:E** \ ; In current version of RMC, the default method of mesh-based weight window is Track-based weight window algorithm.
+ 
+--  **WWP:N** \  is the neutron's weight window parameter card, \ **WUPN** \  indicates the ratio of the weight window upper limit to the lower limit, 
+-   requiring WUPN > 2, with a default value of 5. \ **WSUV** \  indicates the ratio of the weight of surviving particles to the weight window lower limit, 
+-   requiring 1 < WSURVN < WUPN, with a default value of 3. If the weight window card is being used for photons, replace the keyword with \ **WWP:P** \ . 
++-  **WWP:N** \  is the neutron weight window parameter card, \ **WUPN** \  indicates the ratio of the weight window upper limit to the lower limit,
++   requiring WUPN > 2, with a default value of 5. \ **WSUV** \  indicates the ratio of the weight of surviving particles to the weight window lower limit,
++   requiring 1 < WSURVN < WUPN, with a default value of 3. If the weight window card is being used for photons, replace the keyword with \ **WWP:P** \ .
+    If the weight window card is being used for electrons, replace the keyword with \ **WWP:E** \ ;
+ 
++-  **WWE:N** \  optionally specifies physical-energy upper boundaries for native neutron weight windows; the lower boundary is zero.
++   In multigroup transport, RMC converts the internal group coordinate to that group's centre energy before selecting the WWE bin.
++   Therefore, users must provide physical energies in MeV, not multigroup indices.
++
+ -  Note that only one type of particle weight window card can be used at the same time. For example, for neutrons, only one of \ **WWN:N** \  or 
+    \ **WWMESH:N** \  needs to be defined. If WWP:N is not defined, it will use the default value.
+ 
+diff --git "a/docs/source/usersguide/\345\207\217\346\226\271\345\267\256.rst" "b/docs/source/usersguide/\345\207\217\346\226\271\345\267\256.rst"
+index 0a89141e..0ff34b53 100644
+--- "a/docs/source/usersguide/\345\207\217\346\226\271\345\267\256.rst"
++++ "b/docs/source/usersguide/\345\207\217\346\226\271\345\267\256.rst"
+@@ -22,6 +22,7 @@ imp:n=1，imp:n=2，imp:p=0，imp:p=1，imp:p=2，imp:e=0，imp:e=1，imp:e=2，
+ 
+     WeightWindow
+     WWN:N  W_1  W_2  W_3  W_4 … W_n 
++    WWE:N E_1 E_2 … E_j
+     WWMESH:N  W_1  W_2  W_3  W_4 … W_n
+     [WeightWindowMESH:Geometry Axis Vector Origin 
+   Scope Bound BoundX BoundY BoundZ ScopeX ScopeY ScopeZ]
+@@ -75,6 +76,9 @@ imp:n=1，imp:n=2，imp:p=0，imp:p=1，imp:p=2，imp:e=0，imp:e=1，imp:e=2，
+    要求1<MXSPLN，默认值为5。若是光子的权窗参数卡，则把关键词替换
+    为\ **WWP:P**\ 。若是电子的权窗参数卡，则把关键词替换为\ **WWP:E**\ ；
+ 
++-  **WWE:N**\ 可选地指定 native 中子权窗的物理能量上界，最低能量边界为零。
++   多群输运时，RMC 在查窗前将内部能群坐标转换为该群的中心物理能量；因此用户应以 MeV 输入物理能量，而不是能群编号。
++
+ -  注意，同一种粒子的不同种类权窗卡只能同时使用一种。比如对于中子，\ **WWN:N**\ 和
+    \ **WWMESH:N**\ 只定义其中的一个就可以。若\ **WWP:N**\ 没有定义，则为默认值。
+ 
+diff --git a/src/DoMeshWeightWindow.cpp b/src/DoMeshWeightWindow.cpp
+index 8a6c690a..49660e7c 100644
+--- a/src/DoMeshWeightWindow.cpp
++++ b/src/DoMeshWeightWindow.cpp
+@@ -9,13 +9,13 @@
+ # include "CalMode.h"
+ 
+ 
+-void CDWeightWindow::DoPointMeshWeightWindow(CDParticleState &cParticleState, CDFixedSource &cFixedSource,
+-    CDRNG &ORNG) {
++void CDWeightWindow::DoPointMeshWeightWindow(CDAceData &cAceData, CDParticleState &cParticleState,
++                                              CDFixedSource &cFixedSource, CDRNG &ORNG) {
+   int nMeshIndex = p_OWeightWindowMesh.GetUniversalMeshIndex(cParticleState.p_dPos, false);
+   double dLowWeightBound, dSurvivalWeight, dUpperWeightBound;
+   if (nMeshIndex < 0) { return; }
+   setMeshWeightWindowBound(dLowWeightBound, dSurvivalWeight, dUpperWeightBound, cParticleState.p_eParticleType,
+-                           nMeshIndex, cParticleState.p_dErg);
++                           nMeshIndex, GetWeightWindowEnergy(cAceData, cParticleState));
+   DoWeightWindows(cParticleState, cFixedSource, dLowWeightBound, dUpperWeightBound, dSurvivalWeight, ORNG);
+ }
+ void CDWeightWindow::DoTrackMeshWeightWindow(double dTrackLen, CDParticleState &cParticleState,
+@@ -40,7 +40,7 @@ void CDWeightWindow::DoTrackMeshWeightWindow(double dTrackLen, CDParticleState &
+       if (m.p_nMeshIndex > -1) { //如果进入了网格
+         double dLowWeightBound, dSurvivalWeight, dUpperWeightBound;
+         setMeshWeightWindowBound(dLowWeightBound, dSurvivalWeight, dUpperWeightBound, cParticleState.p_eParticleType,
+-                                 m.p_nMeshIndex, cParticleState.p_dErg);
++                                 m.p_nMeshIndex, GetWeightWindowEnergy(cAceData, cParticleState));
+         DoWeightWindows(cParticleState, cFixedSource, dLowWeightBound, dUpperWeightBound, dSurvivalWeight, ORNG);
+       }
+       if (cParticleState.p_bIsKilled) {
+diff --git a/src/DoWeightWindow.cpp b/src/DoWeightWindow.cpp
+index c4a4de73..b6079c49 100644
+--- a/src/DoWeightWindow.cpp
++++ b/src/DoWeightWindow.cpp
+@@ -6,8 +6,10 @@
+ # include "FixedSource.h"
+ # include "Kinetics.h"
+ 
+-void CDWeightWindow::DoWeightWindow(CDGeometry &cGeometry, CDParticleState &cParticleState, CDFixedSource &cFixedSource,
++void CDWeightWindow::DoWeightWindow(CDGeometry &cGeometry, CDAceData &cAceData,
++                                    CDParticleState &cParticleState, CDFixedSource &cFixedSource,
+                                     CDRNG &ORNG) {
++  double weightWindowEnergy = GetWeightWindowEnergy(cAceData, cParticleState);
+   // 记录粒子能量所在的区间
+   int nErgNum = cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Neutron].size();
+   int nErg = 0;
+@@ -17,14 +19,14 @@ void CDWeightWindow::DoWeightWindow(CDGeometry &cGeometry, CDParticleState &cPar
+   double dUpperWeightBound;
+   /// 读取此栅元区间的权窗。
+   if (nErgNum > 1) {
+-    if (cParticleState.p_dErg > cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Neutron][nErgNum -
++    if (weightWindowEnergy > cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Neutron][nErgNum -
+         1]) {
+-      return;                     // 粒子能量大于设定的权窗的能量上限，所以粒子进行权窗
++      return;
+     }
+ 
+     else {
+       for (; nErg < nErgNum; nErg++) {
+-        if (cParticleState.p_dErg <= cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Neutron][nErg]) {
++        if (weightWindowEnergy <= cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Neutron][nErg]) {
+           break;
+         }
+       }
+@@ -96,8 +98,10 @@ void CDWeightWindow::DoWeightWindow(CDGeometry &cGeometry, CDParticleState &cPar
+ //  }
+ }
+ 
+-void CDWeightWindow::DoGmaWeightWindow(CDGeometry &cGeometry, CDParticleState &cParticleState,
+-                                       CDFixedSource &cFixedSource, CDRNG &ORNG) {
++void CDWeightWindow::DoGmaWeightWindow(CDGeometry &cGeometry, CDAceData &cAceData,
++                                       CDParticleState &cParticleState, CDFixedSource &cFixedSource,
++                                       CDRNG &ORNG) {
++  double weightWindowEnergy = GetWeightWindowEnergy(cAceData, cParticleState);
+   // 记录粒子能量所在栅元区间
+   int nErgNum = cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Photon].size();
+   int nErg = 0;
+@@ -107,14 +111,14 @@ void CDWeightWindow::DoGmaWeightWindow(CDGeometry &cGeometry, CDParticleState &c
+   double dUpperWeightBound;
+   /// 读取此栅元区间的权窗。
+   if (nErgNum > 1) {
+-    if (cParticleState.p_dErg > cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Photon][nErgNum -
++    if (weightWindowEnergy > cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Photon][nErgNum -
+         1]) {
+-      return;                     // 粒子能量大于设定的权窗的能量上限，所以粒子进行权窗
++      return;
+     }
+ 
+     else {
+       for (; nErg < nErgNum; nErg ++) {
+-        if (cParticleState.p_dErg <= cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Photon][nErg]) {
++        if (weightWindowEnergy <= cGeometry.p_vCell[cParticleState.p_nCELL].p_vErgBound[CDParticleState::Photon][nErg]) {
+           break;
+         }
+       }
+diff --git a/src/GmaGeoTracking.cpp b/src/GmaGeoTracking.cpp
+index 3366a1ad..840908a0 100644
+--- a/src/GmaGeoTracking.cpp
++++ b/src/GmaGeoTracking.cpp
+@@ -119,7 +119,7 @@ void CDPhotonTransport::GmaRayTracking(CDFixedSource &cFixedSource, CDGeometry &
+     if (cCalMode.p_nVarRedMode[CDParticleState::Photon] == cCalMode.CellWeightWindowGma
+         && cCalMode.p_nRmcCalcMode == cCalMode.FixedSourceMode) {
+       //Do weight window when crossing surfaces////////
+-      OWeightWindow.DoGmaWeightWindow(cGeometry, cParticleState, cFixedSource, ORNG);
++      OWeightWindow.DoGmaWeightWindow(cGeometry, cAceData, cParticleState, cFixedSource, ORNG);
+     } else if (cCalMode.p_nVarRedMode[CDParticleState::Photon] == cCalMode.CellImportanceGma
+                && cCalMode.p_nRmcCalcMode == cCalMode.FixedSourceMode) {
+       //Do weight window when crossing surfaces according to cell importance////////
+diff --git a/src/RayTracking.cpp b/src/RayTracking.cpp
+index ab3fbde9..0bc1b3dc 100755
+--- a/src/RayTracking.cpp
++++ b/src/RayTracking.cpp
+@@ -234,7 +234,7 @@ void CDFixedSource::RayTracking(CDNeutronTransport &cNeutronTransport, CDGeometr
+     //////////////////////////////Using Cell Importance//////////////////
+     if (cCalMode.p_nVarRedMode[CDParticleState::Neutron] == cCalMode.CellWeightWindow) {
+       ////////Do weight window when crossing surfaces////////
+-      OWeightWindow.DoWeightWindow(cGeometry, cParticleState, *this, ORNG);
++      OWeightWindow.DoWeightWindow(cGeometry, cAceData, cParticleState, *this, ORNG);
+     } else if (cCalMode.p_nVarRedMode[CDParticleState::Neutron] == cCalMode.CellImportance) {
+       ////////Do weight window when crossing surfaces according to cell importance////////
+       dImp_Next = cGeometry.p_vCell[cParticleState.p_nCELL].p_dNeuImp;
+diff --git a/src/TrackWithWeightWindow.cpp b/src/TrackWithWeightWindow.cpp
+index afec8bbe..128d1e2b 100644
+--- a/src/TrackWithWeightWindow.cpp
++++ b/src/TrackWithWeightWindow.cpp
+@@ -21,7 +21,7 @@ void CDFixedSource::TransportParticleAndDoMeshWeightWindow(double &dTracklength,
+     while (dTracklength > dAverageFreeFlyDistance) {
+       cTally.TallyByTL(true, dAverageFreeFlyDistance, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+       cParticleState.FlyByLength(dAverageFreeFlyDistance);
+-      OWeightWindow.DoPointMeshWeightWindow(cParticleState, cFixedSource, ORNG);
++      OWeightWindow.DoPointMeshWeightWindow(cAceData, cParticleState, cFixedSource, ORNG);
+       if (cParticleState.p_bIsKilled) {
+         return;
+       }
+diff --git a/src/WeightWindow.h b/src/WeightWindow.h
+index 97afc0ba..db1c5ba9 100644
+--- a/src/WeightWindow.h
++++ b/src/WeightWindow.h
+@@ -91,7 +91,8 @@ public:
+    * @param ORNG 进行中子的轮盘赌和分裂时需要随机数
+    */
+ 
+-  void DoPointMeshWeightWindow(CDParticleState &cParticleState, CDFixedSource &cFixedSource, CDRNG &ORNG);
++  void DoPointMeshWeightWindow(CDAceData &cAceData, CDParticleState &cParticleState,
++                               CDFixedSource &cFixedSource, CDRNG &ORNG);
+   /**
+    * @brief 中子的栅元权窗函数
+    * @param cGeometry 可以得到中子的栅元权窗等信息
+@@ -99,7 +100,8 @@ public:
+    * @param cFixedSource 处理后的中子存储在固定源的中子库中
+    * @param ORNG 进行中子的轮盘赌和分裂时需要随机数
+    */
+-  void DoWeightWindow(CDGeometry &cGeometry, CDParticleState &cParticleState, CDFixedSource &cFixedSource, CDRNG &ORNG);
++  void DoWeightWindow(CDGeometry &cGeometry, CDAceData &cAceData, CDParticleState &cParticleState,
++                      CDFixedSource &cFixedSource, CDRNG &ORNG);
+   /**
+    * @brief 光子的栅元权窗函数
+    * @param cGeometry 可以得到光子的栅元权窗等信息
+@@ -107,8 +109,8 @@ public:
+    * @param cFixedSource 处理后的光子存储在固定源的光子库中
+    * @param ORNG 进行光子的轮盘赌和分裂时需要随机数
+    */
+-  void DoGmaWeightWindow(CDGeometry &cGeometry, CDParticleState &cParticleState, CDFixedSource &cFixedSource,
+-                         CDRNG &ORNG);
++  void DoGmaWeightWindow(CDGeometry &cGeometry, CDAceData &cAceData, CDParticleState &cParticleState,
++                         CDFixedSource &cFixedSource, CDRNG &ORNG);
+   /**
+    * @brief 电子的栅元权窗函数
+    * @param cGeometry 可以得到电子的栅元权窗等信息
+@@ -297,6 +299,7 @@ public:
+    */
+   void setMeshWeightWindowBound(double &dLow, double &dSurvive, double &dUpper, int particleType, const int &meshIndex,
+                                 const double &erg);
++  double GetWeightWindowEnergy(CDAceData &cAceData, const CDParticleState &cParticleState) const;
+ 
+ 
+   /**
+diff --git a/src/WeightWindows.cpp b/src/WeightWindows.cpp
+index 9acc2e6a..6236ab79 100644
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -68,6 +68,14 @@ void CDWeightWindow::setMeshWeightWindowBound(double &dLow, double &dSurvive, do
+   }
+ #endif
+ }
++
++double CDWeightWindow::GetWeightWindowEnergy(CDAceData &cAceData,
++                                               const CDParticleState &cParticleState) const {
++  if (p_bUseMCNPweightwindow) {
++    return cParticleState.p_dErg;
++  }
++  return cAceData.GetErgValue(cParticleState.p_dErg, cParticleState.p_eParticleType);
++}
+ void CDWeightWindow::ProcessWeightWindow(CDGeometry &cGeometry, const int particleType, vector<double> &ErgBins,
+     vector<double> &WeightWindowParameter, double WUPN, double WSURVN) {
+   int totalWeightWindowParaNum = WeightWindowParameter.size();

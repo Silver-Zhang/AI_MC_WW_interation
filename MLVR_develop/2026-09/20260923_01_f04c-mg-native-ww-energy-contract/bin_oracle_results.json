@@ -1,0 +1,91 @@
+{
+  "records": [
+    {
+      "mode": "forward",
+      "transport_group": "low",
+      "wwe_upper_boundary_MeV": 0.3,
+      "source_energy_MeV": 0.2435,
+      "expected_bin": "low",
+      "expected_lower_bound": 0.1,
+      "neutron_collisions_per_source": 28.81,
+      "exit_code": 0
+    },
+    {
+      "mode": "forward",
+      "transport_group": "low",
+      "wwe_upper_boundary_MeV": 0.2,
+      "source_energy_MeV": 0.2435,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 26.37,
+      "exit_code": 0
+    },
+    {
+      "mode": "forward",
+      "transport_group": "high",
+      "wwe_upper_boundary_MeV": 0.3,
+      "source_energy_MeV": 0.4015,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 28.81,
+      "exit_code": 0
+    },
+    {
+      "mode": "forward",
+      "transport_group": "high",
+      "wwe_upper_boundary_MeV": 0.2,
+      "source_energy_MeV": 0.4015,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 26.37,
+      "exit_code": 0
+    },
+    {
+      "mode": "adjoint",
+      "transport_group": "low",
+      "wwe_upper_boundary_MeV": 0.3,
+      "source_energy_MeV": 0.2435,
+      "expected_bin": "low",
+      "expected_lower_bound": 0.1,
+      "neutron_collisions_per_source": 4.51,
+      "exit_code": 0
+    },
+    {
+      "mode": "adjoint",
+      "transport_group": "low",
+      "wwe_upper_boundary_MeV": 0.2,
+      "source_energy_MeV": 0.2435,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 2.22,
+      "exit_code": 0
+    },
+    {
+      "mode": "adjoint",
+      "transport_group": "high",
+      "wwe_upper_boundary_MeV": 0.3,
+      "source_energy_MeV": 0.4015,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 4.51,
+      "exit_code": 0
+    },
+    {
+      "mode": "adjoint",
+      "transport_group": "high",
+      "wwe_upper_boundary_MeV": 0.2,
+      "source_energy_MeV": 0.4015,
+      "expected_bin": "high",
+      "expected_lower_bound": 0.4,
+      "neutron_collisions_per_source": 2.22,
+      "exit_code": 0
+    }
+  ],
+  "forward_same_group_bin_ratio_low_over_high": 1.092529389457717,
+  "forward_same_group_bin_selection_pass": true,
+  "forward_high_group_high_bin_collisions": 28.81,
+  "adjoint_same_group_bin_ratio_low_over_high": 2.0315315315315314,
+  "adjoint_same_group_bin_selection_pass": true,
+  "adjoint_high_group_high_bin_collisions": 4.51,
+  "pass": true
+}

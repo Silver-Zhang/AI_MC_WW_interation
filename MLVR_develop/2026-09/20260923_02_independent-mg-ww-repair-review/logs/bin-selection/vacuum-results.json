@@ -1,0 +1,83 @@
+[
+  {
+    "mode": "mg-forward",
+    "energy_MeV": 0.01,
+    "returncode": 0,
+    "split": 1000,
+    "roulette": 1600,
+    "warning": 0,
+    "ptrac_lines": 7638
+  },
+  {
+    "mode": "mg-forward",
+    "energy_MeV": 0.2,
+    "returncode": 0,
+    "split": 1693,
+    "roulette": 1865,
+    "warning": 0,
+    "ptrac_lines": 9279
+  },
+  {
+    "mode": "mg-forward",
+    "energy_MeV": 1.0,
+    "returncode": 0,
+    "split": 2042,
+    "roulette": 2078,
+    "warning": 0,
+    "ptrac_lines": 10508
+  },
+  {
+    "mode": "mg-adjoint",
+    "energy_MeV": 0.01,
+    "returncode": 0,
+    "split": 1000,
+    "roulette": 3297,
+    "warning": 1,
+    "ptrac_lines": 7638
+  },
+  {
+    "mode": "mg-adjoint",
+    "energy_MeV": 0.2,
+    "returncode": 0,
+    "split": 0,
+    "roulette": 975,
+    "warning": 1,
+    "ptrac_lines": 2000
+  },
+  {
+    "mode": "mg-adjoint",
+    "energy_MeV": 1.0,
+    "returncode": 0,
+    "split": 0,
+    "roulette": 952,
+    "warning": 1,
+    "ptrac_lines": 2000
+  },
+  {
+    "mode": "ce-forward",
+    "energy_MeV": 0.01,
+    "returncode": 0,
+    "split": 1000,
+    "roulette": 1640,
+    "warning": 0,
+    "ptrac_lines": 7638
+  },
+  {
+    "mode": "ce-forward",
+    "energy_MeV": 0.2,
+    "returncode": 0,
+    "split": 1558,
+    "roulette": 1832,
+    "warning": 0,
+    "ptrac_lines": 8934
+  },
+  {
+    "mode": "ce-forward",
+    "energy_MeV": 1.0,
+    "returncode": 0,
+    "split": 2037,
+    "roulette": 2099,
+    "warning": 0,
+    "ptrac_lines": 10493
+  }
+]
