@@ -28,13 +28,13 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | RMC push 时机 | 分支 `Neural_Network_WW_Iteration` 现有 5 个本地提交未 push（含 MPI shared offset 与 MG `WWE:N` 修复，均本地验证/复核通过）；何时 push origin 由你决定 | [MG WW 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[MPI offset](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
-| 6 | MG WW 输入契约加固 | 修复已实施并经独立复核（“Repair is correct with explicit limitations”）：群内 `WWE:N` 边界无唯一物理含义；复核建议要求群对齐边界或在解析期转 group→bin 表，并补 deterministic bin-selection 测试——是否立项由你决定 | [修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
+| 6 | MG WW 输入契约加固 | V2/V3 source-energy 注入错误已修正并重跑；已确认 0.4015 MeV 实际进入高群用例，但碰撞数仍是间接证据。群内 `WWE:N` 边界建议与 MG 群边界对齐；direct selected-bin oracle 尚未实现 | [修复与补测](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[独立复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 09-23 | f04c-mg-native-ww-energy-contract | 修复 MG native `WWE:N` 坐标契约：用户输入保持物理 MeV，MG 查窗转换为群中心物理能量；forward/adjoint bin oracle、native WW 6/6 与 energy-dependent 深穿透 5×1M 通过（$z=0.29571$、FOM 9.27935×）；RMC 本地 commit `5cfb0f77`（未 push） |
+| 09-23 | f04c-mg-native-ww-energy-contract | 修复 MG native `WWE:N` 坐标契约；补正 V2/V3 脚本后确认 0.2435/0.4015 MeV 均实际进入 forward/adjoint 用例。碰撞行为为间接 bin 证据；direct selected-bin oracle 仍缺。RMC commit `5cfb0f77`（未 push） |
 | 09-23 | independent-mg-ww-repair-review | 独立审查：认可 native MG group→physical centre 修复，但群内 WWE boundary 无唯一物理含义、无 direct bin-ID oracle；结论 Repair is correct with explicit limitations；RMC 未修改 |
 | 09-22 | f04b-static-ww-contract-audit | 静态契约审查（Confirmed mismatch）：MG `p_dErg` 离散群坐标直接查 literal `WWE:N`（解析/查找/文档证据链）；forward 与 adjoint 同链；RMC 未修改；修复决策待人工 |
 | 09-22 | f04b-deep-penetration-ww-benchmark | 100 cm water deep-penetration MG adjoint benchmark（5×1M paired，MPI-off/OpenMP-off）：$z=0.29571$，FOM ratio=9.24161，PTRAC 6009 split/31449 roulette；仅 native single-interval track-mesh WW；RMC 未修改 |

@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-RUNS = ROOT / "runs"
+RUNS = ROOT / "runs_source_energy_fixed"
 RMC = Path("/tmp/rmc-f08-cell-ww-build/bin/RMC")
 DATA = "/home/silver/NucXS_Library/RMC_DATA"
 POPULATION = 100_000
@@ -35,7 +35,7 @@ PARTICLE POPULATION={population}
 RNG TYPE=2 SEED=307 STRIDE=1000000
 {adjoint}
 EXTERNALSOURCE
-SOURCE 1 FRACTION=1 PARTICLE=1 CELL=1 WEIGHT=1 ENERGY=0.2435
+SOURCE 1 FRACTION=1 PARTICLE=1 CELL=1 WEIGHT=1 ENERGY={source_energy}
 
 WEIGHTWINDOW
 WWE:N {wwe_boundary}
@@ -65,7 +65,8 @@ for mode, adjoint, transport_group, source_energy, wwe_boundary, expected_bin, e
     directory = RUNS / f"{mode}_{transport_group}_{expected_bin}_{wwe_boundary.replace('.', '_')}"
     directory.mkdir(parents=True)
     (directory / "inp").write_text(INPUT.format(
-        population=POPULATION, adjoint=adjoint, wwe_boundary=wwe_boundary
+        population=POPULATION, adjoint=adjoint, source_energy=source_energy,
+        wwe_boundary=wwe_boundary
     ), encoding="utf-8")
     completed = subprocess.run([str(RMC), "inp"], cwd=directory, text=True, capture_output=True,
                                env={"RMC_DATA_PATH": DATA}, check=False)

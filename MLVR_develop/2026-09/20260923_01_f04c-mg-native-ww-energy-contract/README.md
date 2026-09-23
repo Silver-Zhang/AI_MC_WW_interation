@@ -63,13 +63,13 @@ MG particle p_dErg (group coordinate)
 |---|---|
 | Build | `/tmp/rmc-f08-cell-ww-build`，MPI-off/OpenMP-off，exit 0；最终 binary SHA256 见 `logs/2026-09-23_final-binary-sha256.txt` |
 | V1 / V4 native 回归 | `var_reduce_wwmesh_{e,n,p}`、`var_reduce_wwn_{n,p}`：5/5 passed；既有 `fixed_source_adjoint`：1/1 passed；未更新 reference |
-| V2 MG forward oracle | 同一 0.2435 MeV source group，`WWE:N=0.3` 选低 bin (0.1)、`WWE:N=0.2` 选高 bin (0.4)；低/高每源碰撞比 1.09253 > 1.05，exit 0 |
-| V3 MG adjoint oracle | 同一输入/物理边界，低/高每源碰撞比 2.03153 > 1.05，exit 0；共用 forward helper，无 adjoint-only 分支 |
+| V2 MG forward behavioral probe | 修正前脚本将 `ENERGY` 写死为 0.2435 MeV，所谓 0.4015 MeV 用例未实际执行。修正后输入分别实际写入 0.2435/0.4015 MeV；全部 exit 0。低群切边界的碰撞比 1.09253，高群两种边界均映射至 0.4 lower bound；碰撞数只是间接行为证据，不是 bin-ID oracle |
+| V3 MG adjoint behavioral probe | 同样修正了实际输入能量。全部 exit 0；低群切边界碰撞比 2.03153，高群两种边界均映射至 0.4 lower bound。碰撞数只是间接行为证据；不能称为 direct bin-selection 验证 |
 | V5 100 cm water slab | 5 seed × 1M histories，energy-dependent `WWE:N=1 MeV`；$R_A=5.12924\times10^{-4}\pm9.30112\times10^{-6}$，$R_{WW}=5.15902\times10^{-4}\pm3.86135\times10^{-6}$，$z=0.29571$，通过统计相容；FOM ratio=9.27935 |
 
-V2/V3 原始 JSON/日志见 `logs/2026-09-23_v2-v3-bin-oracle.{json,log}`；V5 原始 JSON/日志及 10 个 run 输入、stdout/stderr/tally 见 `logs/2026-09-23_v5-deep-energy-dependent.{json,log}` 与 `runs_v5/`。V1/V4 真实 CTest 输出见 `logs/2026-09-23_v1-v4-native-ww-ctest.log`、`logs/2026-09-23_fixed-source-adjoint-ctest.log`。
+V2/V3 修正后输入、stdout/stderr 与结果见 `runs_source_energy_fixed/`、`bin_oracle_results.json`。最初运行在填充模板参数时失败（`KeyError: 'source_energy'`），补齐 format 参数后复测通过。V5 原始 JSON/日志及 10 个 run 输入、stdout/stderr/tally 见 `logs/2026-09-23_v5-deep-energy-dependent.{json,log}` 与 `runs_v5/`。V1/V4 真实 CTest 输出见 `logs/2026-09-23_v1-v4-native-ww-ctest.log`、`logs/2026-09-23_fixed-source-adjoint-ctest.log`。
 
-**未覆盖到的验证**：MPI/OpenMP、连续能量（设计上由 identity branch 保持）、electron、MG photon、MCNP `WWINP`、cylindrical mesh、多群内不同物理能量的边界敏感性、真实 MLVR window 生成链。
+**未覆盖到的验证**：direct selected-bin/lower-bound oracle；MPI/OpenMP、连续能量参考回归、electron、MG photon、MCNP `WWINP`、cylindrical mesh、多群内不同物理能量的边界敏感性、真实 MLVR window 生成链。群中心映射只是一项确定性约定；建议第一版输入约束要求 `WWE:N` 与 MG 群边界对齐，尚未实施 parser 校验。
 
 ---
 
@@ -96,8 +96,8 @@ V2/V3 原始 JSON/日志见 `logs/2026-09-23_v2-v3-bin-oracle.{json,log}`；V5 �
 
 - **结论**：已修复 MG native WW 的能量坐标契约。`WWE:N` 现在统一表示物理 MeV 能量网格；MG forward/adjoint 在 native cell/track/point mesh 查窗前使用当前群中心物理能量；CE 行为保持原样。V2/V3 表明物理边界可使同一 MG source group 切换预期 WW bin；V5 energy-dependent 深穿透伴随 WW-on/off 合并 $z=0.29571$，未观察到修复引入 bias，并取得 9.27935× FOM。
 - **不能推出什么**（边界）：群中心是 MG 群的代表能量，不等同于群内连续谱；本任务不验证 MG photon/electron、MCNP `WWINP`、MPI/OpenMP、cylindrical mesh 或真实 MLVR 生成 window；CE 未改变仅由现有回归和 `GetErgValue` identity 分支支持。
-- **遗留 / 下一步**：若第一版需要 MG photon、MPI 或 `WWINP`，另立验证任务；`WWE:N=0` 仍会被 parser 作为显式上界而形成额外 bin，输入需省略 `WWE:N` 以表示默认单 interval，这一既有 parser 行为不在本任务修复范围。
-- **提交状态**：RMC 修复已本地 commit `5cfb0f77`（未 push，待 push 时机）；根工作区档案随 2026-09-23 提交入库；`runs/`、`runs_v5/` 运行目录按归档体积规范不入库、仅保留本地。
+- **遗留 / 下一步**：修正后的 V2/V3 确认 0.4015 MeV 输入已进入高群用例，但仍只以输运碰撞数间接判断，不是直接观察选中 bin。下一步应新增 deterministic selected-bin/lower-bound 测试；第一版 MG 输入建议要求 `WWE:N` 边界与 MG 群边界一致（需要另行确认并实施输入校验）。若第一版需要 MG photon、MPI 或 `WWINP`，另立验证任务；`WWE:N=0` 仍会被 parser 作为显式上界而形成额外 bin，输入需省略 `WWE:N` 以表示默认单 interval，这一既有 parser 行为不在本任务修复范围。
+- **提交状态**：RMC 修复已本地 commit `5cfb0f77`（未 push，待 push 时机）；根工作区档案随 2026-09-23 提交入库；`runs/`、`runs_v5/`、`runs_source_energy_fixed/` 运行目录按归档体积规范不入库、仅保留本地。
 
 > **模式 C 追加 · 结果解释**：修复前，MeV 边界与群编号在数值轴上混用；修复后，两者先回到同一物理能量轴再做 bin 选择。V5 的统计相容支持“本修复只纠正 WW 的选择，不改变伴随响应的期望”；FOM 增益说明所选深穿透 window 在该问题上有效，但不能推广为所有 window 的收益。
 
@@ -112,8 +112,8 @@ V2/V3 原始 JSON/日志见 `logs/2026-09-23_v2-v3-bin-oracle.{json,log}`；V5 �
 | 2026-09-23 | 读取 cell/track/point WW、MG conversion 和 CE fallback：确认统一 helper 可覆盖 neutron cell/mesh lookup，CE fallback 是恒等映射；电子暂不纳入 MG helper。 |
 | 2026-09-23 | 设计 V1–V5 与最小统一 helper，记录 group-centre 的边界语义和停止条件；进入实施。 |
 | 2026-09-23 | 实现单一 native WW lookup-energy helper，并收紧范围：`WWINP` point mesh 保持既有群坐标行为。首次 build 因 `GetErgValue` 非 const 接口失败，改为非 const ACE 引用后成功；没有修改 MG 算法或 WW 数学。 |
-| 2026-09-23 | V2/V3 oracle 首轮使用不同物理源能量，不能严格隔离 bin 选择；已改为同一 0.2435 MeV group、仅切换 `WWE:N` 物理边界，forward/adjoint 都显示预期低/高 bin 的可观测碰撞数差异。 |
-| 2026-09-23 | 完成 V1–V5；更新中英文手册；生成 `changes.diff` 与真实 logs。按授权停止在本地审核状态，未 commit/push RMC。 |
+| 2026-09-23 | V2/V3 脚本审计发现 `source_energy` 未注入输入卡；修正模板并用独立目录重跑，确认 0.4015 MeV 实际进入高群用例。碰撞数变化仍是间接行为证据，非 direct bin oracle。 |
+| 2026-09-23 | RMC 修复 commit `5cfb0f77` 已存在（未 push）；根工作区归档 commit `e5e7700` 已包含初版档案。此次只更新任务脚本/档案，不改 RMC 源码或提交。 |
 
 > 关键命令、误判与修正、未决分歧都写在这里；人机讨论较深时把要点并入本表，**不再单独建会话纪要文件**。原始聊天转储不要入仓（可能含凭据）。
 
