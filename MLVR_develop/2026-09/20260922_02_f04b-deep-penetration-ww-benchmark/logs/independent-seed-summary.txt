@@ -1,0 +1,7 @@
+analog mean=5.1292400000e-04
+analog sample_sd=1.8429397169e-05
+analog standard_error_of_mean=8.2418769707e-06
+ww mean=5.1590200000e-04
+ww sample_sd=1.2801002695e-05
+ww standard_error_of_mean=5.7247824413e-06
+seed-means z=0.29676068

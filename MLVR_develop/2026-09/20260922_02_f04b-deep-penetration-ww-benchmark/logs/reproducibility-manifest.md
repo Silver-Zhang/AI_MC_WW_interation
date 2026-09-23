@@ -1,0 +1,63 @@
+# F04-B reproducibility manifest
+Generated: 2026-09-22T22:29:15+08:00
+
+## Source and executable identity
+RMC HEAD: b7d8a946417eea091a30c09c233054aa077570ee
+RMC source status:
+RMC -- Reactor Monte Carlo code, version: 3.5.0
+Git tag: v3.5.0-alpha.0-310-gb7d8a946
+Build time: 22:16:54, Sep 22 2026
+Parallel: MPI off, OpenMP off
+Copyright (c) 2000-2026 REAL Tsinghua University. All Rights Reserved.
+f5720d8229c6d011bee5788ae787f80afbad2ab0dd1dafec34eab5ab4841a6d6  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/build/bin/RMC
+
+## Input/source/script SHA256
+c82bfa093517f64729a5d4c7b8ce861f7909e100ce5b976b3bcefd70c184c51d  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/cases/base.inp
+a54380fe2f1a8c35274ee8921ba0651349affe4aa2d21be2a4c8aabf5d61900a  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/cases/ww.block
+306ec7daf7c1ce4899a06c0a1e4d98a9545503d746acf24ec0194dc62956bbb5  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/cases/make_case.py
+26f1cd1cce671e2813bd5271718b3ebadcabb527e92bf265b418c28bac7b0bdf  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/cases/analyze_results.py
+4381bfa17a03f776993d8c5c7fc6c24dd7783af868fd7dc479a15b3fde4f555c  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/cases/run_formal.sh
+
+## Formal input SHA256
+fabcb5b2dfae410d232182f2b35adee56e36f03f7a3126b8b5aad1d0a2b20a7a  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed101/inp
+af82a6a8daa0d39fab0713a359e97218d8833b9b14aa6c49911078caa979d5ac  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed103/inp
+1145139d2328fab582e4f35e7d570bc56e65ae66b596f5e4a24c5103d518991b  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed107/inp
+49446ad253399f92e70ccb13e4f155dc8327b45a45cc8699dd340ee12419e7b1  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed109/inp
+ec22831f88472a2b42e4d10562fb17f7d9221961cdafcb4be6b48e95a8a82be7  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed113/inp
+c05f82953856665a0253dad031f458381a21880d5c08c50f6b1f335fda1ad238  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed101/inp
+6c58decf6306a39e4571d36baba237d6f8b7e92043d5e78a2c93e0f8d273b6a5  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed103/inp
+6648d9b447c234fca0bb57bd9c65c25265018a9644a24160f65a4e0023f5b66d  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed107/inp
+dbb16f1bf20e13c7d7ea638d069cc5331dd707c0f8edde8a28f7c345344ba9d7  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed109/inp
+700909cb0d319fb95fb1e6900d88c1e2e89db5e242c668166421a46832441cf8  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed113/inp
+
+## Formal output source/tally SHA256
+2dbc6a9c462c91f958b1439c6e9d7aa795855f84679030903d96522d8ceb3f88  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed101/inp.Tally
+2e12ebe53a438944fd17dd13831ded6b4013320a6c7079a30fc430c2b30fc13f  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed103/inp.Tally
+ba9fa6366554bbe9face99342a216f746dc9f5ad658d8e94c0ef3292c8571d8b  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed107/inp.Tally
+1bdf4fac53f0b6af44517fc4116c7db982f62f4a188933859df32b8072479a22  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed109/inp.Tally
+61f493c1fc2681a9e2253696283cf2c8f833fa0aa0429a166d9d7c8cccdc75f5  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed113/inp.Tally
+b6ce72b0eab5e20f4b110775e17f65aa22bfbc61cfadc94e0f84d1e20ef2bebb  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed101/inp.Tally
+4280aadccfd1b6359f56a944e07cbc460372761c9074c1e5dbaa42603fd15aee  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed103/inp.Tally
+bdbe9d86f4f970ea8d2381d1eab2c854fedceb88066c9508c43589d1a17fb46e  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed107/inp.Tally
+2ad4d6b60bda307ebfc24f51c64fdb57a8c285b5a1ac734f711f9698ba6211e2  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed109/inp.Tally
+6e006b71bb20f0819b852781ddb205d5bc766d379217f8da8c28c195ebed3cb2  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed113/inp.Tally
+cca170ad912065188638a459a416a26d1f6b3115353928cdebf59e6fb08795c7  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed101/stdout.log
+bbc5f1f75528a83b7f03609042c9a955888808fe3a8dd2e2e2d4aec95b48489f  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed103/stdout.log
+111481109356160b3abdd98e0fdc0efc89f10b3aee653ee8b4396cf849b2f656  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed107/stdout.log
+1d4219ee05f68f4e827a02ec16e1d736b642a2f0742de32e978698ed552f952a  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed109/stdout.log
+cfb45ec4bda5fb8428bc5b04d1a6ff0c53082ed72d0e3b2135926fcda1da1fdd  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed113/stdout.log
+ba7310e1a61a65d14f84c664e8fa06c20fd0ec5005f5a3e8f30bf502e9bf2bec  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed101/stdout.log
+849efc6b696e0ec867bfd8107d7bb6df815f6b5c4104ecca195668103b9605a5  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed103/stdout.log
+24418b71953c2cd34a458035c92f939bd3a0f9221e453807adbcd64aac60473c  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed107/stdout.log
+e6a22ab44be49ae06ffcde7e34cb7720b9effbe4277d5ca904a19fd013a35c45  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed109/stdout.log
+53d8ad05103372e9ffdbfc571520cf85d7432a4b70bba97835346dec2306c488  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed113/stdout.log
+ba109c57899bb72a5b40c328db3b3849a70c92d36586454a004604a083729d0f  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed101/stderr.log
+7f5937b715cdab2b2d8502b268abeaaf59c09ce9bd1b1cd9eca1306a32018c59  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed103/stderr.log
+2e2d55daf19050c11c6f02030dabd635be8e9aa007ba0cbf08b43712bbcc5897  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed107/stderr.log
+8c86ed5e34764149198e68560c43c7fe618916899086e184c951fc67fa6acf6a  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed109/stderr.log
+2e2d55daf19050c11c6f02030dabd635be8e9aa007ba0cbf08b43712bbcc5897  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_analog_seed113/stderr.log
+304e74287fd8425706803eb72640539fcdcdf07c33057ccef861ddae2bf23d57  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed101/stderr.log
+1e212b584065f027b03a1306d6c37f0f8212d48d9b445084cd8c8af8e47ef861  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed103/stderr.log
+e275b6173f943f2815673e9a8b9602fa72de3a1c1dd04038cd9ffb78b23f84cb  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed107/stderr.log
+e275b6173f943f2815673e9a8b9602fa72de3a1c1dd04038cd9ffb78b23f84cb  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed109/stderr.log
+e275b6173f943f2815673e9a8b9602fa72de3a1c1dd04038cd9ffb78b23f84cb  /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/runs/formal_ww_seed113/stderr.log

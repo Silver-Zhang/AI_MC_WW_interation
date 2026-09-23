@@ -1,0 +1,42 @@
+MLVR_develop 归档检查 — 2026-09-22 22:31
+
+空白模板（未填写） (0)
+
+状态与台账不一致 (0)
+
+台账未登记 / 缺 README.md (0)
+
+台账悬空（目录不存在） (0)
+
+提示：changes.diff 为空（确认无代码改动后可删除该文件） (10)
+  - 20260825_01_f02-adjoint-numerical-verification
+  - 20260825_02_human-physics-guide
+  - 20260825_08_f02-fissile-response-reciprocity-verification
+  - 20260825_10_f02-extended-physics-readiness
+  - 20260825_11_f02-angular-density-asset-qualification
+  - 20260830_01_f02-parallel-mpi-openmp-verification
+  - 20260831_01_f02-parallel-angular-distribution-verification
+  - 20260831_02_f02-parallel-statistical-gate-calibration
+  - 20260831_03_f02-mpi4-angular-seed-replication
+  - 20260904_04_task04-forward-adjoint-reciprocity
+
+提示：空的 logs/ 或 assets/ (15)
+  - 20260831_04_workflow-multi-mode-upgrade/logs
+  - 20260831_05_workflow-mode-c-audit-remediation/logs
+  - 20260903_01_forward-transport-tally-audit/logs
+  - 20260904_03_task03-adjoint-transport-audit/logs
+  - 20260905_03_task08a-experiment-freeze-harness/assets
+  - 20260917_02_workspace-repo-hygiene/logs
+  - 20260917_03_workflow-hardening/logs
+  - 20260918_01_workflow-simplification/logs
+  - 20260918_02_f08-weight-window-audit/logs
+  - 20260918_03_f08-ww-physics-guide/logs
+  - 20260919_01_f08-cell-ww-core-repair/logs
+  - 20260919_02_f08-cell-ww-unbiasedness/logs
+  - 20260919_03_f08-mesh-ww-shape-validation/logs
+  - 20260919_04_f08-heter-mesh-max-boundary/logs
+  - 20260922_03_f04b-static-ww-contract-audit/logs
+
+提示：模式 C 结构缺失（模板档案缺章节，或异极档案缺三要素） (0)
+
+汇总: 需处理 0 项；提示 25 项

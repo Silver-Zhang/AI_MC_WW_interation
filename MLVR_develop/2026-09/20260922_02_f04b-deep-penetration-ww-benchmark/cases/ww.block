@@ -1,0 +1,8 @@
+
+// No WWE:N card: native parser supplies its single default MG-coordinate interval.
+// WWMESH entries are ordered x=0..100. Bounds increase toward adjoint source
+// so histories travelling to x=0 are split after entering lower windows.
+WEIGHTWINDOW
+WWMESH:N 0.0009765625 0.001953125 0.00390625 0.0078125 0.015625 0.03125 0.0625 0.125 0.25 0.5
+WWP:N 5 3 5
+WEIGHTWINDOWMESH SCOPEX=10 BOUNDX=0 100 SCOPEY=1 BOUNDY=-50 50 SCOPEZ=1 BOUNDZ=-50 50

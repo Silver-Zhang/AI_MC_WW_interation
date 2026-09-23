@@ -1,0 +1,50 @@
+// F04-B deep penetration: 100 cm water slab, MG fixed-source neutron adjoint.
+// Physical forward arrangement: source near x=0 -> water shield -> response near x=100.
+// Computational adjoint source is at x=97.5; response tally is cell 1 (x=0-10).
+UNIVERSE 0
+CELL 1    1 & -2 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 2    2 & -3 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 3    3 & -4 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 4    4 & -5 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 5    5 & -6 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 6    6 & -7 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 7    7 & -8 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 8    8 & -9 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 9    9 & -10 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 10   10 & -11 & 21 & -22 & 23 & -24 MAT=1 IMP:N=1
+CELL 21   -1 : -21 : 22 : -23 : 24 MAT=0 VOID=1 IMP:N=0
+CELL 22   11 : -21 : 22 : -23 : 24 MAT=0 VOID=1 IMP:N=0
+
+SURFACE
+SURF 1 PX 0
+SURF 2 PX 10
+SURF 3 PX 20
+SURF 4 PX 30
+SURF 5 PX 40
+SURF 6 PX 50
+SURF 7 PX 60
+SURF 8 PX 70
+SURF 9 PX 80
+SURF 10 PX 90
+SURF 11 PX 100
+SURF 21 PY -50
+SURF 22 PY 50
+SURF 23 PZ -50
+SURF 24 PZ 50
+
+MATERIAL
+MAT 1 -1.0
+    1001.50M 2.0
+    8016.50M 1.0
+MGACE ERGGRP=30 12
+
+FIXEDSOURCE
+PARTICLE POPULATION=POPULATION_TOKEN
+ADJOINT ADJOINTCALCULATION=1 MAXADJOINTENERGY=30 30
+RNG TYPE=2 SEED=SEED_TOKEN STRIDE=100000
+
+EXTERNALSOURCE
+SOURCE 1 FRACTION=1 PARTICLE=1 POINT=97.5 0 0 WEIGHT=1 ENERGY=2
+
+TALLY
+CELLTALLY 1 TYPE=1 PARTICLE=1 CELL=1 ENERGY=-1

@@ -7,6 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-22 | [f04b-static-ww-contract-audit](2026-09/20260922_03_f04b-static-ww-contract-audit/README.md) | 静态代码审查 / MG WW 坐标契约 | 已完成（Confirmed mismatch；修复待人工） | F04 | E1：MG source 将 `p_dErg` 转为离散群坐标；native lookup 以它直接查 literal `WWE:N`，无 MeV↔群转换；文档称 energy grid 并示例 MeV；RMC 未修改 |
+| 2026-09-22 | [f04b-deep-penetration-ww-benchmark](2026-09/20260922_02_f04b-deep-penetration-ww-benchmark/README.md) | 物理验证 / 深穿透伴随+WW benchmark | 已完成（WW unbiased and effective，冻结 serial 子域） | F04 | current RMC `b7d8a946`；100 cm 水屏蔽、5×1M paired：$z=0.29571$，FOM ratio=9.24161，PTRAC 6009 split/31449 roulette；RMC 未修改 |
 | 2026-09-22 | [f04-independent-ww-verification](2026-09/20260922_01_f04-independent-ww-verification/README.md) | 独立验证 / MG adjoint + native WW | 已完成（独立验证，正式分类待人工决定） | F04 | 验证：群坐标 `WWE:N` 下 paired WW on/off 通过（合并 $z=-1.16537$），但 FOM 比值 0.8522；独立确认 MG group-coordinate 与 physical-MeV `WWE:N` 存在 Potential mismatch；RMC 未修改 |
 | 2026-09-20 | [independent-adjoint-ww-physics-review](2026-09/20260920_05_independent-adjoint-ww-physics-review/README.md) | 独立物理审查 / MG adjoint + native WW | 待决策 | 无 | E1 源码/测试输入独立审查；发现 MG 组号与 WW 能量坐标契约缺口，未运行动态验证，RMC 未修改 |
 | 2026-09-20 | [context-budget](2026-09/20260920_04_context-budget/README.md) | 工作区治理 / 上下文预算与阅读纪律 | 已完成 | 无 | 根工作区 `adaabe8`+`16599a9`；AGENT_CONTEXT 179→60 行、6 份长文档加导航头、硬规则 12；RMC/AIMC 未修改 |
