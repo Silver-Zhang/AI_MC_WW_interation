@@ -1,0 +1,22 @@
+HDF5 "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/runs/adjoint/MeshTally1.h5" {
+GROUP "/" {
+   GROUP "Geometry" {
+      ATTRIBUTE "MeshType" {
+         DATATYPE  H5T_STD_I32LE
+         DATASPACE  SCALAR
+      }
+      DATASET "BinNumber" {
+         DATATYPE  H5T_IEEE_F64LE
+         DATASPACE  SIMPLE { ( 3 ) / ( 3 ) }
+      }
+      DATASET "Boundary" {
+         DATATYPE  H5T_IEEE_F64LE
+         DATASPACE  SIMPLE { ( 7 ) / ( 7 ) }
+      }
+   }
+   DATASET "Type1" {
+      DATATYPE  H5T_IEEE_F64LE
+      DATASPACE  SIMPLE { ( 2, 1, 1 ) / ( 2, 1, 1 ) }
+   }
+}
+}

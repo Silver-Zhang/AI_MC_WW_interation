@@ -1,6 +1,6 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-09-23** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页**
+> **最后更新：2026-09-26** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页**
 > 详细任务清单（47 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
@@ -29,11 +29,15 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 4 | RMC push 时机 | 分支 `Neural_Network_WW_Iteration` 现有 5 个本地提交未 push（含 MPI shared offset 与 MG `WWE:N` 修复，均本地验证/复核通过）；何时 push origin 由你决定 | [MG WW 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[MPI offset](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
 | 6 | MG WW 输入契约加固 | V2/V3 source-energy 注入错误已修正并重跑；已确认 0.4015 MeV 实际进入高群用例，但碰撞数仍是间接证据。群内 `WWE:N` 边界建议与 MG 群边界对齐；direct selected-bin oracle 尚未实现 | [修复与补测](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[独立复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
+| 7 | F06 输出接口 | F06 已完成 C — Verify（含 R1/R2 两轮独立复核，结论一致）：`Energy=-1` + `Normalize=1` 的 Type=1 Cartesian mesh tally 在 serial text 输出中可解释为 $\phi^\dagger_{i,g}$；HDF5 无能群轴，F07 统计另审 | [F06 档案](MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/README.md)、[R1 复核](MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/README.md)、[R2 复核](MLVR_develop/2026-09/20260926_03_independent-f06-adjoint-field-review-r2/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-26 | f06-adjoint-spatial-energy-field | 只读审查完成：fixed-source MG neutron adjoint、Cartesian、Type=1、`Energy=-1`、`Normalize=1`、serial text 输出可恢复 2 spatial × 30 group 场；HDF5 无 energy axis；分类 C — Verify；RMC 未修改 |
+| 09-26 | independent-f06-adjoint-field-review | 独立复核：raw/normalized 体积比 49,999.24 / 150,000.0 cm³；确认 text-first 子域，HDF5 与 geometry warnings 为边界；RMC 未修改 |
+| 09-26 | independent-f06-adjoint-field-review-r2 | R2 独立 source/docs/runtime 复核（静态 E1、runtime E2、行为 E3）：修正几何后 volume ratios 与文本 2×30 结构确认；HDF5 `/Type1` 无 energy 维；C — Verify（限定 serial）；RMC 未修改 |
 | 09-23 | f04c-mg-native-ww-energy-contract | 修复 MG native `WWE:N` 坐标契约；补正 V2/V3 脚本后确认 0.2435/0.4015 MeV 均实际进入 forward/adjoint 用例。碰撞行为为间接 bin 证据；direct selected-bin oracle 仍缺。RMC commit `5cfb0f77`（未 push） |
 | 09-23 | independent-mg-ww-repair-review | 独立审查：认可 native MG group→physical centre 修复，但群内 WWE boundary 无唯一物理含义、无 direct bin-ID oracle；结论 Repair is correct with explicit limitations；RMC 未修改 |
 | 09-22 | f04b-static-ww-contract-audit | 静态契约审查（Confirmed mismatch）：MG `p_dErg` 离散群坐标直接查 literal `WWE:N`（解析/查找/文档证据链）；forward 与 adjoint 同链；RMC 未修改；修复决策待人工 |
@@ -54,7 +58,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **启动 Stage 3/4 接口设计**：F03 外部 response→source 冻结子域、F04 伴随+native WWMESH C—Verify 子域与 F08 native WW 主路径已具备；是否现在立项「双向迭代 WW 框架接口设计」。
+1. **启动 Stage 3/4 接口设计**：F03 外部 response→source 冻结子域、F04 伴随+native WWMESH C—Verify 子域、F06 serial text-first 场输出子域与 F08 native WW 主路径已具备；是否现在立项「双向迭代 WW 框架接口设计」。
 2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
 3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 

@@ -25,7 +25,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F03 | Adjoint source定义 | C — Verify（冻结首版子域） | E2：外部 response→source 映射的 cell 体积积分、空间×MG 群非负标量响应，已完成 source support/MG 定位/一阶矩/无偏与有偏纠偏/复合响应 formal；未见 RMC 内建 response-to-source | `20260825_09_f03-adjoint-source-definition-audit` |
 | F04 | Adjoint + WW兼容性 | C — Verify（冻结子域；MG `WWE:N` 物理能量契约已修复） | standard ASCII 30-group H2O、fixed-source neutron adjoint、native `WWMESH` track mesh、Linux MPI-off serial：E1 组合链，E2 smoke，E3 paired oracle；MG lookup 已统一通过群中心物理能量选择 `WWE:N`，V2/V3 forward/adjoint bin oracle 通过，V5 energy-dependent 100 cm slab 5×1M 合并 $z=0.29571$、FOM 9.27935×；不外推至 point mesh、耦合粒子、MPI/OpenMP 或多 mesh | `20260920_03_f04-adjoint-weight-window`；`20260923_01_f04c-mg-native-ww-energy-contract` |
 | F05 | Forward spatial-energy field tally | 待审查 | 输出空间×能群场 | — |
-| F06 | Adjoint spatial-energy field tally | 待审查 | 输出伴随空间×能群场 | — |
+| F06 | Adjoint spatial-energy field tally | C — Verify（冻结子域：serial text-first Cartesian） | standard MGACE、fixed-source neutron adjoint、Type=1、`Energy=-1`、`Normalize=1`、MPI-off serial：text `inp.Tally` 可恢复 2 spatial × 30 group $\phi^\dagger_{i,g}$；HDF5 无能群轴；geometry/source warnings 未消除；R1/R2 两轮独立复核结论一致 | `20260926_01_f06-adjoint-spatial-energy-field`；独立复核 `20260926_02`、`20260926_03` |
 | F07 | Field统计与RE输出 | 待审查 | 统计误差定义与输出 | — |
 | F08 | WW输入与应用链路 | E — Defect + D — Integration issue（源码审计，当前 commit） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合 | `20260918_02_f08-weight-window-audit` |
 | F09 | Response统计与FOM | 待审查 | 响应、RE、时间统计 | — |
@@ -105,3 +105,4 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-09-18：完成 F03 模式 C 只读设计/定位。E1 调用链确认 RMC 可通过通用外源或条件式 Python `SOURCESUB` 执行显式相空间伴随源，但未见 standard fixed-source 路径从目标 response/tally 自动构造源。因 Stage 1 的“根据目标响应定义并执行”尚未冻结系统责任边界，F03 保持暂不分类，等待人工决定外部构造是否满足第一版需求。
 - 2026-09-20：F04 在冻结的 neutron native `WWMESH` / MPI-off serial 子域完成 C 模式审查：静态伴随标志→WW→bank 链、最小 smoke 与五独立 seed 的 WW off/on paired oracle 均通过；合并 $z=0.27465$，WW-on RE 降低。分类为 C — Verify，不外推至未测 particle、mesh 或并行组合。
 - 2026-09-23：F04c 修复 MG native WW 坐标契约：`WWE:N` 保持物理 MeV 网格，MG lookup 用既有群中心物理能量转换，CE 保持 identity；forward/adjoint 共用 helper。V2/V3 bin oracle、native WW 6/6 回归与 V5 energy-dependent 100 cm slab 通过；F04 仍为冻结子域 C — Verify。
+- 2026-09-26：F06 完成 C 模式只读审查与两轮独立复核（R1/R2）：冻结子域为 standard MGACE fixed-source neutron adjoint、Type=1 Cartesian、`Energy=-1`+`Normalize=1`、MPI-off serial 文本输出，可解释为 $\phi^\dagger_{i,g}$（source-normalized scalar flux density）；HDF5Mesh 无 energy 轴、geometry warnings 未消除，阻止升级为 A；F07 统计另审。分类 C — Verify。

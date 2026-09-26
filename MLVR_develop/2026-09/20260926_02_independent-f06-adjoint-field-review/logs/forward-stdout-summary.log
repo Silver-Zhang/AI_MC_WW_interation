@@ -1,0 +1,63 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 05:22:23 Sep 26 2026
+Git commit  : 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+Git tag  : v3.5.0-alpha.0-311-g5cfb0f77
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/09/26 05:32:04 Saturday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+neutron : 1000
+neutron : 2000
+Warning: failed to locate particle. Pos = 6.110233476047620 -50.000000000000000 -3.473252600606569,Dir =0.239480334103046 -0.812811892820862 -0.531023536641137.
+Warning: failed to locate particle. Pos = 6.110233476047620 -50.000000000000000 -3.473252600606569,Dir =0.239480334103046 -0.812811892820862 -0.531023536641137.
+Warning: failed to locate particle. The particle position is 6.110233, -50.000000 ,-3.473253  
+neutron : 3000
+--- warning count ---
+24
+--- final 25 lines ---
+neutron : 197000
+neutron : 198000
+neutron : 199000
+neutron : 200000
+
+Source Number : 200000.
+
+24 warning found.
+
+8 particle missing
+
+Neutron collisions per source particle: 105.19 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.1176 minutes
+
+Input File = inp   Output File = inp.out     2026/09/26 05:32:11 Saturday
+ Total Calculation Time                   = 7.0579e+00 seconds
+ Time in Reading input blocks             = 1.8211e-04 seconds
+ Time in Fixed Source Calculation         = 7.0576e+00 seconds
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 2.7811e+00 seconds

@@ -52,6 +52,14 @@ MLVR_develop/2026-08/20260831_01_f02-parallel-angular-distribution-verification/
 MLVR_develop/2026-08/20260831_02_f02-parallel-statistical-gate-calibration/logs/formal_*/
 MLVR_develop/2026-08/20260831_03_f02-mpi4-angular-seed-replication/logs/
 
+# ===== 任务局部大体积/原始运行产物（2026-09-26 F06 审查；不入库，保留本地）=====
+#   50 MB 首批 noisy stdout（非正证据）
+MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/logs/forward-stdout.log
+MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/logs/adjoint-stdout.log
+#   最小运行 RMC 原始产品（保留 .inp/.Tally/.stdout/.stderr）
+MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_adjoint_meshtally.inp.*
+!MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_adjoint_meshtally.inp.Tally
+
 # ===== 编译产物 =====
 *.o
 

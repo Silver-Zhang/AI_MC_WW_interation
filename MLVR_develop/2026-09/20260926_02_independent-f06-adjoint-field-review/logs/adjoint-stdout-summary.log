@@ -1,0 +1,63 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 05:22:23 Sep 26 2026
+Git commit  : 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+Git tag  : v3.5.0-alpha.0-311-g5cfb0f77
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/09/26 05:32:03 Saturday 
+
+Reading input file...
+
+******** Calculation mode: fixed-source ********
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Warning: particle energy larger than maximum energy group upper bound.
+Warning: failed to locate particle. Pos = 13.350226048772218 -50.000000000000000 -2.432525231482240,Dir =-0.053091462097929 -0.994512812343333 -0.090141903337230.
+Warning: failed to locate particle. Pos = 13.350226048772218 -50.000000000000000 -2.432525231482240,Dir =-0.053091462097929 -0.994512812343333 -0.090141903337230.
+Warning: failed to locate particle. The particle position is 13.350226, -50.000000 ,-2.432525  
+Warning: failed to locate particle. Pos = 6.818261045889016 -50.000000000000000 11.006917795450258,Dir =-0.616300168446730 -0.761782210369879 -0.199654617618810.
+Warning: failed to locate particle. Pos = 6.818261045889016 -50.000000000000000 11.006917795450258,Dir =-0.616300168446730 -0.761782210369879 -0.199654617618810.
+--- warning count ---
+12217
+--- final 25 lines ---
+Warning: failed to locate particle. Pos = 7.044958469933834 -50.000000000000000 -8.521119562899882,Dir =-0.281170220643254 -0.927241179846647 -0.247319836284966.
+Warning: failed to locate particle. Pos = 7.044958469933834 -50.000000000000000 -8.521119562899882,Dir =-0.281170220643254 -0.927241179846647 -0.247319836284966.
+Warning: failed to locate particle. The particle position is 7.044958, -50.000000 ,-8.521120  
+neutron : 200000
+
+Source Number : 200000.
+
+12217 warning found.
+
+4072 particle missing
+
+Neutron collisions per source particle: 4.60 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0091 minutes
+
+Input File = inp   Output File = inp.out     2026/09/26 05:32:04 Saturday
+ Total Calculation Time                   = 5.4642e-01 seconds
+ Time in Reading input blocks             = 1.8827e-04 seconds
+ Time in Fixed Source Calculation         = 5.4617e-01 seconds
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 1.9756e-01 seconds
