@@ -1,0 +1,98 @@
+{
+  "rows": [
+    {
+      "seed": 101,
+      "value": 22.756,
+      "re": 0.0077482,
+      "sigma": 0.1763180392,
+      "rare_group": 1,
+      "rare_value": 22.756,
+      "rare_re": 0.0077482
+    },
+    {
+      "seed": 103,
+      "value": 22.816,
+      "re": 0.0075687,
+      "sigma": 0.1726874592,
+      "rare_group": 1,
+      "rare_value": 22.816,
+      "rare_re": 0.0075687
+    },
+    {
+      "seed": 107,
+      "value": 22.775,
+      "re": 0.0077045,
+      "sigma": 0.1754699875,
+      "rare_group": 1,
+      "rare_value": 22.775,
+      "rare_re": 0.0077045
+    },
+    {
+      "seed": 109,
+      "value": 22.93,
+      "re": 0.0079014,
+      "sigma": 0.18117910199999998,
+      "rare_group": 1,
+      "rare_value": 22.93,
+      "rare_re": 0.0079014
+    },
+    {
+      "seed": 113,
+      "value": 23.144,
+      "re": 0.0079091,
+      "sigma": 0.1830482104,
+      "rare_group": 1,
+      "rare_value": 23.144,
+      "rare_re": 0.0079091
+    },
+    {
+      "seed": 127,
+      "value": 22.998,
+      "re": 0.0077991,
+      "sigma": 0.1793637018,
+      "rare_group": 1,
+      "rare_value": 22.998,
+      "rare_re": 0.0077991
+    },
+    {
+      "seed": 131,
+      "value": 23.176,
+      "re": 0.007881,
+      "sigma": 0.182650056,
+      "rare_group": 1,
+      "rare_value": 23.176,
+      "rare_re": 0.007881
+    },
+    {
+      "seed": 137,
+      "value": 23.05,
+      "re": 0.0078815,
+      "sigma": 0.181668575,
+      "rare_group": 1,
+      "rare_value": 23.05,
+      "rare_re": 0.0078815
+    },
+    {
+      "seed": 139,
+      "value": 23.155,
+      "re": 0.007851,
+      "sigma": 0.18178990500000003,
+      "rare_group": 1,
+      "rare_value": 23.155,
+      "rare_re": 0.007851
+    },
+    {
+      "seed": 149,
+      "value": 22.902,
+      "re": 0.0077751,
+      "sigma": 0.1780653402,
+      "rare_group": 1,
+      "rare_value": 22.902,
+      "rare_re": 0.0077751
+    }
+  ],
+  "mean": 22.9702,
+  "sd": 0.1591231528652502,
+  "reported_sigma_rms": 0.17925454720059056,
+  "Q": 0.8876938150259988
+}

@@ -59,6 +59,8 @@ MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/logs/adjoi
 #   最小运行 RMC 原始产品（保留 .inp/.Tally/.stdout/.stderr）
 MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_adjoint_meshtally.inp.*
 !MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_adjoint_meshtally.inp.Tally
+#   2026-09-27 F07 复核的 7.6 MB PTRAC 原件（摘要 JSON/Tally 入库）
+MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/logs/ww-ptrac-seed101.txt
 
 # ===== 编译产物 =====
 *.o

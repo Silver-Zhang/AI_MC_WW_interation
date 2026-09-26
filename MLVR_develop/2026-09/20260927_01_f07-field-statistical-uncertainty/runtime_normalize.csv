@@ -1,0 +1,3 @@
+name,population,seed,normalize,value,re,sigma,total_re
+normalize_raw,200000,31,0,0.32799,0.0095026,0.003116757774,0.0072811
+normalize_norm,200000,31,1,0.32799,0.0095026,0.003116757774,0.0072811
