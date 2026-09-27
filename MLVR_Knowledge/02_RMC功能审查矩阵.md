@@ -31,7 +31,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F09 | Response统计与FOM | 待审查 | 响应、RE、时间统计 | — |
 | F10 | Field Reconstruction数据边界 | 待审查 | RMC与外部重构接口 | — |
 | F11 | 固定次数双向迭代调度基础 | 待审查 | 多阶段运行组织 | — |
-| F12 | Bootstrap直接模拟链路 | 待审查 | Analog Forward→field+RE→WW_A(1) | — |
+| F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复 `phi0[i,g]` + `RE0[i,g]`；Bootstrap 生命周期与 formal iteration 分离 | `20260927_04_f12-bootstrap-forward-chain` |
 
 ## F02当前结论
 
@@ -108,3 +108,4 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-09-26：F06 完成 C 模式只读审查与两轮独立复核（R1/R2）：冻结子域为 standard MGACE fixed-source neutron adjoint、Type=1 Cartesian、`Energy=-1`+`Normalize=1`、MPI-off serial 文本输出，可解释为 $\phi^\dagger_{i,g}$（source-normalized scalar flux density）；HDF5Mesh 无 energy 轴、geometry warnings 未消除，阻止升级为 A；F07 统计另审。分类 C — Verify。
 - 2026-09-27：F07 完成 C 模式只读审查与独立复核：standard MGACE fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、serial text 的 per-bin RE 确认为 source-history mean 的相对标准误差（native WW split descendants 在 SumUpTally 前合并）；N scaling、10-seed scatter、Normalize 不变性通过；zero-score `Ave=0, RE=0` 为占位值（非零不确定度）、field-bin WW-on 经验校准未完成，保持 C — Verify。档案：`20260927_01`、`20260927_02`。
 - 2026-09-27：F01/F05 完成轻量闭环验证（B 模式）：standard MGACE fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、serial text 子域 200k histories 输出 2 spatial × 30 MG rows 的 `Ave/RE`；F01 Forward fixed-source MC 与 F05 Forward spatial-energy field 均分类为 A — Ready（限定第一版子域）。档案：`20260927_03_f01-f05-forward-field-closure`。
+- 2026-09-27：F12 完成首版 MC-side Bootstrap 闭环验证（B 模式）：20k-history、无 WW 的 standard MGACE fixed-source neutron forward 输出 2 spatial × 30 MG 的 `phi0[i,g]`+`RE0[i,g]`；Bootstrap 生命周期（`stage=bootstrap`、`iteration=none`）与 formal iteration 分离；分类 A — Ready（限定首版，不含 Field Reconstruction / `WW_A^(1)`）。档案：`20260927_04_f12-bootstrap-forward-chain`。
