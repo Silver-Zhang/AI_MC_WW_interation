@@ -55,6 +55,7 @@
 - **结论**：**ACCEPT WITH MINOR CORRECTIONS**。设计符合第一版最小、纯粹、低耦合边界；完成 §2 三项语义补充后可作为实现前的冻结设计。
 - **不能推出什么**：不证明 parser、reconstruction、WW Builder、ResponseDefinition、HDF5 schema、F11 调度或 ML 模型已经实现或正确。
 - **遗留 / 下一步**：人工决定是否接受三项小修正并更新 F10 design；之后才可另立实现任务。
+- **后续处理（2026-09-27）**：用户已明确接受三项小修正，`../20260927_08_f10-minor-corrections-f07-sync/README.md` 将其写回 F10 设计。上述 **ACCEPT WITH MINOR CORRECTIONS** 保留为本次独立审查时的判定；修订后的设计状态见 F10 原档案 §4。
 - **提交状态**：RMC 未修改、无 commit/push；档案与前置独立结论随 2026-09-27 根工作区提交入库。
 
 > **结果解释**：此设计保留 raw MC 统计和 processed field 的明确边界，阻止 group-coordinate/MeV、Tot/group、RE/reconstruction uncertainty 和 role/stage/iteration 的典型混淆；minor corrections 是输入 validation 和 provenance 精化，不改变架构。

@@ -1,0 +1,50 @@
+我看完了最新提交 `9777c01b9c65edad729567d8e469a32dc1e94fcf`。
+
+结论：**F10 的总体设计可以接受，但还不能说“最终冻结完成”**。Claude 给的是：
+
+> **ACCEPT WITH MINOR CORRECTIONS**
+
+而这 3 个小修正目前还没有真正写回 `F10_Field_Interface_Design.md`。
+
+需要补的就是：
+
+1. **负的&#x20;****`Ave`****&#x20;要拒绝**\
+   当前设计还写着“正负非零 Ave 均属 VALID”。\
+   对第一版 Type=1 标量通量，这不合适。应改为：
+   - `Ave > 0` → `VALID`
+   - `Ave = 0, RE = 0` → `ZERO_SCORE`
+   - `Ave < 0` → Adapter 报错
+2. **metadata 增加 source normalization 信息**\
+   现在只有 source history 数量，还应记录实际的 source-normalization denominator / total starting source weight，避免以后非单位源权重时语义不清。
+3. **明确 value 的单位/归一化口径**\
+   建议写成：
+   > source-normalized track-length flux density；在几何单位为 cm 时，几何量纲为 cm⁻² per unit starting source weight。
+
+除此之外，我认可设计主体：
+```
+RMC .Tally
+→ Field Adapter
+→ StatisticalField
+→ Reconstruction
+→ ReconstructedField
+→ WW Builder
+```
+
+几个关键边界都定得对：
+
+- `StatisticalField` 保留 `value + RE + status`
+- `ReconstructedField` **不复制 MC RE**
+- 外部统一使用物理能群边界，不暴露 RMC 内部反向群号
+- Bootstrap / Forward / Adjoint 共用同一数据结构，用 role 区分
+- Reconstruction 和 WW Builder 分开
+- 第一版不做 mesh/group mapping
+
+还有一个值得保留的发现：`.Tally` 本身只有每群下界，**不能单独恢复完整的 G+1 能群边界**。以后 Adapter 实现时必须从 MGACE 定义或可靠 sidecar 获取完整能群信息，这一点设计里处理得正确。
+
+所以我建议当前状态写成：
+
+\[ \boxed{\text{F10 design accepted，待 3 项 minor corrections 写回后正式 frozen}} \]
+
+另外，`STATUS.md` 里 F07 还写着“field-bin WW-on calibration 仍缺”，这个已经过期，Claude 实际已经完成 WW-on 校准，建议顺手同步掉。
+
+下一步先不要进入 F11。**先让 Codex 把这 3 个 F10 小修正和 F07 状态同步修掉，几分钟即可。**

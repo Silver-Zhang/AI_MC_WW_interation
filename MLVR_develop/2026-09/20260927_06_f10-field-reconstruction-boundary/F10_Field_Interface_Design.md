@@ -25,7 +25,7 @@ Adapter 负责解释 RMC 格式和坐标；Reconstruction 只处理/补全场；
 
 | 成员 | 冻结语义 |
 |---|---|
-| `value[i,g]` | RMC `Ave`：空间 bin `i`、物理能群数组索引 `g` 的 source-normalized Type=1 scalar track-length flux density mean。`FORWARD` 为 φ(i,g)，`ADJOINT` 为 φ†(i,g)，`BOOTSTRAP_FORWARD` 为 φ₀(i,g)。原样传递数值，不在 Adapter 中平滑或补零。 |
+| `value[i,g]` | RMC `Ave`：空间 bin `i`、物理能群数组索引 `g` 的 source-normalized Type=1 scalar track-length flux density mean。几何单位为 cm 时，其几何量纲为 **cm⁻² per unit starting source weight**；这是经过源权重分母与 mesh 体积归一化的通量密度，不是原始 `Σwℓ`。`FORWARD` 为 φ(i,g)，`ADJOINT` 为 φ†(i,g)，`BOOTSTRAP_FORWARD` 为 φ₀(i,g)。合格数值原样传递，不在 Adapter 中平滑或补零。 |
 | `RE[i,g]` | 对应同一 tally 行的 RMC relative statistical uncertainty；保留原值。非零得分时按 F07 的 source-history mean 相对标准误差理解；零得分时 `RE=0` 是输出占位，不能解释为零不确定度。是否及如何利用 RE 由具体 Reconstruction 算法决定。 |
 | `statistical_status[i,g]` | 仅 `VALID`、`ZERO_SCORE` 两态；定义见 §7。它是统计得分状态，不是物理有效性或质量评级。 |
 | `mesh` | 物理坐标、Cartesian 空间分箱及唯一 flatten 规则；见 §5。 |
@@ -77,10 +77,10 @@ Bootstrap、formal Forward、formal Adjoint 和 ReconstructedField 必须使用�
 
 | 状态 | 判定与含义 |
 |---|---|
-| `VALID` | 原始 RMC 行有有效**非零统计得分**，`value≠0`；其 `RE` 按 F07 限定语义传递。`VALID` 不表示 RE 小、估计充分或物理可靠。 |
+| `VALID` | 冻结的 Type=1 标量通量行满足 **`Ave>0`**，且 `RE` 为有限非负数；其 `RE` 按 F07 限定语义传递。`VALID` 不表示 RE 小、估计充分或物理可靠。 |
 | `ZERO_SCORE` | 原始 RMC 行为 `Ave=0, RE=0`；无非零统计得分的可用证据。`RE=0` 不代表零不确定度，也不证明真实场为零。 |
 
-Adapter 对非有限数字、负 RE、缺行、重复行、`Ave=0` 但 `RE≠0` 等不符合两态合同的输入报错，不默默映射成 `ZERO_SCORE`。正负非零 Ave 均属 `VALID` 的统计状态，是否符合特定物理场的预期留给相应物理/算法校验。首版不增加 `LOW_STATISTICS`、`OUTLIER`、`INTERPOLATED`、`INVALID_PHYSICS` 等状态。
+Adapter 对 **`Ave<0`**、非有限数字、负 RE、缺行、重复行、`Ave=0` 但 `RE≠0` 等不符合两态合同的输入报错，不默默映射成 `VALID` 或 `ZERO_SCORE`。第一版 Type=1 标量通量只接受 `Ave>0 → VALID` 与 `Ave=0, RE=0 → ZERO_SCORE`。首版不增加 `LOW_STATISTICS`、`OUTLIER`、`INTERPOLATED`、`INVALID_PHYSICS` 等状态。
 
 ## 8. role, stage, iteration, metadata
 
@@ -94,13 +94,13 @@ Adapter 对非有限数字、负 RE、缺行、重复行、`Ave=0` 但 `RE≠0` 
 
 Adapter 必须从受控的 run metadata 绑定这些标签，并校验它们与运行模式一致；不能从文件名猜测。一次 Field 只表示一个 run、一个角色和一个 iteration，不存跨 iteration history。
 
-最小 `metadata`：RMC revision（能识别执行版本）、唯一 run identity、source/run identifier、particle population（实际 source-history 计数及其口径）、RNG identity（例如 type/seed/stride 或可复核的等价身份）、tally definition identity（含 particle, Type=1, estimator, `Energy=-1`, `Normalize=1`）、mesh definition identity、energy-group definition identity，以及输入 `.Tally` 与定义材料的来源标识。身份记录允许 URI/路径、hash 或受控 ID；不规定序列化字段名。ReconstructedField 另记录处理来源。材料、几何、距离和 ML features 不进入 Field 数组定义；若某方法未来需要，作为单独 feature input 另立合同。
+最小 `metadata`：RMC revision（能识别执行版本）、唯一 run identity、source/run identifier、particle population（实际 source-history 计数及其口径）、**本次 tally 实际使用的 source-normalization denominator / total starting source weight 及其来源身份**（单独于 history 数量记录，不能默认二者相等）、RNG identity（例如 type/seed/stride 或可复核的等价身份）、tally definition identity（含 particle, Type=1, estimator, `Energy=-1`, `Normalize=1`）、mesh definition identity、energy-group definition identity，以及输入 `.Tally` 与定义材料的来源标识。分母必须是可核验的有限正数；来源身份应能关联本次 run。身份记录允许 URI/路径、hash 或受控 ID；不规定序列化字段名。ReconstructedField 另记录处理来源。材料、几何、距离和 ML features 不进入 Field 数组定义；若某方法未来需要，作为单独 feature input 另立合同。
 
 ## 9. Field Adapter contract
 
 概念输入是 **RMC text `inp.Tally` + run metadata + authoritative mesh/MG definitions**；概念输出是一个 `StatisticalField`。调用形式和实现语言不冻结。
 
-Adapter 应：选择 metadata 指明的唯一 neutron Type=1 Cartesian mesh tally；核对 track-length、`Energy=-1`、`Normalize=1`、serial frozen 子域；解析文本的一基 spatial tuple、Group、Energy Bin、Ave、RE；显式排除每个 mesh bin 的 `Tot` 行；依据 §5/§6 的物理定义恢复 `[Nspace,G]`；验证空间×能群笛卡尔积恰好各一行；建立两态 status；绑定 role/stage/iteration 与最小 metadata。`Tot` 可用于后续 response 路径，但不进入 Field 能群数组。输入缺乏必要定义、出现重复/缺失行、索引越界、能量顺序/边界不符或标签矛盾时，Adapter 必须拒绝输出，不得补造值。
+Adapter 应：选择 metadata 指明的唯一 neutron Type=1 Cartesian mesh tally；核对 track-length、`Energy=-1`、`Normalize=1`、serial frozen 子域及实际 source-normalization denominator；解析文本的一基 spatial tuple、Group、Energy Bin、Ave、RE，并按 §7 拒绝负 `Ave`；显式排除每个 mesh bin 的 `Tot` 行；依据 §5/§6 的物理定义恢复 `[Nspace,G]`；验证空间×能群笛卡尔积恰好各一行；建立两态 status；绑定 role/stage/iteration 与最小 metadata。`Tot` 可用于后续 response 路径，但不进入 Field 能群数组。输入缺乏必要定义、出现重复/缺失行、索引越界、能量顺序/边界不符或标签矛盾时，Adapter 必须拒绝输出，不得补造值。
 
 F05/F06/F07/F12 提供的先验只覆盖上述限定子域。此处规定的是未来 Adapter 行为，并没有交付 parser 或可执行的转换。
 

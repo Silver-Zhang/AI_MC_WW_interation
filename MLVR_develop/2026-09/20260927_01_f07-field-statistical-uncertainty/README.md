@@ -107,6 +107,7 @@ WW-on field-bin RE calibration 本任务未新跑；但复用 F04 已归档的�
 - **结论**：**C — Verify（限定 serial text-first Cartesian 子域）**。Analog 与 native track-mesh WW fixed-source 路径均按 source history 累加 per-bin score；RMC 的 RE 是该 history-level sample mean 的 unbiased sample-variance standard error relative to the mean。对非零 bin，可作为第一版统计不确定度的候选。不能判 A 的关键原因是 zero-score `RE=0` 是未定义情形的占位值，且本任务未完成 F07 field-bin 的 WW-on empirical calibration。
 - **不能推出什么**：不能把 `RE=0` 解读为零不确定度；不能把 WW-on RE 直接视为已校准；不能外推至 MPI/OpenMP、batch/cycle、surface source、CE/coupled transport、其他 estimator 或所有 adjoint/WW 组合。
 - **遗留 / 下一步**：人工决定是否继续专门 WW-on field-bin RE empirical calibration；下游如使用 RE，必须把 zero-score 语义作为未定义/待决策处理，但本任务不设计 mask。
+- **后续证据更新（2026-09-27）**：上述“本任务未完成 WW-on field-bin 校准”是本档案执行时的范围记录；独立复核 `../20260927_02_independent-f07-field-re-review/README.md` 随后完成同一 field bin 的 10-seed native WW-on/PTRAC 校准，`Q=0.88769`。当前受限结论以 `MLVR_Knowledge/02_RMC功能审查矩阵.md` F07 速览为准；全 bins、非单位/不等源权重和并行仍未验证。
 - **提交状态**：RMC 未修改、无 commit/push；任务档案与汇总 CSV/摘要随 2026-09-27 根工作区提交入库；原始运行 stdout/stderr 与 `cases/` 运行产物按体积规范不入库、仅保留本地。
 
 > **模式 C · 结果解释**：源码和 runtime 支持“RE 对非零 field bin 是均值的 history-level Monte Carlo standard error”；$N$ 缩放符合 $1/\sqrt N$，Normalize 对照保持 RE 不变；固定源 bank drain 证明 WW descendants 在 SumTallyBin 前属于同一 source history。zero-score 语义和 field-bin WW-on 经验校准仍是边界。
