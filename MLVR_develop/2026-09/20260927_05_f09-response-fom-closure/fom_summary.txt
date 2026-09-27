@@ -1,0 +1,22 @@
+F09 single-run summary
+=======================
+run_identity: formal_forward_seed2719
+stage: formal_forward
+iteration_id: none
+ww: off
+particle: neutron
+population: 200000
+code_version: 3.5.0
+rmc_commit: b7d8a946417eea091a30c09c233054aa077570ee
+mpi: off
+omp: off
+response_definition: first spatial bin (1,1,1), Type=1 track-length neutron flux, Energy=-1, Normalize=1, Tot over 30 MG groups
+response_value: 3.1144E+01
+response_RE: 1.7665E-03
+fixed_source_time_s: 1.0507E+01
+total_calculation_time_s: 1.0508E+01
+fom_definition: 1 / (response_RE^2 * fixed_source_time_s)
+fom: 3.049958880262610134893652752E+04
+bootstrap_in_fom: no
+
+The FOM uses fixed-source time from this same run. No multi-run aggregation was used.

@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-27 | [f09-response-fom-closure](2026-09/20260927_05_f09-response-fom-closure/README.md) | 轻量功能验证 / Response statistics + FOM information | 已完成（F09 A — Ready，限定第一版子域） | F09 | 200k formal Forward；同一 scalar target 输出 `R=3.1144E+01`、`RE_R=1.7665E-03`；fixed-source time `10.507 s`；单-run FOM=`3.04995888026261e4 1/s`；RMC 未修改 |
 | 2026-09-27 | [f12-bootstrap-forward-chain](2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) | 轻量功能验证 / Bootstrap MC-side chain | 已完成（F12 A — Ready，限定首版） | F12 | 20k low-population no-WW forward；2 spatial × 30 MG rows；`phi0[i,g]` + `RE0[i,g]` 可恢复；`stage=bootstrap` 与 formal iteration 分离；RMC 未修改 |
 | 2026-09-27 | [f01-f05-forward-field-closure](2026-09/20260927_03_f01-f05-forward-field-closure/README.md) | 轻量功能验证 / Forward MC + spatial-energy field | 已完成（F01 A — Ready；F05 A — Ready，限定 serial text 子域） | F01 / F05 | 200k histories；MPI/OMP OFF；2 spatial × 30 MG rows；两个空间 bin 非零且有明显差异；RMC 未修改 |
 | 2026-09-27 | [independent-f07-field-re-review](2026-09/20260927_02_independent-f07-field-re-review/README.md) | 独立统计审查 / F07 field RE | 已完成（C — Verify，限定 source-family serial text） | F07 | E1+E3：exact history RE formula、WW bank drain、N scaling 1.975/1.993、analog Q=.849、WW Q=.888、Normalize RE invariant；zero-score RE=0 unsafe；RMC 未修改 |

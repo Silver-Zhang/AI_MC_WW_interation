@@ -33,12 +33,14 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 8 | **F07 RE 统计语义** | **已完成 C — Verify（限定 serial text-first Cartesian）**：analog/native track-mesh WW fixed-source 的 RE 公式和 source-history bank-drain 统计单元已确认；N scaling、10-seed scatter、Normalize、zero-score 已验证；field-bin WW-on 校准仍缺，`Ave=0, RE=0` 不是零不确定度 | [F07 档案](MLVR_develop/2026-09/20260927_01_f07-field-statistical-uncertainty/README.md)、[独立复核](MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/README.md) |
 | 9 | **F01/F05 Forward Field** | **已完成 A — Ready（限定 serial text 子域）**：200k-history standard MGACE forward neutron fixed-source 正常结束；Cartesian Type=1、`Energy=-1`、`Normalize=1` 输出 2 spatial × 30 MG rows 的 `Ave/RE`，空间差异明显 | [合并档案](MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/README.md) |
 | 10 | **F12 Bootstrap MC-side chain** | **已完成 A — Ready（限定首版）**：20k low-population、无 WW 的 standard MGACE forward 运行得到 2 spatial × 30 MG `phi0/Ave + RE0`；`stage=bootstrap` 与 formal iteration 分离；不含 Field Reconstruction 或 `WW_A^(1)` | [F12 档案](MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) |
+| 11 | **F09 Response + FOM information** | **已完成 A — Ready（限定第一版子域）**：200k formal Forward serial run 同一 scalar target 输出 `R`、`RE_R` 与 `Time in Fixed Source Calculation`；单-run FOM 可外部计算；不含 Bootstrap/FOM controller | [F09 档案](MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
 | 09-27 | f12-bootstrap-forward-chain | F12 MC-side 闭环完成：低粒子数无 WW Forward → Bootstrap `phi0[i,g]+RE0[i,g]`；分类 A — Ready（限定首版）；RMC 未修改 |
+| 09-27 | f09-response-fom-closure | F09 formal Forward response/FOM 信息闭环完成：200k serial run 输出同一 scalar target 的 `R`、`RE_R`、fixed-source time；单-run FOM 外部计算成立；分类 A — Ready（限定第一版子域）；RMC 未修改 |
 | 09-27 | f01-f05-forward-field-closure | 轻量闭环验证完成：F01/F05 均 A — Ready（限定 standard MGACE、fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、MPI/OMP-off serial text）；RMC 未修改 |
 | 09-27 | f07-field-statistical-uncertainty | 只读审查 F07 RE 统计：source-history RE 公式与 WW bank-drain 归属确认；N scaling（1.9993/2.0023）、10-seed scatter、Normalize、zero-score 验证；field-bin WW-on 校准仍缺；RMC 未修改 |
 | 09-27 | independent-f07-field-re-review | 独立复核（静态 E1、runtime E2/E3）：N scaling 1.975/1.993、analog Q=0.849、WW Q=0.888、Normalize RE 不变；结论 C — Verify（限定 serial）；RMC 未修改 |

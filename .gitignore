@@ -67,6 +67,9 @@ MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/forward_field.inp
 #   2026-09-27 F12 Bootstrap 的原始 RMC 产品（保留 .inp/.Tally/.stdout/.stderr）
 MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/bootstrap_forward.inp.*
 !MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/bootstrap_forward.inp.Tally
+#   2026-09-27 F09 Response/FOM 的原始 RMC 产品（保留 .inp/.Tally/.stdout/.stderr）
+MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/formal_forward.inp.*
+!MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/formal_forward.inp.Tally
 
 # ===== 编译产物 =====
 *.o
