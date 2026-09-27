@@ -1,0 +1,561 @@
+# Task — F10 Field Reconstruction Data Boundary Design
+
+## Goal
+
+完成 F10 的第一版接口设计：
+
+RMC statistical field
+    ↓
+Field Adapter
+    ↓
+StatisticalField
+    ↓
+Field Reconstruction
+    ↓
+ReconstructedField
+    ↓
+WW Builder
+
+本任务只设计并冻结数据边界。
+
+不要实现 C++ 类。
+不要实现 parser。
+不要实现 Reconstruction 算法。
+不要实现 WW Builder。
+不要修改 RMC。
+
+用户已批准以下总体方案，本任务不要重新讨论方向。
+
+---
+
+# 1. Frozen architecture
+
+第一版采用：
+
+RMC .Tally
+    ↓
+Field Adapter
+    ↓
+StatisticalField
+    ↓
+Field Reconstruction
+    ↓
+ReconstructedField
+    ↓
+WW Builder
+
+职责必须分离：
+
+- Field Adapter：把 RMC 输出转成统一 Field
+- Field Reconstruction：只负责场处理/补全
+- WW Builder：只负责由重构场生成 Weight Window
+
+禁止让 Reconstruction 直接生成 WW。
+
+---
+
+# 2. StatisticalField
+
+第一版 StatisticalField 必须至少包含：
+
+StatisticalField
+- value[i,g]
+- RE[i,g]
+- statistical_status[i,g]
+- mesh
+- energy_groups
+- field_role
+- stage
+- iteration
+- metadata
+
+逐项定义准确语义。
+
+---
+
+## 2.1 value[i,g]
+
+含义：
+
+RMC 输出的空间 bin i、MG group g 的统计平均场。
+
+Forward：
+
+value[i,g] = phi(i,g)
+
+Adjoint：
+
+value[i,g] = phi†(i,g)
+
+Bootstrap：
+
+value[i,g] = phi0(i,g)
+
+第一版统一采用：
+
+Cartesian mesh
+×
+MG energy group
+
+不得加入 angle/time/history dimension。
+
+---
+
+## 2.2 RE[i,g]
+
+RMC tally 的 relative statistical uncertainty。
+
+继承 F07 已确认语义：
+
+- nonzero score：可作为 Monte Carlo relative uncertainty
+- zero score 下 RMC 可能输出 RE=0
+- zero-score 的 RE=0 不表示高可信度
+
+Reconstruction 是否使用 RE、如何使用 RE，属于算法实现，不在 F10 固定。
+
+F10 只保证 RE 被完整传递。
+
+---
+
+## 2.3 statistical_status[i,g]
+
+第一版只冻结最小状态集合，不要过度设计。
+
+建议：
+
+VALID
+ZERO_SCORE
+
+语义：
+
+VALID：
+value 有有效非零统计得分，RE 按 F07 语义使用。
+
+ZERO_SCORE：
+RMC value=0 且 RE=0，对应没有统计得分；
+RE=0 不可解释为零不确定度。
+
+不要现在加入复杂的：
+
+LOW_STATISTICS
+OUTLIER
+INTERPOLATED
+INVALID_PHYSICS
+...
+
+这些以后需要时再扩展。
+
+---
+
+# 3. mesh
+
+mesh 描述 value[i,g] 中 i 的空间意义。
+
+第一版只冻结 Cartesian Field mesh。
+
+至少包含概念信息：
+
+- Nx, Ny, Nz
+- x boundaries
+- y boundaries
+- z boundaries
+- flatten/index ordering
+
+必须明确：
+
+i ↔ (ix, iy, iz)
+
+的唯一映射。
+
+复用 F05/F06 已确认的 RMC Cartesian ordering。
+
+不要重新设计空间离散。
+
+第一版要求：
+
+Bootstrap mesh
+=
+Forward iteration mesh
+=
+Adjoint iteration mesh
+=
+ReconstructedField mesh
+
+不做 mesh mapping。
+
+---
+
+# 4. energy_groups
+
+不要只存裸 group number。
+
+至少保存：
+
+- number_of_groups
+- physical energy boundaries
+- group ordering convention
+
+必须解决此前 F04/F06 暴露的风险：
+
+RMC internal group index
+≠
+physical-energy output ordering
+
+F10 对外统一使用一个清楚的物理群定义。
+
+建议外部 Field contract 以：
+
+physical energy boundaries + field array index
+
+作为标准。
+
+不要要求外部 Reconstruction 理解 RMC internal reverse group coordinate。
+
+第一版要求：
+
+Bootstrap groups
+=
+Forward groups
+=
+Adjoint groups
+=
+ReconstructedField groups
+
+不做 energy mapping。
+
+---
+
+# 5. field_role
+
+冻结：
+
+BOOTSTRAP_FORWARD
+FORWARD
+ADJOINT
+
+它描述 Field 的物理身份。
+
+例如：
+
+field_role = ADJOINT
+
+则：
+
+value[i,g] = phi†(i,g)
+
+禁止仅靠文件名判断 field 类型。
+
+---
+
+# 6. stage / iteration
+
+stage 建议第一版冻结：
+
+BOOTSTRAP
+FORMAL
+
+iteration：
+
+Bootstrap：
+iteration = none
+
+Formal：
+iteration = 1,2,...,K
+
+示例：
+
+stage = BOOTSTRAP
+iteration = none
+field_role = BOOTSTRAP_FORWARD
+
+以及：
+
+stage = FORMAL
+iteration = 3
+field_role = ADJOINT
+
+iteration 是 metadata，不是 Field 数据维度。
+
+第一版不保存跨 iteration history。
+
+---
+
+# 7. metadata
+
+metadata 只保存保证数据可追溯的最小信息。
+
+建议至少记录：
+
+- RMC revision / run identity
+- source/run identifier
+- particle population
+- RNG identity
+- tally definition identity
+- mesh definition identity
+- energy-group definition identity
+
+不要把：
+
+geometry/material/distance/ML features
+
+塞入 Field 数组定义。
+
+这些以后如果 Reconstruction 需要，应作为额外 feature input，而不是 MC Field 本身。
+
+---
+
+# 8. ReconstructedField
+
+第一版定义：
+
+ReconstructedField
+- value[i,g]
+- mesh
+- energy_groups
+- field_role
+- stage
+- iteration
+- metadata
+
+其中：
+
+value[i,g]
+
+是 Reconstruction 输出的完整处理场。
+
+它不再是直接 Monte Carlo tally。
+
+不要默认它还有 Monte Carlo RE。
+
+因此第一版不要简单复制：
+
+RE -> ReconstructedField
+
+除非以后具体 reconstruction method 定义了自己的 uncertainty。
+
+---
+
+# 9. Shape invariants
+
+必须冻结：
+
+StatisticalField.value.shape
+=
+StatisticalField.RE.shape
+=
+StatisticalField.statistical_status.shape
+=
+[Nspace, Ngroup]
+
+ReconstructedField.value.shape
+=
+[Nspace, Ngroup]
+
+并且：
+
+StatisticalField.mesh
+=
+ReconstructedField.mesh
+
+StatisticalField.energy_groups
+=
+ReconstructedField.energy_groups
+
+第一版不允许 Reconstruction 改变 mesh/group shape。
+
+---
+
+# 10. Three usage paths
+
+设计必须证明同一个接口能覆盖：
+
+## Bootstrap
+
+RMC Forward
+→ {phi0, RE0}
+→ StatisticalField(role=BOOTSTRAP_FORWARD)
+→ Reconstruction
+→ ReconstructedField
+→ later WW_A(1)
+
+## Adjoint
+
+RMC Adjoint
+→ {phi†, RE†}
+→ StatisticalField(role=ADJOINT, iteration=k)
+→ Reconstruction
+→ ReconstructedField
+→ later WW_F(k)
+
+## Forward
+
+RMC Forward
+→ {phi, RE}
+→ StatisticalField(role=FORWARD, iteration=k)
+→ Reconstruction
+→ ReconstructedField
+→ later WW_A(k+1)
+
+F10 不实现这些 WW generation。
+
+---
+
+# 11. Field Adapter boundary
+
+明确 Field Adapter 的职责：
+
+Input:
+RMC text inp.Tally + run metadata
+
+Output:
+StatisticalField
+
+Adapter 至少负责：
+
+- 解析 spatial index
+- 解析 physical energy groups
+- 读取 Ave
+- 读取 RE
+- 排除 Tot row
+- 构造 ZERO_SCORE / VALID
+- 恢复 mesh×group array
+- 绑定 field_role / stage / iteration
+
+注意：
+
+Tot 行不是一个 energy group。
+
+不要实现 parser，本任务只冻结行为契约。
+
+---
+
+# 12. Reconstruction interface
+
+设计一个算法无关的概念接口，例如：
+
+ReconstructedField reconstruct(
+    const StatisticalField& input
+)
+
+这里只表达概念，不锁死语言/API。
+
+Reconstruction 可以未来是：
+
+- interpolation
+- regression
+- smoothing
+- DNN
+- PINN
+- GNN
+- FNO
+
+但输入输出合同不变。
+
+---
+
+# 13. WW Builder boundary
+
+明确：
+
+WW Builder 不属于 Reconstruction。
+
+它接收：
+
+ReconstructedField
+
+并根据 field_role 决定后续用途：
+
+ADJOINT reconstructed field
+→ WW_F(k)
+
+FORWARD reconstructed field
+→ WW_A(k+1)
+
+BOOTSTRAP_FORWARD reconstructed field
+→ WW_A(1)
+
+F10 只定义这一 handoff 边界。
+
+不要设计具体 WW 公式。
+
+---
+
+# 14. ResponseDefinition boundary
+
+记录一个重要接口需求，但不要在 F10 展开实现：
+
+F03 的 adjoint-source response
+与
+F09 的 formal Forward response
+
+未来必须引用同一个 ResponseDefinition。
+
+本任务只登记：
+
+ResponseDefinition 是独立对象，
+不属于 StatisticalField。
+
+不要把 response 数据混进 Field。
+
+---
+
+# 15. Deliverables
+
+建立：
+
+MLVR_develop/2026-09/YYYYMMDD_NN_f10-field-reconstruction-boundary/
+
+建议包含：
+
+README.md
+F10_Field_Interface_Design.md
+
+设计文档至少包含：
+
+1. Purpose
+2. Architecture
+3. StatisticalField definition
+4. ReconstructedField definition
+5. Mesh contract
+6. Energy-group contract
+7. statistical_status semantics
+8. role/stage/iteration semantics
+9. Field Adapter contract
+10. Reconstruction contract
+11. WW Builder boundary
+12. Bootstrap/Adjoint/Forward examples
+13. Invariants
+14. Explicitly excluded features
+15. Open issues for implementation
+
+同步：
+
+MLVR_Knowledge/02_RMC功能审查矩阵.md
+STATUS.md
+MLVR_develop/INDEX.md
+
+但不要把“设计完成”写成“接口已经实现”。
+
+F10 的状态应明确区分：
+
+design frozen
+vs
+implementation completed
+
+---
+
+# 16. Stop rule
+
+完成设计文档后停止。
+
+禁止：
+
+- 修改 RMC
+- 写 parser
+- 写 C++ Field class
+- 写 Reconstruction 算法
+- 写 WW Builder
+- 开始 F11 scheduler
+- 引入 ML 模型
+- 设计跨 iteration history
+- 设计 mesh/group mapping

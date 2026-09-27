@@ -29,7 +29,7 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F07 | Field统计与RE输出 | C — Verify（限定 serial text-first Cartesian 子域） | Analog/native track-mesh WW fixed-source 的 source-history RE 公式与 bank-drain 归属已确认；N scaling、empirical scatter、Normalize、zero-score 已验证；field-bin WW-on 校准仍缺，`Ave=0, RE=0` 不是零不确定度 | `20260927_01_f07-field-statistical-uncertainty`；独立复核 `20260927_02` |
 | F08 | WW输入与应用链路 | E — Defect + D — Integration issue（源码审计，当前 commit） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合 | `20260918_02_f08-weight-window-audit` |
 | F09 | Response统计与FOM | A — Ready（限定第一版子域） | formal Forward serial text run 可从同一 scalar Type=1 track-length `Tot` 行读取 `R=3.1144E+01`、`RE_R=1.7665E-03`，stdout 可读取 `Time in Fixed Source Calculation=10.507 s`；外部单-run FOM=`3.04995888026261e4 1/s`；不含 RMC 内部 FOM、Bootstrap 或多 run 合并 | `20260927_05_f09-response-fom-closure` |
-| F10 | Field Reconstruction数据边界 | 待审查 | RMC与外部重构接口 | — |
+| F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 第一版 serial text MG neutron：Adapter→StatisticalField→Reconstruction→ReconstructedField→WW Builder 职责与二维数据合同已冻结；完整 G+1 物理边界需由权威群定义提供，`.Tally` 本身不足；无 parser/算法/WW 实现 | `20260927_06_f10-field-reconstruction-boundary` |
 | F11 | 固定次数双向迭代调度基础 | 待审查 | 多阶段运行组织 | — |
 | F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复 `phi0[i,g]` + `RE0[i,g]`；Bootstrap 生命周期与 formal iteration 分离 | `20260927_04_f12-bootstrap-forward-chain` |
 
@@ -110,3 +110,4 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-09-27：F01/F05 完成轻量闭环验证（B 模式）：standard MGACE fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、serial text 子域 200k histories 输出 2 spatial × 30 MG rows 的 `Ave/RE`；F01 Forward fixed-source MC 与 F05 Forward spatial-energy field 均分类为 A — Ready（限定第一版子域）。档案：`20260927_03_f01-f05-forward-field-closure`。
 - 2026-09-27：F12 完成首版 MC-side Bootstrap 闭环验证（B 模式）：20k-history、无 WW 的 standard MGACE fixed-source neutron forward 输出 2 spatial × 30 MG 的 `phi0[i,g]`+`RE0[i,g]`；Bootstrap 生命周期（`stage=bootstrap`、`iteration=none`）与 formal iteration 分离；分类 A — Ready（限定首版，不含 Field Reconstruction / `WW_A^(1)`）。档案：`20260927_04_f12-bootstrap-forward-chain`。
 - 2026-09-27：F09 完成轻量 formal Forward response/FOM 信息闭环（A 模式）：200k-history、standard MGACE fixed-source neutron、MPI/OMP-off serial；同一 target `Tot` 行提供 `R=3.1144E+01` 与 `RE_R=1.7665E-03`，stdout 提供 fixed-source time `10.507 s`，外部单-run FOM=`3.04995888026261e4 1/s`；Bootstrap 不参与 FOM，未实现 RMC 内部 FOM。档案：`20260927_05_f09-response-fom-closure`。
+- 2026-09-27：F10 第一版 Field Reconstruction 数据边界设计冻结；接口合同与证据边界见 `20260927_06_f10-field-reconstruction-boundary` §4 和设计文档。状态仅为 **design frozen**，未实现 Adapter/parser、Reconstruction 或 WW Builder；RMC 未修改。

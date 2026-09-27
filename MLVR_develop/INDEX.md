@@ -7,6 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-27 | [independent-f10-field-boundary-review](2026-09/20260927_07_independent-f10-field-boundary-review/README.md) | 独立设计审查 / F10 field boundary | 已完成（ACCEPT WITH MINOR CORRECTIONS） | F10 | 独立合同与 Codex F10 一致；要求 reject negative Type=1 Ave、记录 source-normalization identity、明确 flux-density unit；无实现/RMC 修改 |
+| 2026-09-27 | [f10-field-reconstruction-boundary](2026-09/20260927_06_f10-field-reconstruction-boundary/README.md) | 接口设计 / Field Reconstruction 数据边界 | 已完成（design frozen；implementation not completed） | F10 | 15 节数据合同、三路径、shape/mesh/group/status/role 不变量已冻结；RMC 未修改，未实现 parser/算法/WW |
 | 2026-09-27 | [f09-response-fom-closure](2026-09/20260927_05_f09-response-fom-closure/README.md) | 轻量功能验证 / Response statistics + FOM information | 已完成（F09 A — Ready，限定第一版子域） | F09 | 200k formal Forward；同一 scalar target 输出 `R=3.1144E+01`、`RE_R=1.7665E-03`；fixed-source time `10.507 s`；单-run FOM=`3.04995888026261e4 1/s`；RMC 未修改 |
 | 2026-09-27 | [f12-bootstrap-forward-chain](2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) | 轻量功能验证 / Bootstrap MC-side chain | 已完成（F12 A — Ready，限定首版） | F12 | 20k low-population no-WW forward；2 spatial × 30 MG rows；`phi0[i,g]` + `RE0[i,g]` 可恢复；`stage=bootstrap` 与 formal iteration 分离；RMC 未修改 |
 | 2026-09-27 | [f01-f05-forward-field-closure](2026-09/20260927_03_f01-f05-forward-field-closure/README.md) | 轻量功能验证 / Forward MC + spatial-energy field | 已完成（F01 A — Ready；F05 A — Ready，限定 serial text 子域） | F01 / F05 | 200k histories；MPI/OMP OFF；2 spatial × 30 MG rows；两个空间 bin 非零且有明显差异；RMC 未修改 |

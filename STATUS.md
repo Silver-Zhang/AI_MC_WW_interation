@@ -14,10 +14,10 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 native WWP、WWMESH 输入形状、异构最大边界与 MCNP `WWINP` MPI shared mesh 多粒子 offset 已修复并完成 MPI-off / MPI 2·10 rank 回归；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 主要缺陷已修复并回归；F10 Field Reconstruction 数据边界 **design frozen，尚未实现**；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F08 的主要确定性缺陷（WWP 生命周期、WWMESH 形状校验、异构最大边界、WWINP MPI shared offset）已修复并回归；下一步是状态复制/adjoint 组合边界与双向迭代框架设计。**
+一句话：**F08 主要确定性缺陷已修复并回归；F10 首版数据合同已冻结、没有实现 Adapter/Reconstruction/WW Builder；其余框架设计与组合边界仍待后续任务。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
@@ -34,11 +34,14 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 9 | **F01/F05 Forward Field** | **已完成 A — Ready（限定 serial text 子域）**：200k-history standard MGACE forward neutron fixed-source 正常结束；Cartesian Type=1、`Energy=-1`、`Normalize=1` 输出 2 spatial × 30 MG rows 的 `Ave/RE`，空间差异明显 | [合并档案](MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/README.md) |
 | 10 | **F12 Bootstrap MC-side chain** | **已完成 A — Ready（限定首版）**：20k low-population、无 WW 的 standard MGACE forward 运行得到 2 spatial × 30 MG `phi0/Ave + RE0`；`stage=bootstrap` 与 formal iteration 分离；不含 Field Reconstruction 或 `WW_A^(1)` | [F12 档案](MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) |
 | 11 | **F09 Response + FOM information** | **已完成 A — Ready（限定第一版子域）**：200k formal Forward serial run 同一 scalar target 输出 `R`、`RE_R` 与 `Time in Fixed Source Calculation`；单-run FOM 可外部计算；不含 Bootstrap/FOM controller | [F09 档案](MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/README.md) |
+| 12 | **F10 Field 数据合同** | **design frozen（implementation not completed）**：独立复核结论 ACCEPT WITH MINOR CORRECTIONS——三项小修正（拒绝 negative Type=1 Ave、记录 source-normalization identity、明确 flux-density unit）是否接受并更新设计；实现任务是否立项由你决定 | [设计](MLVR_develop/2026-09/20260927_06_f10-field-reconstruction-boundary/README.md)、[独立复核](MLVR_develop/2026-09/20260927_07_independent-f10-field-boundary-review/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-27 | f10-field-reconstruction-boundary | F10 第一版 Adapter→StatisticalField→Reconstruction→ReconstructedField→WW Builder 数据合同 **design frozen**；完整 MG 物理边界来源列为实现前要求；没有 parser/算法/WW 实现，RMC 未修改 |
+| 09-27 | independent-f10-field-boundary-review | 独立设计复核：**ACCEPT WITH MINOR CORRECTIONS**（拒绝负 `Ave`、记录 source-normalization identity、明确 flux-density unit）；无实现/运行证据；RMC 未修改 |
 | 09-27 | f12-bootstrap-forward-chain | F12 MC-side 闭环完成：低粒子数无 WW Forward → Bootstrap `phi0[i,g]+RE0[i,g]`；分类 A — Ready（限定首版）；RMC 未修改 |
 | 09-27 | f09-response-fom-closure | F09 formal Forward response/FOM 信息闭环完成：200k serial run 输出同一 scalar target 的 `R`、`RE_R`、fixed-source time；单-run FOM 外部计算成立；分类 A — Ready（限定第一版子域）；RMC 未修改 |
 | 09-27 | f01-f05-forward-field-closure | 轻量闭环验证完成：F01/F05 均 A — Ready（限定 standard MGACE、fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、MPI/OMP-off serial text）；RMC 未修改 |
@@ -67,7 +70,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **启动 Stage 3/4 接口设计**：F03 外部 response→source 冻结子域、F04 伴随+native WWMESH C—Verify 子域、F06 serial text-first 场输出子域与 F08 native WW 主路径已具备；是否现在立项「双向迭代 WW 框架接口设计」。
+1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 调度尚未启动。
 2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
 3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 
