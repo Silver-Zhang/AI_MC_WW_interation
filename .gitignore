@@ -61,6 +61,9 @@ MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_ad
 !MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/f06_minimal_adjoint_meshtally.inp.Tally
 #   2026-09-27 F07 复核的 7.6 MB PTRAC 原件（摘要 JSON/Tally 入库）
 MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/logs/ww-ptrac-seed101.txt
+#   2026-09-27 F01/F05 闭环的原始 RMC 产品（保留 .inp/.Tally/.stdout/.stderr）
+MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/forward_field.inp.*
+!MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/forward_field.inp.Tally
 
 # ===== 编译产物 =====
 *.o

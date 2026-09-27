@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-27 | [f01-f05-forward-field-closure](2026-09/20260927_03_f01-f05-forward-field-closure/README.md) | 轻量功能验证 / Forward MC + spatial-energy field | 已完成（F01 A — Ready；F05 A — Ready，限定 serial text 子域） | F01 / F05 | 200k histories；MPI/OMP OFF；2 spatial × 30 MG rows；两个空间 bin 非零且有明显差异；RMC 未修改 |
 | 2026-09-27 | [independent-f07-field-re-review](2026-09/20260927_02_independent-f07-field-re-review/README.md) | 独立统计审查 / F07 field RE | 已完成（C — Verify，限定 source-family serial text） | F07 | E1+E3：exact history RE formula、WW bank drain、N scaling 1.975/1.993、analog Q=.849、WW Q=.888、Normalize RE invariant；zero-score RE=0 unsafe；RMC 未修改 |
 | 2026-09-27 | [f07-field-statistical-uncertainty](2026-09/20260927_01_f07-field-statistical-uncertainty/README.md) | 只读功能审查 / Field 统计与 RE | 已完成（C — Verify，限定 serial text-first Cartesian 子域） | F07 | Analog/native track-mesh WW RE 公式与 source-history bank-drain 归属确认；N scaling、M=10 empirical、Normalize、zero-score 完成；field-bin WW-on 校准仍缺，RE=0 非零不确定度；RMC 未修改 |
 | 2026-09-26 | [independent-f06-adjoint-field-review-r2](2026-09/20260926_03_independent-f06-adjoint-field-review-r2/README.md) | 独立复核 / F06 空间×能群伴随场 tally | 已完成（C — Verify，限定 normalized text Cartesian serial） | F06 | R2 独立 source/docs/runtime 复核：text `Energy=-1` + `Normalize=1` 可解释为 \(\phi^\dagger_{i,g}\)；HDF5 无能群轴；geometry warnings/F07 未覆盖；RMC 未修改 |

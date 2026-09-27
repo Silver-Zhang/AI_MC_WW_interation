@@ -31,11 +31,13 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 6 | MG WW 输入契约加固 | V2/V3 source-energy 注入错误已修正并重跑；已确认 0.4015 MeV 实际进入高群用例，但碰撞数仍是间接证据。群内 `WWE:N` 边界建议与 MG 群边界对齐；direct selected-bin oracle 尚未实现 | [修复与补测](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[独立复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
 | 7 | F06 输出接口 | F06 已完成 C — Verify（含 R1/R2 两轮独立复核，结论一致）：`Energy=-1` + `Normalize=1` 的 Type=1 Cartesian mesh tally 在 serial text 输出中可解释为 $\phi^\dagger_{i,g}$；HDF5 无能群轴，F07 统计另审 | [F06 档案](MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/README.md)、[R1 复核](MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/README.md)、[R2 复核](MLVR_develop/2026-09/20260926_03_independent-f06-adjoint-field-review-r2/README.md) |
 | 8 | **F07 RE 统计语义** | **已完成 C — Verify（限定 serial text-first Cartesian）**：analog/native track-mesh WW fixed-source 的 RE 公式和 source-history bank-drain 统计单元已确认；N scaling、10-seed scatter、Normalize、zero-score 已验证；field-bin WW-on 校准仍缺，`Ave=0, RE=0` 不是零不确定度 | [F07 档案](MLVR_develop/2026-09/20260927_01_f07-field-statistical-uncertainty/README.md)、[独立复核](MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/README.md) |
+| 9 | **F01/F05 Forward Field** | **已完成 A — Ready（限定 serial text 子域）**：200k-history standard MGACE forward neutron fixed-source 正常结束；Cartesian Type=1、`Energy=-1`、`Normalize=1` 输出 2 spatial × 30 MG rows 的 `Ave/RE`，空间差异明显 | [合并档案](MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-27 | f01-f05-forward-field-closure | 轻量闭环验证完成：F01/F05 均 A — Ready（限定 standard MGACE、fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、MPI/OMP-off serial text）；RMC 未修改 |
 | 09-27 | f07-field-statistical-uncertainty | 只读审查 F07 RE 统计：source-history RE 公式与 WW bank-drain 归属确认；N scaling（1.9993/2.0023）、10-seed scatter、Normalize、zero-score 验证；field-bin WW-on 校准仍缺；RMC 未修改 |
 | 09-27 | independent-f07-field-re-review | 独立复核（静态 E1、runtime E2/E3）：N scaling 1.975/1.993、analog Q=0.849、WW Q=0.888、Normalize RE 不变；结论 C — Verify（限定 serial）；RMC 未修改 |
 | 09-26 | f06-adjoint-spatial-energy-field | 只读审查完成：fixed-source MG neutron adjoint、Cartesian、Type=1、`Energy=-1`、`Normalize=1`、serial text 输出可恢复 2 spatial × 30 group 场；HDF5 无 energy axis；分类 C — Verify；RMC 未修改 |
