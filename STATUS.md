@@ -1,7 +1,7 @@
 # 项目状态（人只看这一页）
 
 > **最后更新：2026-09-29** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页**
-> 详细任务清单（80 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
+> 详细任务清单（82 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
 
@@ -14,10 +14,10 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 主要缺陷已修复并回归；F10 Field Reconstruction 数据边界 **design frozen，尚未实现**；F11 前置（持久执行能力）两份独立审查已完成（审查时未有动态复用证明），E0–E4 动态实验全部 PASS、独立复核 **ACCEPT WITH LIMITATIONS**（限定实验 lifecycle contract，正式 persistent API 未实现）；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 主要缺陷已修复并回归；F10 Field Reconstruction 数据边界 **design frozen，尚未实现**；F11 前置（持久执行能力）两份独立审查已完成（审查时未有动态复用证明），E0–E4 动态实验全部 PASS、独立复核 **ACCEPT WITH LIMITATIONS**（限定实验 lifecycle contract，正式 persistent API 未实现）；F11 v1 架构设计两稿已成（Task 15 完整、Task 16 待 README 定稿）；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F08 主要确定性缺陷已修复并回归；F10 首版数据合同已冻结、无实现；F11 前置两份独立审查已归档（生产 session 接口尚未实现），E0–E4 动态实验全部 PASS、独立复核 ACCEPT WITH LIMITATIONS（限定实验 lifecycle contract）；其余框架与组合边界待后续任务。**
+一句话：**F08 主要确定性缺陷已修复并回归；F10 首版数据合同已冻结、无实现；F11 前置两份独立审查已归档（生产 session 接口尚未实现），E0–E4 动态实验全部 PASS、独立复核 ACCEPT WITH LIMITATIONS（限定实验 lifecycle contract）；F11 v1 架构设计两稿已成、拍板待办；其余框架与组合边界待后续任务。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
@@ -36,12 +36,13 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 11 | **F09 Response + FOM information** | **已完成 A — Ready（限定第一版子域）**：200k formal Forward serial run 同一 scalar target 输出 `R`、`RE_R` 与 `Time in Fixed Source Calculation`；单-run FOM 可外部计算；不含 Bootstrap/FOM controller | [F09 档案](MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/README.md) |
 | 12 | **F10 Field 数据合同** | **design frozen（implementation not completed）**：三项 minor corrections 已按你批准写回设计；是否/何时另立 F10 实现任务（Adapter/parser → Reconstruction → WW Builder）由你决定；F11 按你指示未启动 | [设计](MLVR_develop/2026-09/20260927_06_f10-field-reconstruction-boundary/README.md)、[修订](MLVR_develop/2026-09/20260927_08_f10-minor-corrections-f07-sync/README.md) |
 | 13 | **F11 前置审查** | 两份独立源码审查已归档（Codex：运行生命周期/复用能力；Claude：persistent execution；互不参阅）：当前 RMC 缺少经证明可重复调用的 fixed-source session；后续最小动态实验已完成（见 #14） | [Codex 报告](MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/README.md)、[Claude 报告](MLVR_develop/2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/README.md) |
-| 14 | **F11 架构设计启动** | E0–E4 动态实验全 PASS，独立复核 Task 14 结论 **ACCEPT WITH LIMITATIONS**（E1/E3/E4 证据可接受；E0/E2/归一化受模型边界限制；Task 13 manifest 哈希不一致已修复）。动态证据已足以进入受限 F11 架构设计；是否现在立项（或先补可裂变 E2 验证）由你决定 | [动态执行报告](MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md)、[独立复核](MLVR_develop/2026-09/20260929_14_independent-f11-e0-e4-dynamic-review/README.md) |
+| 14 | **F11 v1 架构拍板** | 设计两稿已成：Task 15（Codex，完整；含新发现 uniform/heter track-length 归一差异，未动态验证）与 Task 16（Claude，文档已成、README 待定稿）均建议“提取可复用 fixed-source 执行核 + CDCalMode 侧 MLVR 编排 + 显式 prepare/reset 契约；不建通用 src/MLVR 子系统”；Task 16 判定 **Ready to freeze: YES WITH CORRECTIONS**（5 项条件）。拍板：采用/合并两稿、冻结条件与是否立项实现（或先补可裂变 E2/几何门禁验证） | [设计（Codex）](MLVR_develop/2026-09/20260929_15_f11-source-architecture-independent-design/README.md)、[设计（Claude）](MLVR_develop/2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-29 | f11-source-architecture-independent-design | F11 源码架构分析与独立设计（Codex）：源码阅读报告 + production v1 设计（TARGET/history 级响应统计/Field 交换/外部执行契约；P1–P9、T1–T12）；新发现 uniform 原始长度 vs heter 体积归一差异（未动态验证）；RMC 未修改 |
 | 09-29 | independent-f11-e0-e4-dynamic-review | 独立复核 Task 13 动态证据：**ACCEPT WITH LIMITATIONS**——E1/E3/E4 合同证据可接受；E0/E2/归一化受模型边界限制；独立重跑 comparator 复现 PASS；指出 manifest 一处 README 哈希不一致（整理编辑所致，已修复）；RMC 未修改 |
 | 09-29 | f11-persistent-session-e0-e4-execution | E0–E4 全部 PASS（限定 task-private lifecycle contract）；F/A gates、fresh exact oracle、真实 WW2 查窗、tally reset 与 G+1 已有动态证据；共享 RMC 未改；[报告](MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md) |
 | 09-29 | f11-persistent-session-minimal-experiments | F11 最小实验 E0–E4 协议冻结 + P0/P1 提案交付：全部 BLOCKED（未编译、未运行、无 fresh oracle）；当时待批准，后续授权执行见 Task 13；RMC 未修改 |
@@ -79,7 +80,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 正式调度尚未实现；授权的 E0–E4 已全部 PASS 且独立复核通过（ACCEPT WITH LIMITATIONS），受限 F11 架构设计是否启动待拍板，证据见 Task 13/14。
+1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 正式调度尚未实现；授权的 E0–E4 已全部 PASS 且独立复核通过（ACCEPT WITH LIMITATIONS）；v1 架构设计两稿已成（Task 15 完整、Task 16 待 README 定稿），设计冻结与实现立项待拍板，证据见 Task 13–16。
 2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
 3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 

@@ -1,0 +1,19 @@
+$ git rev-parse HEAD
+daf91d604ed4b6d14fd418ac50ae464f4f0de229
+
+$ git status --short
+?? MLVR_develop/2026-09/20260929_15_f11-source-architecture-independent-design/
+?? MLVR_develop/2026-09/20260929_16_independent-f11-source-architecture-claude/
+
+$ git diff --stat
+
+$ git -C RMC rev-parse HEAD
+5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+
+$ git -C RMC status --short
+
+$ git -C AIMC_WWiteration rev-parse HEAD
+9d749291d5f5070a00b9f88603428e686938cb7f
+
+$ git -C AIMC_WWiteration status --short
+?? "article/\346\210\220\351\203\275\344\274\232\350\256\256/\346\210\220\351\203\275\344\274\232\350\256\256\350\256\272\346\226\207\346\212\225\347\250\277\347\211\210.pdf"

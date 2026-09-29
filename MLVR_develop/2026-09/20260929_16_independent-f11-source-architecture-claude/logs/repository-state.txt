@@ -1,0 +1,7 @@
+RMC branch: Neural_Network_WW_Iteration
+RMC HEAD: 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+RMC status at audit start: clean
+AIMC branch: feature/3d-two-group
+AIMC HEAD: 9d749291d5f5070a00b9f88603428e686938cb7f
+AIMC status at audit start: one pre-existing untracked conference PDF; untouched.
+Root source audit scope: RMC only. Task 15 and its descendants were not read.

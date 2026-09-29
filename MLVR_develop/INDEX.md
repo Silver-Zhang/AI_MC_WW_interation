@@ -7,6 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-29 | [independent-f11-source-architecture-claude](2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) | 独立源码审查与架构设计 / F11 v1 | 实施中（独立审查与设计；README 未定稿） | F11 | source audit + v1 设计文档已成稿（Ready to freeze: YES WITH CORRECTIONS，5 项条件）；先立预审查问题、未读 Task 15；README §4/§5 待定稿 |
+| 2026-09-29 | [f11-source-architecture-independent-design](2026-09/20260929_15_f11-source-architecture-independent-design/README.md) | 源码分析与独立架构设计 / F11 v1 | 已完成（设计待拍板，未实现） | F11 | 源码阅读报告 + 独立设计（A–H 链、P1–P9/T1–T12、七项建议）；新发现 uniform track-length 原始长度 vs heter 体积归一差异（未动态验证）；RMC 未修改 |
 | 2026-09-29 | [independent-f11-e0-e4-dynamic-review](2026-09/20260929_14_independent-f11-e0-e4-dynamic-review/README.md) | 独立复核 / F11 E0–E4 动态证据 | 已完成（ACCEPT WITH LIMITATIONS） | F11 | 先立判据后读结果；独立重跑 analyzer/comparator 复现 PASS；E1/E3/E4 可接受，E0/E2/归一化受限；Task 13 manifest 一处 README 哈希不一致（整理所致，已修复）；未改 RMC/AIMC |
 | 2026-09-29 | [f11-persistent-session-e0-e4-execution](2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md) | 动态实验 / F11 E0–E4 | 已完成（E0–E4 全 PASS，限定实验 lifecycle contract） | F11 | task-private P0/P1+driver；fresh exact、F/A state、真实WW2 lookup、tally reset/内存2×30/G+1；共享RMC未改；未选架构；大体积产物（ww.tsv/私有快照/trace）留本地 |
 | 2026-09-29 | [independent-f11-persistent-experiment-review](2026-09/20260929_12_independent-f11-persistent-experiment-review/README.md) | 独立复核 / F11 E0–E4 实验证据 | 已完成（复核当时 E0–E4 INCONCLUSIVE；后续授权执行见 Task 13） | F11 | 先立验收标准后读结果；Task 11 全 BLOCKED、零运行、空测量；建议批准前补全可审查实验包；未改 RMC/AIMC |

@@ -1,0 +1,762 @@
+# Task — F11 Source-Level Architecture Analysis and Independent Design
+
+## Task directory
+
+新建：
+
+MLVR_develop/2026-09/20260929_15_f11-source-architecture-independent-design/
+
+本任务只做：
+
+1. RMC 源码深度阅读；
+2. F11 相关代码生命周期分析；
+3. 独立提出 F11 v1 代码架构；
+4. 给出逐项源码依据。
+
+不要实现代码。
+不要修改 RMC。
+不要修改 AIMC。
+不要修改 STATUS / INDEX / KB。
+不要 commit / push。
+
+---
+
+# 1. Core principle
+
+这是一次 **code-first independent design**。
+
+不要先假定：
+
+- 应该新建 `src/MLVR/`；
+- 应该把 F11 全部放进现有类；
+- iteration 一定应该放在哪个对象；
+- CalcFixedSource 一定要怎么拆；
+- 必须采用某种类设计。
+
+先阅读现有代码，再提出方案。
+
+要求：
+
+**结论必须从当前 RMC 代码结构出发，而不是从理想化软件架构出发。**
+
+---
+
+# 2. Frozen F11 v1 functional requirements
+
+以下是物理/功能需求，不是代码架构答案。
+
+F11 v1：
+
+- standard MGACE
+- neutron fixed-source
+- serial first
+- Cartesian mesh field
+- native track-mesh WW
+- fixed iteration count K
+- Bootstrap 不计入 K
+- 一个 formal iteration = Adjoint + Forward
+
+运行流程：
+
+Bootstrap Forward
+→ field + RE
+→ external reconstruction / WW mapping
+→ WW_A(1)
+
+for k = 1...K:
+
+    Adjoint
+    using WW_A(k)
+    → adjoint field + RE
+    → external reconstruction / WW mapping
+    → WW_F(k)
+
+    Forward
+    using WW_F(k)
+    → forward field + RE
+    → response / response RE / FOM
+    → external reconstruction / WW mapping
+    → WW_A(k+1)
+
+第一版简单 TARGET：
+
+- existing Cartesian tally mesh 中的一个或多个 spatial bins
+- 一个或多个 physical MG groups
+- nonnegative scalar flux response
+
+RMC 内部负责：
+
+- K
+- Bootstrap / Adjoint / Forward 顺序
+- Forward physical source
+- TARGET definition
+- simple TARGET → adjoint source
+- per-run population
+- existing fixed-source batch mechanics
+- Forward / Adjoint state switching
+- run reset / preparation
+- tally
+- response / RE / FOM
+- WW loading and application
+- per-iteration output
+- calling external reconstruction executable
+
+外部程序负责：
+
+Field + RE
+→ field reconstruction
+→ WW mapping
+→ output next WW lower-bound field
+
+第一版文件交换：
+
+RMC → `field.h5`
+external → `ww.h5`
+
+外部只返回 WW lower bounds；
+RMC 自己生成 survival / upper。
+
+现有 source / tally / WWP 定义尽量复用。
+
+---
+
+# 3. Evidence from previous experiments
+
+可以读取 Task 13 / Task 14，了解已经动态证明的生命周期事实：
+
+20260929_13_f11-persistent-session-e0-e4-execution
+20260929_14_independent-f11-e0-e4-dynamic-review
+
+但：
+
+**不要把 Task 13 的 test driver 直接当作 production design。**
+
+它只能作为：
+
+- CLEAR / SET / REBUILD 的动态证据；
+- repeated-run feasibility evidence；
+- state-lifecycle reference。
+
+production architecture 必须重新基于源码设计。
+
+---
+
+# 4. First deliverable — RMC code reading report
+
+先形成：
+
+RMC_F11_Source_Reading_Report.md
+
+必须系统阅读以下代码链。
+
+## A. Program lifecycle
+
+至少：
+
+main.cpp
+RunCalculation.cpp
+CalMode.h
+
+回答：
+
+- RMC 对象在哪里创建；
+- 哪些对象活到 main 结束；
+- 哪些对象 RunCalculation 按值传递；
+- 哪些按引用；
+- 哪些是 global；
+- 哪些对象适合跨多个 MLVR half-run 保留。
+
+给出实际调用图。
+
+---
+
+## B. Input architecture
+
+至少阅读：
+
+Input.h
+ReadInputBlocks.cpp
+ReadFixedSourceBlock.cpp
+ReadTallyBlock / mesh tally related parser
+ReadWeightWindow*
+ReadControlBlock.cpp
+GenerateInputFile.cpp
+
+回答：
+
+- 新 block 一般怎么加入；
+- MLVR 配置适合保存在哪个现有对象；
+- 是否有现有对象可以自然承载 iteration config；
+- 是否需要新 configuration class；
+- GenerateInpFile 是否需要支持 MLVR。
+
+不要假定答案。
+
+---
+
+## C. Fixed-source lifecycle
+
+重点：
+
+CalcFixedSource.cpp
+FixedSource.h
+InitiateAll.cpp
+InitiateTrspt.cpp
+InitialBatchSource.cpp
+CheckTransport.cpp
+ResetTrspt.cpp
+SampleNeutronSource.cpp
+
+画出：
+
+一次 fixed-source run：
+
+full initialization
+→ batch
+→ history
+→ descendant bank
+→ batch end
+→ finish
+→ tally processing
+→ output
+
+明确：
+
+- batch 真正在哪里；
+- batch 和 total histories 什么关系；
+- finish state 如何变化；
+- denominator 如何形成；
+- 哪些状态是 per-run；
+- 哪些可以保持。
+
+---
+
+## D. Forward ↔ Adjoint switching
+
+重点：
+
+FixedSource
+AceData
+ParticleState
+InitiateAll
+InitiateMatAce
+TreatAdjointMaterial
+SampleNeutronSource
+相关 collision / XS paths
+
+形成：
+
+Forward state
+→ Adjoint state
+→ Forward state
+
+的完整状态表。
+
+必须区分：
+
+KEEP
+CLEAR
+SET
+REBUILD
+
+并与 Task 13 动态 evidence 交叉验证。
+
+---
+
+## E. External source architecture
+
+重点：
+
+ExternalSource.h/.cpp
+Source.h
+ReadExternalSourceBlock
+ReadSourceCard
+ReadSourceDistributionCard
+SampleParticle
+SampleVariableFromDistri
+SampleNeutronSource
+
+回答：
+
+F11 v1 TARGET：
+
+mesh spatial bins × MG groups
+
+怎样最自然地复用当前 source representation 构造伴随 source？
+
+重点检查：
+
+- 是否需要创建新的 source type；
+- 还是现有 source/distribution 已足够；
+- 如何表示 spatial mesh-volume sampling；
+- 如何表示 energy-group sampling；
+- equal history weight + probability sampling 是否自然支持；
+- source normalization denominator 如何保持正确。
+
+给出具体源码位置。
+
+---
+
+## F. Tally / Field architecture
+
+重点：
+
+Tally.h
+TallyData.*
+InitiateTally.cpp
+ScoreMeshTally*
+TallyByTL*
+ProcessTally.cpp
+OutputTally.cpp
+MeshTallyHDF5.cpp
+OutputTallyh5.cpp
+StatisticsTester
+
+回答：
+
+- final `Ave / RE` 的真正 owner 是谁；
+- 哪个位置最适合读取 StatisticalField；
+- 是否应该扩展已有 HDF5 output；
+- 是否应该新增专用 Field output path；
+- 如何得到 mesh full boundaries；
+- 如何得到 MG G+1 physical edges；
+- status（VALID / ZERO_SCORE）在哪里最合理生成。
+
+---
+
+## G. Weight Window architecture
+
+重点：
+
+WeightWindow.h
+ReadWeightWindow*
+ProcessWeightWindow
+WeightWindows.cpp
+DoMeshWeightWindow.cpp
+相关 mesh WW code
+
+回答：
+
+- dynamic WW lower values 当前保存在哪里；
+- mesh/group topology 保存在哪里；
+- `lower → survival / upper` 当前在哪生成；
+- 新的 `ww.h5` 最自然从哪里注入；
+- 是否应该复用 existing WWMESH parser；
+- 还是应该直接更新已有 object；
+- 如何避免 static WWMESH 与 MLVR dynamic WW 冲突。
+
+---
+
+## H. Output / external executable
+
+阅读：
+
+Output*
+FileIO
+HDF5 infrastructure
+error paths
+system/process spawning precedent
+
+回答：
+
+第一版：
+
+RMC writes field.h5
+→ external executable
+→ waits
+→ reads ww.h5
+
+最自然应放在哪个运行层。
+
+检查：
+
+- 是否已有 external command execution mechanism；
+- 若没有，最小侵入实现放哪里；
+- exit-code / missing-file / malformed-file 如何处理；
+- 每轮 output filenames 如何避免覆盖。
+
+---
+
+# 5. State ownership table
+
+必须给出一张完整表：
+
+| State | Owner | Lifetime | Bootstrap | A→F | F→A | Action |
+|---|---|---|---|---|---|---|
+| geometry | ... | ... | ... | ... | ... | KEEP |
+| raw MGACE | ... | ... | ... | ... | ... | KEEP |
+| adjoint XS | ... | ... | ... | ... | ... | REBUILD |
+| tally definition | ... | ... | ... | ... | ... | KEEP |
+| tally score | ... | ... | ... | ... | ... | CLEAR |
+| source definition | ... | ... | ... | ... | ... | SET |
+| particle cache | ... | ... | ... | ... | ... | REBUILD |
+| WW topology | ... | ... | ... | ... | ... | KEEP |
+| WW lower | ... | ... | ... | ... | ... | SET |
+| RNG | ... | ... | ... | ... | ... | SET |
+| ... | | | | | | |
+
+必须覆盖 Task 13 reset contract 中的关键状态。
+
+---
+
+# 6. Second deliverable — independent F11 architecture
+
+完成源码报告以后，独立写：
+
+F11_Independent_Code_Architecture_Design.md
+
+不得只是总结现有讨论。
+
+需要提出你认为最符合当前 RMC 架构的 production v1。
+
+至少回答以下问题。
+
+---
+
+# 7. Where should the F11 workflow live?
+
+独立判断：
+
+A.
+new `src/MLVR/` subsystem
+
+B.
+extend existing CalMode / FixedSource / Input / Tally / WeightWindow
+
+C.
+hybrid
+
+或其他方案。
+
+给出：
+
+- 推荐方案；
+- 两个替代方案；
+- 每个方案优缺点；
+- 为什么推荐方案最符合当前 RMC。
+
+不能因为任务描述中出现任何偏好而直接选择。
+
+---
+
+# 8. Exact production call graph
+
+给出你推荐的调用关系，例如但不限于：
+
+main
+→ RunCalculation
+→ ???
+→ Bootstrap
+→ external
+→ Adj
+→ external
+→ Fwd
+
+必须明确：
+
+- iteration loop 在哪个函数 / object；
+- fixed-source full initialization 在哪里；
+- repeated run entry 在哪里；
+- per-run preparation 在哪里；
+- transport loop 是否需要抽函数；
+- ProcessTally 在哪里；
+- output/external invocation 在哪里。
+
+使用实际函数/类名称。
+
+---
+
+# 9. CalcFixedSource refactoring decision
+
+这是重点。
+
+判断当前：
+
+CalcFixedSource()
+
+应该：
+
+A. 保留不动，在外面包控制逻辑；
+
+B. 拆成：
+   - initialization
+   - execute run
+   - finalize
+
+C. 其他方案。
+
+给出具体依据。
+
+如果建议拆：
+
+明确哪些现有代码区间应抽出，
+哪些必须保持原样。
+
+目标：
+
+**production history/batch loop 只能有一份。**
+
+---
+
+# 10. New files vs existing files
+
+给出具体建议：
+
+### Existing files to modify
+
+例如：
+
+ReadInputBlocks.cpp
+RunCalculation.cpp
+FixedSource.h
+CalcFixedSource.cpp
+...
+
+说明每个为什么改。
+
+### New files justified
+
+只有确实需要时才建议新增。
+
+每个新文件必须回答：
+
+为什么现有文件/类不能自然承担该功能？
+
+不要为了“架构漂亮”创建大量 wrapper/classes。
+
+---
+
+# 11. Input-card design integration
+
+结合现有 parser，提出 production syntax 草案。
+
+当前功能信息：
+
+- ITERATION
+- BOOTSTRAP_NPS
+- ADJOINT_NPS
+- FORWARD_NPS
+- TARGET mesh/region/group
+- SEED
+- COMMAND
+- WORKDIR
+
+同时明确：
+
+- existing FIXEDSOURCE 哪些继续使用；
+- TALLY 如何引用；
+- WWP 如何复用；
+- ADJOINTCALCULATION 在 MLVR 下如何处理；
+- static WWMESH 如何处理；
+- input conflict checks 放哪里。
+
+---
+
+# 12. TARGET → adjoint source production design
+
+给出具体实现路线：
+
+TARGET definition
+→ response weights
+→ spatial-energy source probability
+→ existing ExternalSource representation
+→ SampleFixSource
+
+必须说明：
+
+- 是否需要中间 source object；
+- 体积因子在哪里加入；
+- group ordering；
+- probability normalization；
+- equal history weight；
+- zero / invalid target 的检查。
+
+不要实现。
+
+---
+
+# 13. field.h5 / ww.h5 code integration
+
+提出：
+
+谁负责写 field.h5？
+谁负责读 ww.h5？
+
+不要只描述文件格式，要落实到当前类/function。
+
+Field 输出必须包括：
+
+value
+RE
+status
+mesh full boundaries
+G+1 energy boundaries
+role
+stage
+iteration
+history count
+normalization denominator
+identity metadata
+
+WW 输入：
+
+lower
+mesh identity
+energy identity
+role / iteration
+
+RMC 校验后生成 survival / upper。
+
+---
+
+# 14. Batch relationship
+
+必须基于 RMC source 明确解释：
+
+Iteration
+> half-run
+> existing RMC fixed-source batch
+> source history
+> descendants
+
+并判断：
+
+F11 v1 是否需要新增 batch 参数。
+
+如果不需要，给出源码依据。
+
+---
+
+# 15. Error handling
+
+第一版要求 fail-fast。
+
+设计：
+
+external command failure
+missing field/WW file
+invalid WW
+role mismatch
+mesh mismatch
+group mismatch
+run preparation failure
+
+应在哪层终止。
+
+不要设计复杂 recovery。
+
+---
+
+# 16. Minimal-change implementation plan
+
+给出按顺序开发的阶段：
+
+P1 input only
+P2 repeated fixed-source production lifecycle
+P3 target→adjoint source
+P4 Field export
+P5 external invocation + WW import
+P6 Bootstrap
+P7 one A→F iteration
+P8 K iterations
+P9 metrics/archive
+
+每阶段：
+
+- 修改哪些源码；
+- 最小验证；
+- 不能破坏什么。
+
+可以调整阶段，但必须给出理由。
+
+---
+
+# 17. Test plan
+
+生产实现必须保留 fresh-process oracle。
+
+设计至少：
+
+T1 ordinary fixed-source regression
+T2 Bootstrap
+T3 F→F
+T4 F→A→F
+T5 TARGET source
+T6 field.h5
+T7 ww.h5
+T8 external failure
+T9 one formal iteration
+T10 K=3 iteration
+T11 result archive
+T12 fissile F/A lifecycle before claiming general MG adjoint support
+
+区分：
+
+required before v1
+required before broader claim
+future extension
+
+---
+
+# 18. Explicit non-goals
+
+不要：
+
+- 修改源码；
+- 写正式代码；
+- 设计 CE；
+- 设计 coupled particle；
+- 设计 MPI persistent；
+- 设计 OpenMP persistent；
+- 设计 arbitrary response；
+- 设计 complex restart/recovery；
+- 实现 ML model；
+- 选择具体 DNN/PINN 方法。
+
+---
+
+# 19. Deliverables
+
+至少：
+
+README.md
+
+RMC_F11_Source_Reading_Report.md
+
+F11_Independent_Code_Architecture_Design.md
+
+logs/
+    repository-state.txt
+    source-call-graph.md
+    source-state-ownership.md
+    source-evidence-index.md
+    design-alternatives.md
+
+报告中的关键结论必须给：
+
+`file.cpp:line-range`
+
+不能只写函数名。
+
+---
+
+# 20. Final section
+
+最后单独给出：
+
+## Independent recommendation
+
+用不超过 2 页回答：
+
+1. F11 v1 最合理的代码组织是什么？
+2. iteration loop 应该放在哪里？
+3. CalcFixedSource 应该如何处理？
+4. 哪些现有类应该扩展？
+5. 哪些新文件真的有必要？
+6. 最大三个实现风险是什么？
+7. 实现前还需要用户拍板什么？
+
+然后停止。
+
+不要实现。
+不要自动更新公共状态。
