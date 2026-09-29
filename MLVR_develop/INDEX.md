@@ -7,6 +7,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-29 | [f11-rmc-persistent-execution-audit-claude](2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/README.md) | 独立源码审查 / F11 persistent execution | 已完成（独立报告；F11 方向待拍板） | F11 | 确认单次命令行生命周期；persistent session、F/A 转换、WW hot update、tally snapshot、输出隔离为缺口/未验证；最小实验 E1–E6 未执行；RMC/AIMC 只读 |
+| 2026-09-29 | [f11-rmc-runtime-architecture-audit-codex](2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/README.md) | 独立源码审查 / F11 运行生命周期与复用能力 | 已完成（独立报告；F11 方向待拍板） | F11 | 生命周期/初始化复用/F-A 切换/全局状态/IO 非幂等构造审计；无可直接重复调用的 fixed-source session 边界；G+1 群边界可自有效 MGACE 提取；RMC/AIMC 只读 |
 | 2026-09-27 | [f10-minor-corrections-f07-sync](2026-09/20260927_08_f10-minor-corrections-f07-sync/README.md) | 接口合同修订 / F07 状态同步 | 已完成（F10 design frozen；实现未完成） | F10/F07 | 用户批准的三项 F10 修正写回；F07 WW-on 10-seed field-bin 校准状态按独立复核同步；RMC 未修改 |
 | 2026-09-27 | [independent-f10-field-boundary-review](2026-09/20260927_07_independent-f10-field-boundary-review/README.md) | 独立设计审查 / F10 field boundary | 已完成（ACCEPT WITH MINOR CORRECTIONS） | F10 | 独立合同与 Codex F10 一致；要求 reject negative Type=1 Ave、记录 source-normalization identity、明确 flux-density unit；无实现/RMC 修改 |
 | 2026-09-27 | [f10-field-reconstruction-boundary](2026-09/20260927_06_f10-field-reconstruction-boundary/README.md) | 接口设计 / Field Reconstruction 数据边界 | 已完成（design frozen；implementation not completed） | F10 | 15 节合同初稿经独立复核；三项小修正由 `20260927_08` 写回后正式冻结；RMC 未修改 |

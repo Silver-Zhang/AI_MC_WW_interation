@@ -1,0 +1,51 @@
+2026-09-29T13:38:18.449853+08:00
+
+$ git -C RMC branch --show-current
+Neural_Network_WW_Iteration
+exit=0
+
+$ git -C RMC rev-parse HEAD
+5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+exit=0
+
+$ git -C RMC status --short
+
+exit=0
+
+$ git -C RMC log --oneline -10
+5cfb0f77 fix(ww): map MG group to physical energy in native WW lookup (20260923_01)
+b7d8a946 fix(ww): correct shared multi-particle mesh offsets
+41cf4559 修复异构网格最大边界索引 (20260919_04)
+5ec595e1 fix(ww): validate native mesh window shape
+341c0238 fix(ww): preserve native WWP per particle type
+b26a81a2 Merge remote-tracking branch 'origin/Neural_Network_WW_Iteration' into Neural_Network_WW_Iteration
+76cbfe72 fix(adjoint): correct negative angular interval (F02 W9)
+6d208751 fix(adjoint): close W5 W6 W7 defects
+c944a6cb Fix SPBS MPI/OpenMP Issue (thu-real/RMC!884)
+4d3e1aac 新增了用户手册中关于AIS数据库使用的部分 (thu-real/RMC!880)
+exit=0
+
+$ git -C AIMC_WWiteration branch --show-current
+feature/3d-two-group
+exit=0
+
+$ git -C AIMC_WWiteration rev-parse HEAD
+9d749291d5f5070a00b9f88603428e686938cb7f
+exit=0
+
+$ git -C AIMC_WWiteration status --short
+?? "article/\346\210\220\351\203\275\344\274\232\350\256\256/\346\210\220\351\203\275\344\274\232\350\256\256\350\256\272\346\226\207\346\212\225\347\250\277\347\211\210.pdf"
+exit=0
+
+$ git -C AIMC_WWiteration log --oneline -10
+9d74929 docs: flow the third affiliation after the second one
+56d82e1 docs: prepare Chengdu conference submission package
+c298713 docs: retitle the Chengdu paper to a variance-reduction method
+3ee52df docs: drop English title and abstract for the conference template
+f257b3a fix: render submissions with stable LibreOffice and align inline numbers
+3dce76b docs: complete bilingual table captions
+0c1253e docs: finalize Chengdu Word submission
+e167ba9 docs: mark the presentation media as local-only, not tracked
+d87fd21 docs: add an index for the chapter-3/4 experiment protocols
+a597c27 docs: consolidate process docs, READMEs and records across the repo
+exit=0

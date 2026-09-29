@@ -1,0 +1,675 @@
+# Task — F11 前置源码审查：RMC 运行生命周期与可复用执行能力（Codex 独立审查）
+
+## 任务目录
+
+只在以下目录工作：
+
+MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/
+
+不要修改另一个 Agent 的目录。
+不要修改 STATUS.md、INDEX.md、MLVR_Knowledge 公共文件。
+不要 commit / push。
+两个独立审查完成后再统一归档。
+
+---
+
+# 1. Goal
+
+在设计 F11 固定轮数双向迭代调度之前，对当前真实源码进行结构审查。
+
+核心问题：
+
+> 当前 RMC 的程序生命周期是什么？
+> 哪些初始化工作可以跨多次 Forward / Adjoint 计算复用？
+> 哪些状态必须每次重建？
+> 当前代码是否具备“单进程内连续执行多次固定源计算”的基础？
+> Forward / Adjoint 是否可以在同一长生命周期 RMC 进程内交替执行？
+> 如果未来采用“外部策略控制 + RMC 内部长生命周期执行”，需要改哪些位置？
+
+本任务只调查、分析、形成报告。
+
+不要设计最终 F11 架构。
+不要实现代码。
+不要修改 RMC。
+
+---
+
+# 2. Source repositories
+
+重点审查：
+
+RMC/
+branch: Neural_Network_WW_Iteration
+
+辅助审查：
+
+AIMC_WWiteration/
+branch: develop
+
+AIMC 只用于了解当前外部工作流如何：
+
+- 启动 RMC
+- 写输入
+- 读取 tally
+- Reconstruction
+- WW generation
+- iteration bookkeeping
+
+RMC 是本任务主体。
+
+开始时记录：
+
+git branch --show-current
+git rev-parse HEAD
+git status --short
+git log --oneline -10
+
+禁止：
+
+- switch branch
+- reset
+- checkout
+- clean
+- 修改源码
+- 修改测试 reference
+
+必须基于当前真实工作树审查，不要假定历史 commit 就是当前代码。
+
+---
+
+# 3. Independence requirement
+
+先直接阅读当前源码，形成 source-only preliminary conclusion。
+
+保存：
+
+logs/preliminary-source-only-conclusion.md
+
+在这个文件完成之前：
+
+不要阅读 Claude 的任务目录。
+不要阅读任何未来 Claude 结论。
+不要用已有项目文档替代源码判断。
+
+之后可以读取项目已有 F02–F10 档案帮助理解，但必须明确区分：
+
+- current source evidence
+- previous archived evidence
+- inference
+
+代码证据优先。
+
+---
+
+# 4. 第一部分：画出 RMC 完整程序生命周期
+
+从程序入口开始，追踪一次普通 fixed-source calculation：
+
+program entry
+→ input parsing
+→ geometry/material initialization
+→ nuclear data loading
+→ MGACE initialization
+→ source initialization
+→ tally initialization
+→ WW initialization
+→ fixed-source transport
+→ tally normalization
+→ output
+→ cleanup / program exit
+
+必须给出：
+
+- 关键文件
+- 类/函数
+- 调用关系
+- file:line
+- 对象生命周期
+
+不要只根据类名猜。
+
+最终形成一张实际调用链。
+
+---
+
+# 5. 找出“昂贵且理论上可复用”的初始化
+
+逐项调查：
+
+## Geometry
+
+- geometry 在哪里建立？
+- 是否在 fixed-source run 过程中改变？
+- 能否一次初始化，多次 transport 复用？
+
+## Material / nuclear data
+
+重点：
+
+- XSDIR / ACE / MGACE 在哪里读取？
+- cross section 数据保存在哪里？
+- 生命周期多长？
+- Forward / Adjoint 是否共享同一数据？
+- 切换 adjoint mode 是否需要重新读取 nuclear data？
+
+## Mesh / tally
+
+- mesh 何时创建？
+- tally storage 何时 allocate？
+- 每次 run 后如何 clear？
+- 是否已有 reset/clear 操作？
+- 能否保留 mesh definition，只清 statistical accumulation？
+
+## Weight Window
+
+- input parsing
+- runtime object
+- lower bounds storage
+- energy mapping
+- lookup
+
+分别在哪里？
+
+重点回答：
+
+> 如果外部已经计算出一张新的 WW，
+> 当前代码是否可能只替换 WW 数值，而不重新读取完整 RMC input？
+
+指出具体数据结构和依赖。
+
+---
+
+# 6. Fixed-source transport 主循环
+
+定位真正的 fixed-source calculation loop。
+
+必须回答：
+
+- particle population 在哪里保存？
+- population 是 initialization-time 参数还是 run-time 参数？
+- source history loop 在哪里？
+- particle bank 生命周期是什么？
+- tally 在哪个粒度 clear / accumulate / finalize？
+- timer 在哪里开始/结束？
+- 一次 fixed-source calculation 完成后，哪些对象仍然有效？
+- 当前函数是否理论上可以再次调用？
+
+例如不要只说：
+
+“CDFixedSource 可以重复执行。”
+
+必须从成员变量、初始化和清理路径证明。
+
+---
+
+# 7. Forward / Adjoint mode switching
+
+这是本任务重点。
+
+调查：
+
+Adjoint mode 如何进入？
+
+追踪：
+
+input
+→ global/config flag
+→ source
+→ particle state
+→ MGACE
+→ collision / scattering / fission
+→ WW
+→ tally
+
+回答：
+
+1. Forward / Adjoint 是否使用同一个 model / material / nuclear-data object？
+2. 哪些对象在初始化时根据 adjoint flag 构造不同状态？
+3. 哪些状态只在 transport runtime 查询 adjoint flag？
+4. 是否存在 forward-only / adjoint-only cache？
+5. 如果一个进程执行：
+
+Forward
+→ Adjoint
+→ Forward
+
+是否存在明显状态污染风险？
+
+6. 如果不安全，具体哪些状态需要：
+
+reset
+reinitialize
+rebuild
+
+不要直接提出修改方案，先把事实列清楚。
+
+---
+
+# 8. Source 更新能力
+
+调查 source 的完整生命周期：
+
+input definition
+→ source objects
+→ sampling objects
+→ fixed-source transport
+
+回答：
+
+- source 是否只能在 input parsing 时建立？
+- particle population 是否可单独修改？
+- RNG seed/stride 是否可重新设置？
+- Forward source 是否可复用？
+- Adjoint source 是否可以在同一个进程内替换？
+- 替换 source 是否会要求重新初始化 geometry/material/nuclear data？
+
+区分：
+
+stable data
+vs
+per-run data
+
+---
+
+# 9. WW 更新能力
+
+重点调查 F08/F04 当前修复后的 native track-mesh WW。
+
+回答：
+
+- WW mesh definition 与 Field mesh 是否可长期保存？
+- WW lower-bound values 保存在哪里？
+- 能群边界保存在哪里？
+- lower bounds 是否能在运行间被重新赋值？
+- 修改后是否存在 derived data/cache 需要重新构建？
+- WW 对 particle/source/tally 是否有隐藏依赖？
+
+特别调查：
+
+WW_A(k)
+→ Adjoint
+
+以及：
+
+WW_F(k)
+→ Forward
+
+如果只改变 lower-bound 数值，哪些对象可以保持不动？
+
+---
+
+# 10. Tally / Field 生命周期
+
+结合 F05/F06/F07/F10，调查真实代码：
+
+- tally score storage
+- sum1 / sum2
+- RE
+- normalization
+- mesh
+- energy groups
+
+回答：
+
+一次 calculation 结束后：
+
+哪些数据需要导出？
+哪些数据可以直接在内存里读取？
+哪些数据必须先经过 output formatting？
+
+特别回答：
+
+> 是否必须通过 `.Tally` 文本才能取得 Field，
+> 还是 RMC 内部已经存在结构化 value/RE arrays？
+
+给出数据结构和 file:line。
+
+并调查：
+
+> 开始下一轮前，怎样清空上一轮 tally，
+> 但保留 tally mesh definition？
+
+---
+
+# 11. 能群定义生命周期
+
+F10 已发现 `.Tally` 不足以恢复完整 G+1 boundaries。
+
+调查当前 RMC 内存中：
+
+- MGACE group centre
+- group width
+- lower boundary
+- upper boundary
+- internal reverse group mapping
+
+分别保存在哪里。
+
+回答：
+
+> 如果以后使用长期 RMC process，
+> 是否可以直接向外部 Adapter/API 提供完整 physical energy boundaries，
+> 从而不再依赖 `.Tally` 文本反推？
+
+只调查能力，不实现接口。
+
+---
+
+# 12. MPI / OpenMP 生命周期
+
+调查：
+
+- MPI_Init / MPI_Finalize 在哪里？
+- rank/thread config 生命周期？
+- fixed-source calculation 内部 communicator / shared-memory 数据什么时候建立？
+- 能否在一个 MPI job 内连续调用多次 transport？
+- 是否存在只允许“一次计算然后 finalize”的结构？
+
+重点不是验证 MPI 正确性，而是回答：
+
+> persistent RMC session 将来是否与当前 MPI lifecycle 冲突？
+
+---
+
+# 13. Global/static/singleton 状态
+
+系统搜索：
+
+- global objects
+- static variables
+- singleton/config global state
+- process-level flags
+- file-static caches
+
+重点找与以下有关的：
+
+- adjoint
+- source
+- WW
+- tally
+- RNG
+- particle bank
+- fixed-source population
+- timing
+- output files
+- nuclear data
+
+建立表：
+
+State
+Owner
+Lifetime
+Mutable?
+Needs reset between runs?
+Risk
+
+这是判断“同进程重复运行”是否安全的关键。
+
+---
+
+# 14. Existing in-process loop patterns
+
+不要假设 RMC 从未做过多阶段计算。
+
+搜索当前代码是否已有类似：
+
+- burnup loop
+- depletion steps
+- eigenvalue cycles
+- transient/time steps
+- optimization iterations
+- restart
+- repeated fixed-source calculations
+- sensitivity / perturbation loops
+
+如果存在，调查它们如何处理：
+
+- state reset
+- tally reset
+- data reuse
+- repeated transport
+
+判断这些模式是否能为 F11 提供现成的生命周期模式。
+
+不要因为名称相似就认为可以复用。
+
+---
+
+# 15. Error / cleanup path
+
+调查：
+
+- exit()
+- abort()
+- MPI_Abort
+- exceptions
+- fatal error macros
+- explicit cleanup
+
+回答：
+
+如果未来做 long-lived session：
+
+某一轮失败后是否能恢复？
+
+第一版不要求实现恢复机制，但需要知道当前结构是否默认“失败即整个进程结束”。
+
+---
+
+# 16. 当前 AIMC 外部工作流
+
+只做结构性调查。
+
+回答当前 AIMC 是否已经承担：
+
+- subprocess launch
+- input generation
+- forward / adjoint scheduling
+- iteration index
+- particle population
+- reconstruction
+- WW generation
+- result directories
+- best FOM
+- history storage
+
+明确：
+
+哪些属于研究策略、未来可能频繁修改；
+哪些只是稳定的 execution mechanics。
+
+不要评价 AIMC 算法本身。
+
+---
+
+# 17. 对以下候选功能做“源码可行性分类”
+
+不要选最终架构。
+
+只根据源码给每项分类：
+
+A. 当前代码基本可直接复用
+B. 需要小范围封装/reset
+C. 需要明显重构
+D. 当前结构不适合/风险高
+E. 证据不足
+
+功能包括：
+
+1. geometry/material 一次加载，多轮复用
+2. MGACE database 一次加载，多轮复用
+3. mesh/tally definition 一次建立
+4. tally accumulation 每轮 reset
+5. particle population 每轮修改
+6. RNG 每轮重新配置
+7. Forward source 每轮复用
+8. Adjoint source 每轮更新
+9. WW values 每轮热更新
+10. Forward → Adjoint mode switching
+11. Adjoint → Forward mode switching
+12. same-process repeated fixed-source run
+13. same MPI process repeated runs
+14. Field value/RE 内存提取
+15. physical G+1 boundaries 内存提取
+
+每项必须有 source evidence。
+
+---
+
+# 18. 最重要的输出：Integration Seam Map
+
+最终请画一张真实源码基础上的结构图，例如：
+
+Persistent candidates
+---------------------
+geometry
+material
+nuclear data
+mesh
+...
+
+Per-run candidates
+------------------
+source
+population
+RNG
+WW values
+tally accumulators
+...
+
+Research-variable external candidates
+-------------------------------------
+reconstruction
+field→WW policy
+response→adjoint-source policy
+...
+
+但这只是源码事实总结。
+
+不要决定：
+
+“所以一定应该采用 Hybrid architecture。”
+
+这个决策留给用户。
+
+---
+
+# 19. Identify blockers and unknowns
+
+最终列出：
+
+## Confirmed blockers
+
+必须有源码证据。
+
+## Likely risks
+
+有证据但尚不能确定。
+
+## Unknowns
+
+仅靠静态代码无法判断，需要后续 targeted experiment。
+
+对于每个 unknown 给出最小验证实验建议。
+
+例如：
+
+- repeated Forward → Forward
+- Forward → Adjoint → Forward
+- hot-update WW
+- reset tally without model rebuild
+
+但本任务不要自动开始这些实验。
+
+---
+
+# 20. Performance evidence
+
+从已有 timer / code path 判断：
+
+一次 RMC startup 中分别有哪些阶段：
+
+- input read
+- XS/data loading
+- initialization
+- fixed-source transport
+- tally processing
+
+如果现有输出已有 timing，就记录。
+
+若不能可靠量化：
+
+明确写“当前没有足够证据”。
+
+不要凭感觉声称数据库读取“开销很大”。
+
+可以提出下一步应该测哪些时间。
+
+---
+
+# 21. Deliverables
+
+目录：
+
+MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/
+
+至少包含：
+
+README.md
+
+RMC_Runtime_Architecture_Audit_Codex.md
+
+logs/
+  preliminary-source-only-conclusion.md
+  source-navigation.txt
+  source-state-map.md
+
+主报告结构：
+
+1. Executive summary
+2. Repository / revision
+3. RMC process lifecycle
+4. Initialization/data lifetime
+5. Fixed-source runtime lifecycle
+6. Forward/Adjoint switching
+7. Source lifecycle
+8. WW lifecycle
+9. Tally/Field lifecycle
+10. MG energy-definition lifecycle
+11. MPI/OpenMP lifecycle
+12. Global/static state
+13. Existing repeated-run patterns
+14. AIMC external workflow
+15. Feasibility matrix
+16. Integration seam map
+17. Confirmed blockers
+18. Risks
+19. Unknowns + proposed experiments
+20. Information needed for F11 design
+
+最后单独给一节：
+
+# What the human needs to decide next
+
+只列需要用户拍板的问题。
+
+不要替用户选择方案。
+
+---
+
+# 22. Stop rule
+
+完成源码分析和报告后停止。
+
+禁止：
+
+- 修改 RMC
+- 修改 AIMC
+- 写 persistent session
+- 写 controller
+- 写 API
+- 实现 F11
+- 启动动态修复
+- 更新 STATUS/INDEX/KB
+- 阅读 Claude 的任务目录
+- commit/push
