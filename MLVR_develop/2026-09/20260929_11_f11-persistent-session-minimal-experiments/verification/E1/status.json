@@ -1,0 +1,18 @@
+{
+  "experiment": "E1",
+  "title": "Forward → Forward",
+  "result": "BLOCKED",
+  "executed": false,
+  "completed_rmc_runs": 0,
+  "completed_fresh_oracle_runs": 0,
+  "completed_same_process_sequences": 0,
+  "blocker_ids": [
+    "B1"
+  ],
+  "reason": "真实 CalcFixedSource 无条件全初始化；prepared-state gate 与显式 reset driver 待批准。",
+  "measurements": null,
+  "comparisons": null,
+  "runtime_evidence": [],
+  "criteria": "../../logs/experiment-plan-frozen.md",
+  "proposal": "../../Proposed_Experimental_Patch.md"
+}

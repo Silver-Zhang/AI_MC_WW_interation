@@ -1,0 +1,222 @@
+diff --git a/src/main.cpp b/src/main.cpp
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -55,6 +55,9 @@
+ # endif
+ 
+ int main(int argc, char *argv[]) {
++#ifdef RMC_F11_PROBE
++  f11_probe::mark("main.enter");
++#endif
+   ///////////////// Define objects ////////////////////////
+   ///////  decoupling via refactoring at 20130720   ///////
+   CDRNG ORNG;
+@@ -159,12 +162,23 @@
+                           OSampling, OKinetics, OPerturb);
+ 
+   ////////////// Write output ending ////////////////
++#ifdef RMC_F11_PROBE
++  f11_probe::begin("output.ending");
++#endif
+   Output.OutputEnding(OCalMode, OAdjoint, OCriticality, OFixedSource);
++#ifdef RMC_F11_PROBE
++  f11_probe::end("output.ending");
++#endif
++
+ 
+   ///////////////// Parallel Case ////////////////////////
+ # ifdef USE_MPI
+   MPI_Finalize();
+ # endif
+ 
++#ifdef RMC_F11_PROBE
++  f11_probe::mark("main.exit");
++  f11_probe::flush();
++#endif
+   return 0;
+ }
+diff --git a/src/ReadInputBlocks.cpp b/src/ReadInputBlocks.cpp
+--- a/src/ReadInputBlocks.cpp
++++ b/src/ReadInputBlocks.cpp
+@@ -13,6 +13,9 @@
+                               CDAdjoint &OAdjoint, CDHomogenization &OHomogenization, CDExternalSource &cExternSource,
+                               CDSampling &cSampling, CDKinetics &cKinetics, CDPerturbation &cPerturb) {
+   ////////////////////////// Read input file: start ////////////////////////////////
++#ifdef RMC_F11_PROBE
++  f11_probe::Scope f11_input_scope("input_with_geometry_check");
++#endif
+   OTimer.reg(Utility::ReadInputBlock);
+   OTimer[Utility::ReadInputBlock].start();
+ 
+diff --git a/src/ReadAceData.cpp b/src/ReadAceData.cpp
+--- a/src/ReadAceData.cpp
++++ b/src/ReadAceData.cpp
+@@ -14,6 +14,9 @@
+ 
+ void CDAceData::ReadAceData(const int nTotNonSabNucNum, const int nTotNucNumIncSab,
+                             int p_nParticleMode, bool bPhotonNucleus, CDSampling &cSampling) {
++#ifdef RMC_F11_PROBE
++  f11_probe::Scope f11_xs_scope("xs_load_and_mg_prepare");
++#endif
+   Output.OutputMessage([&]() {
+     sprintf(Output.p_sPrintStr, "\nReading XSDIR/ACE library...\n");
+   }, Output.p_fpOutputFilePtr, CDOutput::_NORMAL);
+diff --git a/src/InitiateMatAce.cpp b/src/InitiateMatAce.cpp
+--- a/src/InitiateMatAce.cpp
++++ b/src/InitiateMatAce.cpp
+@@ -7,6 +7,9 @@
+ 
+ void CDMaterial::InitiateMatAce(int nParticleMode, CDGeometry &cGeometry, CDTally &cTally, CDAceData &cAceData,
+                                 CDBurnup &cBurnup, CDSampling &cSampling, bool bPhotonNucleus) {
++#ifdef RMC_F11_PROBE
++  f11_probe::Scope f11_model_scope("model_prepare_inclusive");
++#endif
+   // Treat inp information before reading ACE
+   GenTotNucIdList(cAceData.p_bIsMultiGroup);
+ #ifdef AIS
+@@ -78,7 +81,14 @@
+   if (cBurnup.p_bIsWithBurnup) {
+     cBurnup.ExpdBurnableCell(cGeometry, *this, cTally, cAceData, cSampling);
+   }
++#ifdef RMC_F11_PROBE
++  f11_probe::begin("output.material");
++#endif
+   OutputMaterialFile(cAceData.p_vNuclides);
++#ifdef RMC_F11_PROBE
++  f11_probe::end("output.material");
++#endif
++
+   // 计算缓发中子分组数 //
+   if (!cAceData.p_bIsMultiGroup) {
+     // 如果是多群的话，组数是用户输入的，不需要循环计算，所以这里只计算连续能量的情况 //
+diff --git a/src/TreatAdjointMaterial.cpp b/src/TreatAdjointMaterial.cpp
+--- a/src/TreatAdjointMaterial.cpp
++++ b/src/TreatAdjointMaterial.cpp
+@@ -7,6 +7,10 @@
+ #include "CalMode.h"
+ 
+ void CDAceData::treatAdjointMaterial(int nParticleMode) { //处理伴随截面;
++#ifdef RMC_F11_PROBE
++  f11_probe::Scope f11_adjoint_scope("adjoint_prepare");
++#endif
++
+   int maxParticle = CDParticleState::Neutron + 1;
+   if (nParticleMode == CDCalMode::NeutronMode) { ///check particle mode
+     maxParticle = CDParticleState::Neutron + 1;
+diff --git a/src/CalcFixedSource.cpp b/src/CalcFixedSource.cpp
+--- a/src/CalcFixedSource.cpp
++++ b/src/CalcFixedSource.cpp
+@@ -70,14 +70,32 @@
+                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource,
+                                 CDSampling &cSampling, CDPerturbation &cPerturb) {
++#ifdef RMC_F11_PROBE
++  f11_probe::mark("fixed_source.enter");
++  f11_probe::begin("transport_prepare_inclusive");
++#endif
+   OTimer.reg(Utility::FixedSource);
+   OTimer.reg(Utility::Tally);
+   OTimer[Utility::FixedSource].start();
+   CDBurnup CBurnup;
+   bool bPhotonNucleus = cPhotonTransport.p_bPhotonNucleus;
++#ifdef RMC_F11_PROBE
++  f11_probe::snapshot("before_full_init", cFixedSource, CAceData, CParticleState, CTally, ORNG, cExternalSource);
++#endif
++#ifdef RMC_F11_REUSE_EXPERIMENT
++  // EXPERIMENT ONLY: the task driver must arm and validate prepared state.
++  if (!f11_probe::consume_prepared_state_token()) {
++#endif
+   cFixedSource.InitiateAll(cCalMode.p_nParticleMode, cNeutronTransport, CGeometry, CMaterial, CTally,
+                            CAceData, CParticleState, CBurnup, ORNG, cSampling, bPhotonNucleus,
+                            cPhotonTransport, cElectronTransport, cCalMode, cPerturb);
++#ifdef RMC_F11_REUSE_EXPERIMENT
++  }
++#endif
++#ifdef RMC_F11_PROBE
++  f11_probe::snapshot("after_full_init_or_prepared_state", cFixedSource, CAceData, CParticleState, CTally, ORNG, cExternalSource);
++#endif
++
+   CParticleState.p_vONucCs.resize(CAceData.p_vNuclides.size());
+   CParticleState.p_vIsNucLocCellTmpChanged.resize(CAceData.p_vNuclides.size(), true);
+ 
+@@ -103,6 +121,11 @@
+   }
+ 
+ 
++#ifdef RMC_F11_PROBE
++  f11_probe::end("transport_prepare_inclusive");
++  f11_probe::snapshot("before_transport", cFixedSource, CAceData, CParticleState, CTally, ORNG, cExternalSource);
++  f11_probe::begin("transport_loop");
++#endif
+   if (cCalMode.p_nParticleMode == CDCalMode::NeutronMode) {
+     cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].push(CDFixBank());
+     while (cFixedSource.p_nFinishCalculate < 2) {
+@@ -117,6 +140,9 @@
+ 
+         OTimer[Utility::FixedSource].interval();
+         ORNG.GetRandSeed();
++#ifdef RMC_F11_PROBE
++        f11_probe::history(cFixedSource, ORNG);
++#endif
+ 
+         //模拟每个历史前初始化captime变量
+         if (CTally.p_bCap) {
+@@ -716,9 +742,20 @@
+     }
+   }
+ 
++#ifdef RMC_F11_PROBE
++  f11_probe::end("transport_loop");
++  f11_probe::snapshot("after_transport", cFixedSource, CAceData, CParticleState, CTally, ORNG, cExternalSource);
++  f11_probe::begin("tally_finalize");
++#endif
+   FinalizeLoadBalanceChecker(cFixedSource);
+ 
+   CTally.ProcessTally(cFixedSource, CMaterial, CAceData);
++#ifdef RMC_F11_PROBE
++  f11_probe::end("tally_finalize");
++  f11_probe::snapshot("after_tally_finalize_before_output", cFixedSource, CAceData, CParticleState, CTally, ORNG, cExternalSource);
++  f11_probe::begin("output.fixed_source_tail");
++#endif
++
+ 
+   if (cPerturb.p_bDiffrOprt) {
+     cPerturb.CalcFixedSrcPerbCoeffs(cFixedSource.p_llUserInputParNum);
+@@ -746,5 +783,11 @@
+     OPythonInterface.FinalizePython();
+   }
+ # endif
++#ifdef RMC_F11_PROBE
++  f11_probe::end("output.fixed_source_tail");
++#endif
+   OTimer[Utility::FixedSource].stop();
++#ifdef RMC_F11_PROBE
++  f11_probe::mark("fixed_source.exit");
++#endif
+ }
+diff --git a/src/DoMeshWeightWindow.cpp b/src/DoMeshWeightWindow.cpp
+--- a/src/DoMeshWeightWindow.cpp
++++ b/src/DoMeshWeightWindow.cpp
+@@ -39,6 +39,9 @@
+     for (auto &m : tempWeightWindowMeshTrack) { //针对此段轨迹，一步一步进行处理
+       if (m.p_nMeshIndex > -1) { //如果进入了网格
+         double dLowWeightBound, dSurvivalWeight, dUpperWeightBound;
++#ifdef RMC_F11_PROBE
++        f11_probe::particle_context(cParticleState);
++#endif
+         setMeshWeightWindowBound(dLowWeightBound, dSurvivalWeight, dUpperWeightBound, cParticleState.p_eParticleType,
+                                  m.p_nMeshIndex, GetWeightWindowEnergy(cAceData, cParticleState));
+         DoWeightWindows(cParticleState, cFixedSource, dLowWeightBound, dUpperWeightBound, dSurvivalWeight, ORNG);
+diff --git a/src/WeightWindows.cpp b/src/WeightWindows.cpp
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -66,6 +66,9 @@
+     dUpper = p_vMeshInformation[particleType][meshIndex][ergPos].p_dUpperWeightBound;
+ #ifdef USE_MPI
+   }
++#endif
++#ifdef RMC_F11_PROBE
++  f11_probe::ww_lookup(particleType, meshIndex, erg, ergPos, dLow, dSurvive, dUpper);
+ #endif
+ }
+ 

@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-29T06:20:18.375130+00:00",
+  "task": "F11 Persistent Session Minimal Experiments E0–E4",
+  "workflow_mode": "C",
+  "status": "BLOCKED",
+  "stop_reason": "User task sections 4, 7, 16: proposed production-source instrumentation/control seam requires approval before execution",
+  "rmc_branch": "Neural_Network_WW_Iteration",
+  "rmc_head": "5cfb0f771d0c5a2127c90d57e51ce672a4e3b616",
+  "root_head": "2f20c8da61041d1412fd67592ec6b909d3c12782",
+  "scope": {
+    "platform": "Linux",
+    "database": "standard MGACE",
+    "particle": "neutron",
+    "mode": "fixed source",
+    "tally_type": 1,
+    "tally_mesh": "Cartesian",
+    "energy": -1,
+    "normalize": 1,
+    "weight_window": "native track-mesh",
+    "mpi": false,
+    "openmp": false
+  },
+  "patch": {
+    "state": "PROPOSED_NOT_APPLIED",
+    "approval_received": false,
+    "source_files": 8,
+    "layers": [
+      "P0 observation",
+      "P1 prepared-state initialization gate"
+    ],
+    "proposal": "../Proposed_Experimental_Patch.md",
+    "diff": "../verification/proposal/proposed-experimental.patch",
+    "hook_header": "../verification/proposal/f11_probe_hooks.hpp.draft",
+    "header_declarations_only": true,
+    "callbacks_implemented": false,
+    "driver_implemented": false,
+    "private_source_snapshot_created": false,
+    "compiled": false,
+    "git_apply_check_exit_code": 0,
+    "default_off_text_check": "PASS; blank lines ignored; not compilation"
+  },
+  "actual_rmc_runs_total": 0,
+  "actual_fresh_oracle_runs_total": 0,
+  "build": null,
+  "dynamic_results": null,
+  "experiments": {
+    "E0": {
+      "experiment": "E0",
+      "title": "Startup / initialization performance",
+      "result": "BLOCKED",
+      "executed": false,
+      "completed_rmc_runs": 0,
+      "completed_fresh_oracle_runs": 0,
+      "completed_same_process_sequences": 0,
+      "blocker_ids": [
+        "B0"
+      ],
+      "reason": "当前 timer 包含初始化、输运和收尾；准确拆分需批准内部 timing probes。",
+      "measurements": null,
+      "comparisons": null,
+      "runtime_evidence": [],
+      "criteria": "../../logs/experiment-plan-frozen.md",
+      "proposal": "../../Proposed_Experimental_Patch.md",
+      "timings_seconds": null,
+      "startup_init_fraction": null,
+      "planned_cache_policy": "warm filesystem cache; no cache dropping",
+      "planned_warmups_per_role": 1,
+      "planned_measured_runs_per_role": 7
+    },
+    "E1": {
+      "experiment": "E1",
+      "title": "Forward → Forward",
+      "result": "BLOCKED",
+      "executed": false,
+      "completed_rmc_runs": 0,
+      "completed_fresh_oracle_runs": 0,
+      "completed_same_process_sequences": 0,
+      "blocker_ids": [
+        "B1"
+      ],
+      "reason": "真实 CalcFixedSource 无条件全初始化；prepared-state gate 与显式 reset driver 待批准。",
+      "measurements": null,
+      "comparisons": null,
+      "runtime_evidence": [],
+      "criteria": "../../logs/experiment-plan-frozen.md",
+      "proposal": "../../Proposed_Experimental_Patch.md"
+    },
+    "E2": {
+      "experiment": "E2",
+      "title": "Forward → Adjoint → Forward",
+      "result": "BLOCKED",
+      "executed": false,
+      "completed_rmc_runs": 0,
+      "completed_fresh_oracle_runs": 0,
+      "completed_same_process_sequences": 0,
+      "blocker_ids": [
+        "B1"
+      ],
+      "reason": "同进程入口和预声明角色 CLEAR/REBUILD driver 待批准，四类污染风险尚未实测。",
+      "measurements": null,
+      "comparisons": null,
+      "runtime_evidence": [],
+      "criteria": "../../logs/experiment-plan-frozen.md",
+      "proposal": "../../Proposed_Experimental_Patch.md"
+    },
+    "E3": {
+      "experiment": "E3",
+      "title": "WW hot update",
+      "result": "BLOCKED",
+      "executed": false,
+      "completed_rmc_runs": 0,
+      "completed_fresh_oracle_runs": 0,
+      "completed_same_process_sequences": 0,
+      "blocker_ids": [
+        "B1",
+        "B2"
+      ],
+      "reason": "同进程入口和真实 transport lookup probes 待批准。",
+      "measurements": null,
+      "comparisons": null,
+      "runtime_evidence": [],
+      "criteria": "../../logs/experiment-plan-frozen.md",
+      "proposal": "../../Proposed_Experimental_Patch.md"
+    },
+    "E4": {
+      "experiment": "E4",
+      "title": "Tally reset / memory extraction",
+      "result": "BLOCKED",
+      "executed": false,
+      "completed_rmc_runs": 0,
+      "completed_fresh_oracle_runs": 0,
+      "completed_same_process_sequences": 0,
+      "blocker_ids": [
+        "B1",
+        "B2"
+      ],
+      "reason": "保留 tally owner 的同进程入口和 finalize snapshot driver 待批准。",
+      "measurements": null,
+      "comparisons": null,
+      "runtime_evidence": [],
+      "criteria": "../../logs/experiment-plan-frozen.md",
+      "proposal": "../../Proposed_Experimental_Patch.md"
+    }
+  },
+  "shared_files_updated": false,
+  "architecture_selected": null,
+  "limitations": [
+    "No dynamic validation",
+    "No build/link validation",
+    "H2O case does not validate nonzero fission-adjoint contributions",
+    "Derivative two-bin fixture not validated by a fresh run yet"
+  ]
+}

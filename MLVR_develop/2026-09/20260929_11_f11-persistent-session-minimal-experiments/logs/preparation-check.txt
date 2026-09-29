@@ -1,0 +1,45 @@
+$ git -C RMC apply --check <task>/verification/proposal/proposed-experimental.patch
+exit_code=0
+stdout=''
+stderr=''
+PASS draft context check (no application)
+PASS patch file header
+PASS src/main.cpp base hash unchanged
+PASS src/main.cpp draft hash matches
+PASS src/main.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/ReadInputBlocks.cpp base hash unchanged
+PASS src/ReadInputBlocks.cpp draft hash matches
+PASS src/ReadInputBlocks.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/ReadAceData.cpp base hash unchanged
+PASS src/ReadAceData.cpp draft hash matches
+PASS src/ReadAceData.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/InitiateMatAce.cpp base hash unchanged
+PASS src/InitiateMatAce.cpp draft hash matches
+PASS src/InitiateMatAce.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/TreatAdjointMaterial.cpp base hash unchanged
+PASS src/TreatAdjointMaterial.cpp draft hash matches
+PASS src/TreatAdjointMaterial.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/CalcFixedSource.cpp base hash unchanged
+PASS src/CalcFixedSource.cpp draft hash matches
+PASS src/CalcFixedSource.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/DoMeshWeightWindow.cpp base hash unchanged
+PASS src/DoMeshWeightWindow.cpp draft hash matches
+PASS src/DoMeshWeightWindow.cpp default-off text matches original (blank lines ignored)
+PASS patch file header
+PASS src/WeightWindows.cpp base hash unchanged
+PASS src/WeightWindows.cpp draft hash matches
+PASS src/WeightWindows.cpp default-off text matches original (blank lines ignored)
+PASS all 8 draft source files checked
+PASS STATUS.md unchanged
+PASS MLVR_develop/INDEX.md unchanged
+PASS MLVR_Knowledge/AGENT_CONTEXT.md unchanged
+PASS RMC HEAD unchanged
+PASS RMC status unchanged
+PASS private source snapshot not created
+STATIC PREPARATION CHECK ONLY; compiled=false; RMC runs=0; E0-E4=BLOCKED

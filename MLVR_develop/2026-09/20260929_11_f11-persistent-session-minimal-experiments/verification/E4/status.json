@@ -1,0 +1,19 @@
+{
+  "experiment": "E4",
+  "title": "Tally reset / memory extraction",
+  "result": "BLOCKED",
+  "executed": false,
+  "completed_rmc_runs": 0,
+  "completed_fresh_oracle_runs": 0,
+  "completed_same_process_sequences": 0,
+  "blocker_ids": [
+    "B1",
+    "B2"
+  ],
+  "reason": "保留 tally owner 的同进程入口和 finalize snapshot driver 待批准。",
+  "measurements": null,
+  "comparisons": null,
+  "runtime_evidence": [],
+  "criteria": "../../logs/experiment-plan-frozen.md",
+  "proposal": "../../Proposed_Experimental_Patch.md"
+}

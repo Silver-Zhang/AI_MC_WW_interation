@@ -1,0 +1,12 @@
+{
+  "git -C RMC branch --show-current": "Neural_Network_WW_Iteration\n",
+  "git -C RMC rev-parse HEAD": "5cfb0f771d0c5a2127c90d57e51ce672a4e3b616\n",
+  "git -C RMC status --short": "",
+  "git rev-parse HEAD": "2f20c8da61041d1412fd67592ec6b909d3c12782\n",
+  "git status --short": "?? MLVR_develop/2026-09/20260929_11_f11-persistent-session-minimal-experiments/\n",
+  "protected_hashes": {
+    "STATUS.md": "6f73fe0f13825c2398783e4cfc8f4dc5e37f0a843b13ccc5394856e43fa0a7e7",
+    "MLVR_develop/INDEX.md": "50b6a34885119d271136b96a3fb13bfe73b525de45e4bf9b8b5642fdbbd1cf0f",
+    "MLVR_Knowledge/AGENT_CONTEXT.md": "22e2d0f02fa3fb0cb0aa7216aa711389f118276d321364c2610d8ece46ffacca"
+  }
+}

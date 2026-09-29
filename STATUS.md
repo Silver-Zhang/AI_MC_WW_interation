@@ -1,7 +1,7 @@
 # 项目状态（人只看这一页）
 
 > **最后更新：2026-09-29** ｜ 更新责任：Agent 在任务**归档（第 ⑤ 步）时同步本页**
-> 详细任务清单（76 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
+> 详细任务清单（78 项）→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则 → [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文 → [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
 
@@ -14,10 +14,10 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 主要缺陷已修复并回归；F10 Field Reconstruction 数据边界 **design frozen，尚未实现**；F11 前置（持久执行能力）两份独立审查已完成（未证明可复用 persistent session）；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
+| **3 → 4** | **功能缺口修复与补充 → 功能接口分析与框架设计** | 🟡 F08 主要缺陷已修复并回归；F10 Field Reconstruction 数据边界 **design frozen，尚未实现**；F11 前置（持久执行能力）两份独立审查已完成（未证明可复用 persistent session），最小实验 E0–E4 提案待批准；MLVR 已限定为 native track mesh，状态复制和 adjoint 组合仍待处理 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F08 主要确定性缺陷已修复并回归；F10 首版数据合同已冻结、无实现；F11 前置两份独立审查已归档——当前 RMC 缺少经证明可复用的 persistent session，方向待拍板；其余框架与组合边界待后续任务。**
+一句话：**F08 主要确定性缺陷已修复并回归；F10 首版数据合同已冻结、无实现；F11 前置两份独立审查已归档（缺经证明可复用的 persistent session），最小实验 E0–E4 提案待批准；其余框架与组合边界待后续任务。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
@@ -35,12 +35,15 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 10 | **F12 Bootstrap MC-side chain** | **已完成 A — Ready（限定首版）**：20k low-population、无 WW 的 standard MGACE forward 运行得到 2 spatial × 30 MG `phi0/Ave + RE0`；`stage=bootstrap` 与 formal iteration 分离；不含 Field Reconstruction 或 `WW_A^(1)` | [F12 档案](MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) |
 | 11 | **F09 Response + FOM information** | **已完成 A — Ready（限定第一版子域）**：200k formal Forward serial run 同一 scalar target 输出 `R`、`RE_R` 与 `Time in Fixed Source Calculation`；单-run FOM 可外部计算；不含 Bootstrap/FOM controller | [F09 档案](MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/README.md) |
 | 12 | **F10 Field 数据合同** | **design frozen（implementation not completed）**：三项 minor corrections 已按你批准写回设计；是否/何时另立 F10 实现任务（Adapter/parser → Reconstruction → WW Builder）由你决定；F11 按你指示未启动 | [设计](MLVR_develop/2026-09/20260927_06_f10-field-reconstruction-boundary/README.md)、[修订](MLVR_develop/2026-09/20260927_08_f10-minor-corrections-f07-sync/README.md) |
-| 13 | **F11 前置审查** | 两份独立源码审查已归档（Codex：运行生命周期/复用能力；Claude：persistent execution；互不参阅）：当前 RMC 缺少经证明可重复调用的 fixed-source session；是否进入 F11 设计或先做报告内最小实验（E1–E6）由你决定 | [Codex 报告](MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/README.md)、[Claude 报告](MLVR_develop/2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/README.md) |
+| 13 | **F11 前置审查** | 两份独立源码审查已归档（Codex：运行生命周期/复用能力；Claude：persistent execution；互不参阅）：当前 RMC 缺少经证明可重复调用的 fixed-source session；最小实验已立项（见 #14） | [Codex 报告](MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/README.md)、[Claude 报告](MLVR_develop/2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/README.md) |
+| 14 | **F11 实验包批准** | Task 11 已冻结 E0–E4 协议、全部未运行：批准 P0/P1 任务内插桩与 test driver 才能执行；独立复核 Task 12 判定 E0–E4 INCONCLUSIVE，建议批准前先补全可审查实验包（driver、回调/snapshot schema、exact reset 清单、build plan、comparator）。批准 / 退回补全由你决定 | [实验提案](MLVR_develop/2026-09/20260929_11_f11-persistent-session-minimal-experiments/README.md)、[独立复核](MLVR_develop/2026-09/20260929_12_independent-f11-persistent-experiment-review/README.md) |
 
 ## 3. 最近完成
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 09-29 | f11-persistent-session-minimal-experiments | F11 最小实验 E0–E4 协议冻结 + P0/P1 提案交付：全部 BLOCKED（未编译、未运行、无 fresh oracle）；等待批准任务内插桩/test driver；RMC 未修改 |
+| 09-29 | independent-f11-persistent-experiment-review | 独立复核（先立验收标准后读结果）：E0–E4 INCONCLUSIVE（全部未运行、空测量）；建议批准前先补全可审查实验包；RMC 未修改 |
 | 09-29 | f11-rmc-runtime-architecture-audit-codex | F11 前置独立源码审查（Codex）：生命周期/初始化复用/固定源重复执行/F-A 切换/全局状态与 IO 审计；无可直接重复调用的 fixed-source session 边界；未做实验、未决定架构；RMC/AIMC 只读 |
 | 09-29 | f11-rmc-persistent-execution-audit-claude | F11 前置独立源码审查（Claude）：确认单次命令行生命周期；persistent session、F/A 转换、WW hot update、tally snapshot、输出隔离为缺口/未验证；列 E1–E6 最小实验（未执行）；RMC/AIMC 只读 |
 | 09-27 | f10-minor-corrections-f07-sync | 用户批准的 F10 三项小修正已写回，**design frozen；implementation not completed**；F07 WW-on 校准状态已按独立复核更新；RMC 未修改 |
@@ -74,7 +77,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 调度尚未启动；其前置的 RMC 持久执行两份独立审查（Codex/Claude）已完成并归档，方向决策待办。
+1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 调度尚未启动；前置 RMC 持久执行已两审并冻结 E0–E4 实验协议，最小实验提案（P0/P1）待批准（独立复核建议先补全实验包）。
 2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
 3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 

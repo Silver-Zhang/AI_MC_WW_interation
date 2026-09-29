@@ -1,0 +1,44 @@
+// DECLARATION-ONLY PROPOSAL. Not a runnable/linked harness.
+// Future task-local build: -include <task>/verification/proposal/f11_probe_hooks.hpp
+// Keep this file outside RMC/. Implement callbacks only after patch approval.
+#pragma once
+#if defined(RMC_F11_REUSE_EXPERIMENT) && !defined(RMC_F11_PROBE)
+#error "reuse experiment requires observation probes"
+#endif
+#if defined(RMC_F11_PROBE) && (defined(USE_MPI) || defined(USE_OMP) || defined(AIS))
+#error "F11 experiment scope: serial standard MGACE only"
+#endif
+#ifdef RMC_F11_PROBE
+class CDFixedSource;
+class CDAceData;
+class CDParticleState;
+class CDTally;
+class CDRNG;
+class CDExternalSource;
+namespace f11_probe {
+// Observers: no RNG calls, no mutation of simulation state; record in memory.
+void mark(const char *);
+void begin(const char *);
+void end(const char *);
+void flush();
+class Scope {
+public:
+  explicit Scope(const char *);
+  ~Scope();
+private:
+  const char *name;
+};
+void snapshot(const char *, const CDFixedSource &, const CDAceData &,
+              const CDParticleState &, const CDTally &, const CDRNG &,
+              const CDExternalSource &);
+void history(const CDFixedSource &, const CDRNG &);
+void particle_context(const CDParticleState &);
+void ww_lookup(int particle_type, int mesh_index, double physical_energy,
+               int actual_ww_energy_bin, double lower, double survival, double upper);
+#ifdef RMC_F11_REUSE_EXPERIMENT
+// This is a control seam. Default unarmed -> false.
+// Only an approved task driver may arm it after explicit per-run preparation.
+bool consume_prepared_state_token();
+#endif
+}
+#endif

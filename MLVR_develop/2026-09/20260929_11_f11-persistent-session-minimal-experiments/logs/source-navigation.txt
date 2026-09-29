@@ -1,0 +1,859 @@
+Read-only source excerpts at 2026-09-29T06:20:18.375130+00:00
+RMC HEAD 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+Not runtime evidence.
+
+RMC/src/CalcFixedSource.cpp sha256=dc6e294af4b899b338fb3317d5c6f4bd45ade790b45bc65db2375e8d3fcadb1e
+--- lines 67-84 ---
+67: void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+68:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+69:                                 CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+70:                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+71:                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource,
+72:                                 CDSampling &cSampling, CDPerturbation &cPerturb) {
+73:   OTimer.reg(Utility::FixedSource);
+74:   OTimer.reg(Utility::Tally);
+75:   OTimer[Utility::FixedSource].start();
+76:   CDBurnup CBurnup;
+77:   bool bPhotonNucleus = cPhotonTransport.p_bPhotonNucleus;
+78:   cFixedSource.InitiateAll(cCalMode.p_nParticleMode, cNeutronTransport, CGeometry, CMaterial, CTally,
+79:                            CAceData, CParticleState, CBurnup, ORNG, cSampling, bPhotonNucleus,
+80:                            cPhotonTransport, cElectronTransport, cCalMode, cPerturb);
+81:   CParticleState.p_vONucCs.resize(CAceData.p_vNuclides.size());
+82:   CParticleState.p_vIsNucLocCellTmpChanged.resize(CAceData.p_vNuclides.size(), true);
+83: 
+84:   if (cCalMode.p_nParticleMode == CDCalMode::NeutronPhotonElectronMode ||
+--- lines 103-121 ---
+103:   }
+104: 
+105: 
+106:   if (cCalMode.p_nParticleMode == CDCalMode::NeutronMode) {
+107:     cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].push(CDFixBank());
+108:     while (cFixedSource.p_nFinishCalculate < 2) {
+109:       cFixedSource.DistributeSource(CGeometry, cExternalSource, ORNG);
+110:       if (cFixedSource.GetLoadBalanceMethod() != CDFixedSource::TIME_REDUCE) {
+111:         TotalCount = cFixedSource.p_llParIntervalEachPro;
+112:       }
+113:       for (long long Neu = 1; Neu <= TotalCount; Neu++) {
+114:         if (LoadBalanceTimeChecker(cFixedSource, Neu, &last_t)) {
+115:           break;
+116:         }
+117: 
+118:         OTimer[Utility::FixedSource].interval();
+119:         ORNG.GetRandSeed();
+120: 
+121:         //模拟每个历史前初始化captime变量
+--- lines 715-750 ---
+715:                                    ORNG);
+716:     }
+717:   }
+718: 
+719:   FinalizeLoadBalanceChecker(cFixedSource);
+720: 
+721:   CTally.ProcessTally(cFixedSource, CMaterial, CAceData);
+722: 
+723:   if (cPerturb.p_bDiffrOprt) {
+724:     cPerturb.CalcFixedSrcPerbCoeffs(cFixedSource.p_llUserInputParNum);
+725:     cPerturb.OutputFixSrcPerbCoeffs();
+726:   }
+727: 
+728:   if (OWeightWindow.p_bWeightWindowGeneratorOn) {
+729: #ifdef USE_MPI
+730:     OWeightWindow.GatherTotalWeight();
+731: #endif
+732:     OWeightWindow.CalculateWeightWindow();
+733:     OWeightWindow.OutputWWOUTFile(CGeometry, cCalMode.p_nParticleMode);
+734:   }
+735: #ifdef USE_MPI
+736:   MPI_Barrier(MPI_COMM_WORLD);
+737:   if (OWeightWindow.p_bUseSharedMPIWeightWindow) {
+738:     MPI_Win_free(&OWeightWindow.WeightWindowParaDataShareWindow);
+739:   }
+740: #endif
+741:   Output.OutputWrtSurfSrc(CGeometry);
+742:   Output.OutputSummary(cCalMode, cNeutronTransport, cFixedSource, CTally, CMaterial);
+743: # ifdef USE_PYTHON_API
+744:   //如果使用了外源子程序，则在此关闭python解释器
+745:   if (OPythonInterface.p_bSourceSub) {
+746:     OPythonInterface.FinalizePython();
+747:   }
+748: # endif
+749:   OTimer[Utility::FixedSource].stop();
+750: }
+
+RMC/src/InitiateAll.cpp sha256=a30ae49db04e44479eae76fb6b962d45cac8ae4cc240a608f6d486111fb02ebe
+--- lines 125-160 ---
+125: void CDFixedSource::InitiateAll(int p_nParticleMode, CDNeutronTransport &cNeutronTransport, CDGeometry &cGeometry,
+126:                                 CDMaterial &cMaterial, CDTally &cTally, CDAceData &cAceData, CDParticleState &cParticleState,
+127:                                 CDBurnup &cBurnup, CDRNG &ORNG, CDSampling &cSampling, bool bPhotonNucleus,
+128:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+129:                                 CDCalMode &cCalMode, CDPerturbation &cPerturb) {
+130:   if (p_bIsAdjoint) { cAceData.p_bIsAdjoint = true; }
+131:   cMaterial.InitiateMatAce(p_nParticleMode, cGeometry, cTally, cAceData, cBurnup, cSampling, bPhotonNucleus);
+132: 
+133:   if (cPerturb.p_bDiffrOprtForTMP && cAceData.p_bUseOtfDb) {
+134:     cAceData.p_bTmpPerbOtfDb = true;
+135:   }
+136:   cPerturb.InitDifferentialOperator(cAceData.p_vNuclides, cMaterial, cGeometry, cParticleState.p_OPerbState);
+137: 
+138:   if (p_nParticleMode == CDCalMode::NeutronPhotonElectronMode ||
+139:       p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+140:       p_nParticleMode == CDCalMode::PhotonElectronMode ||
+141:       p_nParticleMode == CDCalMode::PhotonMode) {
+142:     cParticleState.InitiatePhotonXS(bPhotonNucleus, cAceData.p_vNuclides.size());
+143:   }
+144: 
+145:   cParticleState.energyCutoff(CDParticleState::Neutron) = cNeutronTransport.p_dEg0CutOff;
+146:   cParticleState.energyCutoff(CDParticleState::Photon) = cPhotonTransport.p_dErgCutGma;
+147:   cParticleState.energyCutoff(CDParticleState::Electron) = 0.;
+148:   cParticleState.energyCutoff(CDParticleState::Positron) = 0.;
+149: 
+150:   if (cAceData.p_bTMS) {
+151:     cAceData.InitiateTMS(cParticleState);
+152:   }
+153: 
+154:   InitiateTrspt(cNeutronTransport);
+155: 
+156:   cTally.InitiateTally(p_nParticleMode, cGeometry, cAceData, cMaterial, cBurnup, p_llUserInputParNum);
+157: 
+158:   auto pos = ORNG.GetPosition();
+159:   ReadBinary(cTally, cNeutronTransport.p_nMissNeutronCount, cCalMode, pos);
+160:   ORNG.SetPosition(pos);
+--- lines 174-204 ---
+174:     cAceData.ifmult(p_vFissMult);
+175:   }
+176:   cMaterial.SetupMatNucFrc(cParticleState);
+177:   if (OWeightWindow.p_bWeightWindowGeneratorOn) {
+178:     OWeightWindow.InitiateWeightWindowGenerator(cGeometry, this);
+179:   }
+180:   if (OWeightWindow.p_bUseMCNPweightwindow) {
+181:     OWeightWindow.InitiateWeightWindow(cCalMode, cGeometry, this);
+182:   }
+183: 
+184: 
+185:   //InitiateExternalSource(cNeutronTransport, cGeometry, cAceData, cParticleState, ORNG);
+186: 
+187:   //当使用减方差方法时，粒子默认权重下限为1.0E-08///
+188:   if (cCalMode.p_nChangeNeuCutWgt == 2) {
+189:     cNeutronTransport.p_dWgtCutOff = 1.0E-08;
+190:     cPhotonTransport.p_dMinWgt = 1.0E-08;
+191:   }
+192:   if (p_bIsAdjoint) {
+193:     if (p_nParticleMode == CDCalMode::NeutronMode ||
+194:         p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+195:         p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
+196:       p_dMaxAdjointNeutronEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointNeutronEnergy, CDParticleState::Neutron);
+197:     }
+198:     if (p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+199:         p_nParticleMode == CDCalMode::PhotonMode ||
+200:         p_nParticleMode == CDCalMode::PhotonElectronMode ||
+201:         p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
+202:       p_dMaxAdjointPhotonEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointPhotonEnergy, CDParticleState::Photon);
+203:     }
+204:   }
+
+RMC/src/InitiateMatAce.cpp sha256=23e76ba8378f0ce173406b529df57e1daa12d36fa4cdafa6da72bbc00455ced2
+--- lines 8-39 ---
+8: void CDMaterial::InitiateMatAce(int nParticleMode, CDGeometry &cGeometry, CDTally &cTally, CDAceData &cAceData,
+9:                                 CDBurnup &cBurnup, CDSampling &cSampling, bool bPhotonNucleus) {
+10:   // Treat inp information before reading ACE
+11:   GenTotNucIdList(cAceData.p_bIsMultiGroup);
+12: #ifdef AIS
+13:   cSampling.CalNuclideIndexh5(*this);
+14: #else
+15:   cSampling.CalNuclideIndex(*this);
+16: #endif
+17: 
+18:   cAceData.InitiateAce(GetTotNucNumExcSab(), p_vNucIDList);
+19:   ConvertMatNucIndex(cAceData.p_vNuclides);
+20:   cSampling.AllNuclideCase(*this, GetTotNucNumExcSab());
+21:   cSampling.NubarandChiInitial(GetTotNucNumExcSab());
+22:   // Read ACE libraries
+23: #ifdef AIS
+24:   cAceData.ReadHDF5NucData(GetTotNucNumExcSab(), GetTotNucNumIncSab(),
+25:                            nParticleMode, bPhotonNucleus, cSampling);
+26: #else
+27:   cAceData.ReadAceData(GetTotNucNumExcSab(), GetTotNucNumIncSab(),
+28:                        nParticleMode, bPhotonNucleus, cSampling);
+29: #endif
+30:   // initialize global data variables
+31:   // By now, only the path of the hdf5 directory are initialized
+32:   if (nParticleMode == CDCalMode::NeutronMode ||
+33:       nParticleMode == CDCalMode::NeutronPhotonMode ||
+34:       nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
+35:     Data::DataBase::initialize(cTally.with_hdf5() || cBurnup.with_hdf5());
+36:   }
+37: 
+38:   // read hdf5 format energy release data library
+39:   cAceData.ReadHDF5EnergyReleaseData(GetTotNucNumExcSab());
+--- lines 58-82 ---
+58: 
+59:   if (cBurnup.p_bIsBurnStepBegun) {
+60:     //Update atom density in Burnup feedback
+61:     cBurnup.UpdateBurnedMatNucDen(cAceData.p_vNuclides, cGeometry, *this, cTally);
+62:   } else {
+63:     ConvertMatNucDen(cAceData.p_vNuclides);
+64:   }
+65:   if (cAceData.p_bIsMultiGroup && cAceData.p_bIsAdjoint) {
+66:     cAceData.treatAdjointMaterial(nParticleMode);
+67:   }
+68:   // 如果用户设置材料随燃耗步变化，则修改相关燃耗步的材料\n
+69:   cBurnup.VaryMat(*this);
+70:   // 如果用户设置表面随燃耗步变化，则修改相关燃耗步的表面\n
+71:   cBurnup.VarySurf(cGeometry);
+72: 
+73:   // 对每一个栅元，设置它们的质量密度值\n
+74:   SetCellGramDen(cGeometry.p_vCell, cAceData.p_vNuclides);
+75:   // initiate cell temperature according to the fill material\n
+76:   cGeometry.InitiateCellTemperature(cAceData, *this);
+77: 
+78:   if (cBurnup.p_bIsWithBurnup) {
+79:     cBurnup.ExpdBurnableCell(cGeometry, *this, cTally, cAceData, cSampling);
+80:   }
+81:   OutputMaterialFile(cAceData.p_vNuclides);
+82:   // 计算缓发中子分组数 //
+
+RMC/src/ReadAceData.cpp sha256=43b9f5fa442d49c8b16659cb82d07fe3abf142e5c9c88151327a82fb7015ad6d
+--- lines 15-22 ---
+15: void CDAceData::ReadAceData(const int nTotNonSabNucNum, const int nTotNucNumIncSab,
+16:                             int p_nParticleMode, bool bPhotonNucleus, CDSampling &cSampling) {
+17:   Output.OutputMessage([&]() {
+18:     sprintf(Output.p_sPrintStr, "\nReading XSDIR/ACE library...\n");
+19:   }, Output.p_fpOutputFilePtr, CDOutput::_NORMAL);
+20: 
+21:   char chNucIDTemp_sab[200];
+22:   if (p_bOTFSab) {
+--- lines 78-88 ---
+78:   }
+79: 
+80:   // check xsdir existence
+81:   FILE *fptr_xsdir, *fptr_ace;
+82:   std::string xsdir_path = Utility::Path::join(Data::DataBase::indexFilesPath, "xsdir");
+83:   fptr_xsdir = fopen(xsdir_path.c_str(), "r");
+84:   if (fptr_xsdir == nullptr) {
+85:     Output.OutputMessage([&]() {
+86:       sprintf(Output.p_sPrintStr, "Library index file \"%s\" does not exist!", xsdir_path.c_str());
+87:     }, Output.p_fpOutputFilePtr, CDOutput::_ERROR);
+88:   }
+--- lines 420-432 ---
+420:   bool bOpenNewFile = true;
+421:   long lLinePtr = 1;
+422:   for (int seq = 0; seq < ulTotNucNum; ++seq) {
+423:     int nuc = vNucSeqInXsdir[seq];
+424:     if (bOpenNewFile) {
+425:       strcpy(chFullPath, chDataPath);
+426:       strcat(chFullPath, vAceFileName[nuc].c_str());
+427:       fptr_ace = fopen(chFullPath, "rb");
+428:       if (fptr_ace == nullptr) {
+429:         Output.OutputMessage([&]() {
+430:           sprintf(Output.p_sPrintStr, "Ace library %s not found.\n", chFullPath);
+431:         }, Output.p_fpOutputFilePtr, CDOutput::_ERROR);
+432:       }
+--- lines 1025-1035 ---
+1025:   }
+1026: 
+1027:   // Treat ACE data
+1028:   if (p_bIsMultiGroup) {
+1029:     CheckMgAceBlock(nTotNonSabNucNum, p_nParticleMode);
+1030:   } else {
+1031:     CheckCeAceBlock(nTotNonSabNucNum, nTotNonSabNucNum, p_nParticleMode, cSampling);
+1032:   }
+1033: 
+1034:   // Finish Reading
+1035:   Output.OutputMessage([&]() {
+
+RMC/src/TallyByTL.cpp sha256=828f1091c054a78fd231e9118892790b0d3ab213895ebb4b9ab468c55e62a63d
+--- lines 24-33 ---
+24: void CDTally::TallyByTL(bool bActiveCyc, double dTrackLen, CDGeometry &cGeometry, CDAceData &cAceData,
+25:                         CDParticleState &cParticleState, CDMaterial &cMaterial, CDRNG &ORNG, CDSampling &cSampling,
+26:                         CDCriticality *cCriticality) {
+27:   // if TMS is used, then data is tallied by collision estimator instead of track length
+28:   // 当使用TMS进行在线温度截面反馈时，不使用径迹估计器进行计数\n
+29:   if (cAceData.p_bTMS) { return; }
+30:   OTimer[Utility::Tally].start();
+31:   cParticleState.p_dTrackLength = dTrackLen;
+32: 
+33:   if (!bActiveCyc) {
+--- lines 96-104 ---
+96:   if (p_bIsWithXSCalculation && OXSParaTableVec.p_bIsTallyPoint) {
+97:     TallyRXSByTL(cMaterial, cAceData, cParticleState, cCriticality);
+98:     TallyMicroCrossSectionByTL(cMaterial, cAceData, cParticleState, cCriticality);
+99:   }
+100: 
+101:   OTimer[Utility::Tally].stop();
+102: }
+103: 
+104: void CDTally::TallyByCollision(const bool &active, CDGeometry &cGeometry, CDAceData &cAceData,
+
+RMC/src/RunCalculation.cpp sha256=d58824e541164b65ca2f1e2c18b87e494aac3790174efb5b1261194509035431
+--- lines 6-14 ---
+6: void CDCalMode::RunCalculation(CDCalMode &cCalMode, CDNeutronTransport cNeutronTransport,
+7:                                CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+8:                                CDAceData &cAceData, CDGeometry cGeometry, Depth_Class &cDepth,
+9:                                CDCriticality cCriticality, CDMaterial cMaterial, CDParticleState cParticleState,
+10:                                CDConvergence cConvergence, CDTally cTally, CDBurnup cBurnup,
+11:                                CDFixedSource &cFixedSource, CDRNG &ORNG, ME_Class &cME, TTA_Class &cTTA,
+12:                                CDAdjoint &cAdjoint, CDExternalSource &cExternalSource, CDSampling cSampling,
+13:                                CDKinetics &cKinetics, CDPerturbation &cPerturb) {
+14:   if (p_bSkipCalculation) {
+
+RMC/src/FixedSource.h sha256=0dcf13bee0769ae5a0c1076f99dd6aed7ef6df35c1361f624bd66f335da2af4e
+--- lines 192-215 ---
+192:   CDFixedSource() {
+193:     p_llParIntervalEachPro = 0;
+194:     p_llParticlePosEachPro = 0;
+195:     p_nFinishCalculate = -1;
+196:     p_llUserInputParNum = 0;
+197:     p_llParNumRestart = 0;
+198:     p_llCurrentBatch = 0;
+199:     //p_nPhotonBankCount  = 0;
+200: 
+201:     p_dTotStartWgt = 0.0;
+202:     p_dTotStartWgtOrigin = .0;
+203: 
+204:     p_llCurParNumEachPro = 0;
+205:     p_llCurTotParNum     = 0;
+206:     p_llTimeParInterval  = 0;
+207:     p_llParNumToInputInterval = 0;
+208:     p_nMaxMissParCount = 10;
+209:     p_vSpontaFissNeuMul.resize(15, 0);
+210:     p_vInduceFissNeuMul.resize(15, 0);
+211:     p_vSpontaFissPhoMul.resize(50, 0);
+212:     p_vInduceFissPhoMul.resize(50, 0);
+213:     p_vFixedParticleSrcBank.resize(4);
+214:   }
+215: 
+
+RMC/src/InitiateTrspt.cpp sha256=eb244c7f8a797cfa31ae6ef631342319195c05dbd7897a7b8b0bbad3a1ab4714
+--- lines 60-101 ---
+60: void CDFixedSource::InitiateTrspt(CDNeutronTransport &cNeutronTransport) {
+61:   /////////////////////////////////////////////////////
+62: # ifdef USE_MPI
+63:   if (OParallel.p_bUseFastBank) {
+64:     Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "Peer-to-peer fission bank gathering is used.\n");},
+65:     Output.p_fpOutputFilePtr, CDOutput::_FILE, CDOutput::_NORMAL);
+66:   }
+67: # endif
+68: 
+69:   /////////////////////////////////////
+70:   //if(!UseProbTableBool)
+71:   //{
+72:   //  printf("Probability table for unresolved resonance is not used!\n");
+73:   //  fprintf(Output.OutputFilePtr,"Probability table for unresolved resonance is not used!\n");
+74:   //}
+75: 
+76:   //////////// variable for tracking ////////////
+77:   p_dTotStartWgt = 1.0 * p_llParIntervalEachPro;
+78: 
+79:   p_nFixedSrcCount = 0;
+80: 
+81: 
+82:   p_llTotCollisionCount = 0;
+83:   cNeutronTransport.p_nMissParticleCount = 0;
+84: 
+85:   //////////// variable for bank ////////////
+86:   int bank_size = 0;
+87: 
+88: # ifdef USE_MPI
+89:   if (OParallel.p_bUseFastBank) {
+90:     bank_size = int(1.2 * p_llParIntervalEachPro / OParallel.p_nProcsNum);
+91:   } else {
+92:     bank_size = int(1.2 * p_llParIntervalEachPro);
+93:   }
+94: #else
+95:   bank_size = int(1.2 * p_llParIntervalEachPro);
+96: # endif
+97: 
+98:   p_vFixedSrc.resize(bank_size);
+99: 
+100:   return;
+101: }
+
+RMC/src/InitialBatchSource.cpp sha256=d73db506a31878fc31d4a68c932bc575765c20037ef345ae0394a45d337eed2b
+--- lines 291-302 ---
+291:   Output.OutputCycleWrtSurfSrc(cGeometry);
+292:   //bool bCalculationEnd = false;
+293:   int bCalculationEnd = 0;
+294:   // 计算下一代需要计算粒子数  \n
+295:   if (cExternalSource.p_nSourceType == cExternalSource.OrdinarySource) {
+296:     CalcParticleInterval(bCalculationEnd);
+297:     //  根据输入的粒子初始权重计算初始总权重  \n
+298:     p_dTotStartWgt =  p_llCurTotParNum;;
+299:   } else {
+300:     CalcSurfParticleInterval(bCalculationEnd, cExternalSource);
+301:     if (cExternalSource.p_vSurfSrc[0].p_dSplit > 1.0) {
+302:       p_dTotStartWgt = cExternalSource.p_vSurfSrc[0].p_dSplit * p_dTotStartWgtOrigin * p_llCurTotParNum / p_dTotStartWgt;
+--- lines 330-338 ---
+330:       cTally.p_vCellTally[n].p_nNormal = p_llUserInputParNum;
+331:     }
+332: # ifdef USE_MPI
+333:   }
+334: # endif
+335:   if (bCalculationEnd) {
+336:     p_nFinishCalculate = 5;
+337:     return;
+338:   }
+
+RMC/src/RNG/StrideRNG.cpp sha256=3e81b573ac47827761d7c83f4611c482fce15c1dfe48b6d3044e0291323de3de
+--- lines 85-103 ---
+85: void LCG63_0::GetRandSeed() {
+86:   static unsigned long long ullRN_GK;
+87:   static unsigned long long ullRN_CK;
+88:   static unsigned long long ullRN_ISEED;
+89: 
+90:   if (RN_POSITION_PRE != (RN_POSITION - 1)) { //// only execute at the very beginning
+91:     GetSkipPara(RN_STRIDE, ullRN_GK, ullRN_CK);
+92:     unsigned long long ullGK_temp, ullCK_temp;
+93:     GetSkipPara(RN_STRIDE * RN_POSITION, ullGK_temp, ullCK_temp);
+94:     ullRN_ISEED = (((ullGK_temp * RN_SEED0) & RN_MASK) + ullCK_temp) & RN_MASK;
+95:   } else {
+96:     ullRN_ISEED = (((ullRN_GK * ullRN_ISEED) & RN_MASK) + ullRN_CK) & RN_MASK; ////
+97:   }
+98:   RN_SEED = ullRN_ISEED;
+99:   RN_POSITION_PRE = RN_POSITION;
+100:   RN_POSITION += 1;
+101: }
+102: 
+103: /**
+
+RMC/src/TreatAdjointMaterial.cpp sha256=9e44446d115bd681822b351c4a75849b413cf2c5c86ff2c043c3dbad09925f52
+--- lines 9-58 ---
+9: void CDAceData::treatAdjointMaterial(int nParticleMode) { //处理伴随截面;
+10:   int maxParticle = CDParticleState::Neutron + 1;
+11:   if (nParticleMode == CDCalMode::NeutronMode) { ///check particle mode
+12:     maxParticle = CDParticleState::Neutron + 1;
+13:   } else if (nParticleMode == CDCalMode::NeutronPhotonMode || nParticleMode == CDCalMode::PhotonMode) { maxParticle = CDParticleState::Photon + 1; }
+14:   else if (nParticleMode == CDCalMode::NeutronPhotonElectronMode || nParticleMode == CDCalMode::PhotonElectronMode
+15:            || nParticleMode == CDCalMode::ElectronMode) { maxParticle = CDParticleState::Electron + 1; }
+16:   else { maxParticle = 0; }
+17:   int particleGrpNumber[4];
+18:   particleGrpNumber[0] = 0;
+19:   particleGrpNumber[CDParticleState::Neutron] = p_nNeuMltGrpNum;
+20:   particleGrpNumber[CDParticleState::Photon] = p_nPhoMltGrpNum;
+21:   particleGrpNumber[CDParticleState::Electron] = 0; //electron;todo：先不开发电子伴随
+22:   for (int i = 1; i < p_vNuclides.size(); i++) { //初始化pmg和fmg的大小
+23:     p_vNuclides[i].p_vAdjointCrossSection.resize(maxParticle + 1);
+24:     p_vNuclides[i].p_vAdjointFissionCrossSection.resize(maxParticle + 1);
+25:     for (int j = 0; j < maxParticle; j++) {
+26:       p_vNuclides[i].p_vAdjointCrossSection[j].resize(particleGrpNumber[j]);
+27:     }
+28:   }
+29:   for (int particleType = CDParticleState::Neutron; particleType < maxParticle; particleType++) {//计算pmg和fmg
+30:     for (int i = 1; i < p_vNuclides.size(); i++) { //i为当前处理的核素在p_vNuclides中的序号
+31:       double crossSectionSum = 0;
+32:       int crossSectionPosition = 0;
+33:       if (particleType == CDParticleState::Neutron) { //处理中子
+34:         crossSectionPosition = GetMgNeuLERG(i) - 1 +
+35:                                int(p_vNuclides[i].XSS[GetMgNeuLP0L(
+36:                                        i)]);
+37:         for (int jg = 0; jg < particleGrpNumber[particleType];
+38:              jg++) {//对此种核素、此种粒子的的全部对应能群进行遍历//
+39:           double f = 1;//todo:f是基于通量的偏倚参数，未来可以用gmg修改
+40:           if (GetMgNeuLNU(i) != 0) {
+41:             crossSectionSum = p_vNuclides[i].XSS[
+42:                                   GetMgNeuLNU(i) + jg]
+43:                               * p_vNuclides[i].XSS[
+44:                                   GetMgNeuLFIS(i) + jg]
+45:                               * f;
+46:             p_vNuclides[i].p_vAdjointFissionCrossSection[particleType] += crossSectionSum;
+47:           }
+48:           for (int jh = 0; jh < particleGrpNumber[particleType]; jh++) {
+49:             if (GetMgNeuLCHI(i) != 0)
+50:               p_vNuclides[i].p_vAdjointCrossSection[particleType][jh] +=
+51:                   crossSectionSum * p_vNuclides[i].XSS[GetMgNeuLCHI(i) + jh];
+52:             if ((jg - jh) > GetMgNeuUpScatNum(i) ||
+53:                 (jh - jg) > GetMgNeuDownScatNum(i)) {
+54:               continue;
+55:             }
+56:             p_vNuclides[i].p_vAdjointCrossSection[particleType][jh] +=
+57:                 p_vNuclides[i].XSS[crossSectionPosition] * f;
+58:             crossSectionPosition = crossSectionPosition + 1;
+
+RMC/src/DoMeshWeightWindow.cpp sha256=c8a8056fc39a9c4b0df3cb285b9a0e4857cc4932a84144f413f9b2d2d5bce082
+--- lines 21-52 ---
+21: void CDWeightWindow::DoTrackMeshWeightWindow(double dTrackLen, CDParticleState &cParticleState,
+22:     CDFixedSource &cFixedSource,
+23:     CDGeometry &cGeometry, CDAceData &cAceData, CDMaterial &cMaterial,
+24:     CDTally &cTally, CDSampling &cSampling,
+25:     CDRNG &ORNG) {
+26:   if (cParticleState.p_eParticleType == CDParticleState::Neutron
+27:       || cParticleState.p_eParticleType == CDParticleState::Photon) {
+28: 
+29:     vector<CDMeshTrack> tempWeightWindowMeshTrack;
+30:     p_OWeightWindowMesh.CalcUniversalMeshTrack(cParticleState.p_dPos, cParticleState.p_dDir, dTrackLen,
+31:         tempWeightWindowMeshTrack);
+32:     double dTempPos[3];
+33: 
+34:     /// 对追踪的路程中的每一个网格进行权窗处理。
+35:     dTempPos[0] = cParticleState.p_dPos[0];
+36:     dTempPos[1] = cParticleState.p_dPos[1];
+37:     dTempPos[2] = cParticleState.p_dPos[2];
+38:     //记录粒子飞行时间;
+39:     for (auto &m : tempWeightWindowMeshTrack) { //针对此段轨迹，一步一步进行处理
+40:       if (m.p_nMeshIndex > -1) { //如果进入了网格
+41:         double dLowWeightBound, dSurvivalWeight, dUpperWeightBound;
+42:         setMeshWeightWindowBound(dLowWeightBound, dSurvivalWeight, dUpperWeightBound, cParticleState.p_eParticleType,
+43:                                  m.p_nMeshIndex, GetWeightWindowEnergy(cAceData, cParticleState));
+44:         DoWeightWindows(cParticleState, cFixedSource, dLowWeightBound, dUpperWeightBound, dSurvivalWeight, ORNG);
+45:       }
+46:       if (cParticleState.p_bIsKilled) {
+47:         return;
+48:       }
+49:       cTally.TallyByTL(true, m.p_dTrackLen, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+50:       cParticleState.FlyByLength(m.p_dTrackLen);
+51:     }
+52: 
+
+RMC/src/WeightWindows.cpp sha256=237c6ad528797de2a903d0783d77e5eeb56919ff15a9aa38388a7dd49e72a10c
+--- lines 45-100 ---
+45: void CDWeightWindow::setMeshWeightWindowBound(double &dLow, double &dSurvive, double &dUpper, int particleType,
+46:     const int &meshIndex, const double &erg) {
+47:   int ergPos = 0;
+48:   CDGlobeFun::GetIntpltPos(&OWeightWindow.p_vEnergyBins[particleType][0], erg,
+49:                            0, int(OWeightWindow.p_vEnergyBins[particleType].size()) - 1, ergPos);
+50:   if (erg > OWeightWindow.p_vEnergyBins[particleType][OWeightWindow.p_vEnergyBins[particleType].size() - 1]) {
+51:     ergPos = OWeightWindow.p_vEnergyBins[particleType].size() - 2;
+52:   }
+53: #ifdef USE_MPI
+54:   if (p_bUseSharedMPIWeightWindow) {
+55:     int displacement =
+56:         p_vParticleTypeMeshDisplc[particleType] +
+57:         (int(p_vEnergyBins[particleType].size()) - 1) * meshIndex
+58:         + ergPos;
+59:     dLow = SharedMemoryPosition[displacement].p_dLowerWeightBound;
+60:     dSurvive = SharedMemoryPosition[displacement].p_dSurvivalWeight;
+61:     dUpper = SharedMemoryPosition[displacement].p_dUpperWeightBound;
+62:   } else {
+63: #endif
+64:     dLow = p_vMeshInformation[particleType][meshIndex][ergPos].p_dLowerWeightBound;
+65:     dSurvive = p_vMeshInformation[particleType][meshIndex][ergPos].p_dSurvivalWeight;
+66:     dUpper = p_vMeshInformation[particleType][meshIndex][ergPos].p_dUpperWeightBound;
+67: #ifdef USE_MPI
+68:   }
+69: #endif
+70: }
+71: 
+72: double CDWeightWindow::GetWeightWindowEnergy(CDAceData &cAceData,
+73:                                                const CDParticleState &cParticleState) const {
+74:   if (p_bUseMCNPweightwindow) {
+75:     return cParticleState.p_dErg;
+76:   }
+77:   return cAceData.GetErgValue(cParticleState.p_dErg, cParticleState.p_eParticleType);
+78: }
+79: void CDWeightWindow::ProcessWeightWindow(CDGeometry &cGeometry, const int particleType, vector<double> &ErgBins,
+80:     vector<double> &WeightWindowParameter, double WUPN, double WSURVN) {
+81:   int totalWeightWindowParaNum = WeightWindowParameter.size();
+82:   int ergBinNum = int(ErgBins.size()) - 1;
+83:   int spatialNum = p_OWeightWindowMesh.GetTotMeshNum();
+84:   Output.CheckInputParas(totalWeightWindowParaNum == spatialNum * ergBinNum,
+85:   [&]() {
+86:     sprintf(Output.p_sPrintStr,
+87:             "WWMESH parameter count (%d) does not match mesh count (%d) times energy-bin count (%d).\n",
+88:             totalWeightWindowParaNum, spatialNum, ergBinNum);
+89:   }, CDOutput::_ERROR);
+90:   p_vMeshInformation[particleType].resize(spatialNum);//初始化带有权窗的几何的数目;
+91:   for (int i = 0; i < spatialNum; i++) {
+92:     p_vMeshInformation[particleType][i].resize(ergBinNum);
+93:     for (int j = 0; j < ergBinNum; j++) {
+94:       p_vMeshInformation[particleType][i][j].p_dLowerWeightBound = WeightWindowParameter[i * ergBinNum +
+95:           j];
+96:       p_vMeshInformation[particleType][i][j].p_dUpperWeightBound =
+97:           WUPN * p_vMeshInformation[particleType][i][j].p_dLowerWeightBound;
+98:       p_vMeshInformation[particleType][i][j].p_dSurvivalWeight =
+99:           WSURVN * p_vMeshInformation[particleType][i][j].p_dLowerWeightBound;
+100:     }
+
+RMC/src/TallyData.cpp sha256=00a39cd55fa149711e3609da9905d77b74d837527f9836f007b230885fd3901d
+--- lines 17-24 ---
+17: void CDTallyData::SetZero() { // expand size of tally data
+18:   CDGlobeFun::SetVecZero(p_vScore);
+19:   CDGlobeFun::SetVecZero(p_vScoreTemp);
+20:   CDGlobeFun::SetVecZero(p_vSum1);
+21:   CDGlobeFun::SetVecZero(p_vSum2);
+22:   CDGlobeFun::SetVecZero(p_vAve);
+23:   CDGlobeFun::SetVecZero(p_vRe);
+24: }
+--- lines 43-70 ---
+43: void CDTallyData::SumTallyBin() {
+44: 
+45:   for (const int &index : p_setScoreIndex) {
+46:     p_vSum1[index] = p_vSum1[index] + p_vScore[index];
+47:     double dScore2 = p_vScore[index] * p_vScore[index];
+48:     p_vSum2[index] = p_vSum2[index] + dScore2;
+49:     p_vScore[index] = 0;
+50:   }
+51:   p_setScoreIndex.clear();
+52: 
+53: }
+54: 
+55: void CDTallyData::SumTallyBinStride() {
+56:   for (int j = 0; j < p_vScoreIndex2.size(); ++j) {
+57:     int nStartPos = p_vScoreIndex2[j];
+58:     int n = p_vScoreStride[j];
+59:     for (int i = nStartPos; i < nStartPos + n; ++i) {
+60:       p_vSum1[i] = p_vSum1[i] + p_vScore[i];
+61:       double dScore2 = p_vScore[i] * p_vScore[i];
+62:       p_vSum2[i] = p_vSum2[i] + dScore2;
+63:       p_vScore[i] = 0;
+64:     }
+65:   }
+66:   p_setScoreIndex.clear();
+67:   p_vScoreIndex2.clear();
+68:   p_vScoreStride.clear();
+69: }
+70: 
+--- lines 83-105 ---
+83: void CDTallyData::CalcAveRe(double dM, double dDiv) {
+84:   /*  Note:
+85:   M; Number of observations, namely number of total batches/cycles/histories.
+86:   Div: Division. Tally average and relative error are calculated per history.
+87:   */
+88:   double dTemp2 = 1.0 / dDiv;
+89:   if (dM == 1.0) {
+90:     for (int i = 0; i < p_vSum1.size(); ++i) {
+91:       p_vAve[i] = p_vSum1[i] * dTemp2; //Sum1[i]/(M * Div);
+92:       p_vRe[i] = 0;
+93:     }
+94:   } else {
+95:     double dTemp1 = 1.0 / (dM - 1);
+96:     for (int i = 0; i < p_vSum1.size(); ++i) {
+97:       p_vAve[i] = p_vSum1[i] / dM / dDiv; //*temp2; //Sum1[i]/(M * Div);
+98:       p_vRe[i] = p_vSum1[i] == 0 ? 0 : sqrt(p_vSum2[i] / (p_vSum1[i] * p_vSum1[i]) * dM * dTemp1 - dTemp1);
+99:     }
+100:   }
+101: }
+102: 
+103: void CDTallyData::SetSize(int nSetSize) { // set size of tally data
+104:   p_vScore.resize(nSetSize);
+105:   p_vScoreTemp.resize(nSetSize);
+
+RMC/src/InitiateTally.cpp sha256=91553f3b5d5390d8cab3c4b06a0e7a379729335203699a18c188e1b930e72257
+--- lines 57-72 ---
+57:     p_pTallyDataPointer.push_back(p);
+58:   }
+59: 
+60:   if (p_bIsWithMeshTally) {
+61:     p_nTotMeshTallyDataLen = 0;
+62:     p_OMeshTallyData.Initiate();    // /  Clear all cell tally data
+63:     for (auto &oMeshTally : p_vMeshTally) {
+64:       oMeshTally.SetupMeshTally(cAceData, p_OMeshTallyData, p_nTotMeshTallyDataLen);
+65:       if (!p_bUseStatisticsCheck) { oMeshTally.p_bUseStatisticalCheck = false; }
+66:     }
+67:     SetupMeshTallyData();
+68:     CDTallyData *p = &p_OMeshTallyData;
+69:     p_pTallyDataPointer.push_back(p);
+70:   }
+71: 
+72:   if (p_bIsWithMaterialTally) {
+--- lines 140-147 ---
+140:     InitiateFETParameter();
+141:   }
+142: 
+143:   for (auto const &pTallyData : p_pTallyDataPointer) { //清零
+144:     pTallyData->SetZero();
+145:   }
+146: 
+147:   {
+--- lines 227-234 ---
+227: 
+228: 
+229:   // // // // //  use map to locate tally cell position // // // // //
+230:   GenTallyCellMap(cGeometry);
+231: 
+232:   SetStatisticsIndex(nNumOfParticles);  //初始化统计涨落诊断对象
+233: 
+234: }
+
+RMC/src/SetStatisticsIndex.cpp sha256=986b7b465412a2c105738b5cc7a9701a14f8f0a7192a7bad18ae05d0ba5a3518
+--- lines 29-44 ---
+29: 
+30:   }
+31:   if (p_bIsWithMeshTally) {
+32:     for (auto const &cMeshTally : p_vMeshTally) {
+33:       if (cMeshTally.p_bUseStatisticalCheck) {
+34:         int iStartIndex = cMeshTally.p_nDataStartPtr;
+35:         for (int i = 0; i < cMeshTally.p_nDataLen; i++) {
+36:           p_OMeshTallyData.p_OStatisticsTester.p_vIndexOfTallyData.push_back(iStartIndex + i);
+37:         }
+38:         p_OMeshTallyData.p_OStatisticsTester.p_nTallyToCheck = p_OMeshTallyData.p_OStatisticsTester.p_vIndexOfTallyData.size();
+39:       }
+40:     }
+41:     p_OMeshTallyData.p_OStatisticsTester.p_nReMax = 0.10;
+42:     p_OMeshTallyData.p_OStatisticsTester.ReSize(nNumOfParticles);
+43:     p_OMeshTallyData.p_OStatisticsTester.p_cTallyType = 'm';
+44:   }
+
+RMC/src/StatisticsFunc.cpp sha256=f615f47992ed4f7c934b192fe7c62bae26494b3a4d95a335ff87f8f729c9112b
+--- lines 8-14 ---
+8: void CDStatisticsTester::ReSize(long long nNumOfParticles) {
+9:   p_vSum1.resize(p_nBatch * p_nTallyToCheck);
+10:   p_vSum2.resize(p_nBatch * p_nTallyToCheck);
+11:   p_vSum3.resize(p_nBatch * p_nTallyToCheck);
+12:   p_vSum4.resize(p_nBatch * p_nTallyToCheck);
+13:   p_vTime.resize(p_nBatch * p_nTallyToCheck);
+14:   p_vAvePerCycle.resize(p_nBatch * p_nTallyToCheck);
+--- lines 50-91 ---
+50:   p_vTotMean.resize(p_nTallyToCheck);
+51: 
+52:   CDGlobeFun::SetVecZero(p_vSum1);
+53:   CDGlobeFun::SetVecZero(p_vSum2);
+54:   CDGlobeFun::SetVecZero(p_vSum3);
+55:   CDGlobeFun::SetVecZero(p_vSum4);
+56:   CDGlobeFun::SetVecZero(p_vTime);
+57:   CDGlobeFun::SetVecZero(p_vLargestTime);
+58:   CDGlobeFun::SetVecZero(p_vLargestScore);
+59:   CDGlobeFun::SetVecZero(p_vFlucMean);
+60:   CDGlobeFun::SetVecZero(p_vFlucRe);
+61:   CDGlobeFun::SetVecZero(p_vFlucVoV);
+62:   CDGlobeFun::SetVecZero(p_vFlucFOM);
+63:   CDGlobeFun::SetVecZero(p_vFlucShiftCenter);
+64:   CDGlobeFun::SetVecZero(p_vSlope);
+65:   CDGlobeFun::SetVecZero(p_vpdfx);
+66:   CDGlobeFun::SetVecZero(p_vpdfy);
+67:   CDGlobeFun::SetVecZero(p_vAvePerCycle);
+68:   CDGlobeFun::SetVecZero(p_vRePrevCycle);
+69:   CDGlobeFun::SetVecZero(p_vVoVPrevCycle);
+70:   CDGlobeFun::SetVecZero(p_vFoMPerCycle);
+71:   CDGlobeFun::SetVecZero(p_vFoMTot);
+72:   CDGlobeFun::SetVecZero(p_vTempScores);
+73:   CDGlobeFun::SetVecZero(p_vMeanBehaviourCheck);
+74:   CDGlobeFun::SetVecZero(p_vReValueCheck);
+75:   CDGlobeFun::SetVecZero(p_vReDeRateCheck);
+76:   CDGlobeFun::SetVecZero(p_vReDecreaseCheck);
+77:   CDGlobeFun::SetVecZero(p_vVoVValueCheck);
+78:   CDGlobeFun::SetVecZero(p_vVoVDecreaseCheck);
+79:   CDGlobeFun::SetVecZero(p_vVoVDeRateCheck);
+80:   CDGlobeFun::SetVecZero(p_vFoMBehaviourCheck);
+81:   CDGlobeFun::SetVecZero(p_vFoMValueCheck);
+82:   CDGlobeFun::SetVecZero(p_vPdfSlopeCheck);
+83:   CDGlobeFun::SetVecZero(p_vNpsStored);
+84:   CDGlobeFun::SetVecZero(p_vNonZeroNum);
+85:   CDGlobeFun::SetVecZero(p_vCurrentBatch);
+86:   CDGlobeFun::SetVecZero(p_vTempNum);
+87:   CDGlobeFun::SetVecValue(p_vNpsPerBatch, nNumOfParticles / p_nBatch);
+88:   CDGlobeFun::SetVecValue(p_vTooFewParticles, false);
+89:   CDGlobeFun::SetVecValue(p_vNormFactor, 1.0);
+90:   CDGlobeFun::SetVecZero(p_vNonZeroRe);
+91:   CDGlobeFun::SetVecZero(p_vZeroRe);
+
+RMC/src/OutputTally.cpp sha256=e05493ed9b76fdd02655d3838a53462b688d528f8674c9c6261c172ec0cca835
+--- lines 244-263 ---
+244: 
+245:   //////////////////////////////output mesh tally /////////////////////////
+246:   double *pScore1, *pScore2;
+247:   pScore1 = &p_OMeshTallyData.p_vAve[0];
+248:   pScore2 = &p_OMeshTallyData.p_vRe[0];
+249: 
+250: 
+251:   fprintf(fpFilePtr, "============================= %zu Mesh tally in total ==============================\n",
+252:           p_vMeshTally.size());
+253: 
+254:   for (auto &meshTally : p_vMeshTally) {
+255:     // 输出到文本文件
+256:     if (meshTally.p_dAbsoluteValue != 0.0) {
+257:       meshTally.GetMultiplicationFactor(p_OMeshTallyData.p_vAve);
+258:     }
+259:     meshTally.output(fpFilePtr, pScore1, pScore2, nullptr);
+260:     // 输出HDF5网格文件 //
+261:     if (nPrintFlag == FinalPrint && meshTally.p_bHdf5Mesh) {
+262:       meshTally.OutputHDF5Mesh(&p_OMeshTallyData.p_vAve[meshTally.p_nDataStartPtr]);
+263:     }
+
+RMC/src/CheckMgAceBlock.cpp sha256=5387aa2f95fda96ab9cca44e2069fbc18ffecd8c06165f7aa5c347ef51ed6d66
+--- lines 38-62 ---
+38:     // 读取能群结构参数，把每个能群的中心能量和最低能量存储下来
+39:     for (int nNuc = 1; nNuc <= nTotNonSabNucNum; ++nNuc) {
+40:       // LERG = location of incident particle group structure = 1
+41:       int LERG = GetMgNeuLERG(nNuc);
+42:       for (int i = p_nNeuMltGrpNum; i >= 1; --i) {
+43:         double dCentErg = p_vNuclides[nNuc].XSS[LERG + i - 1];
+44:         double dErgWidth = p_vNuclides[nNuc].XSS[LERG + p_nNeuMltGrpNum + i - 1];
+45:         double dLowerBound = dCentErg - 0.5 * dErgWidth;
+46:         if (nNuc == 1) {
+47:           // 中心能量和最低能量这两个参数的能量存储顺序与能群编号相反
+48:           p_vNeuMltCentErg[p_nNeuMltGrpNum - i] = dCentErg;
+49:           p_vNeuMltErgBins[p_nNeuMltGrpNum - i] = dLowerBound;
+50:         } else {
+51:           // 要求所有核素的能群结构保持一致
+52:           if (fabs(p_vNeuMltErgBins[p_nNeuMltGrpNum - i] - dLowerBound) > 1.0E-6 * dLowerBound) {
+53:             Output.OutputMessage([&]() {
+54:               sprintf(Output.p_sPrintStr, "neutron multi-group structure conflicts between %s and %s.\n",
+55:                       p_vNuclides[nNuc].p_ONucID.p_chIdStr, p_vNuclides[1].p_ONucID.p_chIdStr);
+56:             },
+57:             Output.p_fpOutputFilePtr, CDOutput::_ERROR);
+58:           }
+59:         }
+60:       }
+61:     }
+62: 
+
+RMC/src/GetMgCs.cpp sha256=f718dd4bb9faa97ad620f32afa1e4109f54d9b62760c36f1758b0b629b9c4d37
+--- lines 231-238 ---
+231: double  CDAceData::GetMgNeuCentErg(int nErgGrp) {
+232:   int  k = p_nNeuMltGrpNum - nErgGrp;
+233:   return p_vNeuMltCentErg[k];
+234: }
+235: 
+236: double  CDAceData::GetMgPhoCentErg(int nErgGrp) {
+237:   int  k = p_nPhoMltGrpNum - nErgGrp;
+238:   return p_vPhoMltCentErg[k];
+--- lines 263-279 ---
+263: int CDAceData::LocateMgErgGrp(double dErg, int nParticleType) {
+264:   int nErgGrp = 0;
+265:   if (nParticleType == CDParticleState::eParticleType::Neutron) {
+266:     CDGlobeFun::GetIntpltPos(&p_vNeuMltErgBins[0], dErg, 0, p_nNeuMltGrpNum - 1, nErgGrp);
+267:     if (nErgGrp == 0) {
+268:       //检查粒子能量是否小于最低能群下界，若低于最低能群下界将其置于最低能群中
+269:       Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy less than minimum energy group lower bound.\n");},
+270:       Output.p_fpOutputFilePtr, CDOutput::_WARNING);
+271:     } else if (nErgGrp == (p_nNeuMltGrpNum - 1)) {
+272:       if (dErg > (2 * p_vNeuMltCentErg[p_nNeuMltGrpNum - 1] - p_vNeuMltErgBins[p_nNeuMltGrpNum - 1])) {
+273:         //检查粒子能量是否大于最高能群上界，若高于最高能群上界将其置于最高能群中
+274:         Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy larger than maximum energy group upper bound.\n");},
+275:         Output.p_fpOutputFilePtr, CDOutput::_WARNING);
+276:       }
+277:     }
+278:     nErgGrp = p_nNeuMltGrpNum - nErgGrp;
+279:   } else if (nParticleType == CDParticleState::eParticleType::Photon) {
+
+RMC/src/main.cpp sha256=a344ec48347ad51944266f9537dbdc53a4c6cf0f7f3fbe4935086585c40d27a8
+--- lines 57-64 ---
+57: int main(int argc, char *argv[]) {
+58:   ///////////////// Define objects ////////////////////////
+59:   ///////  decoupling via refactoring at 20130720   ///////
+60:   CDRNG ORNG;
+61:   CDInput OInput;
+62:   CDGeometry OGeometry;
+63:   CDMaterial OMaterial;
+64:   CDAceData OAceData;
+--- lines 140-170 ---
+140: 
+141:   ////////////// Read input file ////////////////
+142:   OInput.ReadInputBlocks(OCalMode, ONeutronTransport, OPhotonTransport, OElectronTransport, OGeometry,
+143:                          OMaterial, OAceData, OCriticality, OTally, OConvergence, OBurnup, OPlot,
+144:                          OFixedSource, ORNG, OAdjoint, OHomogenization, OExternalSource, OSampling,
+145:                          OKinetics, OPerturb);
+146: 
+147:   ////////////// Plot Image(geometry) ////////////////
+148:   OPlot.RunPlot(OGeometry, OMaterial, ORNG);
+149: 
+150:   ////////////// Generate Input File////////////////
+151:   Output.GenerateInpFile(OGeometry, OMaterial, OAceData, OCriticality, OTally, OConvergence,
+152:                          OBurnup, OFixedSource, ORNG, OPerturb);
+153: 
+154:   ////////////// Run Calculation ////////////////
+155:   OCalMode.RunCalculation(OCalMode, ONeutronTransport, OPhotonTransport, OElectronTransport, OAceData,
+156:                           OGeometry, ODepth, OCriticality, OMaterial,
+157:                           OParticleState, OConvergence, OTally, OBurnup,
+158:                           OFixedSource, ORNG, OME, OTTA, OAdjoint, OExternalSource,
+159:                           OSampling, OKinetics, OPerturb);
+160: 
+161:   ////////////// Write output ending ////////////////
+162:   Output.OutputEnding(OCalMode, OAdjoint, OCriticality, OFixedSource);
+163: 
+164:   ///////////////// Parallel Case ////////////////////////
+165: # ifdef USE_MPI
+166:   MPI_Finalize();
+167: # endif
+168: 
+169:   return 0;
+170: }

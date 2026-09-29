@@ -1,0 +1,11 @@
+PASS required deliverables exist; E0-E4 each has README.md and status.json
+PASS report contains 14 numbered sections; task README contains 5 sections
+PASS all JSON parses; E0-E4 executed=false, runs=0, comparisons=null
+PASS Markdown local links resolve
+PASS original user attachment preserved byte-for-byte
+PASS RMC branch/HEAD/status and root HEAD unchanged
+PASS root status contains only this task directory
+PASS STATUS.md / INDEX.md / AGENT_CONTEXT.md hashes unchanged
+PASS actual RMC diff empty; saved as changes.diff
+NOT COVERED: compilation, linking, transport, fresh oracle, timing, memory/text or G+1 validation
+FINAL EXECUTION STATE: E0-E4 BLOCKED; proposed patch not applied; approval pending

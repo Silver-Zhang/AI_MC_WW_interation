@@ -1,0 +1,23 @@
+{
+  "experiment": "E0",
+  "title": "Startup / initialization performance",
+  "result": "BLOCKED",
+  "executed": false,
+  "completed_rmc_runs": 0,
+  "completed_fresh_oracle_runs": 0,
+  "completed_same_process_sequences": 0,
+  "blocker_ids": [
+    "B0"
+  ],
+  "reason": "当前 timer 包含初始化、输运和收尾；准确拆分需批准内部 timing probes。",
+  "measurements": null,
+  "comparisons": null,
+  "runtime_evidence": [],
+  "criteria": "../../logs/experiment-plan-frozen.md",
+  "proposal": "../../Proposed_Experimental_Patch.md",
+  "timings_seconds": null,
+  "startup_init_fraction": null,
+  "planned_cache_policy": "warm filesystem cache; no cache dropping",
+  "planned_warmups_per_role": 1,
+  "planned_measured_runs_per_role": 7
+}

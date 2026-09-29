@@ -1,0 +1,34 @@
+{
+  "src/main.cpp": {
+    "base_sha256": "a344ec48347ad51944266f9537dbdc53a4c6cf0f7f3fbe4935086585c40d27a8",
+    "draft_sha256": "8b48d9986bc91a7ae12d574290c3162b87b64a34b0af676dee9c6c3b80e415c2"
+  },
+  "src/ReadInputBlocks.cpp": {
+    "base_sha256": "04d2af661b6f9a15ac61d5624c80a492f37b484fd41935a1f0577fe7fd9c6c69",
+    "draft_sha256": "186ac9e76aebf4984a9a3e669a1662e640c8d1d9dfbb834339e868f2a1252015"
+  },
+  "src/ReadAceData.cpp": {
+    "base_sha256": "43b9f5fa442d49c8b16659cb82d07fe3abf142e5c9c88151327a82fb7015ad6d",
+    "draft_sha256": "6b58e91876b9bb31e5026e3d2c6535a1ca0fd2f2c9cda8d4d215f3cf63394cba"
+  },
+  "src/InitiateMatAce.cpp": {
+    "base_sha256": "23e76ba8378f0ce173406b529df57e1daa12d36fa4cdafa6da72bbc00455ced2",
+    "draft_sha256": "0e0dfd7f061c82b6f09bf372549a0b4fa9b22cf22a017fda5a7bf466e6d6885b"
+  },
+  "src/TreatAdjointMaterial.cpp": {
+    "base_sha256": "9e44446d115bd681822b351c4a75849b413cf2c5c86ff2c043c3dbad09925f52",
+    "draft_sha256": "2c45460d5dd42d3d2eee9c25ad30b86a14e2f50ab075c4ebc5cfdd8b79503cc1"
+  },
+  "src/CalcFixedSource.cpp": {
+    "base_sha256": "dc6e294af4b899b338fb3317d5c6f4bd45ade790b45bc65db2375e8d3fcadb1e",
+    "draft_sha256": "612c783f0eccd68c15a57746fe276e732c9203fb733039697445efe6bf734f9e"
+  },
+  "src/DoMeshWeightWindow.cpp": {
+    "base_sha256": "c8a8056fc39a9c4b0df3cb285b9a0e4857cc4932a84144f413f9b2d2d5bce082",
+    "draft_sha256": "0c8faf4349c73a83731170eddfcfff5c689f9f5a7bceee588de626c51bd5cdf3"
+  },
+  "src/WeightWindows.cpp": {
+    "base_sha256": "237c6ad528797de2a903d0783d77e5eeb56919ff15a9aa38388a7dd49e72a10c",
+    "draft_sha256": "98d9fed19ba9b909f8293e77fdf77f3e2308915ed813ebfb7917ad092700c7bc"
+  }
+}

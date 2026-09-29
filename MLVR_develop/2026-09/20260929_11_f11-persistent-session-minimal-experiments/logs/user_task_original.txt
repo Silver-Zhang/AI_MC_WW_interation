@@ -1,0 +1,751 @@
+# Task — F11 Persistent Session Minimal Experiments E0–E4
+
+## Task directory
+
+只在：
+
+MLVR_develop/2026-09/20260929_11_f11-persistent-session-minimal-experiments/
+
+工作。
+
+本任务建立在两份已完成的独立源码审查之上：
+
+- 20260929_09_f11-rmc-runtime-architecture-audit-codex
+- 20260929_10_f11-rmc-persistent-execution-audit-claude
+
+可以读取这两份报告。
+
+不要开始正式 F11 架构实现。
+
+---
+
+# 1. Goal
+
+通过最小动态实验回答以下问题：
+
+E0 — RMC 一次运行中：
+input / database load / initialization / transport / tally-output
+分别占多少时间？
+
+E1 — 同一个 RMC process 内：
+
+Forward
+→ Forward
+
+能否得到与两个独立 fresh-process Forward runs 等价的结果？
+
+E2 — 同一个 RMC process 内：
+
+Forward
+→ Adjoint
+→ Forward
+
+是否可以安全切换？
+
+如果不能，具体是哪些状态导致失败或污染？
+
+E3 — 固定 geometry / mesh / energy groups：
+
+WW1
+→ WW2
+
+是否可以只更新 Weight Window 数值并在下一次计算正确生效？
+
+E4 — 固定 tally definition：
+
+Run 1
+→ reset tally
+→ Run 2
+
+是否可以完全清除第一轮统计，并从内存得到独立的 value/RE？
+
+本任务的目标是收集证据。
+
+不要决定最终：
+
+- 全外耦合
+- hybrid
+- persistent RMC
+- fully internal
+
+这些架构决策留给用户。
+
+---
+
+# 2. Scope
+
+第一版实验范围严格限定：
+
+- standard MGACE
+- neutron
+- fixed-source
+- Cartesian Type=1 track-length mesh tally
+- Energy=-1
+- Normalize=1
+- native track-mesh WW
+- MPI OFF
+- OpenMP OFF
+- Linux
+
+暂时不测试：
+
+- CE
+- photon
+- coupled transport
+- MPI
+- OpenMP
+- burnup
+- HDF5 field interface
+- arbitrary source weights
+- complex geometry
+
+优先使用已经验证过的简单 H2O / MGACE 小模型。
+
+---
+
+# 3. Repository snapshot
+
+开始前记录：
+
+RMC:
+git branch --show-current
+git rev-parse HEAD
+git status --short
+
+root repo:
+git rev-parse HEAD
+git status --short
+
+不得：
+
+- switch branch
+- reset
+- clean
+- push
+
+所有已有未提交/未 push 内容必须保留。
+
+---
+
+# 4. Modification rule
+
+本任务允许：
+
+- 新建验证脚本
+- 新建 test harness
+- 新建独立 build directory
+- 添加临时 diagnostic instrumentation 的设计草案
+
+但不要修改生产逻辑。
+
+如果 E1/E2/E3/E4 无法在“不改 RMC production code”的条件下执行：
+
+1. 先定位必须暴露/修改的最小位置；
+2. 写出 proposed experimental patch；
+3. 说明为什么必须修改；
+4. 停止；
+5. 等待用户批准。
+
+不要为了把实验跑起来直接重构 RMC。
+
+---
+
+# 5. General oracle rule
+
+所有 persistent / same-process 实验必须有 fresh-process oracle。
+
+例如 E1：
+
+same-process:
+F1 → F2
+
+必须对应：
+
+fresh process:
+F1_fresh
+F2_fresh
+
+比较对象必须在：
+
+- geometry
+- source
+- population
+- RNG
+- WW
+- tally
+- normalization
+
+完全一致。
+
+禁止仅通过：
+
+“程序没有崩”
+
+判断通过。
+
+---
+
+# 6. Statistical comparison rule
+
+如果配置完全相同且 RNG 状态也要求完全相同：
+
+优先做 deterministic / exact comparison：
+
+- history count
+- selected tally values
+- Sum1/Sum2
+- Ave
+- RE
+- bank-empty state
+- RNG identity
+
+如果由于合理原因 RNG stream 不要求完全相同，则使用预先定义的统计比较。
+
+不要看到结果以后再改判据。
+
+---
+
+# 7. E0 — Startup / initialization performance decomposition
+
+## Question
+
+重复启动 RMC 到底浪费多少时间？
+
+不要再只凭“数据库读取可能很慢”推断。
+
+---
+
+## Required timing stages
+
+尽量分开测量：
+
+T_process
+    process creation / MPI-off startup
+
+T_input
+    input read + input checking
+
+T_geometry
+    geometry/material preparation
+    如果当前无法单独拆分，可合并并明确说明
+
+T_xs
+    XSDIR / ACE / MGACE loading
+
+T_adjoint_prepare
+    adjoint derived-data preparation
+    若 Forward case 不存在则记 N/A
+
+T_transport_prepare
+    source/tally/bank/transport initialization
+
+T_transport
+    actual source-history transport loop
+
+T_tally_finalize
+    reduction / Ave / RE / normalization
+
+T_output
+    text/file output
+
+T_total
+
+当前 RMC timer 若不能提供这些边界：
+
+优先采用最小、局部、test-only timing instrumentation。
+
+如果需要修改生产源码才能准确测量，先停止并提出 instrumentation patch。
+
+---
+
+## Cases
+
+至少测：
+
+A. Forward
+B. Adjoint
+
+每种建议：
+
+- warm-up 1 次
+- 正式 5 次以上
+- 相同 population
+- 记录 mean / std
+- 明确文件系统 cache 是 warm 还是 cold
+
+不需要为了 E0 跑大粒子数。
+
+目标是比较：
+
+startup+init
+
+vs
+
+transport
+
+比例。
+
+---
+
+## E0 output
+
+报告：
+
+T_total =
+T_startup/init
++
+T_transport
++
+T_finalize/output
+
+重点给：
+
+startup/init fraction
+
+不要根据单次 noisy timing 下结论。
+
+---
+
+# 8. E1 — Same-process Forward → Forward
+
+## Question
+
+同一模型只初始化一次后，连续执行两个独立 Forward calculations 是否可行？
+
+---
+
+## Fresh-process oracle
+
+准备两个独立 fresh-process runs：
+
+Fresh F1
+Fresh F2
+
+使用明确 seed namespace。
+
+例如：
+
+F1 seed = S1
+F2 seed = S2
+
+---
+
+## Same-process target
+
+目标逻辑：
+
+Initialize model once
+
+Run Forward:
+    population=N1
+    seed=S1
+
+reset calculation state
+
+Run Forward:
+    population=N2
+    seed=S2
+
+---
+
+## Must inspect/reset
+
+至少覆盖：
+
+- p_nFinishCalculate
+- completed-history counters
+- fixed source counters
+- particle banks
+- descendant banks
+- total starting weight
+- source statistics
+- RNG position/cache
+- tally score
+- Sum1/Sum2
+- Ave/RE
+- timing state
+- diagnostics
+- output state
+
+---
+
+## Pass conditions
+
+第二轮必须：
+
+1. 实际执行 N2 histories；
+2. 无第一轮 bank residue；
+3. tally statistics 不含第一轮；
+4. normalization 正确；
+5. 与 Fresh F2 在冻结比较标准下等价；
+6. 第一轮结果与 Fresh F1 等价。
+
+必须证明：
+
+Run2 is independent from Run1
+
+而不是仅得到一个“看起来合理”的 Ave。
+
+---
+
+# 9. E2 — Forward → Adjoint → Forward
+
+## Question
+
+这是决定 persistent RMC 是否现实的核心实验。
+
+---
+
+## Oracle
+
+分别做 fresh process：
+
+Fresh Forward 1
+Fresh Adjoint
+Fresh Forward 2
+
+---
+
+## Same-process sequence
+
+Initialize frozen model once
+
+Forward(S1)
+    ↓
+switch / rebuild required state
+    ↓
+Adjoint(S2)
+    ↓
+switch / rebuild required state
+    ↓
+Forward(S3)
+
+---
+
+## Must observe
+
+运行前后记录：
+
+- FixedSource adjoint flag
+- AceData adjoint state
+- Particle role
+- MaxAdjointEnergy physical value
+- internal MG group representation
+- adjoint XS arrays
+- fission adjoint arrays
+- relevant derived caches
+- material / nuclide object identity
+- source identity
+- tally state
+- WW identity
+
+特别检查之前源码审查发现的：
+
+1. flag only set true path
+2. MaxAdjointEnergy MeV → group index mutation
+3. TreatAdjointMaterial += accumulation
+4. stale particle XS/cache
+
+---
+
+## Pass condition
+
+每个阶段都必须与对应 fresh-process oracle 一致。
+
+尤其：
+
+第三个 Forward
+
+必须证明没有残留 Adjoint 状态。
+
+如果失败：
+
+不要立即修复。
+
+首先定位：
+
+- 哪个 state 不一致
+- 从哪一步开始偏离
+- 应属于 CLEAR / REBUILD / immutable-base redesign 哪一类
+
+输出最小 blocker。
+
+---
+
+# 10. E3 — WW hot update
+
+## Question
+
+固定：
+
+mesh
+energy groups
+WW parameters
+
+只改变：
+
+WW lower bounds
+
+下一轮是否能正确使用新 WW？
+
+---
+
+## Design
+
+构造两个明显不同的 WW：
+
+WW1
+WW2
+
+必须让选定几个 mesh×group bin 的 lower bound 差异足够明显。
+
+不要通过最终 FOM 判断是否更新成功。
+
+需要直接观察：
+
+particle state
+→ selected mesh/group
+→ selected lower bound
+
+---
+
+## Compare
+
+Fresh process WW1
+
+Fresh process WW2
+
+same-process:
+
+WW1
+→ update
+→ WW2
+
+第二轮必须与 Fresh WW2 的查窗行为一致。
+
+---
+
+## Must inspect
+
+- lower bounds
+- survival bounds
+- upper bounds
+- WW parameters
+- mesh identity
+- energy-grid identity
+- derived arrays/cache
+- particle-type tables
+
+如果 survival/upper 由 lower 派生：
+
+必须确认更新后重新计算。
+
+---
+
+## Pass condition
+
+不仅数组看起来变了，还必须证明：
+
+运输实际读取的是 WW2。
+
+---
+
+# 11. E4 — Tally reset + in-memory Field extraction
+
+## Question A
+
+能否保留：
+
+mesh/tally definition
+
+只清：
+
+per-run statistics
+
+然后执行下一轮？
+
+---
+
+## Run design
+
+使用两轮故意明显不同的 source / population / seed，使两个 field pattern 可区分。
+
+Run1
+→ snapshot
+→ reset
+→ Run2
+→ snapshot
+
+---
+
+## Check reset
+
+至少检查：
+
+- per-history score
+- touched/index sets
+- Sum1
+- Sum2
+- Ave
+- RE
+- statistics tester state
+- tally registry size
+
+第二轮不得保留 Run1 数据。
+
+---
+
+## Question B
+
+定位归一化完成后的内存：
+
+value[i,g]
+RE[i,g]
+
+并验证其与 `.Tally` 文本输出一致。
+
+不要实现正式 F10 Adapter/API。
+
+只证明：
+
+结构化数组在什么时刻可读取。
+
+---
+
+## Also extract
+
+尝试从 MGACE 内存结构构造：
+
+physical G+1 energy boundaries
+
+检查：
+
+- G+1 length
+- MeV
+- strictly increasing
+- physical ascending
+- highest upper bound
+- mapping to Tally Group rows
+
+这是 F10 后续实现的重要证据。
+
+---
+
+# 12. Important non-goals
+
+本任务不要：
+
+- 写正式 Session 类
+- 重构 main()
+- 写 F11 Controller
+- 写 Field API
+- 写 WW Builder
+- 写 Reconstruction
+- 写 ResponseDefinition
+- 实现 convergence
+- 实现 best-FOM selection
+- 实现 MPI persistent mode
+
+只做实验。
+
+---
+
+# 13. Result classification
+
+每个实验单独给：
+
+PASS
+FAIL
+BLOCKED
+INCONCLUSIVE
+
+例如：
+
+E1 PASS
+
+不代表：
+
+persistent RMC architecture approved
+
+E2 FAIL
+
+也不代表：
+
+persistent execution permanently impossible
+
+它只说明当前结构或最小 lifecycle contract 不成立。
+
+---
+
+# 14. Deliverables
+
+目录：
+
+MLVR_develop/2026-09/20260929_11_f11-persistent-session-minimal-experiments/
+
+至少：
+
+README.md
+
+F11_Persistent_Session_Minimal_Experiments.md
+
+verification/
+    E0/
+    E1/
+    E2/
+    E3/
+    E4/
+
+logs/
+    repository-state-start.txt
+    experiment-plan-frozen.md
+    experiment-summary.json
+
+报告必须包含：
+
+1. Scope
+2. Frozen acceptance criteria
+3. E0 performance
+4. E1 Forward→Forward
+5. E2 Forward→Adjoint→Forward
+6. E3 WW hot update
+7. E4 tally reset / memory extraction
+8. Fresh-process oracle comparison
+9. Confirmed reusable states
+10. Confirmed per-run states
+11. Confirmed blockers
+12. Remaining unknowns
+13. Implications for F11 design
+14. What the human needs to decide
+
+---
+
+# 15. Shared files
+
+本任务暂时不要更新：
+
+STATUS.md
+MLVR_develop/INDEX.md
+MLVR_Knowledge/*
+
+等 Claude 独立审核完成后统一归档。
+
+---
+
+# 16. Stop rule
+
+完成 E0–E4 或遇到“必须修改 RMC production source 才能继续”的 blocker 后停止。
+
+如果需要源码修改：
+
+不要自己实施。
+
+输出：
+
+Proposed Experimental Patch
+Why required
+Files/functions affected
+Expected evidence
+Risk
+
+等待用户决定。
