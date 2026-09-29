@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver",
+    "-i",
+    "inp_E2_A",
+    "-d",
+    "/home/silver/NucXS_Library/RMC_DATA"
+  ],
+  "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver -i inp_E2_A -d /home/silver/NucXS_Library/RMC_DATA",
+  "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_probe_E2_A",
+  "environment_overrides": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_probe_E2_A",
+    "F11_RUN_ID": "E2_A",
+    "F11_MODE": "diagnostic",
+    "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_probe_E2_A/sequence.txt",
+    "OMP_NUM_THREADS": "1"
+  },
+  "binary_sha256": "3bd72b938157d9db21fbdce201fa81665faf9c5891526040e6712d90af47e1be",
+  "requested_runs": [
+    "E2_A"
+  ],
+  "parent_start_monotonic_ns": 12776948763570,
+  "parent_end_monotonic_ns": 12777062685514,
+  "exit_code": 0,
+  "total_seconds": 0.113921944
+}

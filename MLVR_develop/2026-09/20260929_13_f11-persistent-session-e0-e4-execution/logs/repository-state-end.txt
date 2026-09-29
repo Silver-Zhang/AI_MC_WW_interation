@@ -1,0 +1,27 @@
+$ git rev-parse HEAD
+f4730fdb036ea8530faab228b2e8c38e81482f6b
+
+$ git status --short
+ M MLVR_develop/INDEX.md
+ M STATUS.md
+?? MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/
+
+$ git -C RMC branch --show-current
+Neural_Network_WW_Iteration
+
+$ git -C RMC rev-parse HEAD
+5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+
+$ git -C RMC status --short
+
+$ git -C RMC log --oneline -10
+5cfb0f77 fix(ww): map MG group to physical energy in native WW lookup (20260923_01)
+b7d8a946 fix(ww): correct shared multi-particle mesh offsets
+41cf4559 修复异构网格最大边界索引 (20260919_04)
+5ec595e1 fix(ww): validate native mesh window shape
+341c0238 fix(ww): preserve native WWP per particle type
+b26a81a2 Merge remote-tracking branch 'origin/Neural_Network_WW_Iteration' into Neural_Network_WW_Iteration
+76cbfe72 fix(adjoint): correct negative angular interval (F02 W9)
+6d208751 fix(adjoint): close W5 W6 W7 defects
+c944a6cb Fix SPBS MPI/OpenMP Issue (thu-real/RMC!884)
+4d3e1aac 新增了用户手册中关于AIS数据库使用的部分 (thu-real/RMC!880)

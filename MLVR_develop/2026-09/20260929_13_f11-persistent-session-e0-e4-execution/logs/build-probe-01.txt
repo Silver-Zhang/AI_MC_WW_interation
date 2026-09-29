@@ -1,0 +1,287 @@
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.o
+[  0%] Building CXX object CMakeFiles/RNG.dir/src/RNG/StrideRNG.cpp.o
+[  0%] Building CXX object dependencies/fmt/CMakeFiles/fmt.dir/src/format.cc.o
+[  0%] Building CXX object CMakeFiles/f11_observers.dir/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp.o
+[  0%] Building CXX object dependencies/fmt/CMakeFiles/fmt.dir/src/os.cc.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.o
+[  0%] Building CXX object dependencies/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AcceFsc.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdAllGather.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdBackupBurnup.cpp.o
+[  0%] Linking CXX static library libRNG.a
+[  0%] Built target RNG
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdCalcAveRe.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdFissionRate.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdForceFission.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdForceScat.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdInitialGeneralSenNucDataTally.cpp.o
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp: In function ‘void f11_probe::snapshot(const char*, const CDFixedSource&, const CDAceData&, const CDParticleState&, const CDTally&, const CDRNG&, const CDExternalSource&)’:
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp:73:92: error: passing ‘const ParticleStack’ as ‘this’ argument discards qualifiers [-fpermissive]
+   73 | std::vector<size_t> banks;for(const auto&b:f.p_vFixedParticleSrcBank)banks.push_back(b.size());o.add("raw_particle_stacks",banks);o.add("fixed_src_storage",f.p_vFixedSrc.size());o.add("fixed_src_bank",f.p_vFixedSrcBank.size());o.add("photon_bank",f.p_vPhotonBank.size());o.add("electron_bank",f.p_vElectronBank.size());o.add("external_neutron_bank",s.p_vFixedInitSrcBank.size());o.add("external_photon_bank",s.p_vFixedInitPhoSrcBank.size());o.add("external_neutron_count",s.p_nFixedInitSrcBankCount);o.add("external_photon_count",s.p_nFixedInitPhoSrcBankCount);
+      |                                                                                      ~~~~~~^~
+In file included from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/Tally.h:16,
+                 from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/Criticality.h:11,
+                 from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/CalMode.h:8,
+                 from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp:2:
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/FixedSource.h:161:16: note:   in call to ‘unsigned int ParticleStack::size()’
+  161 |   unsigned int size();
+      |                ^~~~
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp: In function ‘void f11_probe::arm(const CDFixedSource&, const CDAceData&, const CDParticleState&, const CDTally&, const CDRNG&, const CDExternalSource&)’:
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp:97:48: error: ‘const class ParticleStack’ has no member named ‘empty’
+   97 | for(auto&b:f.p_vFixedParticleSrcBank)require(b.empty(),"bank not empty");
+      |                                                ^~~~~
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdInitialKSenNucDataTally.cpp.o
+[  0%] Linking CXX static library libfmt.a
+[  0%] Built target fmt
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdInitialization.cpp.o
+gmake[3]: *** [CMakeFiles/f11_observers.dir/build.make:76: CMakeFiles/f11_observers.dir/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.cpp.o] Error 1
+gmake[2]: *** [CMakeFiles/Makefile2:1273: CMakeFiles/f11_observers.dir/all] Error 2
+gmake[2]: *** Waiting for unfinished jobs....
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdInitiateBurnupSU.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdJudgeBlock.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdJudgeNuc.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdOpenFilePtr.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdOutputAd.cpp.o
+[  0%] Building CXX object CMakeFiles/f11_core.dir/src/AdOutputUncertainty.cpp.o
+[  0%] Linking CXX static library libspdlog.a
+[  0%] Built target spdlog
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdProcessBlockEnd.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdProcessBlockEnd_G.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdProcessPseudoPar.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdReadAdjointBlock.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdReadCellTally.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdReadTallyID.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdTallyAtSurf.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdTallyCollisionTerm.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdTallyFissionTerm.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdTallyScatteringTerm.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdTreatFission.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/Ad_CalUncertainty.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/Ad_EnergyDefault.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/Ad_InitialConstrain.cpp.o
+In file included from /usr/include/c++/13/string:51,
+                 from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.hpp:2,
+                 from <command-line>:
+In static member function ‘static _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(_Tp*, _Tp*, _Up*) [with _Tp = long unsigned int; _Up = long unsigned int; bool _IsMove = false]’,
+    inlined from ‘_OI std::__copy_move_a2(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:506:30,
+    inlined from ‘_OI std::__copy_move_a1(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:533:42,
+    inlined from ‘_OI std::__copy_move_a(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:540:31,
+    inlined from ‘_OI std::copy(_II, _II, _OI) [with _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:633:7,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::_M_copy_aligned(const_iterator, const_iterator, iterator) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1342:28,
+    inlined from ‘void std::vector<bool, _Alloc>::_M_fill_insert(iterator, size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/vector.tcc:879:34,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::insert(const_iterator, size_type, const bool&) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1242:16,
+    inlined from ‘void std::vector<bool, _Alloc>::resize(size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1288:10,
+    inlined from ‘CDBin::CDBin()’ at /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/TallyData.h:230:25:
+/usr/include/c++/13/bits/stl_algobase.h:437:30: warning: ‘void* __builtin_memmove(void*, const void*, long unsigned int)’ writing between 9 and 9223372036854775807 bytes into a region of size 8 overflows the destination [-Wstringop-overflow=]
+  437 |             __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+      |             ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:33,
+                 from /usr/include/c++/13/bits/allocator.h:46,
+                 from /usr/include/c++/13/string:43:
+In member function ‘_Tp* std::__new_allocator<_Tp>::allocate(size_type, const void*) [with _Tp = long unsigned int]’,
+    inlined from ‘static _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(allocator_type&, size_type) [with _Tp = long unsigned int]’ at /usr/include/c++/13/bits/alloc_traits.h:482:28,
+    inlined from ‘std::_Bvector_base<_Alloc>::_Bit_pointer std::_Bvector_base<_Alloc>::_M_allocate(std::size_t) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:679:48,
+    inlined from ‘void std::vector<bool, _Alloc>::_M_fill_insert(iterator, size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/vector.tcc:877:40,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::insert(const_iterator, size_type, const bool&) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1242:16,
+    inlined from ‘void std::vector<bool, _Alloc>::resize(size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1288:10,
+    inlined from ‘CDBin::CDBin()’ at /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/TallyData.h:230:25:
+/usr/include/c++/13/bits/new_allocator.h:151:55: note: destination object of size 8 allocated by ‘operator new’
+  151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+      |                                                       ^
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/Ad_ReadCovdirAndSelect.cpp.o
+[  2%] Building CXX object CMakeFiles/f11_core.dir/src/AdaptActiveCycleNum.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/AddBranch.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/AddBurnNucToMat.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/AddNegativeReaction.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/AdjustOrigin.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/AutoConverge.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BalanceBurnCell.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BalanceFisBank.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BalanceFissChain.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankElecIndusGma.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankFisSource.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankFluxNeuSource.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankGeometryParticle.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankNeuGma.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankNeuSource.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankPhoNeu.cpp.o
+[  4%] Building CXX object CMakeFiles/f11_core.dir/src/BankSecondaryElectron.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BankSrcPerb.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BankUfsParticle.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BankVirtualNeuSource.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BinFun.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BoneCalcAlpha.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BoneCalculation.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/Boolean.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BuildCoreXS.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BuildDem.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BuildNeiCellsList.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BuildODR.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BurnupClass.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BurnupConstants.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/BurnupStrategy.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/CDLandauParameter.cpp.o
+[  6%] Building CXX object CMakeFiles/f11_core.dir/src/CLSCorrection.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/Cal3Dindex.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalBOneMatBuck.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalDensityEffectFactor.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalIntraGenTerm.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalNextGeoIterValue.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalNextMatIterValue.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalNucDen2NucDenUnc.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalNucMicroXS.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalPertBurnup.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalRea2NucDenUnc.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalScreenFactor.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalSubstepNum.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalTotNeuGmaCs.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalcAdjTally.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalcAttenuator.cpp.o
+[  8%] Building CXX object CMakeFiles/f11_core.dir/src/CalcBoneKeff.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcBoneMatrix.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcBurnup.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcBurstTime.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcCellPower.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcColliNucCs.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcCosine.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcCriticality.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDBXS.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDF.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDecayIntensity.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDem.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDerOfPerbMatDenToTemp.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDistToBound.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDistToBound_MinDis.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDistToLat.cpp.o
+[ 10%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDistToSurf.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDistToTorus.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcDose.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcFissionSpectrum.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcFixedSource.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcFreeGasScatProb.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcGeoPertCoeff.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcGeoSensitivity.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcGmaNum.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcGroupConstant.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcKinetics.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMPNComponent.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMXSSArray.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMXSTable.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMatFisQ.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMatMacroXS.cpp.o
+[ 13%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMeshAdjFluxAveRe.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMinDistToLat.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMinDistToSurf.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMultGroupNucMicroXS.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcMultiplier.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcNeuGmaCs.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcNeuLeakRate.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcNeuScatProb.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcNeuVel.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcNucMajXS.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPNByCollision.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPNCs.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPhoScatProb.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPoi.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPointBurnup.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPolynomial.cpp.o
+[ 15%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPosNBTM.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcPosSNTM.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcRelativeError.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcSabScatProb.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcSegment.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcSrcPerbFactor.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcSurfSense.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTallyFlag.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTallyScore.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTallyXs.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTallyXsforMultiplier.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTimeAbsMacroCs.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcTotCsForPointTally.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcXeEquilCs.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalculParameterRho.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CalcvmtFun.cpp.o
+[ 17%] Building CXX object CMakeFiles/f11_core.dir/src/CheckAceForBurn.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckAndInitiateParameters.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckAndNormalizeDistribution.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckCeAceBlock.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckCellDefinition.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckDepletionNuc.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckGeometry.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckIOFile.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckInpBlock.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckMgAceBlock.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckOutputCells.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckParticleLocation.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckSabMaterial.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckSourceAndDistri.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckSpecificCellComplement.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckSurfParas.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckTransport.cpp.o
+[ 19%] Building CXX object CMakeFiles/f11_core.dir/src/CheckUnivContainCell.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CheckUniverse.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CheckUsedMat.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CheckandUpdatePackFrac.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CloseFilePtrs.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CmdParser.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/ColiIFP.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CombToChangeNeuWgt.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CombineKeff.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CondenseFissionSpectrum.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CondenseIntoFewGroup.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CondenseScattMatrix.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CondensedWalkScatterAngle.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/CondeseFewGrpRXS.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/ConvergenceClass.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/ConvertMatNucDen.cpp.o
+[ 21%] Building CXX object CMakeFiles/f11_core.dir/src/ConvertMatNucIndex.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/ConvertNucId.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/CreatCellTally.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/CubicSplineInterpolation.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/DEPTH_to_RMC.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/Dagmc.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/DefineSVDMethod.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/DepthExecution.cpp.o
+[ 23%] Building CXX object CMakeFiles/f11_core.dir/src/DetermineCycleType.cpp.o
+/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/DefineSVDMethod.cpp:6:11: fatal error: Eigen/Dense: No such file or directory
+    6 | # include <Eigen/Dense>
+      |           ^~~~~~~~~~~~~
+compilation terminated.
+gmake[3]: *** [CMakeFiles/f11_core.dir/build.make:2624: CMakeFiles/f11_core.dir/src/DefineSVDMethod.cpp.o] Error 1
+gmake[3]: *** Waiting for unfinished jobs....
+In file included from /usr/include/c++/13/string:51,
+                 from /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness/probes.hpp:2,
+                 from <command-line>:
+In static member function ‘static _Up* std::__copy_move<_IsMove, true, std::random_access_iterator_tag>::__copy_m(_Tp*, _Tp*, _Up*) [with _Tp = long unsigned int; _Up = long unsigned int; bool _IsMove = false]’,
+    inlined from ‘_OI std::__copy_move_a2(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:506:30,
+    inlined from ‘_OI std::__copy_move_a1(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:533:42,
+    inlined from ‘_OI std::__copy_move_a(_II, _II, _OI) [with bool _IsMove = false; _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:540:31,
+    inlined from ‘_OI std::copy(_II, _II, _OI) [with _II = long unsigned int*; _OI = long unsigned int*]’ at /usr/include/c++/13/bits/stl_algobase.h:633:7,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::_M_copy_aligned(const_iterator, const_iterator, iterator) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1342:28,
+    inlined from ‘void std::vector<bool, _Alloc>::_M_fill_insert(iterator, size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/vector.tcc:879:34,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::insert(const_iterator, size_type, const bool&) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1242:16,
+    inlined from ‘void std::vector<bool, _Alloc>::resize(size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1288:10,
+    inlined from ‘CDBin::CDBin()’ at /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/TallyData.h:230:25:
+/usr/include/c++/13/bits/stl_algobase.h:437:30: warning: ‘void* __builtin_memmove(void*, const void*, long unsigned int)’ writing between 9 and 9223372036854775807 bytes into a region of size 8 overflows the destination [-Wstringop-overflow=]
+  437 |             __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+      |             ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:33,
+                 from /usr/include/c++/13/bits/allocator.h:46,
+                 from /usr/include/c++/13/string:43:
+In member function ‘_Tp* std::__new_allocator<_Tp>::allocate(size_type, const void*) [with _Tp = long unsigned int]’,
+    inlined from ‘static _Tp* std::allocator_traits<std::allocator<_CharT> >::allocate(allocator_type&, size_type) [with _Tp = long unsigned int]’ at /usr/include/c++/13/bits/alloc_traits.h:482:28,
+    inlined from ‘std::_Bvector_base<_Alloc>::_Bit_pointer std::_Bvector_base<_Alloc>::_M_allocate(std::size_t) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:679:48,
+    inlined from ‘void std::vector<bool, _Alloc>::_M_fill_insert(iterator, size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/vector.tcc:877:40,
+    inlined from ‘std::vector<bool, _Alloc>::iterator std::vector<bool, _Alloc>::insert(const_iterator, size_type, const bool&) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1242:16,
+    inlined from ‘void std::vector<bool, _Alloc>::resize(size_type, bool) [with _Alloc = std::allocator<bool>]’ at /usr/include/c++/13/bits/stl_bvector.h:1288:10,
+    inlined from ‘CDBin::CDBin()’ at /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/src/TallyData.h:230:25:
+/usr/include/c++/13/bits/new_allocator.h:151:55: note: destination object of size 8 allocated by ‘operator new’
+  151 |         return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+      |                                                       ^
+gmake[2]: *** [CMakeFiles/Makefile2:1247: CMakeFiles/f11_core.dir/all] Error 2
+gmake[1]: *** [CMakeFiles/Makefile2:1311: CMakeFiles/RMC.dir/rule] Error 2
+gmake: *** [Makefile:221: RMC] Error 2

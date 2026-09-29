@@ -1,0 +1,33 @@
+$ cmake -S /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot -B /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe -DCMAKE_BUILD_TYPE=Release -Dmpi=OFF -Dopenmp=OFF -Dais=OFF -Dtest=OFF -Dloadmodules=OFF -Dcatcherr=OFF -DF11_HARNESS_DIR=/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/harness -DF11_PROBES=ON
+-- The CXX compiler identification is GNU 13.3.0
+-- The C compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- RMC Version: 3.5.0
+-- System name: Linux
+-- System version: 7.0.0-34-generic
+-- MPI parallel: turned OFF
+-- OpenMP threads parallel: turned OFF
+-- RMC CXX Standard: C++14
+-- Warning level: 1
+-- CMake Build Type: Release
+-- CXX compiler: /usr/bin/c++
+-- CXX compiler flags:  -Wno-unused-result
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- GIT SHA (manually set): 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+CMake Error at cmake/LoadPackage/load_package.cmake:26 (message):
+  Please add the [TPLS_HighFive_DIR] definition, [HighFive_DIR] environment
+  variable, or loadmodules CMake option.
+Call Stack (most recent call first):
+  CMakeLists.txt:559 (load_package)
+
+
+-- Configuring incomplete, errors occurred!

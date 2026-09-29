@@ -1,0 +1,212 @@
+{
+  "scope": "unit-weight single-component fixture only; N equals denominator here, not generally",
+  "runs": [
+    {
+      "run_id": "E1_F1",
+      "requested": 2000,
+      "completed": 2000,
+      "starting_weight_denominator": 2000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E1_F2",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E2_A",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E2_F1",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E2_F2",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E3_WW1",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E3_WW2",
+      "requested": 3000,
+      "completed": 3000,
+      "starting_weight_denominator": 3000,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E4_S1",
+      "requested": 1500,
+      "completed": 1500,
+      "starting_weight_denominator": 1500,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          5,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    },
+    {
+      "run_id": "E4_S2",
+      "requested": 3500,
+      "completed": 3500,
+      "starting_weight_denominator": 3500,
+      "sources_type_fraction_weight_energy_points": [
+        [
+          1,
+          1,
+          1,
+          2,
+          15,
+          0,
+          0
+        ]
+      ],
+      "source_probabilities": [
+        1
+      ],
+      "source_bias_probabilities": [
+        1
+      ]
+    }
+  ]
+}

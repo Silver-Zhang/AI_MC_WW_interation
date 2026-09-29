@@ -1,0 +1,551 @@
+{
+  "E1": {
+    "experiment": "E1",
+    "fresh": {
+      "E1_F1": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E1_F1",
+      "E1_F2": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E1_F2"
+    },
+    "same_process": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E1",
+    "execution": {
+      "command": [
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver",
+        "-i",
+        "inp_E1_F1",
+        "-d",
+        "/home/silver/NucXS_Library/RMC_DATA"
+      ],
+      "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver -i inp_E1_F1 -d /home/silver/NucXS_Library/RMC_DATA",
+      "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E1",
+      "environment_overrides": {
+        "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+        "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E1",
+        "F11_RUN_ID": "E1_F1",
+        "F11_MODE": "diagnostic",
+        "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E1/sequence.txt",
+        "OMP_NUM_THREADS": "1"
+      },
+      "binary_sha256": "8d7c0f2e450100698af98ddcbe75e4ca87fd13a52587285f80894e1acbde7711",
+      "requested_runs": [
+        "E1_F1",
+        "E1_F2"
+      ],
+      "parent_start_monotonic_ns": 11877048697637,
+      "parent_end_monotonic_ns": 11878314385413,
+      "exit_code": 0,
+      "total_seconds": 1.265687776
+    },
+    "comparisons": {
+      "E1_F1": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      },
+      "E1_F2": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      }
+    },
+    "checks": {
+      "E1_F1": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true
+      },
+      "E1_F2": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true,
+        "reset": {
+          "p_vScore": true,
+          "p_vScoreTemp": true,
+          "p_vSum1": true,
+          "p_vSum2": true,
+          "p_vAve": true,
+          "p_vRe": true,
+          "touched_empty": true,
+          "banks_empty": true,
+          "completed_zero": true,
+          "denominator_zero": true,
+          "finish_ready": true,
+          "registry": true,
+          "unique_stat_indices": true,
+          "statistics/p_vSum1": true,
+          "statistics/p_vSum2": true,
+          "statistics/p_vSum3": true,
+          "statistics/p_vSum4": true,
+          "statistics/p_vNpsStored": true,
+          "statistics/p_vCurrentBatch": true,
+          "statistics/p_vNonZeroNum": true,
+          "statistics/p_vTempNum": true,
+          "statistics/p_vTempScores": true,
+          "statistics/p_vLargestScore": true,
+          "statistics/Time": true,
+          "statistics/LargestTime": true,
+          "stat_batch_population": true
+        }
+      }
+    },
+    "verdict": "PENDING_ANALYSIS"
+  },
+  "E2": {
+    "experiment": "E2",
+    "fresh": {
+      "E2_F1": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E2_F1",
+      "E2_A": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E2_A",
+      "E2_F2": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E2_F2"
+    },
+    "same_process": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E2",
+    "execution": {
+      "command": [
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver",
+        "-i",
+        "inp_E2_F1",
+        "-d",
+        "/home/silver/NucXS_Library/RMC_DATA"
+      ],
+      "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver -i inp_E2_F1 -d /home/silver/NucXS_Library/RMC_DATA",
+      "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E2",
+      "environment_overrides": {
+        "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+        "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E2",
+        "F11_RUN_ID": "E2_F1",
+        "F11_MODE": "diagnostic",
+        "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E2/sequence.txt",
+        "OMP_NUM_THREADS": "1"
+      },
+      "binary_sha256": "8d7c0f2e450100698af98ddcbe75e4ca87fd13a52587285f80894e1acbde7711",
+      "requested_runs": [
+        "E2_F1",
+        "E2_A",
+        "E2_F2"
+      ],
+      "parent_start_monotonic_ns": 11880040674160,
+      "parent_end_monotonic_ns": 11881607174641,
+      "exit_code": 0,
+      "total_seconds": 1.566500481
+    },
+    "comparisons": {
+      "E2_F1": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      },
+      "E2_A": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      },
+      "E2_F2": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      }
+    },
+    "checks": {
+      "E2_F1": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true
+      },
+      "E2_A": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true,
+        "reset": {
+          "p_vScore": true,
+          "p_vScoreTemp": true,
+          "p_vSum1": true,
+          "p_vSum2": true,
+          "p_vAve": true,
+          "p_vRe": true,
+          "touched_empty": true,
+          "banks_empty": true,
+          "completed_zero": true,
+          "denominator_zero": true,
+          "finish_ready": true,
+          "registry": true,
+          "unique_stat_indices": true,
+          "statistics/p_vSum1": true,
+          "statistics/p_vSum2": true,
+          "statistics/p_vSum3": true,
+          "statistics/p_vSum4": true,
+          "statistics/p_vNpsStored": true,
+          "statistics/p_vCurrentBatch": true,
+          "statistics/p_vNonZeroNum": true,
+          "statistics/p_vTempNum": true,
+          "statistics/p_vTempScores": true,
+          "statistics/p_vLargestScore": true,
+          "statistics/Time": true,
+          "statistics/LargestTime": true,
+          "stat_batch_population": true
+        }
+      },
+      "E2_F2": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true,
+        "reset": {
+          "p_vScore": true,
+          "p_vScoreTemp": true,
+          "p_vSum1": true,
+          "p_vSum2": true,
+          "p_vAve": true,
+          "p_vRe": true,
+          "touched_empty": true,
+          "banks_empty": true,
+          "completed_zero": true,
+          "denominator_zero": true,
+          "finish_ready": true,
+          "registry": true,
+          "unique_stat_indices": true,
+          "statistics/p_vSum1": true,
+          "statistics/p_vSum2": true,
+          "statistics/p_vSum3": true,
+          "statistics/p_vSum4": true,
+          "statistics/p_vNpsStored": true,
+          "statistics/p_vCurrentBatch": true,
+          "statistics/p_vNonZeroNum": true,
+          "statistics/p_vTempNum": true,
+          "statistics/p_vTempScores": true,
+          "statistics/p_vLargestScore": true,
+          "statistics/Time": true,
+          "statistics/LargestTime": true,
+          "stat_batch_population": true
+        }
+      }
+    },
+    "verdict": "PENDING_ANALYSIS"
+  },
+  "E3": {
+    "experiment": "E3",
+    "fresh": {
+      "E3_WW1": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E3_WW1",
+      "E3_WW2": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E3_WW2"
+    },
+    "same_process": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E3",
+    "execution": {
+      "command": [
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver",
+        "-i",
+        "inp_E3_WW1",
+        "-d",
+        "/home/silver/NucXS_Library/RMC_DATA"
+      ],
+      "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver -i inp_E3_WW1 -d /home/silver/NucXS_Library/RMC_DATA",
+      "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E3",
+      "environment_overrides": {
+        "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+        "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E3",
+        "F11_RUN_ID": "E3_WW1",
+        "F11_MODE": "diagnostic",
+        "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E3/sequence.txt",
+        "OMP_NUM_THREADS": "1"
+      },
+      "binary_sha256": "8d7c0f2e450100698af98ddcbe75e4ca87fd13a52587285f80894e1acbde7711",
+      "requested_runs": [
+        "E3_WW1",
+        "E3_WW2"
+      ],
+      "parent_start_monotonic_ns": 11885424604030,
+      "parent_end_monotonic_ns": 11889144877607,
+      "exit_code": 0,
+      "total_seconds": 3.720273577
+    },
+    "comparisons": {
+      "E3_WW1": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      },
+      "E3_WW2": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      }
+    },
+    "checks": {
+      "E3_WW1": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true
+      },
+      "E3_WW2": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true,
+        "reset": {
+          "p_vScore": true,
+          "p_vScoreTemp": true,
+          "p_vSum1": true,
+          "p_vSum2": true,
+          "p_vAve": true,
+          "p_vRe": true,
+          "touched_empty": true,
+          "banks_empty": true,
+          "completed_zero": true,
+          "denominator_zero": true,
+          "finish_ready": true,
+          "registry": true,
+          "unique_stat_indices": true,
+          "statistics/p_vSum1": true,
+          "statistics/p_vSum2": true,
+          "statistics/p_vSum3": true,
+          "statistics/p_vSum4": true,
+          "statistics/p_vNpsStored": true,
+          "statistics/p_vCurrentBatch": true,
+          "statistics/p_vNonZeroNum": true,
+          "statistics/p_vTempNum": true,
+          "statistics/p_vTempScores": true,
+          "statistics/p_vLargestScore": true,
+          "statistics/Time": true,
+          "statistics/LargestTime": true,
+          "stat_batch_population": true
+        }
+      }
+    },
+    "verdict": "PENDING_ANALYSIS"
+  },
+  "E4": {
+    "experiment": "E4",
+    "fresh": {
+      "E4_S1": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E4_S1",
+      "E4_S2": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/E4_S2"
+    },
+    "same_process": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E4",
+    "execution": {
+      "command": [
+        "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver",
+        "-i",
+        "inp_E4_S1",
+        "-d",
+        "/home/silver/NucXS_Library/RMC_DATA"
+      ],
+      "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/F11Driver -i inp_E4_S1 -d /home/silver/NucXS_Library/RMC_DATA",
+      "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E4",
+      "environment_overrides": {
+        "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+        "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E4",
+        "F11_RUN_ID": "E4_S1",
+        "F11_MODE": "diagnostic",
+        "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/same_process/E4/sequence.txt",
+        "OMP_NUM_THREADS": "1"
+      },
+      "binary_sha256": "8d7c0f2e450100698af98ddcbe75e4ca87fd13a52587285f80894e1acbde7711",
+      "requested_runs": [
+        "E4_S1",
+        "E4_S2"
+      ],
+      "parent_start_monotonic_ns": 11891053264772,
+      "parent_end_monotonic_ns": 11892869855574,
+      "exit_code": 0,
+      "total_seconds": 1.816590802
+    },
+    "comparisons": {
+      "E4_S1": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      },
+      "E4_S2": {
+        "equal": true,
+        "first_divergence": null,
+        "left_phase": "after_tally_finalize_before_output",
+        "right_phase": "after_tally_finalize_before_output"
+      }
+    },
+    "checks": {
+      "E4_S1": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true
+      },
+      "E4_S2": {
+        "end": {
+          "completed": true,
+          "normalization": true,
+          "source_weight": true,
+          "empty_descendants": true,
+          "no_external_banks": true,
+          "registry": true,
+          "field_shape": true,
+          "finish": true,
+          "active_role": true,
+          "touched_empty": true
+        },
+        "memory_text": {
+          "equal": true,
+          "rows": 62,
+          "first_bad_check": null
+        },
+        "text_exact": true,
+        "history_trace_exact": true,
+        "reset": {
+          "p_vScore": true,
+          "p_vScoreTemp": true,
+          "p_vSum1": true,
+          "p_vSum2": true,
+          "p_vAve": true,
+          "p_vRe": true,
+          "touched_empty": true,
+          "banks_empty": true,
+          "completed_zero": true,
+          "denominator_zero": true,
+          "finish_ready": true,
+          "registry": true,
+          "unique_stat_indices": true,
+          "statistics/p_vSum1": true,
+          "statistics/p_vSum2": true,
+          "statistics/p_vSum3": true,
+          "statistics/p_vSum4": true,
+          "statistics/p_vNpsStored": true,
+          "statistics/p_vCurrentBatch": true,
+          "statistics/p_vNonZeroNum": true,
+          "statistics/p_vTempNum": true,
+          "statistics/p_vTempScores": true,
+          "statistics/p_vLargestScore": true,
+          "statistics/Time": true,
+          "statistics/LargestTime": true,
+          "stat_batch_population": true
+        }
+      }
+    },
+    "verdict": "PENDING_ANALYSIS"
+  }
+}

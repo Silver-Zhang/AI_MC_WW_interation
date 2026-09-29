@@ -1,0 +1,8 @@
+{
+  "git rev-parse HEAD": "f4730fdb036ea8530faab228b2e8c38e81482f6b\n",
+  "git status --short": "",
+  "git -C RMC branch --show-current": "Neural_Network_WW_Iteration\n",
+  "git -C RMC rev-parse HEAD": "5cfb0f771d0c5a2127c90d57e51ce672a4e3b616\n",
+  "git -C RMC status --short": "",
+  "git -C RMC log --oneline -10": "5cfb0f77 fix(ww): map MG group to physical energy in native WW lookup (20260923_01)\nb7d8a946 fix(ww): correct shared multi-particle mesh offsets\n41cf4559 \u4fee\u590d\u5f02\u6784\u7f51\u683c\u6700\u5927\u8fb9\u754c\u7d22\u5f15 (20260919_04)\n5ec595e1 fix(ww): validate native mesh window shape\n341c0238 fix(ww): preserve native WWP per particle type\nb26a81a2 Merge remote-tracking branch 'origin/Neural_Network_WW_Iteration' into Neural_Network_WW_Iteration\n76cbfe72 fix(adjoint): correct negative angular interval (F02 W9)\n6d208751 fix(adjoint): close W5 W6 W7 defects\nc944a6cb Fix SPBS MPI/OpenMP Issue (thu-real/RMC!884)\n4d3e1aac \u65b0\u589e\u4e86\u7528\u6237\u624b\u518c\u4e2d\u5173\u4e8eAIS\u6570\u636e\u5e93\u4f7f\u7528\u7684\u90e8\u5206 (thu-real/RMC!880)\n"
+}

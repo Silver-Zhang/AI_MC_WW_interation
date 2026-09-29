@@ -1,0 +1,6 @@
+{
+  "timestamp_utc": "2026-09-29T07:34:20.216180+00:00",
+  "reason": "Before E0: use blocking OS wait without subprocess timeout polling to avoid Python wait(timeout) latency in short-run T_total. Diagnostic gates retain timeout=180. No simulation code or comparison criteria changed.",
+  "runner_sha256": "88270e08de50c86927697782b5953051e26ba9659e07572b07edac18d8a9601e",
+  "e0_runs_so_far": 0
+}

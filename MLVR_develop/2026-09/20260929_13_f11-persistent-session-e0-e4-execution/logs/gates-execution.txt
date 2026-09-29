@@ -1,0 +1,6 @@
+gate_plain_E1_F1 0 0.1145
+gate_probe_E1_F1 0 0.5147
+gate_cli_E1_F1 0 0.5147
+gate_plain_E2_A 0 0.064
+gate_probe_E2_A 0 0.1141
+gate_cli_E2_A 0 0.1138

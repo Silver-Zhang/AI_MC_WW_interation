@@ -1,0 +1,16 @@
+{"run_id":"E4_S1","kind":"mark","name":"fixed_source.enter","ns":11891060368136}
+{"run_id":"E4_S1","kind":"begin","name":"transport_prepare_inclusive","ns":11891060369783}
+{"run_id":"E4_S1","kind":"begin","name":"model_prepare_inclusive","ns":11891060554064}
+{"run_id":"E4_S1","kind":"begin","name":"xs_load_and_mg_prepare","ns":11891060583788}
+{"run_id":"E4_S1","kind":"end","name":"xs_load_and_mg_prepare","ns":11891079677577}
+{"run_id":"E4_S1","kind":"begin","name":"output.material","ns":11891079688913}
+{"run_id":"E4_S1","kind":"end","name":"output.material","ns":11891079698025}
+{"run_id":"E4_S1","kind":"end","name":"model_prepare_inclusive","ns":11891079698718}
+{"run_id":"E4_S1","kind":"end","name":"transport_prepare_inclusive","ns":11891085653076}
+{"run_id":"E4_S1","kind":"begin","name":"transport_loop","ns":11891091517423}
+{"run_id":"E4_S1","kind":"end","name":"transport_loop","ns":11891163443081}
+{"run_id":"E4_S1","kind":"begin","name":"tally_finalize","ns":11891170984484}
+{"run_id":"E4_S1","kind":"end","name":"tally_finalize","ns":11891171781401}
+{"run_id":"E4_S1","kind":"begin","name":"output.fixed_source_tail","ns":11891179584489}
+{"run_id":"E4_S1","kind":"end","name":"output.fixed_source_tail","ns":11891259576884}
+{"run_id":"E4_S1","kind":"mark","name":"fixed_source.exit","ns":11891259580628}

@@ -1,0 +1,5 @@
+Default-off v2 source text check (blank lines ignored) PASS
+Macros removed: RMC_F11_PROBE, RMC_F11_REUSE_EXPERIMENT, RMC_F11_DRIVER_ACCESS
+Changed source files: src/CalMode.h, src/CalcFixedSource.cpp, src/DoMeshWeightWindow.cpp, src/InitiateMatAce.cpp, src/ReadAceData.cpp, src/ReadInputBlocks.cpp, src/TreatAdjointMaterial.cpp, src/WeightWindows.cpp, src/main.cpp
+All remaining snapshot src files byte-identical to RMC baseline.
+Includes v2 guarded endpoint metadata include/call. Build support differs only in private snapshot.

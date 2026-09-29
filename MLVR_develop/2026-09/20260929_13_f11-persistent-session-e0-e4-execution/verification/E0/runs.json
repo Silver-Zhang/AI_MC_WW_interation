@@ -1,0 +1,218 @@
+[
+  {
+    "role": "F",
+    "kind": "warmup",
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_warmup_E0_F"
+  },
+  {
+    "role": "F",
+    "kind": "plain_warmup",
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_warmup_plain_E0_F"
+  },
+  {
+    "role": "A",
+    "kind": "warmup",
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_warmup_E0_A"
+  },
+  {
+    "role": "A",
+    "kind": "plain_warmup",
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_warmup_plain_E0_A"
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 0,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_0_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 0,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_0_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 0,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_0_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 0,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_0_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 1,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_1_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 1,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_1_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 1,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_1_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 1,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_1_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 2,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_2_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 2,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_2_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 2,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_2_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 2,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_2_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 3,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_3_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 3,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_3_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 3,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_3_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 3,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_3_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 4,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_4_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 4,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_4_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 4,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_4_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 4,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_4_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 5,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_5_plain",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 5,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_5_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 5,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_5_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 5,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_5_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "probe",
+    "repetition": 6,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_6_probe",
+    "valid": true
+  },
+  {
+    "role": "F",
+    "kind": "plain",
+    "repetition": 6,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_6_plain",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "probe",
+    "repetition": 6,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_6_probe",
+    "valid": true
+  },
+  {
+    "role": "A",
+    "kind": "plain",
+    "repetition": 6,
+    "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_6_plain",
+    "valid": true
+  }
+]

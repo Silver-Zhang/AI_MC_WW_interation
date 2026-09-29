@@ -1,0 +1,16 @@
+{"run_id":"E3_WW1","kind":"mark","name":"fixed_source.enter","ns":11885431480341}
+{"run_id":"E3_WW1","kind":"begin","name":"transport_prepare_inclusive","ns":11885431481996}
+{"run_id":"E3_WW1","kind":"begin","name":"model_prepare_inclusive","ns":11885431654336}
+{"run_id":"E3_WW1","kind":"begin","name":"xs_load_and_mg_prepare","ns":11885431679775}
+{"run_id":"E3_WW1","kind":"end","name":"xs_load_and_mg_prepare","ns":11885452156741}
+{"run_id":"E3_WW1","kind":"begin","name":"output.material","ns":11885452169280}
+{"run_id":"E3_WW1","kind":"end","name":"output.material","ns":11885452176529}
+{"run_id":"E3_WW1","kind":"end","name":"model_prepare_inclusive","ns":11885452177183}
+{"run_id":"E3_WW1","kind":"end","name":"transport_prepare_inclusive","ns":11885453909801}
+{"run_id":"E3_WW1","kind":"begin","name":"transport_loop","ns":11885455591830}
+{"run_id":"E3_WW1","kind":"end","name":"transport_loop","ns":11885593740505}
+{"run_id":"E3_WW1","kind":"begin","name":"tally_finalize","ns":11885595520293}
+{"run_id":"E3_WW1","kind":"end","name":"tally_finalize","ns":11885595524530}
+{"run_id":"E3_WW1","kind":"begin","name":"output.fixed_source_tail","ns":11885597235758}
+{"run_id":"E3_WW1","kind":"end","name":"output.fixed_source_tail","ns":11885599762371}
+{"run_id":"E3_WW1","kind":"mark","name":"fixed_source.exit","ns":11885599764841}

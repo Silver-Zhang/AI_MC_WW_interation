@@ -1,0 +1,112 @@
+{
+  "E0_F": {
+    "population": 20000,
+    "seed": 10001,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "1f95c27cba15c13640d65f08b58d5e65df54de012b3991bdd08513db17c81b40",
+    "sequence_row": "E0_F 20000 10001 0 5 1"
+  },
+  "E0_A": {
+    "population": 20000,
+    "seed": 10001,
+    "adjoint": true,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "96b749805f9213a4709c86cff84db01e2f3b5ab37c2eda0cdf4d259d77584e99",
+    "sequence_row": "E0_A 20000 10001 1 5 1"
+  },
+  "E1_F1": {
+    "population": 2000,
+    "seed": 11001,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "f4b988b29cd07b169e130137132bdb55ba79237e2945db8de3f5af36cc81c708",
+    "sequence_row": "E1_F1 2000 11001 0 5 1"
+  },
+  "E1_F2": {
+    "population": 3000,
+    "seed": 11003,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "9a10d2971165f1eb4fa5e854f16c40300d4c54b9f518da898fc89865cc78109a",
+    "sequence_row": "E1_F2 3000 11003 0 5 1"
+  },
+  "E2_F1": {
+    "population": 3000,
+    "seed": 12001,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "b8cedf68d6eeba8b3fbd700aa04ff2d4c2b7d76da9b9e8b599d239863d4dd329",
+    "sequence_row": "E2_F1 3000 12001 0 5 1"
+  },
+  "E2_A": {
+    "population": 3000,
+    "seed": 12003,
+    "adjoint": true,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "c22fc945b7d655fcb8faf593fe9e76ff61d1500a4aeb1a1720b07af99669818e",
+    "sequence_row": "E2_A 3000 12003 1 5 1"
+  },
+  "E2_F2": {
+    "population": 3000,
+    "seed": 12005,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "57edf800cae46e902a5a3854201580d165fd8442766ba5593bdb10af53bb3e57",
+    "sequence_row": "E2_F2 3000 12005 0 5 1"
+  },
+  "E3_WW1": {
+    "population": 3000,
+    "seed": 13001,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 0,
+    "input_sha256": "7fff30313bdcd8c981f98b2ec8315b607a7349605be5fb65328191187d9f186a",
+    "sequence_row": "E3_WW1 3000 13001 0 5 1"
+  },
+  "E3_WW2": {
+    "population": 3000,
+    "seed": 13003,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 2,
+    "scheck": 0,
+    "input_sha256": "41f94dc60ab69d9961e13f5a2704164889ec2b1b5d0fb976d84dcbe126f5818e",
+    "sequence_row": "E3_WW2 3000 13003 0 5 2"
+  },
+  "E4_S1": {
+    "population": 1500,
+    "seed": 14001,
+    "adjoint": false,
+    "source_x": 5,
+    "ww": 1,
+    "scheck": 1,
+    "input_sha256": "cd1b574b482312ca79588e246a3d328b99314fcb9e5866d9820ffd3bd4c3eb64",
+    "sequence_row": "E4_S1 1500 14001 0 5 1"
+  },
+  "E4_S2": {
+    "population": 3500,
+    "seed": 14003,
+    "adjoint": false,
+    "source_x": 15,
+    "ww": 1,
+    "scheck": 1,
+    "input_sha256": "14abb2d4094aba0cbdeed60d7f46462087e038553a7fdaf50044c68ae5b927f8",
+    "sequence_row": "E4_S2 3500 14003 0 15 1"
+  }
+}

@@ -1,0 +1,664 @@
+{
+  "raw": [
+    {
+      "role": "F",
+      "repetition": 0,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_0_probe",
+      "timing_seconds": {
+        "T_process": 0.003080796,
+        "T_input": 0.000217644,
+        "T_geometry_material_postinput": 3.357599999999952e-05,
+        "T_xs": 0.01519881,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 1.7638000000000376e-05,
+        "T_transport": 0.687442411,
+        "T_tally_finalize": 3.569e-06,
+        "T_output_material": 7.137e-06,
+        "T_output_tail": 0.002741428,
+        "T_output_ending": 8.0692e-05,
+        "T_startup_init": 0.019511495,
+        "T_finalize_output": 0.004586355,
+        "T_total": 0.711540261,
+        "T_output_explicit": 0.0028292570000000004,
+        "T_startup_glue": 0.0009558939999999988,
+        "T_shutdown_glue": 0.0017606660000000001
+      },
+      "startup_fraction": 0.027421491192330436,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 0,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_0_probe",
+      "timing_seconds": {
+        "T_process": 0.004754777,
+        "T_input": 0.00023139,
+        "T_geometry_material_postinput": 3.539699999999862e-05,
+        "T_xs": 0.015064877,
+        "T_adjoint_prepare": 4.183e-06,
+        "T_transport_prepare": 2.508399999999987e-05,
+        "T_transport": 0.03470897,
+        "T_tally_finalize": 3.118e-06,
+        "T_output_material": 4.994e-06,
+        "T_output_tail": 0.002677414,
+        "T_output_ending": 7.6499e-05,
+        "T_startup_init": 0.021243405,
+        "T_finalize_output": 0.004241202,
+        "T_total": 0.060193577,
+        "T_output_explicit": 0.002758907,
+        "T_startup_glue": 0.0011227030000000005,
+        "T_shutdown_glue": 0.0014841710000000003
+      },
+      "startup_fraction": 0.3529181360994712,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 1,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_1_probe",
+      "timing_seconds": {
+        "T_process": 0.004984632,
+        "T_input": 0.000239783,
+        "T_geometry_material_postinput": 3.3827999999999724e-05,
+        "T_xs": 0.01526637,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 2.933900000000149e-05,
+        "T_transport": 0.671376687,
+        "T_tally_finalize": 3.163e-06,
+        "T_output_material": 6.265e-06,
+        "T_output_tail": 0.002632043,
+        "T_output_ending": 7.3922e-05,
+        "T_startup_init": 0.021893811,
+        "T_finalize_output": 0.004104099,
+        "T_total": 0.697374597,
+        "T_output_explicit": 0.00271223,
+        "T_startup_glue": 0.001333593999999997,
+        "T_shutdown_glue": 0.0013949709999999996
+      },
+      "startup_fraction": 0.03139462075932198,
+      "closure_seconds": 1.1102230246251565e-16,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 1,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_1_probe",
+      "timing_seconds": {
+        "T_process": 0.002910313,
+        "T_input": 0.000227742,
+        "T_geometry_material_postinput": 2.9583000000000916e-05,
+        "T_xs": 0.014842214,
+        "T_adjoint_prepare": 3.5e-06,
+        "T_transport_prepare": 1.6827999999999982e-05,
+        "T_transport": 0.034939694,
+        "T_tally_finalize": 2.481e-06,
+        "T_output_material": 5.261e-06,
+        "T_output_tail": 0.002558225,
+        "T_output_ending": 6.3577e-05,
+        "T_startup_init": 0.019073405,
+        "T_finalize_output": 0.003877313,
+        "T_total": 0.057890412,
+        "T_output_explicit": 0.002627063,
+        "T_startup_glue": 0.0010379640000000023,
+        "T_shutdown_glue": 0.00125303
+      },
+      "startup_fraction": 0.3294743350591459,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 2,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_2_probe",
+      "timing_seconds": {
+        "T_process": 0.002967533,
+        "T_input": 0.000209382,
+        "T_geometry_material_postinput": 3.267000000000042e-05,
+        "T_xs": 0.015029675,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 2.2348999999999633e-05,
+        "T_transport": 0.674123875,
+        "T_tally_finalize": 3.697e-06,
+        "T_output_material": 6.255e-06,
+        "T_output_tail": 0.002626198,
+        "T_output_ending": 6.0945e-05,
+        "T_startup_init": 0.019245035,
+        "T_finalize_output": 0.004271609,
+        "T_total": 0.697640519,
+        "T_output_explicit": 0.002693398,
+        "T_startup_glue": 0.0009771710000000024,
+        "T_shutdown_glue": 0.0015807689999999997
+      },
+      "startup_fraction": 0.02758589054945646,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 2,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_2_probe",
+      "timing_seconds": {
+        "T_process": 0.005116553,
+        "T_input": 0.000353143,
+        "T_geometry_material_postinput": 4.641699999999886e-05,
+        "T_xs": 0.017776369,
+        "T_adjoint_prepare": 3.752e-06,
+        "T_transport_prepare": 1.937500000000203e-05,
+        "T_transport": 0.034679115,
+        "T_tally_finalize": 3.617e-06,
+        "T_output_material": 5.755e-06,
+        "T_output_tail": 0.002586457,
+        "T_output_ending": 7.0771e-05,
+        "T_startup_init": 0.024927082,
+        "T_finalize_output": 0.004188535,
+        "T_total": 0.063794732,
+        "T_output_explicit": 0.002662983,
+        "T_startup_glue": 0.0016057179999999982,
+        "T_shutdown_glue": 0.0015276900000000004
+      },
+      "startup_fraction": 0.3907388779374447,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 3,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_3_probe",
+      "timing_seconds": {
+        "T_process": 0.00422335,
+        "T_input": 0.000223586,
+        "T_geometry_material_postinput": 3.074300000000113e-05,
+        "T_xs": 0.014937305,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 2.27229999999988e-05,
+        "T_transport": 0.680834283,
+        "T_tally_finalize": 3.499e-06,
+        "T_output_material": 6.368e-06,
+        "T_output_tail": 0.002619588,
+        "T_output_ending": 6.2845e-05,
+        "T_startup_init": 0.020494894,
+        "T_finalize_output": 0.004191461,
+        "T_total": 0.705520638,
+        "T_output_explicit": 0.0026888009999999998,
+        "T_startup_glue": 0.0010508190000000014,
+        "T_shutdown_glue": 0.0015055289999999998
+      },
+      "startup_fraction": 0.02904931889462318,
+      "closure_seconds": 1.1102230246251565e-16,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 3,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_3_probe",
+      "timing_seconds": {
+        "T_process": 0.005099094,
+        "T_input": 0.000232344,
+        "T_geometry_material_postinput": 3.2910999999999164e-05,
+        "T_xs": 0.015149376,
+        "T_adjoint_prepare": 3.437e-06,
+        "T_transport_prepare": 1.9112999999999422e-05,
+        "T_transport": 0.035126283,
+        "T_tally_finalize": 3.374e-06,
+        "T_output_material": 6.03e-06,
+        "T_output_tail": 0.002610357,
+        "T_output_ending": 6.7039e-05,
+        "T_startup_init": 0.021852411,
+        "T_finalize_output": 0.004118888,
+        "T_total": 0.061097582,
+        "T_output_explicit": 0.002683426,
+        "T_startup_glue": 0.0013101060000000003,
+        "T_shutdown_glue": 0.001438118
+      },
+      "startup_fraction": 0.35766408889962287,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 4,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_4_probe",
+      "timing_seconds": {
+        "T_process": 0.004943638,
+        "T_input": 0.000354125,
+        "T_geometry_material_postinput": 4.875299999999931e-05,
+        "T_xs": 0.018347275,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 2.395900000000048e-05,
+        "T_transport": 0.680447874,
+        "T_tally_finalize": 3.529e-06,
+        "T_output_material": 6.366e-06,
+        "T_output_tail": 0.002627389,
+        "T_output_ending": 6.4472e-05,
+        "T_startup_init": 0.025491484,
+        "T_finalize_output": 0.004168584,
+        "T_total": 0.710107942,
+        "T_output_explicit": 0.002698227,
+        "T_startup_glue": 0.0017673679999999983,
+        "T_shutdown_glue": 0.0014731940000000006
+      },
+      "startup_fraction": 0.03589804097698712,
+      "closure_seconds": 1.1102230246251565e-16,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 4,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_4_probe",
+      "timing_seconds": {
+        "T_process": 0.004985287,
+        "T_input": 0.000379486,
+        "T_geometry_material_postinput": 5.417199999999949e-05,
+        "T_xs": 0.016934714,
+        "T_adjoint_prepare": 4.068e-06,
+        "T_transport_prepare": 2.097300000000052e-05,
+        "T_transport": 0.035409289,
+        "T_tally_finalize": 3.357e-06,
+        "T_output_material": 6.634e-06,
+        "T_output_tail": 0.00264707,
+        "T_output_ending": 7.8507e-05,
+        "T_startup_init": 0.024170044,
+        "T_finalize_output": 0.004051169,
+        "T_total": 0.063630502,
+        "T_output_explicit": 0.002732211,
+        "T_startup_glue": 0.0017847100000000012,
+        "T_shutdown_glue": 0.0013222350000000002
+      },
+      "startup_fraction": 0.3798499656658374,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 5,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_5_probe",
+      "timing_seconds": {
+        "T_process": 0.003697129,
+        "T_input": 0.000213774,
+        "T_geometry_material_postinput": 3.68849999999992e-05,
+        "T_xs": 0.014903516,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 1.8297999999999925e-05,
+        "T_transport": 0.680286756,
+        "T_tally_finalize": 3.628e-06,
+        "T_output_material": 7.299e-06,
+        "T_output_tail": 0.002647783,
+        "T_output_ending": 6.8881e-05,
+        "T_startup_init": 0.019892373,
+        "T_finalize_output": 0.004466933,
+        "T_total": 0.704646062,
+        "T_output_explicit": 0.002723963,
+        "T_startup_glue": 0.0010154720000000034,
+        "T_shutdown_glue": 0.0017466410000000002
+      },
+      "startup_fraction": 0.02823030464903102,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 5,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_5_probe",
+      "timing_seconds": {
+        "T_process": 0.004926941,
+        "T_input": 0.000371493,
+        "T_geometry_material_postinput": 5.071499999999868e-05,
+        "T_xs": 0.018678334,
+        "T_adjoint_prepare": 4.203e-06,
+        "T_transport_prepare": 2.5974000000001524e-05,
+        "T_transport": 0.036070094,
+        "T_tally_finalize": 3.864e-06,
+        "T_output_material": 6.207e-06,
+        "T_output_tail": 0.002601066,
+        "T_output_ending": 6.4766e-05,
+        "T_startup_init": 0.025749943,
+        "T_finalize_output": 0.00404947,
+        "T_total": 0.065869507,
+        "T_output_explicit": 0.0026720389999999998,
+        "T_startup_glue": 0.0016860759999999995,
+        "T_shutdown_glue": 0.0013797740000000003
+      },
+      "startup_fraction": 0.3909235725720553,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "F",
+      "repetition": 6,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_F_6_probe",
+      "timing_seconds": {
+        "T_process": 0.003082862,
+        "T_input": 0.000230429,
+        "T_geometry_material_postinput": 3.483500000000055e-05,
+        "T_xs": 0.014925387,
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": 2.2678999999999408e-05,
+        "T_transport": 0.68758113,
+        "T_tally_finalize": 4.588e-06,
+        "T_output_material": 8.829e-06,
+        "T_output_tail": 0.002684457,
+        "T_output_ending": 6.6884e-05,
+        "T_startup_init": 0.019455436,
+        "T_finalize_output": 0.004083134,
+        "T_total": 0.7111197,
+        "T_output_explicit": 0.0027601699999999997,
+        "T_startup_glue": 0.0011504149999999984,
+        "T_shutdown_glue": 0.0013272050000000006
+      },
+      "startup_fraction": 0.027358876431070604,
+      "closure_seconds": 0.0,
+      "issues": []
+    },
+    {
+      "role": "A",
+      "repetition": 6,
+      "folder": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/v2_measured_E0_A_6_probe",
+      "timing_seconds": {
+        "T_process": 0.004768499,
+        "T_input": 0.00037737,
+        "T_geometry_material_postinput": 5.489600000000043e-05,
+        "T_xs": 0.017081782,
+        "T_adjoint_prepare": 4.546e-06,
+        "T_transport_prepare": 2.0328999999999486e-05,
+        "T_transport": 0.034739299,
+        "T_tally_finalize": 3.649e-06,
+        "T_output_material": 5.74e-06,
+        "T_output_tail": 0.002583739,
+        "T_output_ending": 9.1758e-05,
+        "T_startup_init": 0.024021677,
+        "T_finalize_output": 0.004404626,
+        "T_total": 0.063165602,
+        "T_output_explicit": 0.002681237,
+        "T_startup_glue": 0.0017085150000000018,
+        "T_shutdown_glue": 0.0017254800000000002
+      },
+      "startup_fraction": 0.38029681091300294,
+      "closure_seconds": 0.0,
+      "issues": []
+    }
+  ],
+  "roles": {
+    "F": {
+      "stages": {
+        "T_process": {
+          "mean_s": 0.003854277142857143,
+          "sample_std_s": 0.0008760697335924862,
+          "mean_fraction_total": 0.005465872518316492
+        },
+        "T_input": {
+          "mean_s": 0.00024124614285714286,
+          "sample_std_s": 5.0826128095132894e-05,
+          "mean_fraction_total": 0.0003418369307511741
+        },
+        "T_geometry_material_postinput": {
+          "mean_s": 3.5898571428571406e-05,
+          "sample_std_s": 5.9725169696180605e-06,
+          "mean_fraction_total": 5.0869560163061346e-05
+        },
+        "T_xs": {
+          "mean_s": 0.015515476857142857,
+          "sample_std_s": 0.0012566092681996033,
+          "mean_fraction_total": 0.02199192659430106
+        },
+        "T_adjoint_prepare": null,
+        "T_transport_prepare": {
+          "mean_s": 2.2426428571428588e-05,
+          "sample_std_s": 3.878640907033971e-06,
+          "mean_fraction_total": 3.181445917894601e-05
+        },
+        "T_transport": {
+          "mean_s": 0.6802990022857143,
+          "sample_std_s": 0.006084220264488563,
+          "mean_fraction_total": 0.9643879115884699
+        },
+        "T_tally_finalize": {
+          "mean_s": 3.6675714285714287e-06,
+          "sample_std_s": 4.3999009729116143e-07,
+          "mean_fraction_total": 5.197194106284137e-06
+        },
+        "T_output_material": {
+          "mean_s": 6.931285714285714e-06,
+          "sample_std_s": 9.413633224010295e-07,
+          "mean_fraction_total": 9.820685506199837e-06
+        },
+        "T_output_tail": {
+          "mean_s": 0.0026541265714285713,
+          "sample_std_s": 4.426664488776002e-05,
+          "mean_fraction_total": 0.0037624250085201857
+        },
+        "T_output_ending": {
+          "mean_s": 6.837728571428571e-05,
+          "sample_std_s": 6.90381521851712e-06,
+          "mean_fraction_total": 9.69198362751535e-05
+        },
+        "T_startup_init": {
+          "mean_s": 0.02085493257142857,
+          "sample_std_s": 0.002235628606338036,
+          "mean_fraction_total": 0.029562649064688685
+        },
+        "T_finalize_output": {
+          "mean_s": 0.004267453571428571,
+          "sample_std_s": 0.00019048880747510005,
+          "mean_fraction_total": 0.006049439346841312
+        },
+        "T_total": {
+          "mean_s": 0.7054213884285715,
+          "sample_std_s": 0.006024656333158564,
+          "mean_fraction_total": 1.0
+        },
+        "T_output_explicit": {
+          "mean_s": 0.002729435142857143,
+          "sample_std_s": 5.0263892452497174e-05,
+          "mean_fraction_total": 0.003869165530301539
+        },
+        "T_startup_glue": {
+          "mean_s": 0.0011786761428571428,
+          "sample_std_s": 0.0002899929839159482,
+          "mean_fraction_total": 0.001670508316471753
+        },
+        "T_shutdown_glue": {
+          "mean_s": 0.001541282142857143,
+          "sample_std_s": 0.00016583676960033977,
+          "mean_fraction_total": 0.0021848973079396884
+        }
+      },
+      "startup_fraction_mean": 0.029562649064688685,
+      "startup_fraction_sample_std": 0.0031326428022884142,
+      "total_cv": 0.008540507038749364,
+      "plain_total_mean_s": 0.7006345895714285,
+      "observer_relative_mean_overhead": 0.006832090405457958,
+      "checks": {
+        "seven_complete": true,
+        "events_accounting": true,
+        "total_cv_le_10pct": true,
+        "startup_std_le_005": true,
+        "observer_overhead_le_5pct": true,
+        "paired_physics_outputs": true,
+        "actual_source_normalization_metadata": true,
+        "paired_endpoint_metadata_0": true,
+        "paired_endpoint_metadata_1": true,
+        "paired_endpoint_metadata_2": true,
+        "paired_endpoint_metadata_3": true,
+        "paired_endpoint_metadata_4": true,
+        "paired_endpoint_metadata_5": true,
+        "paired_endpoint_metadata_6": true
+      },
+      "pairs": [
+        {
+          "repetition": 0,
+          "tally_exact": true
+        },
+        {
+          "repetition": 1,
+          "tally_exact": true
+        },
+        {
+          "repetition": 2,
+          "tally_exact": true
+        },
+        {
+          "repetition": 3,
+          "tally_exact": true
+        },
+        {
+          "repetition": 4,
+          "tally_exact": true
+        },
+        {
+          "repetition": 5,
+          "tally_exact": true
+        },
+        {
+          "repetition": 6,
+          "tally_exact": true
+        }
+      ],
+      "verdict": "PASS"
+    },
+    "A": {
+      "stages": {
+        "T_process": {
+          "mean_s": 0.004651637714285714,
+          "sample_std_s": 0.0007810231674367315,
+          "mean_fraction_total": 0.0745091114566846
+        },
+        "T_input": {
+          "mean_s": 0.000310424,
+          "sample_std_s": 7.526047564071507e-05,
+          "mean_fraction_total": 0.0049563707211668934
+        },
+        "T_geometry_material_postinput": {
+          "mean_s": 4.344157142857088e-05,
+          "sample_std_s": 1.0612649965287283e-05,
+          "mean_fraction_total": 0.0006936709830800171
+        },
+        "T_xs": {
+          "mean_s": 0.016503952285714288,
+          "sample_std_s": 0.0015018661552327398,
+          "mean_fraction_total": 0.2647710663824599
+        },
+        "T_adjoint_prepare": {
+          "mean_s": 3.955571428571429e-06,
+          "sample_std_s": 4.066312240605146e-07,
+          "mean_fraction_total": 6.353265185416872e-05
+        },
+        "T_transport_prepare": {
+          "mean_s": 2.1096571428571832e-05,
+          "sample_std_s": 3.3018277189635354e-06,
+          "mean_fraction_total": 0.0003385304296045272
+        },
+        "T_transport": {
+          "mean_s": 0.03509610628571429,
+          "sample_std_s": 0.0005038482894237473,
+          "mean_fraction_total": 0.5646787229671759
+        },
+        "T_tally_finalize": {
+          "mean_s": 3.3514285714285713e-06,
+          "sample_std_s": 4.535933777966256e-07,
+          "mean_fraction_total": 5.368070416112746e-05
+        },
+        "T_output_material": {
+          "mean_s": 5.803e-06,
+          "sample_std_s": 5.567500935488621e-07,
+          "mean_fraction_total": 9.315889174721363e-05
+        },
+        "T_output_tail": {
+          "mean_s": 0.0026091897142857144,
+          "sample_std_s": 4.0658627119445365e-05,
+          "mean_fraction_total": 0.041990246227910845
+        },
+        "T_output_ending": {
+          "mean_s": 7.327385714285714e-05,
+          "sample_std_s": 9.924727341822735e-06,
+          "mean_fraction_total": 0.001177916122811585
+        },
+        "T_startup_init": {
+          "mean_s": 0.023005423857142857,
+          "sample_std_s": 0.0023632318007911985,
+          "mean_fraction_total": 0.36883796959236864
+        },
+        "T_finalize_output": {
+          "mean_s": 0.004133029,
+          "sample_std_s": 0.0001672428628233006,
+          "mean_fraction_total": 0.06648330744045547
+        },
+        "T_total": {
+          "mean_s": 0.062234559142857145,
+          "sample_std_s": 0.002670593631267302,
+          "mean_fraction_total": 1.0
+        },
+        "T_output_explicit": {
+          "mean_s": 0.0026882665714285715,
+          "sample_std_s": 4.4050159234888784e-05,
+          "mean_fraction_total": 0.04326132124246964
+        },
+        "T_startup_glue": {
+          "mean_s": 0.0014651131428571433,
+          "sample_std_s": 0.0003037842534203223,
+          "mean_fraction_total": 0.02341252807577133
+        },
+        "T_shutdown_glue": {
+          "mean_s": 0.0014472140000000003,
+          "sample_std_s": 0.00015450579293023293,
+          "mean_fraction_total": 0.023261464385571914
+        }
+      },
+      "startup_fraction_mean": 0.36883796959236864,
+      "startup_fraction_sample_std": 0.02290482183257401,
+      "total_cv": 0.04291174659303125,
+      "plain_total_mean_s": 0.06171611857142857,
+      "observer_relative_mean_overhead": 0.008400407923070174,
+      "checks": {
+        "seven_complete": true,
+        "events_accounting": true,
+        "total_cv_le_10pct": true,
+        "startup_std_le_005": true,
+        "observer_overhead_le_5pct": true,
+        "paired_physics_outputs": true,
+        "actual_source_normalization_metadata": true,
+        "paired_endpoint_metadata_0": true,
+        "paired_endpoint_metadata_1": true,
+        "paired_endpoint_metadata_2": true,
+        "paired_endpoint_metadata_3": true,
+        "paired_endpoint_metadata_4": true,
+        "paired_endpoint_metadata_5": true,
+        "paired_endpoint_metadata_6": true
+      },
+      "pairs": [
+        {
+          "repetition": 0,
+          "tally_exact": true
+        },
+        {
+          "repetition": 1,
+          "tally_exact": true
+        },
+        {
+          "repetition": 2,
+          "tally_exact": true
+        },
+        {
+          "repetition": 3,
+          "tally_exact": true
+        },
+        {
+          "repetition": 4,
+          "tally_exact": true
+        },
+        {
+          "repetition": 5,
+          "tally_exact": true
+        },
+        {
+          "repetition": 6,
+          "tally_exact": true
+        }
+      ],
+      "verdict": "PASS"
+    }
+  },
+  "verdict": "PASS",
+  "cache_policy": "warm filesystem cache; no cold measurements"
+}

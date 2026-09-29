@@ -1,0 +1,70 @@
+[
+  {
+    "case": "E1_F1",
+    "runs_valid": true,
+    "plain": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_plain_E1_F1",
+    "probe": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_probe_E1_F1",
+    "cli": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_cli_E1_F1",
+    "p0_endpoint_exact": {
+      "equal": true,
+      "first_divergence": null,
+      "left_phase": "driver_after_return",
+      "right_phase": "driver_after_return"
+    },
+    "fresh_driver_vs_cli": {
+      "equal": true,
+      "first_divergence": null,
+      "left_phase": "after_tally_finalize_before_output",
+      "right_phase": "after_tally_finalize_before_output"
+    },
+    "text_equal": true,
+    "end_checks": {
+      "completed": true,
+      "normalization": true,
+      "source_weight": true,
+      "empty_descendants": true,
+      "no_external_banks": true,
+      "registry": true,
+      "field_shape": true,
+      "finish": true,
+      "active_role": true,
+      "touched_empty": true
+    },
+    "p0_identity_note": "P0-disabled driver reads RNG identity and moments only after original CalcFixedSource returns. Full per-history trace exists in P0 build; no claim of an uninstrumented per-history trace.",
+    "pass": true
+  },
+  {
+    "case": "E2_A",
+    "runs_valid": true,
+    "plain": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_plain_E2_A",
+    "probe": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_probe_E2_A",
+    "cli": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/fresh/v2_gate_cli_E2_A",
+    "p0_endpoint_exact": {
+      "equal": true,
+      "first_divergence": null,
+      "left_phase": "driver_after_return",
+      "right_phase": "driver_after_return"
+    },
+    "fresh_driver_vs_cli": {
+      "equal": true,
+      "first_divergence": null,
+      "left_phase": "after_tally_finalize_before_output",
+      "right_phase": "after_tally_finalize_before_output"
+    },
+    "text_equal": true,
+    "end_checks": {
+      "completed": true,
+      "normalization": true,
+      "source_weight": true,
+      "empty_descendants": true,
+      "no_external_banks": true,
+      "registry": true,
+      "field_shape": true,
+      "finish": true,
+      "active_role": true,
+      "touched_empty": true
+    },
+    "p0_identity_note": "P0-disabled driver reads RNG identity and moments only after original CalcFixedSource returns. Full per-history trace exists in P0 build; no claim of an uninstrumented per-history trace.",
+    "pass": true
+  }
+]

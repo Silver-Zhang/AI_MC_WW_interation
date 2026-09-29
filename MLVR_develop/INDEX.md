@@ -7,8 +7,9 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-09-29 | [independent-f11-persistent-experiment-review](2026-09/20260929_12_independent-f11-persistent-experiment-review/README.md) | 独立复核 / F11 E0–E4 实验证据 | 已完成（独立复核报告：E0–E4 INCONCLUSIVE；批准待拍板） | F11 | 先立验收标准后读结果；Task 11 全 BLOCKED、零运行、空测量；建议批准前补全可审查实验包；未改 RMC/AIMC |
-| 2026-09-29 | [f11-persistent-session-minimal-experiments](2026-09/20260929_11_f11-persistent-session-minimal-experiments/README.md) | 实验设计 / F11 同进程最小合同 E0–E4 | 待决策（设计完成；实验补丁待批准） | F11 | E0 分解/F→F/F→A→F/WW 更新/tally reset 协议冻结；全部 BLOCKED（未编译未运行）；P0/P1 patch 提案未应用；RMC 未修改 |
+| 2026-09-29 | [f11-persistent-session-e0-e4-execution](2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md) | 动态实验 / F11 E0–E4 | 已完成（E0–E4 全 PASS，限定实验 lifecycle contract） | F11 | task-private P0/P1+driver；fresh exact、F/A state、真实WW2 lookup、tally reset/内存2×30/G+1；共享RMC未改；未选架构；大体积产物（ww.tsv/私有快照/trace）留本地 |
+| 2026-09-29 | [independent-f11-persistent-experiment-review](2026-09/20260929_12_independent-f11-persistent-experiment-review/README.md) | 独立复核 / F11 E0–E4 实验证据 | 已完成（复核当时 E0–E4 INCONCLUSIVE；后续授权执行见 Task 13） | F11 | 先立验收标准后读结果；Task 11 全 BLOCKED、零运行、空测量；建议批准前补全可审查实验包；未改 RMC/AIMC |
+| 2026-09-29 | [f11-persistent-session-minimal-experiments](2026-09/20260929_11_f11-persistent-session-minimal-experiments/README.md) | 实验设计 / F11 同进程最小合同 E0–E4 | 设计已交付（当时全部未运行；后续授权执行见 Task 13） | F11 | E0 分解/F→F/F→A→F/WW 更新/tally reset 协议冻结；全部 BLOCKED（未编译未运行）；P0/P1 patch 提案未应用；RMC 未修改 |
 | 2026-09-29 | [f11-rmc-persistent-execution-audit-claude](2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/README.md) | 独立源码审查 / F11 persistent execution | 已完成（独立报告；F11 方向待拍板） | F11 | 确认单次命令行生命周期；persistent session、F/A 转换、WW hot update、tally snapshot、输出隔离为缺口/未验证；最小实验 E1–E6 未执行；RMC/AIMC 只读 |
 | 2026-09-29 | [f11-rmc-runtime-architecture-audit-codex](2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/README.md) | 独立源码审查 / F11 运行生命周期与复用能力 | 已完成（独立报告；F11 方向待拍板） | F11 | 生命周期/初始化复用/F-A 切换/全局状态/IO 非幂等构造审计；无可直接重复调用的 fixed-source session 边界；G+1 群边界可自有效 MGACE 提取；RMC/AIMC 只读 |
 | 2026-09-27 | [f10-minor-corrections-f07-sync](2026-09/20260927_08_f10-minor-corrections-f07-sync/README.md) | 接口合同修订 / F07 状态同步 | 已完成（F10 design frozen；实现未完成） | F10/F07 | 用户批准的三项 F10 修正写回；F07 WW-on 10-seed field-bin 校准状态按独立复核同步；RMC 未修改 |

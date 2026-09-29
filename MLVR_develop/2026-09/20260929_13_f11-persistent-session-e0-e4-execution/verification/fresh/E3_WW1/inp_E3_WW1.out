@@ -1,0 +1,85 @@
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 15:29:15 Sep 29 2026
+Git commit  : 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+MPI parallel: OFF
+
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp_E3_WW1     2026/09/29 15:34:02 Tuesday 
+
+------------------ Input File Start -------------------- 
+UNIVERSE 0
+CELL 1 1&-2&21&-22&23&-24 MAT=1 IMP:N=1
+CELL 2 -1:2:-21:22:-23:24 MAT=0 VOID=1 IMP:N=0
+
+SURFACE
+SURF 1 PX 0
+SURF 2 PX 20
+SURF 21 PY -50
+SURF 22 PY 50
+SURF 23 PZ -50
+SURF 24 PZ 50
+
+MATERIAL
+MAT 1 -1.0
+ 1001.50M 2
+ 8016.50M 1
+MGACE ERGGRP=30 12
+
+FIXEDSOURCE
+PARTICLE POPULATION=3000
+RNG TYPE=2 SEED=13001 STRIDE=1000000
+
+EXTERNALSOURCE
+SOURCE 1 FRACTION=1 PARTICLE=1 POINT=5 0 0 WEIGHT=1 ENERGY=2
+
+WEIGHTWINDOW
+WWMESH:N 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.5 0.25 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125 0.25 0.125
+WWE:N 1.5199999999999998e-07 4.1399999999999997e-07 1.1299999999999998e-06 3.0599999999999999e-06 8.3200000000000017e-06 2.2599999999999997e-05 6.1400000000000002e-05 0.00016700000000000002 0.00045399999999999998 0.0012349999999999998 0.0033500000000000001 0.0091199999999999996 0.024799999999999999 0.067599999999999993 0.184 0.30300000000000005 0.5 0.82300000000000006 1.3530000000000002 1.738 2.2320000000000002 2.8650000000000002 3.6799999999999997 6.0699999999999994 7.7899999999999991 10 12 13.5 15
+WWP:N 5 3 5
+WEIGHTWINDOWMESH SCOPEX=2 BOUNDX=0 20 SCOPEY=1 BOUNDY=-50 50 SCOPEZ=1 BOUNDZ=-50 50
+
+TALLY
+SCHECK 0
+MESHTALLY 1 TYPE=1 PARTICLE=1 ENERGY=-1 NORMALIZE=1 CHECK=0 SCOPEX=2 BOUNDX=0 20 SCOPEY=1 BOUNDY=-50 50 SCOPEZ=1 BOUNDZ=-50 50
+
+---------------------- Input File End------------------------ 
+
+Reading input file...
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+Cell-mapping method is used to accelerate tally treatment.
+
+Source Number : 3000.
+
+Neutron collisions per source particle: 98.41 
+
+RMC Calculation Finish.
+Total Calculational Time: 0.0029 minutes
+
+Input File = inp_E3_WW1   Output File = inp_E3_WW1.out     2026/09/29 15:34:02 Tuesday
+ Total Calculation Time                   = 1.7514e-01 seconds
+
+Time spent in each part of calculation:
+ Time in Reading input blocks             = 3.5754e-04 seconds
+ Time in Fixed Source Calculation         = 1.7286e-01 seconds
+ Calculation rate in Fixed Source         = 1.7355e+04 particles/second
+ Time in Photon Transport                 = 0.0000e+00 seconds
+ Time in Photon Collision                 = 0.0000e+00 seconds
+ Time in Photon XS lookup                 = 0.0000e+00 seconds
+ Time in Photon tracking                  = 0.0000e+00 seconds
+ Time in Tally Process                    = 2.8967e-02 seconds

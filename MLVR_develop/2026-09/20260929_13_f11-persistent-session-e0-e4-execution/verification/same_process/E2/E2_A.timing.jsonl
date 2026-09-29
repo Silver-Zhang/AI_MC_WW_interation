@@ -1,0 +1,14 @@
+{"run_id":"E2_A","kind":"begin","name":"adjoint_prepare","ns":11880821849305}
+{"run_id":"E2_A","kind":"end","name":"adjoint_prepare","ns":11880821853625}
+{"run_id":"E2_A","kind":"mark","name":"prepared_token.armed","ns":11880823583950}
+{"run_id":"E2_A","kind":"mark","name":"fixed_source.enter","ns":11880823590379}
+{"run_id":"E2_A","kind":"begin","name":"transport_prepare_inclusive","ns":11880823591032}
+{"run_id":"E2_A","kind":"mark","name":"prepared_token.consumed","ns":11880825290890}
+{"run_id":"E2_A","kind":"end","name":"transport_prepare_inclusive","ns":11880826990643}
+{"run_id":"E2_A","kind":"begin","name":"transport_loop","ns":11880828684168}
+{"run_id":"E2_A","kind":"end","name":"transport_loop","ns":11880837483755}
+{"run_id":"E2_A","kind":"begin","name":"tally_finalize","ns":11880839227077}
+{"run_id":"E2_A","kind":"end","name":"tally_finalize","ns":11880839231479}
+{"run_id":"E2_A","kind":"begin","name":"output.fixed_source_tail","ns":11880840930472}
+{"run_id":"E2_A","kind":"end","name":"output.fixed_source_tail","ns":11880843387355}
+{"run_id":"E2_A","kind":"mark","name":"fixed_source.exit","ns":11880843390371}

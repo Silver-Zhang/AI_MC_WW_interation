@@ -1,0 +1,12 @@
+{"run_id":"E4_S2","kind":"mark","name":"prepared_token.armed","ns":11891591217910}
+{"run_id":"E4_S2","kind":"mark","name":"fixed_source.enter","ns":11891591227435}
+{"run_id":"E4_S2","kind":"begin","name":"transport_prepare_inclusive","ns":11891591228403}
+{"run_id":"E4_S2","kind":"mark","name":"prepared_token.consumed","ns":11891597071403}
+{"run_id":"E4_S2","kind":"end","name":"transport_prepare_inclusive","ns":11891602917602}
+{"run_id":"E4_S2","kind":"begin","name":"transport_loop","ns":11891609224941}
+{"run_id":"E4_S2","kind":"end","name":"transport_loop","ns":11891817729030}
+{"run_id":"E4_S2","kind":"begin","name":"tally_finalize","ns":11891825266694}
+{"run_id":"E4_S2","kind":"end","name":"tally_finalize","ns":11891826096990}
+{"run_id":"E4_S2","kind":"begin","name":"output.fixed_source_tail","ns":11891833820473}
+{"run_id":"E4_S2","kind":"end","name":"output.fixed_source_tail","ns":11891923368967}
+{"run_id":"E4_S2","kind":"mark","name":"fixed_source.exit","ns":11891923373019}

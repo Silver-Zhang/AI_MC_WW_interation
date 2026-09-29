@@ -1,0 +1,43 @@
+{
+  "timestamp_utc": "2026-09-29T07:33:14.232229+00:00",
+  "rmc_runs_so_far": 0,
+  "files": {
+    "verification/harness/probes.hpp": "c64df45c93bc930a1da67479396ec6a7601e53c2359065e63e6ba4eea453ccf1",
+    "verification/harness/driver_body.inc": "61ea504809ac58a49d19bfbf3680438e50989ab606b87550f76707e6cdfb04eb",
+    "verification/harness/compare.py": "dd92d880a5073dad4eaf2c1c358724faaffa9e098066df18fcb3e101b1daa09c",
+    "verification/harness/run_experiments.py": "165e854d67a8699d23126a19eaccec348774eeb39fc4fa5e5e8a577dd2a1f97f",
+    "verification/harness/make_fixtures.py": "1b1bf554ebc5939984e86d8d1cb109d675923c310eaf1d19e4334c9a3ed2992d",
+    "verification/harness/probes.cpp": "b497c9d820fd594c5ff4f7dfec2d4dc17f9d7556750d123be53848bea21c2cc7",
+    "verification/harness/driver_main.cpp": "a677e2fd43af60d0ecd8013b7f832f62284e547d8e8ba3e213dba0e779a773ef",
+    "verification/fixtures/E3_WW1.inp": "7fff30313bdcd8c981f98b2ec8315b607a7349605be5fb65328191187d9f186a",
+    "verification/fixtures/E2_F2.inp": "57edf800cae46e902a5a3854201580d165fd8442766ba5593bdb10af53bb3e57",
+    "verification/fixtures/E2_A.inp": "c22fc945b7d655fcb8faf593fe9e76ff61d1500a4aeb1a1720b07af99669818e",
+    "verification/fixtures/manifest.json": "ef3ab014ca4b6f6c08aff13b339b59996e36aca0a8e2dd8c4a671ca012b2fa98",
+    "verification/fixtures/E1_F1.inp": "f4b988b29cd07b169e130137132bdb55ba79237e2945db8de3f5af36cc81c708",
+    "verification/fixtures/E1_F2.inp": "9a10d2971165f1eb4fa5e854f16c40300d4c54b9f518da898fc89865cc78109a",
+    "verification/fixtures/disk_edges_for_input_only.json": "28616def5c5e2cdb1d2a768a05e45f6362d7ed06b0b6012581eb1b5b1edfbb8d",
+    "verification/fixtures/E2_F1.inp": "b8cedf68d6eeba8b3fbd700aa04ff2d4c2b7d76da9b9e8b599d239863d4dd329",
+    "verification/fixtures/E0_A.inp": "96b749805f9213a4709c86cff84db01e2f3b5ab37c2eda0cdf4d259d77584e99",
+    "verification/fixtures/E0_F.inp": "1f95c27cba15c13640d65f08b58d5e65df54de012b3991bdd08513db17c81b40",
+    "verification/fixtures/E4_S2.inp": "14abb2d4094aba0cbdeed60d7f46462087e038553a7fdaf50044c68ae5b927f8",
+    "verification/fixtures/E3_WW2.inp": "41f94dc60ab69d9961e13f5a2704164889ec2b1b5d0fb976d84dcbe126f5818e",
+    "verification/fixtures/E4_S1.inp": "cd1b574b482312ca79588e246a3d328b99314fcb9e5866d9820ffd3bd4c3eb64",
+    "logs/run-reset-contract.md": "c56945d8482e94b52e2a685795e9825a354286d36e34611395351956bddb1967",
+    "changes.diff": "3457dcd7e493db4ee8894063fa369ee7c24267287c1d55c0ede4dbcebe6f584b",
+    "logs/inherited-experiment-plan-frozen.md": "56d1ee620d99e907a5038ccef9f5d7b014b7aa0d2a77e624061316ed0d1d58fb"
+  },
+  "snapshot_modified_files": [
+    "CMakeLists.txt",
+    "cmake/LoadPackage/Base/load_lib.cmake",
+    "delivery/GITSHA",
+    "src/CalMode.h",
+    "src/CalcFixedSource.cpp",
+    "src/DoMeshWeightWindow.cpp",
+    "src/InitiateMatAce.cpp",
+    "src/ReadAceData.cpp",
+    "src/ReadInputBlocks.cpp",
+    "src/TreatAdjointMaterial.cpp",
+    "src/WeightWindows.cpp",
+    "src/main.cpp"
+  ]
+}

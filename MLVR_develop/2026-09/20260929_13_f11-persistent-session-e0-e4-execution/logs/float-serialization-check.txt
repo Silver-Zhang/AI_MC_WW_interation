@@ -1,0 +1,1 @@
+Checked all raw snapshots for JSON -0 tokens: none. Finite binary64 values serialized with 17 significant digits; integer RNG seed/position retained as integers. Statistics-checker nonfinite diagnostic values use explicit nan/inf strings; NaN payload bits are not compared. Ave/RE and Sum1/Sum2 finite-value exact checks use binary64 pack comparison.

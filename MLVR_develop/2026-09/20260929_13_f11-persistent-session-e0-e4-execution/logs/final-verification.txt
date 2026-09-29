@@ -1,0 +1,32 @@
+PASS git rev-parse HEAD unchanged
+PASS git -C RMC branch --show-current unchanged
+PASS git -C RMC rev-parse HEAD unchanged
+PASS git -C RMC status --short unchanged
+PASS shared RMC clean including untracked files
+PASS tracked shared changes limited to STATUS.md and INDEX.md
+PASS new root files limited to Task 13
+PASS shared RMC diff empty; task changes.diff describes private snapshot only
+PASS default-off source identical src/CalMode.h
+PASS default-off source identical src/CalcFixedSource.cpp
+PASS default-off source identical src/DoMeshWeightWindow.cpp
+PASS default-off source identical src/InitiateMatAce.cpp
+PASS default-off source identical src/ReadAceData.cpp
+PASS default-off source identical src/ReadInputBlocks.cpp
+PASS default-off source identical src/TreatAdjointMaterial.cpp
+PASS default-off source identical src/WeightWindows.cpp
+PASS default-off source identical src/main.cpp
+PASS exactly 9 guarded source files differ; all other snapshot src files byte-identical
+PASS snapshot-current-sha256.txt: all 4623 file hashes match actual bytes
+PASS binary-sha256.txt: all 8 file hashes match actual bytes
+PASS all 89 execution records exit=0 and binary hashes map to preserved v1/v2 binaries
+PASS all archived execution records contain 94 calculations
+PASS user task original preserved byte for byte
+PASS final E0-E4 verdicts all PASS
+PASS 56 final normalization records have raw evidence files
+PASS fixture normalization: requested=completed=actual denominator; unit source/probability
+PASS all 169 task JSON files parse (snapshot/build third-party files excluded)
+PASS local Markdown links in task README, report, E0-E4 READMEs resolve
+PASS README has 5 required sections
+PASS report has 14 sections
+No numerical experiment rerun in final archive verification. Boundaries and v1/v2 amendment remain explicit.
+Artifact manifest scope: 1604 files; dedicated manifests cover 4623 snapshot files and 8 v1/v2 binaries. See artifact-manifest-policy.md.

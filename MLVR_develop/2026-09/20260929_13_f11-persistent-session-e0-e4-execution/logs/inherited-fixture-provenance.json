@@ -1,0 +1,57 @@
+{
+  "recorded_at_utc": "2026-09-29T06:20:18.375130+00:00",
+  "files": [
+    {
+      "role": "model_lineage",
+      "path": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/cases/make_f07_case.py",
+      "exists": true,
+      "size_bytes": 1744,
+      "sha256": "42be75854f491d09020b395f7feca9eb9ebfa4b1a903d94c920df361861fd1f2"
+    },
+    {
+      "role": "xsdir",
+      "path": "/home/silver/NucXS_Library/RMC_DATA/xsdir",
+      "exists": true,
+      "size_bytes": 1116007,
+      "sha256": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b"
+    },
+    {
+      "role": "mgace",
+      "path": "/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp",
+      "exists": true,
+      "size_bytes": 5913327,
+      "sha256": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001"
+    },
+    {
+      "role": "audit_codex",
+      "path": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_09_f11-rmc-runtime-architecture-audit-codex/RMC_Runtime_Architecture_Audit_Codex.md",
+      "exists": true,
+      "size_bytes": 53911,
+      "sha256": "62262c75a5ed8c49e42a1bfe5f97507433dd774101fb7fb60b0f2d1e9487db8c"
+    },
+    {
+      "role": "audit_claude",
+      "path": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_10_f11-rmc-persistent-execution-audit-claude/Independent_RMC_Persistent_Execution_Audit_Claude.md",
+      "exists": true,
+      "size_bytes": 34877,
+      "sha256": "b8612a85312a0bbcc94c11d266c96770697642265538816d623de195b60a106d"
+    }
+  ],
+  "xsdir_selected_entries": [
+    {
+      "line": 12368,
+      "text": "1001.50m 0.999172 multigroup/mgxsnp 0 1 1 3249"
+    },
+    {
+      "line": 12390,
+      "text": "8016.50m 15.857588 multigroup/mgxsnp 0 1 11885 3346"
+    }
+  ],
+  "prior_binary": {
+    "path": "/tmp/rmc-f08-cell-ww-build/bin/RMC",
+    "exists": false
+  },
+  "derived_input_generated": false,
+  "fresh_fixture_validated": false,
+  "note": "Only source lineage and database presence/hashes verified. No RMC database loading or transport performed."
+}

@@ -70,6 +70,11 @@ MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/bootstrap_forward.i
 #   2026-09-27 F09 Response/FOM 的原始 RMC 产品（保留 .inp/.Tally/.stdout/.stderr）
 MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/formal_forward.inp.*
 !MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/formal_forward.inp.Tally
+#   2026-09-29 F11 E0–E4 动态实验：大体积产物留本地（哈希清单见 logs/artifact-manifest.sha256）
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/RMC-snapshot/
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.ww.tsv
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.histories.jsonl
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.snapshots.jsonl
 
 # ===== 编译产物 =====
 *.o

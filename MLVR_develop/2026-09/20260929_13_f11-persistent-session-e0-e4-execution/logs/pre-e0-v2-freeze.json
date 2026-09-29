@@ -1,0 +1,17 @@
+{
+  "timestamp_utc": "2026-09-29T07:48:56.525921+00:00",
+  "reason": "same frozen E0 criteria; add actual per-run endpoint normalization metadata",
+  "files": {
+    "verification/harness/analyze_results.py": "7224f846986446d3e47ebe27a66c10c94b6c672f43cac58eb6de9e0f88e75d62",
+    "verification/harness/probes.hpp": "c64df45c93bc930a1da67479396ec6a7601e53c2359065e63e6ba4eea453ccf1",
+    "verification/harness/driver_body.inc": "1abdbac3ea6e50dd37a62302358ec80a577c3277b5b38e071c634abaa98f0ab0",
+    "verification/harness/compare.py": "dd92d880a5073dad4eaf2c1c358724faaffa9e098066df18fcb3e101b1daa09c",
+    "verification/harness/run_experiments.py": "ba6eeafd8fa85d425fadbce8bd8a0e4fd54679b11fa2daaa446ba722c11125ea",
+    "verification/harness/make_fixtures.py": "1b1bf554ebc5939984e86d8d1cb109d675923c310eaf1d19e4334c9a3ed2992d",
+    "verification/harness/probes.cpp": "f8a6103d9b537cc9a76af232c43d7bbc118a5b04577996f36ebe034dea23900f",
+    "verification/harness/driver_main.cpp": "a7d2e90c9c0f6396a59c3501558b6fd8eecc28ac68cde3ad818456ec8eeef239",
+    "verification/harness/endpoint_metadata.hpp": "0e02f75661af3520835cafc66ff4f5ecbf09ee153ec404166d6a540072476770",
+    "verification/RMC-snapshot/src/main.cpp": "f731cec661aa8294b9cc0a99747e0f84704c28c98647660cc8e9d072a9641324",
+    "logs/endpoint-metadata-amendment.md": "fbda52c9c1968095790442ac63b9f1c44743febe9dd6f3a1860783b7022f396b"
+  }
+}

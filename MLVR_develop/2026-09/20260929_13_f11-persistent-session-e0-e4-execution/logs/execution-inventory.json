@@ -1,0 +1,15 @@
+{
+  "archived_processes": 89,
+  "archived_calculations": 94,
+  "archived_requested_histories": 1360000,
+  "final_evidence_processes": 51,
+  "final_evidence_calculations": 56,
+  "final_requested_histories": 705000,
+  "all_exit_codes_zero": true,
+  "final_gate_processes": 6,
+  "formal_fresh_processes": 9,
+  "same_process_sequences": 4,
+  "same_process_calculations": 9,
+  "final_e0_processes": 32,
+  "architecture_selected": null
+}

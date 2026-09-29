@@ -1,0 +1,16 @@
+{
+  "timestamp_utc": "2026-09-29T07:41:45.020788+00:00",
+  "processes": 51,
+  "calculations": 56,
+  "requested_histories_total": 705000,
+  "all_exit_codes_zero": true,
+  "gate_processes": 6,
+  "formal_fresh_processes": 9,
+  "same_process_sequences": 4,
+  "same_process_calculations": 9,
+  "e0_processes": 32,
+  "warmups_per_role_per_build": 1,
+  "measured_per_role_per_build": 7,
+  "all_verdicts": "PASS under experimental lifecycle contract",
+  "architecture_selected": null
+}

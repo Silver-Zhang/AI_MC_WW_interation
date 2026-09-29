@@ -1,0 +1,10 @@
+{
+  "length31": true,
+  "finite": true,
+  "ascending": true,
+  "highest_upper": true,
+  "lower_memory": true,
+  "unit": "MeV",
+  "nuclide1_centre_width": true,
+  "nuclide2_centre_width": true
+}

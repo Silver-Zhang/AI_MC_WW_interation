@@ -1,0 +1,888 @@
+# Task — F11 Persistent Session E0–E4 Dynamic Execution
+
+## Task directory
+
+新建并只在：
+
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/
+
+工作。
+
+本任务继承并允许读取：
+
+- 20260929_09_f11-rmc-runtime-architecture-audit-codex
+- 20260929_10_f11-rmc-persistent-execution-audit-claude
+- 20260929_11_f11-persistent-session-minimal-experiments
+- 20260929_12_independent-f11-persistent-experiment-review
+
+本次用户已经批准：
+
+1. 实现 task-private P0 probes；
+2. 实现 task-private P1 experimental control seam；
+3. 实现 test driver / snapshot / comparator；
+4. 编译实验 binary；
+5. 正常执行 E0–E4；
+6. 运行 fresh-process oracle；
+7. 保存全部原始证据。
+
+不需要再次为上述实验步骤询问批准。
+
+但是：
+
+- 不修改共享 `RMC/` 工作树；
+- 不修改生产算法；
+- 不修复实验发现的 RMC 缺陷；
+- 不实现正式 F11 Session / Controller；
+- 不选择最终架构。
+
+所有实验源码必须基于当前 RMC revision 的**任务私有 snapshot**。
+
+---
+
+# 1. Goal
+
+真正执行：
+
+E0 — 初始化/输运性能时间分解  
+E1 — same-process Forward → Forward  
+E2 — Forward → Adjoint → Forward  
+E3 — WW1 → WW2 hot update  
+E4 — tally reset + in-memory Field / RE / G+1 extraction
+
+目标：
+
+把之前的静态判断转成动态证据。
+
+最终每项只能给：
+
+PASS
+FAIL
+INCONCLUSIVE
+
+不得用“程序正常退出”代替正确性判断。
+
+---
+
+# 2. Frozen physics scope
+
+严格限定：
+
+- standard MGACE
+- neutron
+- fixed-source
+- Cartesian Type=1 track-length mesh tally
+- `Energy=-1`
+- `Normalize=1`
+- native track-mesh WW
+- Linux
+- MPI OFF
+- OpenMP OFF
+
+第一轮不扩展：
+
+- CE
+- photon
+- coupled particle
+- MPI
+- OpenMP
+- burnup
+- arbitrary weighted source
+- HDF5 Field API
+
+使用 Task 11 已冻结的简单 H2O / 30-group fixture。
+
+E2 必须明确：
+
+H2O 非裂变算例只验证 F/A lifecycle mechanism，
+不证明非零 adjoint-fission derived arrays 的完整 rebuild。
+
+---
+
+# 3. Repository provenance
+
+开始前记录：
+
+root repo:
+git rev-parse HEAD
+git status --short
+
+RMC:
+git branch --show-current
+git rev-parse HEAD
+git status --short
+git log --oneline -10
+
+必须确认 RMC 基线仍是：
+
+`5cfb0f771d0c5a2127c90d57e51ce672a4e3b616`
+
+如果 revision 已变化：
+
+停止实验，记录 BLOCKED，不自行切 branch/reset。
+
+不要 push。
+
+---
+
+# 4. Build isolated experimental snapshot
+
+在任务目录下建立：
+
+verification/RMC-snapshot/
+
+从当前 RMC 基线复制实验所需源码。
+
+把 Task 11 提出的 P0/P1 方案真正实现。
+
+共享：
+
+RMC/
+
+必须始终保持 clean。
+
+保存：
+
+- snapshot source hash
+- applied experimental diff
+- compiler version
+- cmake configuration
+- build flags
+- binary SHA256
+
+实验 patch 必须默认关闭时与生产逻辑等价。
+
+---
+
+# 5. Implement P0 — observation layer
+
+完成实际 callback，而不只是声明。
+
+P0 至少提供：
+
+## Phase timing
+
+- process
+- input
+- model/material
+- XS/MGACE
+- adjoint preparation
+- transport preparation
+- history transport
+- tally finalization
+- output
+- total
+
+## Run state snapshot
+
+至少：
+
+- run_id
+- role
+- requested histories
+- completed histories
+- finish state
+- total starting source weight / normalization denominator
+- source identity
+- population
+- RNG seed/stride/position
+- all relevant particle-bank sizes
+- tally registry size
+- tally statistical-index size
+
+## Tally snapshot
+
+至少：
+
+- Score
+- ScoreTemp
+- Sum1
+- Sum2
+- Ave
+- RE
+- touched/index sets
+- mesh/group identity
+
+## Adjoint-state snapshot
+
+至少：
+
+- FixedSource adjoint flag
+- AceData adjoint flag
+- physical max adjoint energy
+- internal MG cutoff/group state
+- adjoint XS hash/content summary
+- adjoint fission XS hash/content summary
+- relevant particle/cache role state
+
+## WW lookup event
+
+至少：
+
+- run_id
+- history id
+- position
+- particle type
+- physical energy
+- spatial mesh index
+- external/physical group identity
+- selected internal energy-bin index
+- lower
+- survival
+- upper
+
+P0 不得：
+
+- 调 RNG
+- 改粒子
+- 改 score
+- 改 source
+- 改 WW
+- 改 XS
+
+---
+
+# 6. Implement P1 — experimental prepared-run seam
+
+P1 仅用于 task-private binary。
+
+目标是：
+
+第一次：
+
+full initialization
+
+之后：
+
+使用显式 prepared-run contract
+重新准备 per-run state
+然后进入**原始 production history loop**
+
+不要复制一份 transport loop。
+
+P1 必须：
+
+- 有显式 armed token；
+- 默认关闭；
+- 只允许 test driver 调用；
+- 未满足 preconditions 时 hard fail；
+- 记录这轮到底 CLEAR / REBUILD 了什么。
+
+不得把 P1 包装成正式 RMC API。
+
+---
+
+# 7. Explicit per-run preparation contract
+
+在运行前，把实际 driver 的字段级操作写入：
+
+logs/run-reset-contract.md
+
+必须逐项列：
+
+## CLEAR
+
+- finish/completion counters
+- completed histories
+- fixed-source counters
+- particle banks
+- descendant banks
+- source-history temporary state
+- tally Score/ScoreTemp/Sum1/Sum2/Ave/RE
+- touched sets
+- statistical checker per-run state
+- timer/run diagnostics
+
+## SET
+
+- population
+- run identity
+- source identity
+- RNG seed
+- RNG stride
+- RNG position
+- WW identity
+
+## REBUILD when required
+
+- Forward/Adjoint mode-derived state
+- adjoint XS derived arrays
+- cutoff internal representation
+- particle XS/cache state
+- WW survival/upper derived values
+
+## KEEP
+
+candidate immutable/base data:
+
+- frozen geometry topology
+- frozen material definition
+- raw MGACE/base data
+- mesh definition
+- energy-group definition
+
+不能只写抽象名称。
+必须写实际 field/function/location。
+
+---
+
+# 8. Fresh-process baseline gate
+
+正式 sequence 前，先证明实验 harness 的 fresh mode 与原 RMC CLI 单轮结果一致。
+
+至少选择：
+
+Forward baseline
+
+比较：
+
+- history count
+- Ave/RE
+- Sum1/Sum2（如果 CLI probe build 可读）
+- response
+- normalization
+- RNG identity
+- selected field rows
+
+如果 task-private fresh driver 自己就不能复现 CLI：
+
+停止。
+
+标记：
+
+HARNESS INVALID
+
+不要继续 E1–E4。
+
+---
+
+# 9. P0 observer non-interference gate
+
+构建：
+
+A. uninstrumented experimental snapshot
+B. P0 enabled
+
+使用完全相同 input / seed。
+
+比较物理输出。
+
+要求：
+
+P0 不改变：
+
+- histories
+- response
+- field Ave
+- RE
+- Sum1/Sum2
+- RNG trajectory / identity
+
+满足后才能进行 E0–E4。
+
+记录 P0 timing overhead。
+
+---
+
+# 10. E0 — performance decomposition
+
+## Runs
+
+Forward：
+- warm-up 1
+- measured 7
+
+Adjoint：
+- warm-up 1
+- measured 7
+
+使用 warm filesystem cache。
+
+固定：
+
+- source
+- population
+- seed policy
+- binary
+- data library
+
+输出每次 raw timing。
+
+计算：
+
+mean
+sample std
+fraction of total
+
+重点：
+
+T_startup_init
+T_transport
+T_finalize_output
+
+不要声称冷启动性能。
+
+---
+
+## E0 verdict
+
+PASS：
+
+阶段计时闭合，observer overhead 可接受，7次数据完整。
+
+INCONCLUSIVE：
+
+timer overlap、缺事件或波动无法解释。
+
+没有“FAIL persistent”这一分类。
+
+---
+
+# 11. E1 — Forward → Forward
+
+按照 Task 11 冻结：
+
+Run 1:
+N=2000
+seed=11001
+
+Run 2:
+N=3000
+seed=11003
+
+Fresh oracle：
+
+Fresh F1
+Fresh F2
+
+Same process：
+
+F1
+→ explicit per-run preparation
+→ F2
+
+---
+
+## E1 required comparisons
+
+Run1 vs Fresh F1
+
+Run2 vs Fresh F2
+
+比较：
+
+- completed histories
+- normalization denominator
+- RNG identity
+- all banks empty/end state
+- Score
+- ScoreTemp
+- Sum1
+- Sum2
+- Ave
+- RE
+- registry/index count
+- field output
+
+优先 exact comparison。
+
+如果浮点 reduction 路径完全相同，要求 exact/bitwise；
+否则必须提前说明允许的 machine tolerance。
+
+---
+
+## E1 PASS
+
+只有：
+
+Run1 = Fresh F1
+且
+Run2 = Fresh F2
+
+并且：
+
+第二轮明确执行 N2 histories，
+没有上一轮统计残留。
+
+---
+
+# 12. E2 — Forward → Adjoint → Forward
+
+Same process：
+
+Forward S=12001
+→
+Adjoint S=12003
+→
+Forward S=12005
+
+分别建立 fresh oracle：
+
+Fresh F1
+Fresh A
+Fresh F2
+
+N=3000 each。
+
+---
+
+## Mandatory state evidence
+
+每轮前后保存：
+
+- FixedSource adjoint
+- AceData adjoint
+- particle role
+- physical max-adjoint energy
+- internal group cutoff
+- adjoint XS arrays
+- adjoint-fission arrays
+- source identity
+- WW identity
+- relevant particle XS/cache hash
+
+特别验证：
+
+### F→A
+
+adjoint derived arrays 从明确零/基态构造。
+
+### A→F
+
+第三轮 Forward 不带：
+
+- stale adjoint flag
+- stale cutoff
+- stale adjoint cache usage
+- stale particle XS/cache
+
+---
+
+## Important
+
+不允许仅凭最终 tally 一致就 PASS。
+
+必须同时满足：
+
+state snapshot
++
+fresh output oracle
+
+---
+
+# 13. E3 — WW hot update
+
+使用固定：
+
+geometry
+mesh
+energy groups
+WW parameters
+
+准备：
+
+WW1
+WW2
+
+WW2 lower 与 WW1 有明显差异。
+
+Same process：
+
+Run WW1
+→ update
+→ Run WW2
+
+fresh：
+
+Fresh WW1
+Fresh WW2
+
+---
+
+## Required direct oracle
+
+必须从真实 transport lookup trace 证明：
+
+Run2 particle
+→ intended spatial bin
+→ intended energy group
+→ WW2 lower/survival/upper
+
+不能用：
+
+- FOM
+- collision count
+- 文件内容变化
+- 容器数组变化
+
+作为唯一证据。
+
+---
+
+## PASS
+
+same-process WW2 lookup event distribution/content
+与
+Fresh WW2
+
+在冻结事件比较口径下匹配。
+
+---
+
+# 14. E4 — tally reset + memory Field extraction
+
+Run1：
+
+source/location A
+N=1500
+seed=14001
+
+Run2：
+
+明显不同 source/location B
+N=3500
+seed=14003
+
+---
+
+## Reset check
+
+Run2 前确认：
+
+- Score = 0
+- ScoreTemp = 0
+- Sum1 = 0
+- Sum2 = 0
+- Ave = 0
+- RE = 0 / initialization state
+- touched sets empty
+- registry 没增长
+- statistical indices 不重复
+
+---
+
+## In-memory extraction
+
+在：
+
+ProcessTally completed
+且 owner 仍有效
+
+的位置直接取得：
+
+value[i,g]
+RE[i,g]
+
+和 `.Tally` 对照。
+
+要求：
+
+- 2 × 30 group
+- Tot 不进入 Field group axis
+- physical ordering 一致
+
+---
+
+# 15. G+1 energy boundary extraction
+
+从 actual in-memory MGACE data 构造：
+
+E[0...G]
+
+必须验证：
+
+- length = G+1
+- MeV
+- finite
+- strictly ascending
+- highest upper edge 正确
+- centre/width relation 一致
+- Tally Group row ↔ physical group mapping 正确
+- internal reverse transport coordinate 不泄漏到 external representation
+
+保存真实 31 个数值。
+
+不要只保存 hash。
+
+---
+
+# 16. Source normalization
+
+每个 run 独立保存：
+
+- requested histories
+- completed histories
+- total starting source weight / denominator
+- source initial weight
+- source component probabilities
+
+当前 unit-weight fixture 可以出现：
+
+N == denominator
+
+但报告必须明确：
+
+这是 fixture 结果，
+不是一般数学等价关系。
+
+---
+
+# 17. Failure handling
+
+如果某个实验出现物理/lifecycle FAIL：
+
+不要现场修 RMC。
+
+保存：
+
+- first divergence
+- state before
+- state after
+- fresh oracle
+- source location
+- likely category:
+
+CLEAR missing
+REBUILD missing
+MODE contamination
+WW derived state
+TALLY residue
+RNG state
+OUTPUT/session issue
+
+然后继续与该 FAIL **逻辑独立**的实验。
+
+例如：
+
+E2 FAIL 不应阻止 E3/E4。
+
+如果 harness 本身失效：
+
+停止所有实验。
+
+---
+
+# 18. E0–E4 final verdict
+
+最终表：
+
+| Experiment | Verdict | Main finding |
+|---|---|---|
+| E0 | PASS / INCONCLUSIVE | ... |
+| E1 | PASS / FAIL / INCONCLUSIVE | ... |
+| E2 | PASS / FAIL / INCONCLUSIVE | ... |
+| E3 | PASS / FAIL / INCONCLUSIVE | ... |
+| E4 | PASS / FAIL / INCONCLUSIVE | ... |
+
+严格区分：
+
+PASS under experimental lifecycle contract
+
+与：
+
+production RMC currently supports persistent mode
+
+前者不能自动推出后者。
+
+---
+
+# 19. Evidence archive
+
+任务目录：
+
+MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/
+
+至少：
+
+README.md
+F11_E0_E4_Dynamic_Experiment_Report.md
+changes.diff
+
+verification/
+    harness/
+    build/
+    fixtures/
+    fresh/
+    same_process/
+    E0/
+    E1/
+    E2/
+    E3/
+    E4/
+
+logs/
+    repository-state-start.txt
+    build-info.txt
+    binary-sha256.txt
+    run-reset-contract.md
+    p0-noninterference.txt
+    experiment-summary.json
+
+保存：
+
+- exact commands
+- input files
+- seeds
+- stdout
+- stderr
+- exit codes
+- raw snapshots
+- timing events
+- comparison output
+- hashes
+
+不要只保存汇总表。
+
+---
+
+# 20. Shared project files
+
+实验完成以后可以更新：
+
+STATUS.md
+MLVR_develop/INDEX.md
+
+只登记：
+
+E0–E4 实际 verdict 和证据。
+
+不要修改：
+
+F11 最终架构结论
+F10 frozen contract
+F02–F09 原结论
+
+除非新实验直接证明此前档案事实错误。
+
+---
+
+# 21. RMC production tree
+
+共享 `RMC/`：
+
+禁止修改。
+禁止 commit。
+禁止 push。
+
+所有实验 patch 和 build：
+
+只存在 task-private snapshot。
+
+---
+
+# 22. Stop rule
+
+完成动态 E0–E4 后停止。
+
+不要：
+
+- 修复发现的 production defect
+- 实现正式 persistent Session
+- 实现外部 Controller
+- 选择最终 F11 架构
+- 扩展 MPI/OpenMP
+- 扩展 fissile E2
+
+最后只回答：
+
+动态证据告诉我们什么，
+以及下一步需要用户决定什么。

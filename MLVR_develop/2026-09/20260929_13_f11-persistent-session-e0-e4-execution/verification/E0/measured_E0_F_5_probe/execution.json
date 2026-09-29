@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/RMC",
+    "-i",
+    "inp_E0_F",
+    "-d",
+    "/home/silver/NucXS_Library/RMC_DATA"
+  ],
+  "shell_command": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/build/probe/bin/RMC -i inp_E0_F -d /home/silver/NucXS_Library/RMC_DATA",
+  "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/measured_E0_F_5_probe",
+  "environment_overrides": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "F11_OUTPUT": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/measured_E0_F_5_probe",
+    "F11_RUN_ID": "E0_F",
+    "F11_MODE": "timing",
+    "F11_SEQUENCE": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/E0/measured_E0_F_5_probe/sequence.txt",
+    "OMP_NUM_THREADS": "1"
+  },
+  "binary_sha256": "1f06c3f78c8e1612a291afcd421e3aff362b0fc645cb0e105d85a1dac5cae271",
+  "requested_runs": [
+    "E0_F"
+  ],
+  "parent_start_monotonic_ns": 11936287835544,
+  "parent_end_monotonic_ns": 11936996213847,
+  "exit_code": 0,
+  "total_seconds": 0.708378303
+}
