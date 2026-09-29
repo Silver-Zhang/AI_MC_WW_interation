@@ -56,4 +56,4 @@
 3. 人拍板：本轮任务已明确授权全部实验步骤；没有重复询问。
 4. 实施+自验：私有P0/P1和driver构建；F/A baseline gates；E1–E4 fresh/sequence；E0初步运行，补齐只读metadata后完成最终gates/E0；保留各版本及全部原始证据。编译问题仅涉及实验接入/构建，不修改物理算法。
 5. 归档：本任务报告及证据完成；仅同步STATUS/INDEX的实际verdict/入口。共享RMC和KB/Physics Guide/F10合同不变，未commit/push。到此停止，后续独立复核/架构设计由用户决定。
-6. 入库（2026-09-29 整理）：档案随根工作区提交入库；`*.ww.tsv`（1.36 GB）、`verification/RMC-snapshot/`（124 MB）与 E1–E4 histories/snapshots trace 留本地，完整性见 `logs/artifact-manifest.sha256`（`sha256sum --check` 校验）。
+6. 入库（2026-09-29 整理）：档案随根工作区提交入库；`*.ww.tsv`（1.36 GB）、`verification/RMC-snapshot/`（124 MB）与 E1–E4 histories/snapshots trace 留本地，完整性见 `logs/artifact-manifest.sha256`（`sha256sum --check` 校验）。Task 14 复核发现的 manifest 唯一 README 哈希不一致（本条目编辑所致）已同步更新 manifest 条目，本地校验恢复全通过。

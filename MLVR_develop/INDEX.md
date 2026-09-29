@@ -7,6 +7,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-09-29 | [independent-f11-e0-e4-dynamic-review](2026-09/20260929_14_independent-f11-e0-e4-dynamic-review/README.md) | 独立复核 / F11 E0–E4 动态证据 | 已完成（ACCEPT WITH LIMITATIONS） | F11 | 先立判据后读结果；独立重跑 analyzer/comparator 复现 PASS；E1/E3/E4 可接受，E0/E2/归一化受限；Task 13 manifest 一处 README 哈希不一致（整理所致，已修复）；未改 RMC/AIMC |
 | 2026-09-29 | [f11-persistent-session-e0-e4-execution](2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md) | 动态实验 / F11 E0–E4 | 已完成（E0–E4 全 PASS，限定实验 lifecycle contract） | F11 | task-private P0/P1+driver；fresh exact、F/A state、真实WW2 lookup、tally reset/内存2×30/G+1；共享RMC未改；未选架构；大体积产物（ww.tsv/私有快照/trace）留本地 |
 | 2026-09-29 | [independent-f11-persistent-experiment-review](2026-09/20260929_12_independent-f11-persistent-experiment-review/README.md) | 独立复核 / F11 E0–E4 实验证据 | 已完成（复核当时 E0–E4 INCONCLUSIVE；后续授权执行见 Task 13） | F11 | 先立验收标准后读结果；Task 11 全 BLOCKED、零运行、空测量；建议批准前补全可审查实验包；未改 RMC/AIMC |
 | 2026-09-29 | [f11-persistent-session-minimal-experiments](2026-09/20260929_11_f11-persistent-session-minimal-experiments/README.md) | 实验设计 / F11 同进程最小合同 E0–E4 | 设计已交付（当时全部未运行；后续授权执行见 Task 13） | F11 | E0 分解/F→F/F→A→F/WW 更新/tally reset 协议冻结；全部 BLOCKED（未编译未运行）；P0/P1 patch 提案未应用；RMC 未修改 |
