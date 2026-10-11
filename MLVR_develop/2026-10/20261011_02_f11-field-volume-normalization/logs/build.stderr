@@ -1,0 +1,116 @@
+/tmp/f11-volume-rmc-source/src/HistoryTree.cpp: In member function ‘CDFixBank& ParticleStack::top()’:
+/tmp/f11-volume-rmc-source/src/HistoryTree.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+   33 | }
+      | ^
+/tmp/f11-volume-rmc-source/src/NearestPBSurf.cpp: In member function ‘bool CDGeometry::CalcDisToParticleSurf(bool, std::vector<std::vector<double> >, double*, double*, double, double&, bool&, int, int, int&)’:
+/tmp/f11-volume-rmc-source/src/NearestPBSurf.cpp:282:1: warning: control reaches end of non-void function [-Wreturn-type]
+  282 | }
+      | ^
+/tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp:38:33: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size between 0 and 219 [-Wformat-overflow=]
+   38 |     sprintf(p_chXSFileName, "%s_%d", chXSName, p_OMXSTable.p_nHomRegion);
+      |                                 ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/f11-volume-rmc-source/src/CommonHead.h:15,
+                 from /tmp/f11-volume-rmc-source/src/Tally.h:10,
+                 from /tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp:38:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 3 and 232 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp:36:34: warning: ‘_’ directive writing 1 byte into a region of size between 0 and 219 [-Wformat-overflow=]
+   36 |     sprintf(p_chXSFileName, "%s%d_%d", chXSName, p_OMXSTable.p_nHomRegion, p_OMXSTable.p_nSubUnivIndex);
+      |                                  ^
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/f11-volume-rmc-source/src/OutputMXSFile.cpp:36:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 4 and 243 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/PoissonBoxSampling.cpp: In member function ‘int CDGeometry::InPoissonBox(CDParticleState&, int, double*, double*, double&, bool&, CDRNG&)’:
+/tmp/f11-volume-rmc-source/src/PoissonBoxSampling.cpp:267:1: warning: control reaches end of non-void function [-Wreturn-type]
+  267 | }
+      | ^
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp:1082:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1082 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA or ACCUMROSSIALPHA must be specified if TOTALTIME is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp:1087:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1087 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA must be specified if TIMEBINS is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/f11-volume-rmc-source/src/ReadCellTallyCard.cpp:1093:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1093 |     [&]() {sprintf(Output.p_sPrintStr, "ACCUMROSSIALPHA must be specified if TIMEINTERVAL is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergy::to_string()’:
+/tmp/f11-volume-rmc-source/src/TallyType.cpp:156:25: warning: control reaches end of non-void function [-Wreturn-type]
+  156 |     Output.OutputMessage([&]() {
+      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+  157 |       sprintf(Output.p_sPrintStr,
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  158 |               "Unsupported Fission energy type %d\n", type);
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  159 |     }, CDOutput::_ERROR);
+      |     ~~~~~~~~~~~~~~~~~~~~ 
+/tmp/f11-volume-rmc-source/src/TallyType.cpp: In member function ‘virtual std::string TallyEnergyDeposition::to_string()’:
+/tmp/f11-volume-rmc-source/src/TallyType.cpp:998:1: warning: control reaches end of non-void function [-Wreturn-type]
+  998 | }
+      | ^
+/tmp/f11-volume-rmc-source/src/TallyType.cpp: In member function ‘virtual std::string TallyRecoverableEnergy::to_string()’:
+/tmp/f11-volume-rmc-source/src/TallyType.cpp:1108:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1108 |     RMC::IO::OLogger.fatal("unsupported recoverable energy type!");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergyRelease::to_string()’:
+/tmp/f11-volume-rmc-source/src/TallyType.cpp:1518:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1518 |     RMC::IO::OLogger.fatal("The component of fission energy release must be specified and in range of [1, 10]");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:97:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+   97 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/f11-volume-rmc-source/src/CommonHead.h:15,
+                 from /tmp/f11-volume-rmc-source/src/Burnup.h:11,
+                 from /tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:97:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/f11-volume-rmc-source/src/Output.h:213:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:96:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:101:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+  101 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:101:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/f11-volume-rmc-source/src/Output.h:200:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/f11-volume-rmc-source/src/UpdateBurnedMatNucDen.cpp:100:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/f11-volume-rmc-source/src/Utility/Function/Function.cpp: In static member function ‘static std::shared_ptr<Utility::Function::BaseFunction> Utility::Function::BaseFunction::instantiate(const std::string&, const std::string&, RMC::File::HDF5*)’:
+/tmp/f11-volume-rmc-source/src/Utility/Function/Function.cpp:24:22: warning: control reaches end of non-void function [-Wreturn-type]
+   24 |         OLogger.fatal("Unsupported function type {}", type);
+      |         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

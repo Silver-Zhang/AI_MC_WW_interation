@@ -1,0 +1,6 @@
+Independent reference: N= 200 hit= 93 zero= 107 V=8 cm^3
+uniform_n0 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
+uniform_n1 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
+heter_n0 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
+heter_n1 Ave= 0.11625 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
+Checks: 248 / 248 max Ave error= 0.0 max RE error= 1.8507209653684242e-11

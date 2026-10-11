@@ -1,0 +1,33 @@
+-- The CXX compiler identification is GNU 13.3.0
+-- The C compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- RMC Version: 3.5.0
+-- System name: Linux
+-- System version: 7.0.0-38-generic
+-- MPI parallel: turned OFF
+-- OpenMP threads parallel: turned OFF
+-- RMC CXX Standard: C++14
+-- Warning level: 1
+-- CMake Build Type: Release
+-- CXX compiler: /usr/bin/c++
+-- CXX compiler flags:  -Wno-unused-result
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- GIT SHA: 5cfb0f771d0c5a2127c90d57e51ce672a4e3b616
+-- GIT Description with tag: v3.5.0-alpha.0-311-g5cfb0f77
+Synchronizing submodule url for 'dependencies/Eigen3'
+Synchronizing submodule url for 'dependencies/HighFive'
+Synchronizing submodule url for 'dependencies/fmt'
+Synchronizing submodule url for 'dependencies/spdlog'
+Synchronizing submodule url for 'dependencies/xtensor'
+Synchronizing submodule url for 'dependencies/xtl'
+-- Synchronizing git submodules succeeded.
+-- Configuring incomplete, errors occurred!

@@ -1,0 +1,80 @@
+-- RMC Version: 3.5.0
+-- System name: Linux
+-- System version: 7.0.0-38-generic
+-- MPI parallel: turned OFF
+-- OpenMP threads parallel: turned OFF
+-- RMC CXX Standard: C++14
+-- Warning level: 1
+-- CMake Build Type: RelWithDebInfo
+-- CXX compiler: /usr/bin/c++
+-- CXX compiler flags:  -Wno-unused-result
+-- GIT SHA (manually set): [blank git SHA]
+-- Found HDF5: /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so;/usr/lib/x86_64-linux-gnu/libcrypto.so;/usr/lib/x86_64-linux-gnu/libcurl.so;/usr/lib/x86_64-linux-gnu/libpthread.a;/usr/lib/x86_64-linux-gnu/libsz.so;/usr/lib/x86_64-linux-gnu/libz.so;/usr/lib/x86_64-linux-gnu/libdl.a;/usr/lib/x86_64-linux-gnu/libm.so (found version "1.10.10")  
+-- Found HDF5: /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so;/usr/lib/x86_64-linux-gnu/libcrypto.so;/usr/lib/x86_64-linux-gnu/libcurl.so;/usr/lib/x86_64-linux-gnu/libpthread.a;/usr/lib/x86_64-linux-gnu/libsz.so;/usr/lib/x86_64-linux-gnu/libz.so;/usr/lib/x86_64-linux-gnu/libdl.a;/usr/lib/x86_64-linux-gnu/libm.so (found version "1.10.10") found components: C HL 
+-- TPL HighFive loaded successfully
+-- $<BUILD_INTERFACE:/tmp/f11-volume-rmc-source/dependencies/HighFive/include>;$<BUILD_INTERFACE:/tmp/f11-volume-rmc-build-snapshot/dependencies/HighFive/include>;$<BUILD_INTERFACE:/tmp/f11-volume-rmc-build-snapshot/dependencies/HighFive>;/usr/include/hdf5/serial included.
+-- /usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5.so;/usr/lib/x86_64-linux-gnu/libcrypto.so;/usr/lib/x86_64-linux-gnu/libcurl.so;/usr/lib/x86_64-linux-gnu/libpthread.a;/usr/lib/x86_64-linux-gnu/libsz.so;/usr/lib/x86_64-linux-gnu/libz.so;/usr/lib/x86_64-linux-gnu/libdl.a;/usr/lib/x86_64-linux-gnu/libm.so;/usr/lib/x86_64-linux-gnu/hdf5/serial/libhdf5_hl.so libraries included.
+--  library path included.
+-- Performing Test COMPILER_SUPPORT_std=cpp03
+-- Performing Test COMPILER_SUPPORT_std=cpp03 - Success
+-- Standard libraries to link to explicitly: none
+-- Found unsuitable Qt version "" from NOTFOUND
+-- Found unsuitable Qt version "" from NOTFOUND
+-- Qt4 not found, so disabling the mandelbrot and opengl demos
+-- Could NOT find CHOLMOD (missing: CHOLMOD_INCLUDES CHOLMOD_LIBRARIES) 
+-- Could NOT find UMFPACK (missing: UMFPACK_INCLUDES UMFPACK_LIBRARIES) 
+-- Could NOT find SUPERLU (missing: SUPERLU_INCLUDES SUPERLU_LIBRARIES SUPERLU_VERSION_OK) 
+-- A version of Pastix has been found but pastix_nompi.h does not exist in the include directory. Because Eigen tests require a version without MPI, we disable the Pastix backend.
+-- 
+-- Configured Eigen 3.3.7
+-- 
+-- Some things you can do now:
+-- --------------+--------------------------------------------------------------
+-- Command       |   Description
+-- --------------+--------------------------------------------------------------
+-- make install  | Install Eigen. Headers will be installed to:
+--               |     <CMAKE_INSTALL_PREFIX>/<INCLUDE_INSTALL_DIR>
+--               |   Using the following values:
+--               |     CMAKE_INSTALL_PREFIX: /usr/local
+--               |     INCLUDE_INSTALL_DIR:  include/eigen3
+--               |   Change the install location of Eigen headers using:
+--               |     cmake . -DCMAKE_INSTALL_PREFIX=yourprefix
+--               |   Or:
+--               |     cmake . -DINCLUDE_INSTALL_DIR=yourdir
+-- make doc      | Generate the API documentation, requires Doxygen & LaTeX
+-- make check    | Build and run the unit-tests. Read this page:
+--               |   http://eigen.tuxfamily.org/index.php?title=Tests
+-- make blas     | Build BLAS library (not the same thing as Eigen)
+-- make uninstall| Removes files installed by make install
+-- --------------+--------------------------------------------------------------
+-- 
+-- TPL Eigen3 loaded successfully
+--  included.
+-- eigen libraries included.
+--  library path included.
+-- Module support is disabled.
+-- Version: 9.1.0
+-- Build type: RelWithDebInfo
+-- CXX_STANDARD: 14
+-- Required features: cxx_variadic_templates
+-- TPL fmt loaded successfully
+-- /tmp/f11-volume-rmc-source/dependencies/fmt/include;/tmp/f11-volume-rmc-build-snapshot/dependencies/fmt/include included.
+-- fmt::fmt libraries included.
+--  library path included.
+-- Build spdlog: 1.11.0
+-- Build type: RelWithDebInfo
+-- TPL spdlog loaded successfully
+-- /tmp/f11-volume-rmc-source/dependencies/spdlog/include;/tmp/f11-volume-rmc-build-snapshot/dependencies/spdlog/include included.
+-- spdlog::spdlog libraries included.
+--  library path included.
+-- xtl v0.6.7
+-- Building xtensor v0.20.10
+-- Found xtl: /xtl
+-- TPL xtensor loaded successfully
+--  included.
+-- xtensor libraries included.
+--  library path included.
+-- CatchErr feature is switched on.
+-- Configuring done (0.8s)
+-- Generating done (0.2s)
+-- Build files have been written to: /tmp/f11-volume-rmc-build-snapshot

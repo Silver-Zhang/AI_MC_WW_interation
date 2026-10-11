@@ -1,0 +1,866 @@
+diff --git "a/MLVR_Knowledge/02_RMC\345\212\237\350\203\275\345\256\241\346\237\245\347\237\251\351\230\265.md" "b/MLVR_Knowledge/02_RMC\345\212\237\350\203\275\345\256\241\346\237\245\347\237\251\351\230\265.md"
+index 201acb2..06a3d4e 100644
+--- "a/MLVR_Knowledge/02_RMC\345\212\237\350\203\275\345\256\241\346\237\245\347\237\251\351\230\265.md"
++++ "b/MLVR_Knowledge/02_RMC\345\212\237\350\203\275\345\256\241\346\237\245\347\237\251\351\230\265.md"
+@@ -31,11 +31,11 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
+ | F07 | Field统计与RE输出 | C — Verify（限定 serial text-first Cartesian 子域） | Source-history RE 公式与 WW bank-drain 归属已确认；独立复核完成一个 field bin 的 10-seed native WW-on 经验校准（PTRAC 确认启用，`Q=0.88769`）；`Ave=0, RE=0` 不是零不确定度，非单位/不等源权重、并行及全部 field bins 未覆盖 | `20260927_01_f07-field-statistical-uncertainty`；独立复核 `20260927_02` |
+ | F08 | WW输入与应用链路 | E — Defect + D — Integration issue（历史源码审计时点；修复进展见对应任务） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合；F11 新动态导入与 topology 构建仍需实现 | `20260918_02_f08-weight-window-audit`；F11 新边界见 04 §10 |
+ | F09 | Response统计与FOM | A — Ready（既有单标量信息读取子域）；F11 聚合统计未实现 | 旧 formal Forward 同一 `Tot` 行可读 R/RE_R 与 fixed-source time；F11 多 bin 目标须新增 history 级聚合，计时采用 prepare+transport+finalize，不将旧单 Tot 或旧计时直接视为新功能已验证 | `20260927_05_f09-response-fom-closure`；04 §6、§12 |
+-| F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 保留 [Nspace,G]、角色/阶段、RE/status 和完整 G+1；F11 通道改为 RMC 内存→专用 HDF5；候选体积转换仍待动态确认，不能一律照抄 Ave；重构与 WW 映射仍分开 | `20260927_06`、`20260927_07`、`20260927_08`；`20261011_01_f11-design-freeze`，04 §7、§10 |
+-| F11 | 固定次数双向迭代调度基础 | **design frozen；production implementation not completed** | 正式合并方案已入知识库04；现有类扩展、CalMode 调度、唯一固定源核心、内部 TARGET 构源与文件交换；Task13/14 只支持限定实验生命周期，阶段0–6待逐项授权 | `20261011_01_f11-design-freeze`；设计 [04](04_F11_v1_架构与实施设计.md) |
++| F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 保留 [Nspace,G]、角色/阶段、RE/status 和完整 G+1；F11 通道改为 RMC 内存→专用 HDF5；体积转换的阶段0最小验证见下方补充，待独立复核；不能一律照抄 Ave；重构与 WW 映射仍分开 | `20260927_06`、`20260927_07`、`20260927_08`；`20261011_01_f11-design-freeze`，04 §7、§10 |
++| F11 | 固定次数双向迭代调度基础 | **design frozen；production implementation not completed** | 正式合并方案已入知识库04；现有类扩展、CalMode 调度、唯一固定源核心、内部 TARGET 构源与文件交换；Task13/14 只支持限定实验生命周期；阶段0最小自验完成待独立复核，阶段1–6待逐项授权 | `20261011_01_f11-design-freeze`；设计 [04](04_F11_v1_架构与实施设计.md) |
+ | F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复数据；Bootstrap 生命周期与 formal iteration 分离；完整 Field转换/重构/WW_A1 闭环尚未实现 | `20260927_04_f12-bootstrap-forward-chain`；04 §4 |
+ 
+-**F11 的单位与适用范围补充（未新增动态证据）**：Task15 的 uniform/heter track-length 体积处理差异为静态发现。04 §7 明确候选转换和阶段0验证，不将 `Normalize=1` 或 E4 内存—文本一致性当作所有路径均已正确体积归一的证明。既有原始数据与历史分类保留；新 Field/响应接口未通过相应门禁前不得宣称可用。非零裂变产生项的连续 F/A 开放门禁见 04 §14，不因此推翻既有 F02 的单次输运验证。
++**F11 单位转换阶段0（E3，待独立复核）**：2026-10-11 的未修改RMC、standard MGACE加载、单位源权重真空直线束四配置最小验证支持04 §7候选表：Normalize=1时uniform Ave是源归一化加权轨迹长度，Field/目标history共用c_i=1/V_i；heter Ave已除体积，共用c_i=1。两条路径Normalize=0均为长度，只作诊断。200历史含107零得分、V=8cm³，独立原始段裁剪参考及248/248行检查支持上述关系；未动态验证Adjoint/碰撞/WW/非等体积bin或全3D轴，未提升接口为Ready。完整结论、证据、转换表、W11/W12边界只在[任务§4](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界)维护。04冻结规则未改；新的Field/响应接口未实现。裂变连续F/A门禁仍见04 §14，既有F02单次能力分类不重判。
+ 
+ ## F02当前结论
+ 
+@@ -117,3 +117,5 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
+ - 2026-09-27：F10 第一版 Field Reconstruction 数据边界设计冻结；接口合同与证据边界见 `20260927_06_f10-field-reconstruction-boundary` §4 和设计文档。状态仅为 **design frozen**，未实现 Adapter/parser、Reconstruction 或 WW Builder；RMC 未修改。
+ - 2026-09-27：F10 独立审查 `20260927_07` 的 **ACCEPT WITH MINOR CORRECTIONS** 三项意见已由用户批准，并在 `20260927_08` 写回设计；从本次修订后正式 **design frozen**，实现仍未开始。
+ - 2026-10-11：F11 v1 网页合并方案正式入库，D020 记录设计冻结及仅文档授权。更新 F03/F09/F10/F11/F12 的新设计关联，并明确 Field 体积转换和裂变连续运行门禁尚未验证。旧实验分类和原始证据不重判；阶段 0–6 未在本轮启动。档案：`20261011_01_f11-design-freeze`。
++
++- 2026-10-11：阶段0 Field体积归一化最小动态验证及原始段oracle已归档（E3，待独立复核）；同期W11/W12见06。未修改04冻结规则及RMC，未进入阶段1。档案：`20261011_02_f11-field-volume-normalization`。
+diff --git "a/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md" "b/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
+index 43818b4..d43691d 100644
+--- "a/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
++++ "b/MLVR_Knowledge/06_\345\267\262\347\237\245\351\227\256\351\242\230\344\270\216\346\224\271\350\277\233\345\273\272\350\256\256.md"
+@@ -28,6 +28,9 @@
+ | F03-boundary | **伴随源 response-to-source 不是 RMC 内建对象**：首版受限响应通过 MLVR/人工外部映射为显式 `SOURCE`；RMC 负责源采样、MG 群定位和伴随输运。该边界已在 cell 体积积分、空间×MG 群、非负标量响应上完成动态验证；反应率、角、表面、时间和符号响应需另立任务。 | 🟡 有界已验证 | `已验证 → MLVR_develop/2026-08/20260825_09_f03-adjoint-source-definition-audit`；当前为 C — Verify（冻结子域），不是 RMC 缺陷修复 | F03 formal：20/20 exit 0；source mapping 与复合响应门槛通过 |
+ | M1   | **深穿透 quick 模式零响应污染 best-WW**：探测器响应可能为零（RE=100%、flux=0），原实现可能把零响应 WW 存入 best 池                                                                                                                                                                                                                   | 🟢 已修复 | `已修复 →` 原型 notes/2026-06-05（FOM gate）                                     | `AIMC_WWiteration` notes                                                                                                            |
+ 
++| W11 | **uniform Cartesian TL的Normalize=1体积语义问题**：限定验证、转换策略和修复边界见[阶段0档案§4](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界)。 | 🟠 | 未修复；普通scorer若另立修复须同步撤销对应adapter补偿，不能双除体积 | `20261011_02_f11-field-volume-normalization`（E3，待独立复核） |
++| W12 | **阶段0真空束算例PTRAC文件为空**：原始输入/输出及只读轨迹获取替代方案见阶段0档案§2/§4。 | 🟡 | 限定例观察；根因未定位、未修复；不泛化为PTRAC通用缺陷，不阻塞本例oracle | `20261011_02_f11-field-volume-normalization` |
++
+ 
+ > W9 的 neutron、photon 与 photon→neutron 次级负单变量分支均已修复并验证。任务 01 已以 `6d208751... + W9 diff 5eec...` 的 MPI-off fresh build 重跑 40+10 条 formal；banner、raw evidence、strict checker、CTest 和 checksum 均闭合，冻结 F02 为有界 A — Ready。
+ 
+@@ -72,3 +75,5 @@
+ - 2026-09-20 · point/track mesh 事件时序审查确认：native `WWMESH` 走 track mesh，`WWINP` 走 point mesh；track 为“段起点 WW→tally→移动”，point 在最终余段不触发。用户决定第一版 MLVR 仅支持 native track mesh，不修复或承诺 `WWINP` point mesh。
+ - 2026-09-20 · W10 的 MPI shared mesh 多粒子 offset 已修复并闭环（红测→绿测）：统一 prefix-sum 重建位移、worker 元数据顺序、`p_vMeshNum` 广播数据类型；新增两粒子异能群 `WWINP` 回归（shared 与非共享参考逐位一致）；MPI 2/10 rank、MPI+OpenMP、serial 全矩阵通过；native track mesh 无回归。档案：`MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset`。同轮新发现 `MCNPWeightWindow` 块内 `WWINP` 与 `WWP` 的书写顺序约束（已记入 W10 行）。
+ - 2026-09-23 · MG native `WWE:N` 能量坐标契约不一致已修复并独立复核：用户输入统一为物理 MeV 上界，MG 查窗先映射当前群中心物理能量（CE identity、forward/adjoint 同链，`WWINP` 路径不变）；V1–V5 验证（V5 z=0.29571、FOM 9.27935×）；独立复核 “Repair is correct with explicit limitations”，遗留群内边界语义与 deterministic bin-selection 测试建议。档案：`MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract`、`MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review`。
++
++- 2026-10-11：登记W11/W12及阶段0档案指针；未修复生产scorer或PTRAC，未更新reference。
+diff --git a/MLVR_Knowledge/AGENT_CONTEXT.md b/MLVR_Knowledge/AGENT_CONTEXT.md
+index 030c7e0..1eb021d 100644
+--- a/MLVR_Knowledge/AGENT_CONTEXT.md
++++ b/MLVR_Knowledge/AGENT_CONTEXT.md
+@@ -7,7 +7,7 @@
+ 
+ 1. 根目录 [STATUS.md](../STATUS.md)：现在做到哪一步、下一步是否已授权。
+ 2. [F11 v1 正式设计](04_F11_v1_架构与实施设计.md)：按当前阶段读取，不必每次通读。
+-3. [设计入库档案](../MLVR_develop/2026-10/20261011_01_f11-design-freeze/README.md) §1/§3/§4；后续再读实际实施任务对应章节。
++3. [阶段0最新档案](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md) §1/§3/§4；设计入库记录仍见20261011_01。
+ 
+ ## 当前主线
+ 
+@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
+ 
+ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
+ 
+-本次用户只授权先写设计文档，随后自己在本地 fetch，再逐步开发或测试。**不得因文档写了阶段 0–6 而自动执行测试、改源码或 push RMC。** 决策见 [D020](DECISIONS.md#d020)。
++2026-10-11用户随后明确授权阶段0：新输入/脚本、独立编译未修改RMC、小规模验证；已执行并归档，待独立复核。**阶段1–6未授权开工，本轮停止。** 原设计决策仍见[D020](DECISIONS.md#d020)，本轮执行授权见阶段0档案§3。
+ 
+ ## 权威顺序
+ 
+@@ -29,12 +29,12 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
+ - 首版 standard MGACE、中子固定源、Linux 串行、Cartesian Type=1、Energy=-1、Normalize=1、native track-mesh WW；固定模型、网格、群和 WWP。
+ - Bootstrap 无 WW、不是正式 iteration；一轮=A+F；不新增 batch 参数，不跨 iteration 合并统计；不自动收敛、best-anchor 或成品计算。
+ - Field=[Nspace,G] 的 value+RE+status；原始场与重构场分开，重构场不复制 MC RE。
+-- Field 体积归一候选转换尚未动态确认；不能把 Normalize=1 一律解释为 Ave 已是通量密度。
++- Field体积转换的阶段0证据/结论/边界见最新档案§4与02顶部速览；不能把Normalize=1一律解释为Ave已是通量密度，未验证项不得提升Ready。
+ - 起始权重、伴随尺度、多 bin 响应 history 统计、随机数段和 FOM 计时以 04 为准。非零裂变产生项须对应连续 F/A 门禁通过后才开放。
+ 
+ ## 下一步
+ 
+-本地 fetch 后先阅读设计；用户单独确认后，按 04 §14 从阶段 0 的体积归一最小验证开始，再进行固定源核心拆分和正式重复运行。**当前未运行阶段 0，也未开始生产实现。**
++阶段0最小验证已完成（E3，待独立复核），先复核最新档案。用户另行授权后才立项阶段1；生产实现未开始，不因前置自验通过自动拆分代码。
+ 
+ ## 工作纪律
+ 
+diff --git a/MLVR_Physics_Guide/README.md b/MLVR_Physics_Guide/README.md
+index 4edb2ac..6116f4f 100644
+--- a/MLVR_Physics_Guide/README.md
++++ b/MLVR_Physics_Guide/README.md
+@@ -11,7 +11,7 @@
+ | 专题 | 内容 | 当前状态 |
+ |---|---|---|
+ | [01 RMC 多群伴随输运](01_RMC多群伴随输运/README.md) | standard MGACE fixed-source neutron adjoint 的物理对象、流程、验证和缺陷修复 | **A — Ready（有界）** |
+-| 正向输运 | 后续专题：正向固定源与场统计 | 待建立 |
++| [Field统计与体积归一化](03_Field统计与体积归一化.md) | 从真实路径到通量密度、零历史与目标积分 | 阶段0最小证据，待独立复核；具体边界见任务§4 |
+ | [RMC 权重窗](02_RMC权重窗/README.md) | 权重窗的无偏关系、RMC 实际链路、源码审计问题和 Stage 3 修复路线 | **E — Defect + D — Integration issue（源码审计）** |
+ | ML 代理模型 | 后续专题：重构模型与物理约束 | 待建立 |
+ | 无偏性验证 | 后续专题：估计器、权重与统计检验 | 待建立 |
+@@ -67,3 +67,5 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready
+ - 2026-09-18：F03 冻结外部 response→source 映射 + RMC 执行的责任边界；20-run formal 通过源支持域、MG 群、一阶矩、无偏/有偏纠偏和复合响应级对照，定为冻结子域 C — Verify。
+ - 2026-09-18：新增 RMC 权重窗专题。F08 源码审计发现 WWP 参数生命周期、mesh/能群边界、split 状态复制、MPI shared mesh 和 adjoint+WW 组合边界问题；专题以 E — Defect + D — Integration issue 作为当前状态，不把静态候选写成动态已复现缺陷。
+ - 2026-09-19：将 WW 物理算法讨论沉淀到专题：区分 point mesh 与 track mesh 的触发时序，展开 `DoWeightWindows()` 的 roulette/splitting 逻辑，并记录先理解 cell、再处理 mesh 的审查顺序。
++
++- 2026-10-11：新增Field统计与体积归一化导读及阶段0档案指针，结果待独立复核；不修改F11冻结规则或生产实现。
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index 50582c0..53750a7 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -8,6 +8,7 @@
+ 
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
++| 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |
+ | 2026-10-11 | [f11-design-freeze](2026-10/20261011_01_f11-design-freeze/README.md) | 文档 / F11 v1 合并设计入库 | 已完成（design frozen；生产实现和后续测试未启动） | F11/F03/F09/F10/F12 | 正式设计入知识库04；D020；状态与交接同步；只改文档，阶段0–6待逐项授权 |
+ | 2026-09-29 | [independent-f11-source-architecture-claude](2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) | 独立源码审查与架构设计 / F11 v1 | 已完成独立报告与设计；README于2026-10-11补齐 | F11 | 原结论YES WITH CORRECTIONS保留；独立正文未改；后续合并取舍见知识库04 |
+ | 2026-09-29 | [f11-source-architecture-independent-design](2026-09/20260929_15_f11-source-architecture-independent-design/README.md) | 源码分析与独立架构设计 / F11 v1 | 已完成（设计待拍板，未实现） | F11 | 源码阅读报告 + 独立设计（A–H 链、P1–P9/T1–T12、七项建议）；新发现 uniform track-length 原始长度 vs heter 体积归一差异（未动态验证）；RMC 未修改 |
+diff --git a/STATUS.md b/STATUS.md
+index 589bad4..ef0c026 100644
+--- a/STATUS.md
++++ b/STATUS.md
+@@ -1,49 +1,44 @@
+ # 项目状态（人只看这一页）
+ 
+-> **最后更新：2026-10-11**。当前科研主线：F11 v1 设计已冻结入库，生产实现与后续测试尚未启动。
+-> [正式设计](MLVR_Knowledge/04_F11_v1_架构与实施设计.md) ｜ [本次归档](MLVR_develop/2026-10/20261011_01_f11-design-freeze/README.md) ｜ [任务台账（83项）](MLVR_develop/INDEX.md) ｜ [Agent交接](MLVR_Knowledge/AGENT_CONTEXT.md)
++> **最后更新：2026-10-11**。当前科研主线：F11 v1设计冻结；阶段0最小验证已归档，**待独立复核**；生产实现未开始。
++> [正式设计](MLVR_Knowledge/04_F11_v1_架构与实施设计.md) ｜ [阶段0档案](MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md) ｜ [任务台账（84项）](MLVR_develop/INDEX.md) ｜ [Agent交接](MLVR_Knowledge/AGENT_CONTEXT.md)
+ 
+ ## 1. 现在在哪一步
+ 
+ | 内容 | 当前状态 |
+ |---|---|
+-| F11 前置源码审查、Task 13/14 实验与独立复核 | 已归档；实验结论仍限于原受限条件，不等于生产接口已实现 |
+-| Task 15/16 独立架构方案 | 原报告保留；合并取舍已进入正式设计；Task 16 README 本轮补齐归档说明 |
+-| **F11 v1 总体设计** | **design frozen；production implementation not completed**，以知识库 04 为唯一实施基线 |
+-| 本轮工作 | 只将已讨论的设计写入 GitHub；同步文档、决策和入口，没有修改 RMC/AIMC 或执行测试 |
+-| 后续开发/测试 | 按设计阶段 0–6 逐项授权，不因设计冻结自动开工 |
+-
+-**已定边界**：RMC 内部控制 Bootstrap 和固定 K 轮 A→F；现有类扩展、不建平行 `src/MLVR/`；唯一固定源核心；TARGET 内部生成简单伴随源；通过 Field/WW HDF5 文件调用外部重构与权窗映射。详细要求只在正式设计正文维护。
++| F11 v1总体设计 | design frozen；production implementation not completed；知识库04为唯一基线 |
++| 阶段0 Field体积归一化 | 最小数值判据满足（E3），待独立复核；结论/证据/边界见[档案§4](MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界) |
++| 本轮授权与执行 | 用户明确授权新输入/分析脚本、编译未修改RMC、小规模验证；已完成四配置与独立原始段参考 |
++| 源码与基准 | 未修改RMC/AIMC、核数据库、既有测试/reference；未切分支/reset/commit/push |
++| 阶段1–6 | 未开始；本任务到此停止 |
+ 
+ ## 2. 下一步与授权
+ 
+-用户先在本地 fetch 并阅读正式设计。随后按下面顺序逐项立项、确认、实施和验收。
++先独立复核阶段0档案及原始材料。结果解释的人类确认尚未填写，不把自验当独立复核。
+ 
+-| 阶段 | 工作 | 本轮状态 |
++| 阶段 | 工作 | 当前状态 |
+ |---|---|---|
+-| 0 | Field 体积归一的最小动态验证 | 待单独授权；候选转换未验证 |
+-| 1 | 抽出唯一固定源执行核心 | 未开始 |
+-| 2 | 正式 reset 与 F→F / F→A→F / A→A | 未开始 |
+-| 3 | MLVR 输入、TARGET 伴随源与 history 级响应统计 | 未开始 |
+-| 4 | Field / WW 文件接口 | 未开始 |
+-| 5 | 外部程序调用及失败处理 | 未开始 |
+-| 6 | Bootstrap、K=1、K=3 完整闭环与归档 | 未开始 |
++| 0 | Field体积归一的最小验证 | 自验与归档完成，待独立复核 |
++| 1 | 抽出唯一固定源执行核心 | 未开始，需另行授权/立项 |
++| 2 | 正式reset与F→F/F→A→F/A→A | 未开始 |
++| 3 | MLVR输入、TARGET伴随源/history响应 | 未开始 |
++| 4 | Field/WW文件接口 | 未开始 |
++| 5 | 外部调用及失败处理 | 未开始 |
++| 6 | Bootstrap/K=1/K=3闭环 | 未开始 |
+ 
+-非零裂变产生项的开放条件另见设计 §14。当前没有授权修改/提交团队 RMC 仓库、运行以上测试或更新参考输出。
++普通计分体积语义及本例PTRAC观察的单独问题指针见[06的W11/W12](MLVR_Knowledge/06_已知问题与改进建议.md)。阶段0不构成修改/提交团队RMC或更新参考结果的授权。
+ 
+ ## 3. 文档优先级与证据边界
+ 
+-[04_F11_v1_架构与实施设计.md](MLVR_Knowledge/04_F11_v1_架构与实施设计.md) 是现行设计。旧 F03 外部构源、F10 text-only 通道等保留为历史设计/验证范围，不再用于覆盖本版内部构源和 HDF5 通道；其旧验证结论不因设计变更被提升为新接口验证。详见 [D020](MLVR_Knowledge/DECISIONS.md#d020)。
+-
+-Field 的物理定义已定；uniform/heter 路径的体积转换仍待动态确认。不得仅凭 `Normalize=1` 或内存/文本一致就宣称体积归一已正确。FOM 时间口径、多 bin 响应 RE、源权重与伴随尺度按正式设计执行。
++知识库04是唯一实施基线，冻结规则本轮未改。Task15/16保留为历史独立提案。设计入库见[20261011_01](MLVR_develop/2026-10/20261011_01_f11-design-freeze/README.md)，不能拿旧text/source出口验证替代新接口验收。
+ 
+-已有功能分类与原始证据继续见 [02 审查矩阵](MLVR_Knowledge/02_RMC功能审查矩阵.md) 和历史任务 §4，不重新全面验证成熟输运。完整的 2026-09-29 看板原样保存于 [本次归档快照](MLVR_develop/2026-10/20261011_01_f11-design-freeze/logs/STATUS_before_20261011.md)，历史条目不等于本地工作树已重新核查。
++实际阶段0转换结论只看[档案§4](MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界)及[02顶部速览](MLVR_Knowledge/02_RMC功能审查矩阵.md)；未覆盖的动态Adjoint、非等体积网格、碰撞/WW、多维轴、并行等不可写Ready。非零裂变连续切换门禁仍按04 §14。
+ 
+-## 4. 其他待办（不在本轮自动处理）
++## 4. 其他待办
+ 
+-- RMC 本地提交的 push、F04 并行/耦合/多 mesh 扩展、历史台账遗留项：仍需用户决定；本轮没有操作本地 RMC。
+-- AIMC/论文线不属于本次 F11 科研主线；已有计划或可运行脚本不构成运行授权。
++RMC push、F04扩展、历史台账及AIMC/论文线不在本轮范围。
+ 
+ ## 5. 维护方式
+ 
+-新任务先读本页、AGENT_CONTEXT 与对应设计章节；结论证据写进任务 §4，归档同步本页和 INDEX。每阶段单独确认，设计冻结、实现完成、测试通过必须分开标注。不要以文档整理另设科研阻塞任务，也不要用历史报告替代当前阶段的必要验证。
++新任务读取本页/AGENT_CONTEXT/相关设计节；结论写档案§4与02速览，归档同步STATUS/INDEX。每阶段单独授权，设计冻结、自验和独立复核分开标注。
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md
+new file mode 100644
+index 0000000..b6eb4c9
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md
+@@ -0,0 +1,148 @@
++# F11 阶段0：Field 体积归一化最小验证
++
++| 项目 | 内容 |
++|---|---|
++| 立项日期 | 2026-10-11 |
++| 状态 | 已完成（最小数值验证；待独立复核） |
++| 任务模式 | C — 深度物理研究与学习 |
++| 类型 | 算法实验 / 物理接口验证 |
++| 关联知识库条目 | F11，知识库04 §0/§7/§14；W11 |
++| 证据等级 | E3；同一Agent执行和自验，未达独立复核E4 |
++| 治理标签 | 可复现；边界已定义；原始证据已归档；结果待独立复核 |
++| 源码修改/提交 | 无；不commit/push、不切分支、不reset；知识库04冻结正文未改 |
++
++## 1. 目标与范围
++
++以知识库04为唯一设计基线，回答uniform与heter Cartesian TL的Ave是否已除网格体积。只做阶段0，不重新设计F11、不按Task15/16开发、不进入固定源核心拆分。四配置standard MGACE中子固定源、MPI/OMP关闭、无WW、单位起始源权重；Normalize=0只诊断。
++
++**物理解释**：bin内的群积分体积平均标量通量为所有源历史的加权真实路径长度总和除以N和V，单位为每单位起始源权重cm⁻²。N包括零得分历史；只平均命中历史会造成选择偏差。固定正比例体积转换不改变该bin的RE；TARGET体积积分先得到同一密度，再乘响应系数与体积。不能把多个bin的RE当作独立误差相加。
++
++## 2. 做法与证据
++
++### 实验与事前判据
++
++运行前记录：`logs/pre-run-plan.md`；正式配置：`logs/config.json`；四输入：`inputs/`。预先允许候选表被反证：若uniform N1匹配phi_ref则否定其1/V补偿；若heter N1匹配L_ref则否定其c=1；均不匹配则不放行。
++
++网格x=[0,2,4]、y=z=[0,2]，两个bin均V=8cm³。uniform用Scope/Bound，heter用ScopeX=1 1及BoundX=0 2 4，物理网格完全相同，并穿越heter coarse边界。六平面域x,y,z∈[-1,5]，y>4的水材料使用1001.50m/8016.50m（30中子群/12光子群standard MGACE）。两个源等概率选取x=-0.5,z=1，分别y=1或3，方向(+x)，0.6MeV，权重1；源和路径均不进入水。**核数据实际加载，轨迹在真空中，没有碰撞、散射或群变换**；不是对材料输运的数值验证。
++
++正式N=200，RNG TYPE=1/SEED=17。四例源序列完全一致。RMC内部能群13对应Energy=-1文本升序第18行（群边界0.5–0.823MeV）；内部输运群与文本行号不能混用。本例未验证通用能群/轴映射。
++
++容差在运行前冻结：Ave差≤5e-12+6e-6×|expected|；RE绝对差≤6e-5；零值必须为0。显式PRINT MESHTALLY 8，不在运行后放宽。3次输入校验失败（SURFACE不支持RPP、N必须>100、PRINT不接受等号）均未产生输运结果；保留pilot/pilot2/pilot3原始输入与输出。把盒改为等价六平面、N改200、PRINT语法修正均在正式输运前登记，判据不变。
++
++### 当前真实计分链（仅相关路径）
++
++源码原文和行号：`logs/source-evidence.txt`。
++
++| 位置 | 证据 |
++|---|---|
++| `RMC/src/ReadMeshTallyCard.cpp:258–267,270–295` | Normalize解析为p_bUseVol；Scope/Bound设heter=false，ScopeX/Y/Z设heter=true |
++| `RMC/src/MeshFun.cpp:270–385` | uniform生成真实段长度，不读p_bUseVol；同bin/跨bin均不除体积 |
++| `RMC/src/MeshFun.cpp:455,479–485,540–546,611–617` | heter dMeshVol初始1，p_bUseVol为true时计算各bin体积并返回长度/V |
++| `RMC/src/ScoreMeshTally.cpp:40–49,59–67,79–119` | 实际分派两条函数；Type=1得分=粒子权重×MeshTrack长度；群行及Tot同源累加 |
++| `RMC/src/SumUpTally.cpp:130–132`、`TallyData.cpp:43–53` | 每源历史聚合Sum1/Sum2；未计分历史对和贡献0，不从分母剔除 |
++| `RMC/src/InitialBatchSource.cpp:294–299` | 普通源的总起始权重字段在结束时取实际源历史数；本例单位权重时=N |
++| `RMC/src/ProcessTally.cpp:364–365,389–393`、`TallyData.cpp:83–104` | 固定源M=p_dTotStartWgt，Div=1；Ave=Sum1/(M×Div)，RE用history二阶矩，无附加体积处理 |
++| `RMC/src/OutputTally.cpp:247–260`、`SingleTally.cpp:981–1001` | 普通非MCNP文本直接打印Ave/RE，无再次体积转换；本例不使用AbsoluteValue/剂量/乘子 |
++
++GDB动态确认四例：uniform仅CalcMeshTrck 200次，heter仅CalcHeterMeshTrck 200次；usevol分别0/1，heterflag分别0/1；DENOM=200,N=200；AVERAGING M=200,Div=1。每个正式输出Source Number=200。所有调用计数及分母见`logs/trace/<case>/stdout.txt`和`checks.json`。
++
++Forward/Adjoint共链证据：`InitiateAll.cpp:130`设AceData伴随标志，`SampleNeutronSource.cpp:222`设粒子伴随角色；`CalcFixedSource.cpp`两角色使用同一TrackHistory和结束统计；`TrackHistory.cpp:164–230`→`RayTracking.cpp:257`→`TrackWithWeightWindow.cpp:33–35`→`TallyByTL.cpp:55–60`→同一ScoreMeshTally，mesh生成/平均/文本路径无Forward/Adjoint体积归一分支。**只确认体积计分链共用，不证明伴随源尺度或互易性**；按任务约定无差异故未补动态Adjoint。
++
++### 独立参考与原始获取
++
++最初四例`logs/formal/`退出0但PTRAC文件为空，不能作oracle。本任务没有为恢复PTRAC修改源码。改用只读GDB在TrackHistory入口获取每个源状态、在**进入网格切段之前的TallyByTL入口**获取真实物理段长（不是CDMesh返回值），保存原始stdout/stderr、退出码及完整200历史/200段；`tools/trace.gdb`不修改生产源码、二进制或目标进程变量。GDB pilot对C++ double&用printf产生无效段长，原样保留且未用于分析，正式改读按值double dTrackLen；获取调整不改变物理判据或容差。
++
++`tools/analyze.py`使用独立slab线段-盒裁剪算法，从真实段起点、方向、长度和权重求各bin内路径。每历史段长5.5cm，命中每bin2cm；93历史命中、107历史避开，全部计入N=200。四例源/段记录逐字一致，SHA256=53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5；普通运行与GDB重跑Tally逐字节一致。参考从轨迹构造，**不使用Ave倒推命中数或除体积生成参考**。
++
++独立参考：ΣwL=186cm/bin，Σ(wL)²=372cm²/bin，L_ref=186/200=0.93cm；phi_ref=186/(200×8)=0.11625cm⁻²；RE_ref=sqrt((200×372/186²−1)/199)=0.07603680788149279。零得分群参考和输出均0。
++
++### 环境、身份与复现
++
++根仓库main/504c68be4541245c9459ce72f57e552fdca50572；RMC Neural_Network_WW_Iteration/5cfb0f771d0c5a2127c90d57e51ce672a4e3b616；开工两工作树干净，完整状态与子模块记录`logs/identity-before.json`。结束身份/不可变核验见`logs/final-verification.json`，RMC生产工作树保持干净。已有状态未reset/切分支/提交。
++
++使用`/tmp/f11-volume-rmc-build-snapshot/bin/RMC`，SHA256=d69c87ef2e061418b34a72337582129bdbcc3e79b38a385fb197e88e141dd9a4。源码原样副本位于/tmp；3221文件SHA256与原RMC一致，包含src/include及使用的依赖（`logs/source-snapshot-sha256.json`）。独立构建不运行生产git submodule update。原始delivery/GITSHA为[blank git SHA]，保持不改；因此banner不是HEAD证明，身份由初始Git记录、逐文件hash、完整flags与构建日志、二进制hash共同约束。可执行文件/构建产物不存档，当前留在/tmp供复核。
++
++数据库`/home/silver/NucXS_Library/RMC_DATA`；实际xsdir与mgxsnp的SHA256、大小、两个核素的记录位置见`logs/formal/identity.json`。未复制/修改数据库。mgxsnp SHA256=1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001；xsdir SHA256=970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b。
++
++GCC13.3.0、CMake3.28.3、Python3.12.3、HDF5 1.10.10；更多依赖/链接/GDB/编译标志和CMakeCache见logs对应文件。MPI/OMP宏未定义，banner均OFF；-O2 -g -DNDEBUG，gnu++14。无AIMC训练，src/config.py dataclass、随机训练种子、CUDA/PyTorch/numpy不适用。
++
++复现命令（工作区根目录）：
++
++```bash
++TASK=MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization
++bash "$TASK/tools/build.sh"
++python3 "$TASK/tools/run.py" --label formal
++python3 "$TASK/tools/trace.py"
++python3 "$TASK/tools/analyze.py"
++```
++
++上面按全新任务证据目录重现；现有logs/formal、logs/trace已存在时脚本主动拒绝覆盖。独立复核可在干净副本按相同目录结构复现，或新label运行（分析默认使用formal/trace）。仅检查已归档原始记录：`python3 "$TASK/tools/analyze.py"`，不启动输运。每例精确cwd/命令保存在command.txt；configure/build/每例运行/分析均含stdout/stderr/退出码，失败材料也保留。构建先尝试loadmodules OFF缺HighFive，再尝试副本漏delivery，最终复制原delivery/GITSHA成功配置，所有失败日志保留。
++
++真实分析输出（`logs/analyze.stdout`，退出0）：
++
++```text
++Independent reference: N= 200 hit= 93 zero= 107 V=8 cm^3
++uniform_n0 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
++uniform_n1 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
++heter_n0 Ave= 0.93 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
++heter_n1 Ave= 0.11625 RE= 0.0760368079 phi_ref= 0.11625 converted_error= 0.0
++Checks: 248 / 248 max Ave error= 0.0 max RE error= 1.8507209653684242e-11
++```
++
++## 3. 决策
++
++**用户已直接授权**：记录实验方案和判据后直接执行，允许新测试输入/分析脚本、独立构建未修改RMC、小规模验证。不得修改生产源码、数据库、既有测试/reference，不实现F11，不commit/push。此授权覆盖五步流程的实施关口，不再提交待批准实验提案。
++
++**人类理解确认**：用户已直接指定phi_ref=Σ(w×真实路径长度)/(N×V)、N包含零得分、候选表可被推翻，这是用户给定的问题定式与验伪要求。最终结果解释和可进入阶段1的判断尚待人/独立复核确认；不声称用户已接受本Agent的新结论。
++
++| 变更卡 | 内容 |
++|---|---|
++| 问题与风险 | Normalize语义差异造成通量/响应差V倍 |
++| 改动对象 | 任务内新输入、参考脚本、文档和入口；源码不改 |
++| 预期因果链 | 网格类型/Normalize→长度或长度/V→单位权重score→全历史平均→Ave |
++| 验证 | 四配置、8cm³、含零历史、独立盒裁剪、动态调用/分母、248数值行 |
++| 回滚 | 只涉及本任务产物和文档；既有代码/参考不变 |
++
++## 4. 结论与边界
++
++**结果解释与结论（E3，待独立复核）**：KB04候选表两行都获最小动态证据支持，没有候选行被本例否定。uniform Normalize=1没有在当前计分链中除体积；heter Normalize=1已除体积。“Normalize=1一律意味着Ave就是通量密度”的泛化被本例反证。不能靠统一照抄Ave或统一再除V实现正确Field。
++
++每个bin（1、2相同）的第18群实测如下；完整全部群与Tot、分母、体积、原始二阶矩、误差及判据见`logs/comparison.csv/json`：
++
++| 路径 | Normalize | 实际N / 平均分母M×Div | V cm³ | Ave | RE | 独立phi_ref cm⁻² | 转换后偏差 |
++|---|---:|---:|---:|---:|---:|---:|---:|
++| uniform | 0 | 200 / 200×1 | 8 | 0.93 | 0.0760368079 | 0.11625 | 0 |
++| uniform | 1 | 200 / 200×1 | 8 | 0.93 | 0.0760368079 | 0.11625 | 0 |
++| heter | 0 | 200 / 200×1 | 8 | 0.93 | 0.0760368079 | 0.11625 | 0 |
++| heter | 1 | 200 / 200×1 | 8 | 0.11625 | 0.0760368079 | 0.11625 | 0 |
++
++**Field与TARGET共同转换表（当前源码）**：value_i,g=c_i Ave_i,g；history密度score_i,g=c_i raw_history_score_i,g。RE_i,g保持原RE。正向目标history分数X_h=Σ_i,g r_i,g V_i c_i raw_history_score_h,i,g，均值R=Σ_i,g r_i,g V_i value_i,g；RE_R必须由同一history的X_h统计，不能拼各bin的RE。
++
++| 路径 | Normalize | Ave物理含义 | c_i | 适用 |
++|---|---:|---|---|---|
++| uniform Cartesian TL | 1 | 源归一化加权轨迹长度 | 1/V_i | F11 v1候选规则获本例支持 |
++| heter Cartesian TL | 1 | 源归一化体积平均群积分通量密度 | 1 | F11 v1候选规则获本例支持 |
++| uniform Cartesian TL | 0 | 源归一化加权轨迹长度 | 1/V_i | 仅诊断，未扩展首版范围 |
++| heter Cartesian TL | 0 | 源归一化加权轨迹长度 | 1/V_i | 仅诊断，未扩展首版范围 |
++
++作为转换关系的算术检查，若TARGET包括两个bin且r=1，则独立history响应=93×4/200=1.86；ΣV×value也为1.86；未补偿uniform N1直接当密度会给14.88，差8倍。**这是关系检查，不是已实现/测试F11 TARGET功能。**
++
++**是否进入阶段1**：本阶段0的最小数值判据已满足；从本项前置条件看，可以在独立复核确认、用户另行授权后立项阶段1。当前状态为“最小验证已完成、待独立复核”，不是新接口Ready。生产实现未开始，本任务完成后停止。
++
++**需单独处理的问题**：W11——普通uniform Cartesian TL的Normalize=1未除体积（未修复）；若后续修复通用scorer，须同步撤去F11 uniform补偿并验证reference影响，避免重复除V。当前按04 adapter方式可处理，不需为本验证改生产代码，也不把通用scorer修复混入阶段1拆分。另有本真空例PTRAC输出为空（观察已登记W12，根因未定位、未修复），本次以只读原始段记录完成oracle，不承诺PTRAC通用可用。
++
++**仍未确定 / 未覆盖到的验证**：动态Adjoint、碰撞/散射/非单位或不等源权重、裂变、WW、非等体积异构bins、同bin短段分支、多维轴与边角/对角射线、MPI/OpenMP、Windows、GPU/大规模验证、F11 HDF5和多bin目标history实现均未验证。静态支持所有Cartesian bin按对应V取系数，动态证据只覆盖本例两等体积bin、多粗网格跨越。未以零得分的首/末群宣称非零首末群映射正确，未以2×1×1宣称完整3D展平正确。核数据加载但不验证其碰撞物理；无新基准/参考结果。
++
++## 5. 过程
++
++| 日期（按用户Asia/Shanghai上下文） | 过程 |
++|---|---|
++| 2026-10-11 | 读取AGENTS/STATUS/AGENT_CONTEXT/04 §0,7,14/工作流；建C任务并保留开工Git身份 |
++| 2026-10-11 | 相关计分链定位，写事前方案；原样源码外部构建，保留两次配置失败和最终构建日志 |
++| 2026-10-11 | 三次输入校验失败保留；等价六平面/N200/PRINT语法调整后执行四普通配置，退出均0 |
++| 2026-10-11 | PTRAC为空，改只读GDB；修正引用参数调试记录，四次完整轨迹重跑并核对普通Tally不变 |
++| 2026-10-11 | 248/248对独立参考比较通过；更新STATUS/INDEX/02速览/06问题及物理导读/交接指针，待独立复核；不进入阶段1 |
++
++原始运行日志的时间字符串由运行环境生成，不替换或加工。changes.diff为任务脚本快照；RMC差异为空的不可变核验保存JSON，不造空changes.diff。
++
++归档检查真实输出见`logs/archive-check.stdout`（退出0）：需处理0项、提示31项；提示为历史档案的12个空changes.diff及19个空目录，本任务未出现结构/台账问题，未自动修整历史档案。最终不可变核验退出0，3221文件原始/副本hash一致、核数据库/二进制未变、RMC状态/分支/HEAD与开工一致、04与HEAD逐字节一致；Python脚本AST和git diff --check通过。
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n0.inp b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n0.inp
+new file mode 100644
+index 0000000..ddade6d
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n0.inp
+@@ -0,0 +1,35 @@
++UNIVERSE 0
++CELL 1 1 & -2 & 3 & -4 & 5 & -6 & -7 MAT=0 VOID=0
++CELL 2 1 & -2 & 3 & -4 & 5 & -6 & 7 MAT=1
++CELL 3 -1 : 2 : -3 : 4 : -5 : 6 MAT=0 VOID=1
++
++SURFACE
++SURF 1 PX -1
++SURF 2 PX 5
++SURF 3 PY -1
++SURF 4 PY 5
++SURF 5 PZ -1
++SURF 6 PZ 5
++SURF 7 PY 4
++
++MATERIAL
++MAT 1 -1.0
++  1001.50m 2.0
++  8016.50m 1.0
++MGACE ERGGRP=30 12
++
++FIXEDSOURCE
++PARTICLE POPULATION=200
++RNG TYPE=1 SEED=17
++
++EXTERNALSOURCE
++SOURCE 1 FRACTION=0.5 PARTICLE=1 POINT=-0.5 1 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++SOURCE 2 FRACTION=0.5 PARTICLE=1 POINT=-0.5 3 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++
++TALLY
++MESHTALLY 1 TYPE=1 PARTICLE=1 ENERGY=-1 ESTIMATOR=1 NORMALIZE=0 SCOPEX=1 1 SCOPEY=1 SCOPEZ=1 BOUNDX=0 2 4 BOUNDY=0 2 BOUNDZ=0 2
++
++PTRAC NEU=1 SRC=1 SUR=1 COL=1 TER=1 FILE=1 WRITE=1 MAX=10000 MEPH=100
++
++PRINT
++MESHTALLY 8
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n1.inp b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n1.inp
+new file mode 100644
+index 0000000..8660cca
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/heter_n1.inp
+@@ -0,0 +1,35 @@
++UNIVERSE 0
++CELL 1 1 & -2 & 3 & -4 & 5 & -6 & -7 MAT=0 VOID=0
++CELL 2 1 & -2 & 3 & -4 & 5 & -6 & 7 MAT=1
++CELL 3 -1 : 2 : -3 : 4 : -5 : 6 MAT=0 VOID=1
++
++SURFACE
++SURF 1 PX -1
++SURF 2 PX 5
++SURF 3 PY -1
++SURF 4 PY 5
++SURF 5 PZ -1
++SURF 6 PZ 5
++SURF 7 PY 4
++
++MATERIAL
++MAT 1 -1.0
++  1001.50m 2.0
++  8016.50m 1.0
++MGACE ERGGRP=30 12
++
++FIXEDSOURCE
++PARTICLE POPULATION=200
++RNG TYPE=1 SEED=17
++
++EXTERNALSOURCE
++SOURCE 1 FRACTION=0.5 PARTICLE=1 POINT=-0.5 1 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++SOURCE 2 FRACTION=0.5 PARTICLE=1 POINT=-0.5 3 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++
++TALLY
++MESHTALLY 1 TYPE=1 PARTICLE=1 ENERGY=-1 ESTIMATOR=1 NORMALIZE=1 SCOPEX=1 1 SCOPEY=1 SCOPEZ=1 BOUNDX=0 2 4 BOUNDY=0 2 BOUNDZ=0 2
++
++PTRAC NEU=1 SRC=1 SUR=1 COL=1 TER=1 FILE=1 WRITE=1 MAX=10000 MEPH=100
++
++PRINT
++MESHTALLY 8
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n0.inp b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n0.inp
+new file mode 100644
+index 0000000..fb303ee
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n0.inp
+@@ -0,0 +1,35 @@
++UNIVERSE 0
++CELL 1 1 & -2 & 3 & -4 & 5 & -6 & -7 MAT=0 VOID=0
++CELL 2 1 & -2 & 3 & -4 & 5 & -6 & 7 MAT=1
++CELL 3 -1 : 2 : -3 : 4 : -5 : 6 MAT=0 VOID=1
++
++SURFACE
++SURF 1 PX -1
++SURF 2 PX 5
++SURF 3 PY -1
++SURF 4 PY 5
++SURF 5 PZ -1
++SURF 6 PZ 5
++SURF 7 PY 4
++
++MATERIAL
++MAT 1 -1.0
++  1001.50m 2.0
++  8016.50m 1.0
++MGACE ERGGRP=30 12
++
++FIXEDSOURCE
++PARTICLE POPULATION=200
++RNG TYPE=1 SEED=17
++
++EXTERNALSOURCE
++SOURCE 1 FRACTION=0.5 PARTICLE=1 POINT=-0.5 1 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++SOURCE 2 FRACTION=0.5 PARTICLE=1 POINT=-0.5 3 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++
++TALLY
++MESHTALLY 1 TYPE=1 PARTICLE=1 ENERGY=-1 ESTIMATOR=1 NORMALIZE=0 SCOPE=2 1 1 BOUND=0 4 0 2 0 2
++
++PTRAC NEU=1 SRC=1 SUR=1 COL=1 TER=1 FILE=1 WRITE=1 MAX=10000 MEPH=100
++
++PRINT
++MESHTALLY 8
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n1.inp b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n1.inp
+new file mode 100644
+index 0000000..e70093c
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/inputs/uniform_n1.inp
+@@ -0,0 +1,35 @@
++UNIVERSE 0
++CELL 1 1 & -2 & 3 & -4 & 5 & -6 & -7 MAT=0 VOID=0
++CELL 2 1 & -2 & 3 & -4 & 5 & -6 & 7 MAT=1
++CELL 3 -1 : 2 : -3 : 4 : -5 : 6 MAT=0 VOID=1
++
++SURFACE
++SURF 1 PX -1
++SURF 2 PX 5
++SURF 3 PY -1
++SURF 4 PY 5
++SURF 5 PZ -1
++SURF 6 PZ 5
++SURF 7 PY 4
++
++MATERIAL
++MAT 1 -1.0
++  1001.50m 2.0
++  8016.50m 1.0
++MGACE ERGGRP=30 12
++
++FIXEDSOURCE
++PARTICLE POPULATION=200
++RNG TYPE=1 SEED=17
++
++EXTERNALSOURCE
++SOURCE 1 FRACTION=0.5 PARTICLE=1 POINT=-0.5 1 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++SOURCE 2 FRACTION=0.5 PARTICLE=1 POINT=-0.5 3 1 VECTOR=1 0 0 DIRECMIU=1 ENERGY=0.6 WEIGHT=1
++
++TALLY
++MESHTALLY 1 TYPE=1 PARTICLE=1 ENERGY=-1 ESTIMATOR=1 NORMALIZE=1 SCOPE=2 1 1 BOUND=0 4 0 2 0 2
++
++PTRAC NEU=1 SRC=1 SUR=1 COL=1 TER=1 FILE=1 WRITE=1 MAX=10000 MEPH=100
++
++PRINT
++MESHTALLY 8
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/analyze.py b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/analyze.py
+new file mode 100644
+index 0000000..b0ca98f
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/analyze.py
+@@ -0,0 +1,135 @@
++#!/usr/bin/env python3
++"""Independent ray/box reference. Never derive the reference from RMC Ave."""
++import csv
++import hashlib
++import json
++import math
++from pathlib import Path
++import re
++
++TASK = Path(__file__).resolve().parents[1]
++CFG = json.loads((TASK / 'logs/config.json').read_text())
++N = CFG['N']
++G = CFG['MGACE'][0]
++
++def clip_length(origin, direction, length, lower, upper):
++    """Slab intersection in physical cm, independent of CDMesh implementations."""
++    enter, leave = 0.0, length
++    for x, u, lo, hi in zip(origin, direction, lower, upper):
++        if u == 0:
++            if not lo <= x < hi:
++                return 0.0
++        else:
++            a, b = (lo - x) / u, (hi - x) / u
++            enter, leave = max(enter, min(a, b)), min(leave, max(a, b))
++    return max(0.0, leave - enter)
++
++def tally_rows(path):
++    result, current = {}, None
++    for line in path.read_text().splitlines():
++        tokens = line.split()
++        if len(tokens) == 7 and all(t.isdigit() for t in tokens[:4]):
++            current = tuple(map(int, tokens[:3]))
++            result[(current, int(tokens[3]))] = tuple(map(float, tokens[-2:]))
++        elif len(tokens) == 4 and tokens[0].isdigit() and current:
++            result[(current, int(tokens[0]))] = tuple(map(float, tokens[-2:]))
++        elif len(tokens) == 3 and tokens[0] == 'Tot' and current:
++            result[(current, 'Tot')] = tuple(map(float, tokens[-2:]))
++    assert len(result) == 2 * (G + 1), (path, len(result))
++    return result
++
++all_rows, summaries, previous_trace = [], [], None
++for case in CFG['case_names']:
++    normal = TASK / 'logs/formal' / case
++    trace = TASK / 'logs/trace' / case
++    assert (normal / 'exitcode.txt').read_text().strip() == '0'
++    assert (trace / 'exitcode.txt').read_text().strip() == '0'
++    assert (normal / 'inp').read_bytes() == (trace / 'inp').read_bytes()
++    assert (normal / 'inp.Tally').read_bytes() == (trace / 'inp.Tally').read_bytes()
++    log = (trace / 'stdout.txt').read_text()
++    assert 'exited normally' in log
++    assert f'DENOM,{N},N={N}' in log
++    assert f'AVERAGING,M={N},Div=1' in log
++    path, norm = case.split('_n')
++    assert f'PATH,{path},usevol={norm},heterflag={int(path == "heter")}' in log
++    assert f'COUNTS,histories={N},uniform={N if path == "uniform" else 0},heter={N if path == "heter" else 0}' in log
++    source, segments, raw = {}, {}, []
++    for line in log.splitlines():
++        if line.startswith(('SOURCE,', 'SEGMENT,')):
++            raw.append(line)
++            tokens = line.split(',')
++            history = int(tokens[1])
++            target = source if tokens[0] == 'SOURCE' else segments
++            assert history not in target, ('duplicate', case, history)
++            target[history] = list(map(float, tokens[2:]))
++    assert sorted(source) == sorted(segments) == list(range(1, N + 1))
++    if previous_trace is not None:
++        assert raw == previous_trace, 'random histories changed between configurations'
++    previous_trace = raw
++    (trace / 'source-segments.csv').write_text('\n'.join(raw) + '\n')
++    history_scores = {(i, g): [0.0] * N for i in [1, 2] for g in range(1, G + 1)}
++    for h in range(1, N + 1):
++        src, seg = source[h], segments[h]
++        assert src == seg[:-1]
++        assert src[0] == -0.5 and src[1] in [1.0, 3.0] and src[2] == 1.0
++        assert src[3:6] == [1.0, 0.0, 0.0] and src[6] == 1.0
++        assert src[7] == 13 and seg[8] == 5.5
++        # MG transport groups descend in energy; text Energy=-1 rows ascend.
++        g = G - int(seg[7]) + 1
++        for i in [1, 2]:
++            length = clip_length(seg[:3], seg[3:6], seg[8],
++                                 [(i-1)*2, 0, 0], [i*2, 2, 2])
++            history_scores[(i, g)][h-1] += seg[6] * length
++    m = sum(src[1] == 1.0 for src in source.values())
++    assert 0 < m < N
++    values = tally_rows(normal / 'inp.Tally')
++    for i in [1, 2]:
++        for g in list(range(1, G + 1)) + ['Tot']:
++            scores = (history_scores[(i, g)] if g != 'Tot' else
++                      [sum(history_scores[(i, k)][h] for k in range(1, G+1)) for h in range(N)])
++            sum1, sum2 = math.fsum(scores), math.fsum(x*x for x in scores)
++            volume = CFG['volumes_cm3'][i-1]
++            L_ref = sum1 / N
++            phi_ref = sum1 / N / volume
++            RE_ref = math.sqrt(max(0.0, (N*sum2/(sum1*sum1)-1)/(N-1))) if sum1 else 0.0
++            c = 1.0 if path == 'heter' and norm == '1' else 1.0 / volume
++            expected = phi_ref / c
++            ave, RE = values[((i, 1, 1), g)]
++            error, RE_error = ave - expected, RE - RE_ref
++            ave_ok = abs(error) <= CFG['tolerance_Ave_absolute'] + CFG['tolerance_Ave_relative']*abs(expected)
++            re_ok = abs(RE_error) <= CFG['tolerance_RE_absolute']
++            if sum1 == 0:
++                ave_ok, re_ok = ave == 0.0, RE == 0.0
++            row = {'case': case, 'bin': i, 'group_text_ascending': g,
++                   'actual_N': N, 'denominator_M': N, 'denominator_Div': 1,
++                   'hit_histories': m, 'zero_histories': N-m, 'V_cm3': volume,
++                   'independent_sum_wL': sum1, 'independent_sum_wL2': sum2,
++                   'L_ref_cm': L_ref, 'phi_ref_cm-2': phi_ref, 'Ave': ave, 'RE': RE,
++                   'expected_Ave': expected, 'Ave_error': error, 'RE_ref': RE_ref,
++                   'RE_error': RE_error, 'c': c, 'converted_phi': c*ave,
++                   'converted_error': c*ave-phi_ref, 'pass': ave_ok and re_ok}
++            all_rows.append(row)
++            if g == 18:
++                summaries.append(row)
++    summary = {'histories': N, 'hit': m, 'zero': N-m, 'segments': len(segments),
++               'source_segment_sha256': hashlib.sha256(('\n'.join(raw)+'\n').encode()).hexdigest(),
++               'normal_equals_gdb_Tally': True, 'denominator_M': N, 'Div': 1,
++               'called_path': path, 'Normalize': int(norm)}
++    (trace / 'checks.json').write_text(json.dumps(summary, indent=2))
++
++with (TASK / 'logs/comparison.csv').open('w', newline='') as f:
++    writer = csv.DictWriter(f, fieldnames=list(all_rows[0]))
++    writer.writeheader()
++    writer.writerows(all_rows)
++result = {'checks': len(all_rows), 'passed': sum(r['pass'] for r in all_rows),
++          'all_passed': all(r['pass'] for r in all_rows), 'nonzero_group_rows': summaries,
++          'max_abs_Ave_error': max(abs(r['Ave_error']) for r in all_rows),
++          'max_abs_RE_error': max(abs(r['RE_error']) for r in all_rows)}
++(TASK / 'logs/comparison.json').write_text(json.dumps(result, indent=2))
++print('Independent reference: N=', N, 'hit=', m, 'zero=', N-m, 'V=8 cm^3')
++for r in summaries[::2]:
++    print(r['case'], 'Ave=', r['Ave'], 'RE=', r['RE'], 'phi_ref=', r['phi_ref_cm-2'],
++          'converted_error=', r['converted_error'])
++print('Checks:', result['passed'], '/', result['checks'],
++      'max Ave error=', result['max_abs_Ave_error'], 'max RE error=', result['max_abs_RE_error'])
++raise SystemExit(0 if result['all_passed'] else 1)
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/build.sh b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/build.sh
+new file mode 100644
+index 0000000..9998242
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/build.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++set -euo pipefail
++task_dir="$(cd "$(dirname "$0")/.." && pwd)"
++workspace_dir="$(cd "$task_dir/../../.." && pwd)"
++source_dir=/tmp/f11-volume-rmc-source
++build_dir=/tmp/f11-volume-rmc-build-snapshot
++# Copy source bytes without Git metadata; all generated files remain outside RMC.
++rsync -a --exclude=.git --exclude=docs --exclude=tests --exclude=RMC --exclude=delivery "$workspace_dir/RMC/" "$source_dir/"
++mkdir -p "$source_dir/delivery"
++cp "$workspace_dir/RMC/delivery/GITSHA" "$source_dir/delivery/GITSHA"
++cmake -S "$source_dir" -B "$build_dir" -Dmpi=OFF -Dopenmp=OFF -Dloadmodules=ON -Dtest=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo
++cmake --build "$build_dir" -j 8
++# CMake's submodule attempts fail harmlessly on the Git-free copy; existing
++# vendored dependencies are used. Preserve delivery/GITSHA, even when blank.
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/run.py b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/run.py
+new file mode 100644
+index 0000000..352eaa6
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/run.py
+@@ -0,0 +1,55 @@
++#!/usr/bin/env python3
++"""Run unmodified RMC in new /tmp directories; preserve selected raw evidence."""
++import argparse
++import hashlib
++import json
++import os
++from pathlib import Path
++import shlex
++import shutil
++import subprocess
++import tempfile
++
++TASK = Path(__file__).resolve().parents[1]
++parser = argparse.ArgumentParser()
++parser.add_argument('--exe', default='/tmp/f11-volume-rmc-build-snapshot/bin/RMC')
++parser.add_argument('--database', default='/home/silver/NucXS_Library/RMC_DATA')
++parser.add_argument('--label', required=True)
++parser.add_argument('--case', choices=['uniform_n0', 'uniform_n1', 'heter_n0', 'heter_n1'])
++args = parser.parse_args()
++exe = Path(args.exe).resolve()
++database = Path(args.database).resolve()
++out = TASK / 'logs' / args.label
++out.mkdir(exist_ok=False)
++identity = {'exe': str(exe), 'exe_sha256': hashlib.sha256(exe.read_bytes()).hexdigest(),
++            'database': str(database), 'database_files': {}}
++for name in ['xsdir', 'multigroup/mgxsnp']:
++    f = database / name
++    identity['database_files'][name] = {'path': str(f.resolve()), 'size': f.stat().st_size,
++                                       'sha256': hashlib.sha256(f.read_bytes()).hexdigest()}
++identity['xsdir_entries'] = [s for s in (database / 'xsdir').read_text().splitlines()
++                            if s.split() and s.split()[0] in ['1001.50m', '8016.50m']]
++(out / 'identity.json').write_text(json.dumps(identity, indent=2))
++cases = [args.case] if args.case else ['uniform_n0', 'uniform_n1', 'heter_n0', 'heter_n1']
++root = Path(tempfile.mkdtemp(prefix='f11-volume-runs-'))
++for case in cases:
++    work = root / case
++    work.mkdir()
++    dest = out / case
++    dest.mkdir()
++    shutil.copyfile(TASK / 'inputs' / (case + '.inp'), work / 'inp')
++    shutil.copyfile(work / 'inp', dest / 'inp')
++    (work / 'xsdir').symlink_to(database / 'xsdir')
++    command = [str(exe), '-i', 'inp', '-d', str(database)]
++    (dest / 'command.txt').write_text('cd ' + shlex.quote(str(work)) + '\n' + shlex.join(command) + '\n')
++    env = dict(os.environ, OMP_NUM_THREADS='1')
++    with (dest / 'stdout.txt').open('w') as stdout, (dest / 'stderr.txt').open('w') as stderr:
++        result = subprocess.run(command, cwd=work, env=env, stdout=stdout, stderr=stderr, timeout=60)
++    (dest / 'exitcode.txt').write_text(str(result.returncode) + '\n')
++    for suffix in ['.Tally', '.PTRAC', '.out', '.material']:
++        f = work / ('inp' + suffix)
++        if f.exists():
++            shutil.copyfile(f, dest / f.name)
++    print(case, 'exit=', result.returncode, 'raw=', dest, flush=True)
++    if result.returncode:
++        raise SystemExit(result.returncode)
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.gdb b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.gdb
+new file mode 100644
+index 0000000..b9ef3f7
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.gdb
+@@ -0,0 +1,52 @@
++set pagination off
++set confirm off
++set print pretty off
++set $history = 0
++set $uniform = 0
++set $heter = 0
++break CDFixedSource::TrackHistory
++commands
++silent
++set $history = $history + 1
++printf "SOURCE,%d,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g\n", $history, cParticleState.p_dPos[0], cParticleState.p_dPos[1], cParticleState.p_dPos[2], cParticleState.p_dDir[0], cParticleState.p_dDir[1], cParticleState.p_dDir[2], cParticleState.p_dWgt, cParticleState.p_dErg
++continue
++end
++break CDTally::TallyByTL
++commands
++silent
++printf "SEGMENT,%d,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g\n", $history, cParticleState.p_dPos[0], cParticleState.p_dPos[1], cParticleState.p_dPos[2], cParticleState.p_dDir[0], cParticleState.p_dDir[1], cParticleState.p_dDir[2], cParticleState.p_dWgt, cParticleState.p_dErg, dTrackLen
++continue
++end
++break CDMesh::CalcMeshTrck
++commands
++silent
++set $uniform = $uniform + 1
++if $uniform == 1
++printf "PATH,uniform,usevol=%d,heterflag=%d\n", p_bUseVol, p_bIsHeterMesh
++end
++continue
++end
++break CDMesh::CalcHeterMeshTrck
++commands
++silent
++set $heter = $heter + 1
++if $heter == 1
++printf "PATH,heter,usevol=%d,heterflag=%d\n", p_bUseVol, p_bIsHeterMesh
++end
++continue
++end
++break /tmp/f11-volume-rmc-source/src/ProcessTally.cpp:364
++commands
++silent
++printf "DENOM,%.17g,N=%lld\n", cFixedSource.p_dTotStartWgt, cFixedSource.p_llCurTotParNum
++continue
++end
++break CDTallyData::CalcAveRe
++commands
++silent
++printf "AVERAGING,M=%.17g,Div=%.17g\n", dM, dDiv
++continue
++end
++run
++printf "COUNTS,histories=%d,uniform=%d,heter=%d\n", $history, $uniform, $heter
++quit
+diff --git a/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.py b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.py
+new file mode 100644
+index 0000000..d6aa9b7
+--- /dev/null
++++ b/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.py
+@@ -0,0 +1,42 @@
++#!/usr/bin/env python3
++"""Read-only debugger acquisition; fresh run directories for all four cases."""
++import concurrent.futures
++import hashlib
++import json
++from pathlib import Path
++import shlex
++import shutil
++import subprocess
++import tempfile
++
++TASK = Path(__file__).resolve().parents[1]
++EXE = '/tmp/f11-volume-rmc-build-snapshot/bin/RMC'
++DB = '/home/silver/NucXS_Library/RMC_DATA'
++ROOT = Path(tempfile.mkdtemp(prefix='f11-volume-trace-'))
++DEST = TASK / 'logs' / 'trace'
++DEST.mkdir(exist_ok=False)
++
++def run(case):
++    work = ROOT / case
++    work.mkdir()
++    dest = DEST / case
++    dest.mkdir()
++    shutil.copyfile(TASK / 'inputs' / (case + '.inp'), work / 'inp')
++    command = ['gdb', '-q', '-batch', '-x', str(TASK / 'tools' / 'trace.gdb'),
++               '--args', EXE, '-i', 'inp', '-d', DB]
++    (dest / 'command.txt').write_text('cd ' + shlex.quote(str(work)) + '\n' + shlex.join(command) + '\n')
++    with (dest / 'stdout.txt').open('w') as stdout, (dest / 'stderr.txt').open('w') as stderr:
++        result = subprocess.run(command, cwd=work, stdout=stdout, stderr=stderr, timeout=180)
++    (dest / 'exitcode.txt').write_text(str(result.returncode) + '\n')
++    for name in ['inp', 'inp.Tally', 'inp.out', 'inp.PTRAC']:
++        if (work / name).exists():
++            shutil.copyfile(work / name, dest / name)
++    hashes = {name: hashlib.sha256((dest / name).read_bytes()).hexdigest()
++              for name in ['inp', 'inp.Tally'] if (dest / name).exists()}
++    (dest / 'sha256.json').write_text(json.dumps(hashes, indent=2))
++    print(case, 'gdb exit=', result.returncode, flush=True)
++    return result.returncode
++
++with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
++    codes = list(pool.map(run, ['uniform_n0', 'uniform_n1', 'heter_n0', 'heter_n1']))
++raise SystemExit(max(codes))
+diff --git "a/MLVR_Physics_Guide/03_Field\347\273\237\350\256\241\344\270\216\344\275\223\347\247\257\345\275\222\344\270\200\345\214\226.md" "b/MLVR_Physics_Guide/03_Field\347\273\237\350\256\241\344\270\216\344\275\223\347\247\257\345\275\222\344\270\200\345\214\226.md"
+new file mode 100644
+index 0000000..6dead9a
+--- /dev/null
++++ "b/MLVR_Physics_Guide/03_Field\347\273\237\350\256\241\344\270\216\344\275\223\347\247\257\345\275\222\344\270\200\345\214\226.md"
+@@ -0,0 +1,25 @@
++# 从轨迹长度到体积平均通量
++
++这里的物理对象是一个空间网格单元内、一个能群的标量通量。轨迹长度估计器累计粒子在该单元内行走的真实距离，并乘以当时粒子权重。单位起始源权重的体积平均结果是
++
++\[
++\phi_{i,g}=\frac{\sum_{h=1}^{N}\sum_{s\in(i,g)}w_s\ell_s}{N V_i}.
++\]
++
++分母中的历史数包括从未进入该单元的源历史。零得分历史表示本次抽样没有贡献，不应从平均中删掉。能群内的路径贡献已经积分，不需要再除以能群宽度；几何长度用cm时，结果单位为每单位起始源权重的cm⁻²。
++
++“每历史平均轨迹长度”还没有除以单元体积，与“体积平均通量”不同。输入开关的名字不足以判断一个输出属于哪一种量，必须检查实际数值关系。RMC当前两种Cartesian网格表达的体积处理存在差异；具体路径、转换系数和最小验证边界统一见[阶段0档案§4](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界)，不能仅看Normalize=1便复制Ave为通量密度。
++
++这种实现差异不会让真空中的粒子多走或少走，却会改变送入场重构的数值尺度。如果把长度均值当成密度，通量图及由它得到的目标响应都会带入体积因子；若在已经除体积的结果上再次除体积，则会产生相反的尺度偏差。非等体积单元还可能造成空间形状失真，而不只是整体倍数变化。修复普通计分或增加接口转换时，必须避免两个位置重复除体积。
++
++目标响应若定义为对空间和能群的体积积分，应使用同一物理密度：
++
++\[
++R=\sum_{i,g}r_{i,g} V_i\phi_{i,g}.
++\]
++
++对单个bin乘固定正数，均值和标准差同倍缩放，相对误差保持不变。多个bin组成目标时，它们可能由同一个历史贡献并彼此相关；必须先合成每历史目标贡献，再求目标相对误差。零得分bin打印RE=0，也不表示真实通量及其不确定度为零。
++
++本次证据是未修改RMC、真实standard MGACE加载、单位源权重的真空直线束最小实验，含命中与零得分历史；轨迹由只读断点原样记录，用独立的线段与盒裁剪算法核算。结果待独立复核，不证明碰撞、伴随源尺度、非等体积动态行为或完整F11接口已经正确。完整输入、原始记录、实际输出和未覆盖项见[档案§2/§4](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md)；现行设计仍为[知识库04](../MLVR_Knowledge/04_F11_v1_架构与实施设计.md)。
++
++变更记录：2026-10-11，新增阶段0物理解释与证据指针；未改变F11冻结规则，未修复生产计分。

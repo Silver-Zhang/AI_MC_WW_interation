@@ -1,0 +1,45 @@
+{
+  "seed": 17,
+  "N": 200,
+  "MGACE": [
+    30,
+    12
+  ],
+  "source_energy_MeV": 0.6,
+  "source_weight": 1,
+  "WW": false,
+  "MPI": false,
+  "OMP": false,
+  "mesh_edges_cm": [
+    [
+      0,
+      2,
+      4
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "volumes_cm3": [
+    8,
+    8
+  ],
+  "beam_hit_length_per_bin_cm": 2,
+  "case_names": [
+    "uniform_n0",
+    "uniform_n1",
+    "heter_n0",
+    "heter_n1"
+  ],
+  "tolerance_Ave_relative": 6e-06,
+  "tolerance_Ave_absolute": 5e-12,
+  "tolerance_RE_absolute": 6e-05,
+  "config_py": "not applicable: RMC input experiment, no AIMC training",
+  "numpy": "not used",
+  "CUDA_PyTorch": "not used"
+}

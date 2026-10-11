@@ -1,0 +1,548 @@
+
+RMC/src/ReadMeshTallyCard.cpp:258-295
+258:   bool bVolNormMesh = false;
+259:   if (!vParas[2].empty()) {
+260:     int nUseVolFlag = ExtratIntPara(vParas[2][0], "NORMALIZE");
+261:     Output.CheckInputParas(nUseVolFlag == 0 || nUseVolFlag == 1,
+262:     [&]() {sprintf(Output.p_sPrintStr, "incorrect NORMALIZE parameters for mesh tally %d.\n", nTally_id);},
+263:     CDOutput::_ERROR);
+264:     bVolNormMesh = (nUseVolFlag == 1);
+265:   }
+266: 
+267:   vMeshTally[nTallySize].p_OTallyMesh.p_bUseVol = bVolNormMesh;
+268: 
+269:   // Read mesh Scope/Bound
+270:   if ((!vParas[3].empty() && !vParas[4].empty()) &&
+271:       (vParas[5].empty() && vParas[6].empty() && vParas[7].empty() &&
+272:        vParas[8].empty() && vParas[9].empty() && vParas[10].empty())) {
+273:     Output.CheckInputParas(vParas[3].size() == 3 && vParas[4].size() == 6,
+274:     [&]() {sprintf(Output.p_sPrintStr, "incorrect SCOPE/BOUND parameters for mesh tally %d.\n", nTally_id);},
+275:     CDOutput::_ERROR);
+276: 
+277:     vMeshTally[nTallySize].p_OTallyMesh.p_bIsHeterMesh = false;
+278: 
+279:     for (int i = 0; i < 3; ++i) {
+280:       vMeshTally[nTallySize].p_OTallyMesh.p_nMeshScope[i] =
+281:           ExtratIntPara(vParas[3][i], "SCOPE");
+282:       vMeshTally[nTallySize].p_OTallyMesh.p_nMeshNum[i] =
+283:           std::max(vMeshTally[nTallySize].p_OTallyMesh.p_nMeshScope[i], 1);
+284: 
+285:       vMeshTally[nTallySize].p_OTallyMesh.p_dBoundMin[i] = vParas[4][2 * i];
+286:       vMeshTally[nTallySize].p_OTallyMesh.p_dBoundMax[i] = vParas[4][2 * i + 1];
+287:     }
+288: 
+289:     vMeshTally[nTallySize].p_OTallyMesh.CheckMeshPara(string("MeshTally"));
+290:   } else if ((vParas[3].empty() && vParas[4].empty()) &&
+291:              (!vParas[5].empty() && !vParas[6].empty() && !vParas[7].empty() &&
+292:               !vParas[8].empty() && !vParas[9].empty() && !vParas[10].empty())) {
+293:     // Read heterogeneous mesh in Cartesian coordinate system
+294:     vMeshTally[nTallySize].p_OTallyMesh.p_bIsHeterMesh = true;
+295:     // read SCOPEX
+
+RMC/src/MeshFun.cpp:270-306
+270: void CDMesh::CalcMeshTrck(const double dPos0[3], const double dDir[3], double dTrackLen,
+271:                           vector<CDMeshTrack> &MeshTrack) {
+272: 
+273:   double dPos1[3];
+274:   dPos1[0] = dPos0[0] + dDir[0] * dTrackLen;
+275:   dPos1[1] = dPos0[1] + dDir[1] * dTrackLen;
+276:   dPos1[2] = dPos0[2] + dDir[2] * dTrackLen;
+277: 
+278:   MeshTrack.resize(0);
+279: 
+280:   int nIndex0Xyz[3];  // start from 0
+281:   int nIndex1Xyz[3];  // start from 0
+282:   int nCrossNum = 0;
+283:   for ( int i = 0 ; i < 3 ; ++i ) {
+284:     if (p_nMeshScope[i] == SCOPE_INFINITE) {
+285:       nIndex0Xyz[i] = 0;
+286:       nIndex1Xyz[i] = 0;
+287:       continue;
+288:     }
+289: 
+290:     nIndex0Xyz[i] = int(floor((dPos0[i] - p_dBoundMin[i]) / p_dMeshDelt[i])) ;
+291:     nIndex1Xyz[i] = int(floor((dPos1[i] - p_dBoundMin[i]) / p_dMeshDelt[i])) ;
+292: 
+293:     nCrossNum = nCrossNum + abs(nIndex0Xyz[i] - nIndex1Xyz[i]);
+294:   }
+295: 
+296:   ////////// simple case: track length is inside single mesh
+297:   if (  nCrossNum == 0) {
+298:     if (dTrackLen > 0 && IsInsideMesh(nIndex0Xyz)) {
+299:       int nMeshIndex = nIndex0Xyz[2] * p_nMeshNum[0] * p_nMeshNum[1] + nIndex0Xyz[1] * p_nMeshNum[0] + nIndex0Xyz[0] ;
+300:       MeshTrack.emplace_back(nMeshIndex, dTrackLen);
+301:     } else if (dTrackLen > 0) { //outside the mesh
+302:       MeshTrack.emplace_back(-1, dTrackLen);
+303:     }
+304:     return;
+305:   }
+306: 
+
+RMC/src/MeshFun.cpp:338-385
+338:     }
+339: 
+340:     double dMinDist = dDistXyz[nMinDistDim];
+341: 
+342:     ///////////////////  Add mesh_index - track_len pair /////////////////
+343:     if (dMinDist > ZERO_TRACK_LENGTH) {
+344:       if (IsInsideMesh(nIndex0Xyz)) {
+345:         int nMeshIndex = nIndex0Xyz[2] * p_nMeshNum[0] * p_nMeshNum[1] + nIndex0Xyz[1] * p_nMeshNum[0] + nIndex0Xyz[0] ;
+346:         MeshTrack.emplace_back(nMeshIndex, dMinDist);
+347:         bIsInside = true;
+348:       } else {
+349:         if (bIsInside) {//从网格中飞出去，记录剩余长度
+350:           MeshTrack.emplace_back(-1, dTrackLen);
+351:           return;
+352:         } else { //尚未进入网格
+353:           MeshTrack.emplace_back(-1, dMinDist);
+354:         }
+355:       }
+356:     }
+357: 
+358: 
+359:     //////////////////// offset index0_xyz ///////////////////
+360:     if (dDir[nMinDistDim] > 0) {
+361:       nIndex0Xyz[nMinDistDim] = nIndex0Xyz[nMinDistDim] + 1;
+362:     } else {
+363:       nIndex0Xyz[nMinDistDim] = nIndex0Xyz[nMinDistDim] - 1;
+364:     }
+365: 
+366:     //////////////////// offset dist_xyz ///////////////////
+367:     //if(dMinDist > 1.0E-8) //// bug? wrong location of index when pos0 and pos1 are on grid lines, 20140115, LIANG
+368:     //{
+369:     dTrackLen = dTrackLen - dMinDist;
+370:     for (int i = 0 ; i < 3 ; ++i) {
+371:       if (i == nMinDistDim) {
+372:         dDistXyz[i] = dWidthXyz[i];
+373:       } else {
+374:         dDistXyz[i] = dDistXyz[i] - dMinDist;
+375:       }
+376:     }
+377:     //}
+378: 
+379:     ++n;
+380:     if (n >= nCrossNum) {
+381:       if (dTrackLen > ZERO_TRACK_LENGTH && IsInsideMesh(nIndex0Xyz)) {
+382:         int nMeshIndex = nIndex0Xyz[2] * p_nMeshNum[0] * p_nMeshNum[1] + nIndex0Xyz[1] * p_nMeshNum[0] + nIndex0Xyz[0] ;
+383:         MeshTrack.emplace_back(nMeshIndex, dTrackLen);
+384:       } else if (dTrackLen > ZERO_TRACK_LENGTH && !IsInsideMesh(nIndex0Xyz)) {
+385:         MeshTrack.emplace_back(-1, dTrackLen);
+
+RMC/src/MeshFun.cpp:442-456
+442: void CDMesh::CalcHeterMeshTrck(const double dPos0[3], const double dDir[3],
+443:                                double dTrackLen, vector<CDMeshTrack> &MeshTrack) {
+444:   double dPos1[3];
+445:   dPos1[0] = dPos0[0] + dDir[0] * dTrackLen;
+446:   dPos1[1] = dPos0[1] + dDir[1] * dTrackLen;
+447:   dPos1[2] = dPos0[2] + dDir[2] * dTrackLen;
+448: 
+449:   MeshTrack.resize(0);
+450: 
+451:   int nIndex0Xyz[3];  // start from 0
+452:   int nIndex1Xyz[3];  // start from 0
+453:   int nCoarseIndex0[3];
+454:   int nCoarseIndex1[3];
+455:   int nCrossNum = 0;
+456:   double dMeshVol = 1.0;
+
+RMC/src/MeshFun.cpp:474-486
+474:   ////////// simple case: track length is inside single mesh
+475:   if (nCrossNum == 0) {
+476:     if (dTrackLen > 0 && IsInsideHeterMesh(nIndex0Xyz)) {
+477:       int nMeshIndex = nIndex0Xyz[2] * p_vTotMeshNum[0] * p_vTotMeshNum[1] +
+478:                        nIndex0Xyz[1] * p_vTotMeshNum[0] + nIndex0Xyz[0];
+479:       if (p_bUseVol) {
+480:         dMeshVol = p_vMeshDelta[0][nCoarseIndex0[0]] *
+481:                    p_vMeshDelta[1][nCoarseIndex0[1]] *
+482:                    p_vMeshDelta[2][nCoarseIndex0[2]];
+483:       }
+484:       double dRealTrackLen = dTrackLen / dMeshVol;
+485:       MeshTrack.emplace_back(nMeshIndex, dRealTrackLen);
+486:     } else if (dTrackLen > 0) {
+
+RMC/src/MeshFun.cpp:535-546
+535:     ///////////////////  Add mesh_index - track_len pair /////////////////
+536:     if (dMinDist > ZERO_TRACK_LENGTH) {
+537:       if (IsInsideHeterMesh(nIndex0Xyz)) {
+538:         int nMeshIndex = nIndex0Xyz[2] * p_vTotMeshNum[0] * p_vTotMeshNum[1] +
+539:                          nIndex0Xyz[1] * p_vTotMeshNum[0] + nIndex0Xyz[0];
+540:         if (p_bUseVol) {
+541:           dMeshVol = p_vMeshDelta[0][nCoarseIndex0[0]] *
+542:                      p_vMeshDelta[1][nCoarseIndex0[1]] *
+543:                      p_vMeshDelta[2][nCoarseIndex0[2]];
+544:         }
+545:         double dRealTrackLen = dMinDist / dMeshVol;
+546:         MeshTrack.emplace_back(nMeshIndex, dRealTrackLen);
+
+RMC/src/MeshFun.cpp:607-617
+607:     if (n >= nCrossNum) { //  最后一个网格内，从网格边界到终点的距离，落在最后一个网格内
+608:       if (dTrackLen > ZERO_TRACK_LENGTH && IsInsideHeterMesh(nIndex0Xyz)) {
+609:         int nMeshIndex = nIndex0Xyz[2] * p_vTotMeshNum[0] * p_vTotMeshNum[1] +
+610:                          nIndex0Xyz[1] * p_vTotMeshNum[0] + nIndex0Xyz[0];
+611:         if (p_bUseVol) {
+612:           dMeshVol = p_vMeshDelta[0][nCoarseIndex0[0]] *
+613:                      p_vMeshDelta[1][nCoarseIndex0[1]] *
+614:                      p_vMeshDelta[2][nCoarseIndex0[2]];
+615:         }
+616:         double dRealTrackLen = dTrackLen / dMeshVol;
+617:         MeshTrack.emplace_back(nMeshIndex, dRealTrackLen);
+
+RMC/src/ScoreMeshTally.cpp:9-49
+9: void CDTally::ScoreMeshTallyByTL(double dTrackLens, CDAceData &cAceData, CDParticleState &cParticleState,
+10:                                  CDMaterial &cMaterial, CDGeometry &cGeometry, CDCriticality *cCriticality) {
+11:   if (!cGeometry.p_vCLSUniverse.empty()) {
+12:     return;
+13:   }
+14:   vector<CDMeshTrack> MeshTrack;
+15: 
+16:   for (auto &meshTally : p_vMeshTally) { // search all mesh tally list
+17:     //track length tally and velocity tally supported only;
+18:     if (meshTally.estimator == BaseTally::TallyEstimator::COLLISION) {
+19:       continue;
+20:     }
+21:     // 先判断粒子类型是否正确 //
+22:     // 如果当前网格计数器的计数粒子类型为0，意味着该网格计数器会统计所有粒子的计数，不需要进行粒子类型判断\n
+23:     if (meshTally.p_nTallyParticle != 0) {
+24:       if (cParticleState.p_eParticleType == CDParticleState::Neutron &&
+25:           meshTally.p_nTallyParticle != 1) {
+26:         continue;
+27:       }
+28:       if (cParticleState.p_eParticleType == CDParticleState::Photon &&
+29:           meshTally.p_nTallyParticle != 2) {
+30:         continue;
+31:       }
+32:       if ((cParticleState.p_eParticleType == CDParticleState::Electron ||
+33:            cParticleState.p_eParticleType == CDParticleState::Positron)
+34:           && meshTally.p_nTallyParticle != 3) {
+35:         continue;
+36:       }
+37:     }
+38: 
+39:     ////////////////// find scored meshes  ////////////////
+40:     if (meshTally.p_OTallyMesh.p_nGeoType == CDMesh::CUBOID) {
+41:       if (!meshTally.p_OTallyMesh.p_bIsHeterMesh) {
+42:         meshTally.p_OTallyMesh.CalcMeshTrck(cParticleState.p_dPos, cParticleState.p_dDir, dTrackLens, MeshTrack);
+43:       } else {
+44:         meshTally.p_OTallyMesh.CalcHeterMeshTrck(cParticleState.p_dPos, cParticleState.p_dDir, dTrackLens,
+45:             MeshTrack);
+46:       }
+47:     } else if (meshTally.p_OTallyMesh.p_nGeoType == CDMesh::CYLINDER) {
+48:       meshTally.p_OTallyMesh.CalcHeterCylinMeshTrck(cParticleState.p_dPos, cParticleState.p_dDir, dTrackLens,
+49:           MeshTrack);
+
+RMC/src/ScoreMeshTally.cpp:59-67
+59:     }
+60:     //////////////////////// Add tally Score /////////////////////////
+61:     double dScore = 0.0;
+62:     // flux = weight * tracklength, the tracklength is later calculated for every mesh.
+63:     double flux = cParticleState.p_dWgt;
+64:     if (cCriticality == nullptr) {
+65:       dScore = meshTally.score(cParticleState, cMaterial, cAceData, flux);
+66:     } else {
+67:       dScore = meshTally.score(cParticleState, cMaterial, cAceData, flux, cCriticality->p_dKeffFinal,
+
+RMC/src/ScoreMeshTally.cpp:79-119
+79:     for (auto &track : MeshTrack) {
+80:       if (track.p_nMeshIndex < 0) {
+81:         continue;
+82:       }
+83:       double dTrackLen = track.p_dTrackLen;
+84:       int nMeshIndex = track.p_nMeshIndex;
+85:       double dTallyAdd = dScore * track.p_dTrackLen;
+86:       /////////// Judge energy-bin existence //////////////
+87:       int nErgBinNum = meshTally.p_nErgBinSize;
+88:       if (nErgBinNum > 0) {
+89:         double dErg = cAceData.GetErgValue(cParticleState.p_dErg, cParticleState.p_eParticleType);
+90:         // 后续可以将多群情况下计数器的能量分箱统一，建议分箱值为能群号\meshTally
+91: 
+92:         int nMin = 0, nMax = nErgBinNum - 1;
+93:         int j;// Energy bin position;
+94:         CDGlobeFun::GetIntpltPos(&meshTally.p_vErgBins[0], dErg, nMin, nMax, j);
+95: 
+96:         int nPtr = meshTally.GetMeshErgPtr(nMeshIndex, j);
+97: 
+98: # ifdef USE_OMP
+99:         #pragma omp atomic
+100: # endif
+101:         p_OMeshTallyData.p_vScore[nPtr] += dTallyAdd;
+102: 
+103:         if (p_bIsPerHstry) {
+104:           p_OMeshTallyData.p_setScoreIndex.insert(nPtr);
+105:         }
+106:       }
+107: 
+108: 
+109:       int nPtr = meshTally.GetMeshPtr(nMeshIndex);
+110: 
+111: # ifdef USE_OMP
+112:       #pragma omp atomic
+113: # endif
+114:       p_OMeshTallyData.p_vScore[nPtr] += dTallyAdd;
+115: 
+116:       if (p_bIsPerHstry) {
+117:         p_OMeshTallyData.p_setScoreIndex.insert(nPtr);
+118:       }
+119:     }
+
+RMC/src/SumUpTally.cpp:139-150
+139: 
+140:   if (p_bIsWithCsTally) {
+141:     auto ScoreIndexTemp = p_OCsTallyData.p_setScoreIndex;
+142:     p_OCsTallyData.p_setScoreIndex.clear();
+143:     for (auto const &idx : ScoreIndexTemp) {
+144:       int ptr = p_vOneGroupCsTally[idx].p_nDataStartPtr;
+145:       int len = p_vOneGroupCsTally[idx].p_nDataLen;
+146:       p_OCsTallyData.p_vScoreIndex2.push_back(ptr);
+147:       p_OCsTallyData.p_vScoreStride.push_back(len);
+148:     }
+149:     p_OCsTallyData.p_OStatisticsTester.SumStatisticsBin(p_OCsTallyData.p_vScore, nCurrentParticle, dSimTime);
+150:     p_OCsTallyData.SumTallyBinStride(); // sum up tally by bin index and length
+
+RMC/src/TallyData.cpp:43-53
+43: void CDTallyData::SumTallyBin() {
+44: 
+45:   for (const int &index : p_setScoreIndex) {
+46:     p_vSum1[index] = p_vSum1[index] + p_vScore[index];
+47:     double dScore2 = p_vScore[index] * p_vScore[index];
+48:     p_vSum2[index] = p_vSum2[index] + dScore2;
+49:     p_vScore[index] = 0;
+50:   }
+51:   p_setScoreIndex.clear();
+52: 
+53: }
+
+RMC/src/TallyData.cpp:83-104
+83: void CDTallyData::CalcAveRe(double dM, double dDiv) {
+84:   /*  Note:
+85:   M; Number of observations, namely number of total batches/cycles/histories.
+86:   Div: Division. Tally average and relative error are calculated per history.
+87:   */
+88:   double dTemp2 = 1.0 / dDiv;
+89:   if (dM == 1.0) {
+90:     for (int i = 0; i < p_vSum1.size(); ++i) {
+91:       p_vAve[i] = p_vSum1[i] * dTemp2; //Sum1[i]/(M * Div);
+92:       p_vRe[i] = 0;
+93:     }
+94:   } else {
+95:     double dTemp1 = 1.0 / (dM - 1);
+96:     for (int i = 0; i < p_vSum1.size(); ++i) {
+97:       p_vAve[i] = p_vSum1[i] / dM / dDiv; //*temp2; //Sum1[i]/(M * Div);
+98:       p_vRe[i] = p_vSum1[i] == 0 ? 0 : sqrt(p_vSum2[i] / (p_vSum1[i] * p_vSum1[i]) * dM * dTemp1 - dTemp1);
+99:     }
+100:   }
+101: }
+102: 
+103: void CDTallyData::SetSize(int nSetSize) { // set size of tally data
+104:   p_vScore.resize(nSetSize);
+
+RMC/src/ProcessTally.cpp:330-331
+330: void CDTally::ProcessTally(CDFixedSource &cFixedSource, CDMaterial &CMaterial, CDAceData &CAceData) {
+331:   //*////////////////////////////// Gather tally data for parallel case /////////////////////////////////////
+
+RMC/src/ProcessTally.cpp:364-365
+364:   double dM = cFixedSource.p_dTotStartWgt;
+365:   double dDiv = 1;
+
+RMC/src/ProcessTally.cpp:389-394
+389:     if (p_bIsWithMeshTally) {
+390:       p_OMeshTallyData.CalcAveRe(dM, dDiv);
+391:       p_OMeshTallyData.p_OStatisticsTester.CalcFlucInfluence(dM, dDiv, p_OMeshTallyData.p_vSum1,
+392:           p_OMeshTallyData.p_vSum2);
+393:       p_OMeshTallyData.p_OStatisticsTester.CalcAndCheck();
+394:     }
+
+RMC/src/OutputTally.cpp:247-263
+247:   pScore1 = &p_OMeshTallyData.p_vAve[0];
+248:   pScore2 = &p_OMeshTallyData.p_vRe[0];
+249: 
+250: 
+251:   fprintf(fpFilePtr, "============================= %zu Mesh tally in total ==============================\n",
+252:           p_vMeshTally.size());
+253: 
+254:   for (auto &meshTally : p_vMeshTally) {
+255:     // 输出到文本文件
+256:     if (meshTally.p_dAbsoluteValue != 0.0) {
+257:       meshTally.GetMultiplicationFactor(p_OMeshTallyData.p_vAve);
+258:     }
+259:     meshTally.output(fpFilePtr, pScore1, pScore2, nullptr);
+260:     // 输出HDF5网格文件 //
+261:     if (nPrintFlag == FinalPrint && meshTally.p_bHdf5Mesh) {
+262:       meshTally.OutputHDF5Mesh(&p_OMeshTallyData.p_vAve[meshTally.p_nDataStartPtr]);
+263:     }
+
+RMC/src/SingleTally.cpp:973-1003
+973:         fprintf(fpFilePtr, "%-6d %-6d %-6d          ", nIndexX, nIndexY, nIndexZ);
+974: 
+975:         // output tally data
+976:         int nErgBinNum = static_cast<int>(p_vErgBins.size());
+977:         if (nErgBinNum > 0) { // output sub tallies if energy bin is present
+978:           for (int j = 0; j < nErgBinNum; ++j) {
+979:             ++nDataPtr;
+980:             if (j == 0) {
+981:               fprintf(fpFilePtr, "  %-4d      %5.4E     %5.*E     %5.*E\n",
+982:                       j + 1, p_vErgBins[j],
+983:                       Output.p_nMeshTallyDecimalDigits, pScore1[nDataPtr],
+984:                       Output.p_nMeshTallyDecimalDigits, pScore2[nDataPtr]);
+985:             } else {
+986:               fprintf(fpFilePtr, "                                %-4d      %5.4E     %5.*E     %5.*E\n",
+987:                       j + 1, p_vErgBins[j],
+988:                       Output.p_nMeshTallyDecimalDigits, pScore1[nDataPtr],
+989:                       Output.p_nMeshTallyDecimalDigits, pScore2[nDataPtr]);
+990:             }
+991:           }
+992:           ++nDataPtr;
+993:           fprintf(Output.p_fpTallyFilePtr, "                               Tot                       %5.*E     %5.*E\n",
+994:                   Output.p_nMeshTallyDecimalDigits, pScore1[nDataPtr],
+995:                   Output.p_nMeshTallyDecimalDigits, pScore2[nDataPtr]);
+996:         } else {
+997:           ++nDataPtr;
+998:           fprintf(fpFilePtr, "   %5.*E      %5.*E\n",
+999:                   Output.p_nMeshTallyDecimalDigits, pScore1[nDataPtr],
+1000:                   Output.p_nMeshTallyDecimalDigits, pScore2[nDataPtr]);
+1001:         }
+1002:       }
+1003:     }
+
+RMC/src/InitialBatchSource.cpp:294-300
+294:   // 计算下一代需要计算粒子数  \n
+295:   if (cExternalSource.p_nSourceType == cExternalSource.OrdinarySource) {
+296:     CalcParticleInterval(bCalculationEnd);
+297:     //  根据输入的粒子初始权重计算初始总权重  \n
+298:     p_dTotStartWgt =  p_llCurTotParNum;;
+299:   } else {
+300:     CalcSurfParticleInterval(bCalculationEnd, cExternalSource);
+
+RMC/src/TrackWithWeightWindow.cpp:9-37
+9: void CDFixedSource::TransportParticleAndDoMeshWeightWindow(double &dTracklength, CDAceData &cAceData,
+10:     CDParticleState &cParticleState, CDCalMode &cCalMode, CDGeometry &cGeometry, CDTally &cTally,
+11:     CDMaterial &cMaterial, CDFixedSource &cFixedSource, int MeshWeightWindowType, CDSampling &cSampling, CDRNG &ORNG) {
+12:   if (MeshWeightWindowType == cCalMode.TrackMeshWeightWindow) {
+13:     /// - 如果程序有网格权窗操作，还要进行网格权窗计算
+14:     OWeightWindow.DoTrackMeshWeightWindow(dTracklength, cParticleState, cFixedSource, cGeometry, cAceData, cMaterial,
+15:                                           cTally, cSampling, ORNG);
+16:     if (cParticleState.p_bIsKilled) {//如果粒子被网格权窗中途杀死了，则返回
+17:       return;
+18:     }
+19:   } else if (MeshWeightWindowType == cCalMode.PointMeshWeightWindow && !cAceData.p_bTMS) {
+20:     double dAverageFreeFlyDistance = 1 / cParticleState.p_dMacroTotCs;
+21:     while (dTracklength > dAverageFreeFlyDistance) {
+22:       cTally.TallyByTL(true, dAverageFreeFlyDistance, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+23:       cParticleState.FlyByLength(dAverageFreeFlyDistance);
+24:       OWeightWindow.DoPointMeshWeightWindow(cAceData, cParticleState, cFixedSource, ORNG);
+25:       if (cParticleState.p_bIsKilled) {
+26:         return;
+27:       }
+28:       dTracklength -= dAverageFreeFlyDistance;
+29:     }
+30:     cTally.TallyByTL(true, dTracklength, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+31:     cParticleState.FlyByLength(dTracklength);
+32:   } else {
+33:     if (!cAceData.p_bTMS) {
+34:       cTally.TallyByTL(true, dTracklength, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+35:     }
+36:     /// - 每完成一次计算自由程+计算边界，便要更新光子的空间位置
+37:     cParticleState.FlyByLength(dTracklength);
+
+RMC/src/TallyByTL.cpp:24-30
+24: void CDTally::TallyByTL(bool bActiveCyc, double dTrackLen, CDGeometry &cGeometry, CDAceData &cAceData,
+25:                         CDParticleState &cParticleState, CDMaterial &cMaterial, CDRNG &ORNG, CDSampling &cSampling,
+26:                         CDCriticality *cCriticality) {
+27:   // if TMS is used, then data is tallied by collision estimator instead of track length
+28:   // 当使用TMS进行在线温度截面反馈时，不使用径迹估计器进行计数\n
+29:   if (cAceData.p_bTMS) { return; }
+30:   OTimer[Utility::Tally].start();
+
+RMC/src/TallyByTL.cpp:55-60
+55: 
+56:     if (p_bIsWithCellTally) {
+57:       TallyCellByTL(cGeometry, cParticleState, cAceData, cMaterial, ORNG, cSampling, cCriticality);
+58:     }
+59: 
+60:     if (!cGeometry.p_vCLSUniverse.empty()) {
+
+RMC/src/TrackHistory.cpp:164-180
+164:                                  CDPhotonTransport &cPhotonTransport, CDGeometry &cGeometry,
+165:                                  CDMaterial &cMaterial, CDAceData &cAceData, CDParticleState &cParticleState,
+166:                                  CDTally &cTally, CDRNG &ORNG, CDSampling &cSampling, CDPerturbation &cPerturb) {
+167:   if (!cParticleState.alive()) {
+168:     // found wrong cell
+169:     return;
+170:   }
+171:   cParticleState.p_nColliCount = 0;
+172:   if (OParticleTracker.p_bPtracOpen) {
+173:     OParticleTracker.p_bPassHistory = !OParticleTracker.p_bHistoryFilterOn;
+174:     OParticleTracker.p_vSaveBuffer.clear();
+175:   }
+176:   OParticleTracker.Track(cParticleState, SRC, NEUTRON,
+177:                          NeutronSourceEvent);
+178:   cParticleState.p_nColliCount = 0;
+179: 
+180:   bool bPhotonNucleus = cPhotonTransport.p_bPhotonNucleus;
+
+RMC/src/TrackHistory.cpp:208-230
+208:     CDNeutronTransport::OutputSrcInfo(
+209:         cAceData, cParticleState, 0, static_cast<int>(p_llCurParNumEachPro));
+210: 
+211:     cGeometry.p_OBinaryOut.UpdateCollisionNum(cParticleState.p_nColliCount);
+212:     // 存储粒子状态
+213:     cParticleState.backup();
+214:     // geometry tracking : free flying
+215:     RayTracking(cNeutronTransport, cGeometry, cMaterial, cAceData, cParticleState, cTally, ORNG,
+216:                 cSampling, cCalMode, cPerturb);
+217: 
+218:     /// 使用碰撞估计器统计计数(认为在ray-tracing后，粒子已经发生了碰撞，而对应的最大材料截面，在抽样粒子自由程时已经计算)
+219:     cTally.TallyByCollision(true, cGeometry, cAceData, cParticleState, cMaterial, ORNG,
+220:                             cSampling, nullptr);
+221: 
+222:     if (!cParticleState.alive()) {
+223:       break;
+224:     }
+225: 
+226:     // sample collision nuclide
+227:     CDNeutronTransport::SampleColliNuc(cMaterial, cAceData, cParticleState, ORNG);
+228:     if (!cParticleState.alive()) {
+229:       break;
+230:     }
+
+RMC/src/SampleNeutronSource.cpp:218-223
+218:     Output.OutputMessage([&]() {
+219:       sprintf(Output.p_sPrintStr, "unknown external source type.\n");
+220:     }, CDOutput::_ERROR);
+221:   }
+222:   if (cAceData.p_bIsAdjoint) { cParticleState.p_bIsAdjointParticle = true; } //如果使用了固定源伴随计算则粒子是以伴随粒子形式进行输运
+223: 
+
+RMC/src/InitiateAll.cpp:125-132
+125: void CDFixedSource::InitiateAll(int p_nParticleMode, CDNeutronTransport &cNeutronTransport, CDGeometry &cGeometry,
+126:                                 CDMaterial &cMaterial, CDTally &cTally, CDAceData &cAceData, CDParticleState &cParticleState,
+127:                                 CDBurnup &cBurnup, CDRNG &ORNG, CDSampling &cSampling, bool bPhotonNucleus,
+128:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+129:                                 CDCalMode &cCalMode, CDPerturbation &cPerturb) {
+130:   if (p_bIsAdjoint) { cAceData.p_bIsAdjoint = true; }
+131:   cMaterial.InitiateMatAce(p_nParticleMode, cGeometry, cTally, cAceData, cBurnup, cSampling, bPhotonNucleus);
+132: 
+
+RMC/src/GetMgCs.cpp:247-261
+247: double CDAceData::GetErgValue(double dParticleErg, int nParticleType) {
+248:   if (p_bIsMultiGroup) {
+249:     if (nParticleType == CDParticleState::Neutron) {
+250:       return GetMgNeuCentErg(int(dParticleErg + 0.5));
+251:     } else if (nParticleType == CDParticleState::Photon) {
+252:       return GetMgPhoCentErg(int(dParticleErg + 0.5));
+253:     } else {
+254:       Output.OutputMessage([&]() { sprintf(Output.p_sPrintStr, "only neutron and photon supported for multi group energy case.\n"); },
+255:       Output.p_fpOutputFilePtr, CDOutput::_ERROR);
+256:       return 0.0;
+257:     }
+258:   } else {
+259:     return dParticleErg;
+260:   }
+261: }
+
+RMC/src/SumUpTally.cpp:130-132
+130:   if (p_bIsWithMeshTally) { //// Only calculate in master processor
+131:     p_OMeshTallyData.p_OStatisticsTester.SumStatisticsBin(p_OMeshTallyData.p_vScore, nCurrentParticle, dSimTime);
+132:     p_OMeshTallyData.SumTallyBin(); // sum up tally by bin index
+
+RMC/src/GetMgCs.cpp:278
+278:     nErgGrp = p_nNeuMltGrpNum - nErgGrp;

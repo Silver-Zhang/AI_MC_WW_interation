@@ -1,0 +1,2 @@
+cd /tmp/f11-volume-runs-6x0307jr/heter_n0
+/tmp/f11-volume-rmc-build-snapshot/bin/RMC -i inp -d /home/silver/NucXS_Library/RMC_DATA

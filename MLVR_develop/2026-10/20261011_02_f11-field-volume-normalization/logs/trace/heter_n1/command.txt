@@ -1,0 +1,2 @@
+cd /tmp/f11-volume-trace-0saeopc6/heter_n1
+gdb -q -batch -x /home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/tools/trace.gdb --args /tmp/f11-volume-rmc-build-snapshot/bin/RMC -i inp -d /home/silver/NucXS_Library/RMC_DATA

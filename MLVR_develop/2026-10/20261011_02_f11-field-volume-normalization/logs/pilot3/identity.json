@@ -1,0 +1,21 @@
+{
+  "exe": "/tmp/f11-volume-rmc-build-snapshot/bin/RMC",
+  "exe_sha256": "d69c87ef2e061418b34a72337582129bdbcc3e79b38a385fb197e88e141dd9a4",
+  "database": "/home/silver/NucXS_Library/RMC_DATA",
+  "database_files": {
+    "xsdir": {
+      "path": "/home/silver/NucXS_Library/RMC_DATA/xsdir",
+      "size": 1116007,
+      "sha256": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b"
+    },
+    "multigroup/mgxsnp": {
+      "path": "/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp",
+      "size": 5913327,
+      "sha256": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001"
+    }
+  },
+  "xsdir_entries": [
+    "1001.50m 0.999172 multigroup/mgxsnp 0 1 1 3249",
+    "8016.50m 15.857588 multigroup/mgxsnp 0 1 11885 3346"
+  ]
+}

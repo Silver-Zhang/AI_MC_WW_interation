@@ -11,7 +11,7 @@
 | 专题 | 内容 | 当前状态 |
 |---|---|---|
 | [01 RMC 多群伴随输运](01_RMC多群伴随输运/README.md) | standard MGACE fixed-source neutron adjoint 的物理对象、流程、验证和缺陷修复 | **A — Ready（有界）** |
-| 正向输运 | 后续专题：正向固定源与场统计 | 待建立 |
+| [Field统计与体积归一化](03_Field统计与体积归一化.md) | 从真实路径到通量密度、零历史与目标积分 | 阶段0最小证据，待独立复核；具体边界见任务§4 |
 | [RMC 权重窗](02_RMC权重窗/README.md) | 权重窗的无偏关系、RMC 实际链路、源码审计问题和 Stage 3 修复路线 | **E — Defect + D — Integration issue（源码审计）** |
 | ML 代理模型 | 后续专题：重构模型与物理约束 | 待建立 |
 | 无偏性验证 | 后续专题：估计器、权重与统计检验 | 待建立 |
@@ -67,3 +67,5 @@ RMC 当前 standard ASCII MGACE fixed-source neutron adjoint 为 **A — Ready�
 - 2026-09-18：F03 冻结外部 response→source 映射 + RMC 执行的责任边界；20-run formal 通过源支持域、MG 群、一阶矩、无偏/有偏纠偏和复合响应级对照，定为冻结子域 C — Verify。
 - 2026-09-18：新增 RMC 权重窗专题。F08 源码审计发现 WWP 参数生命周期、mesh/能群边界、split 状态复制、MPI shared mesh 和 adjoint+WW 组合边界问题；专题以 E — Defect + D — Integration issue 作为当前状态，不把静态候选写成动态已复现缺陷。
 - 2026-09-19：将 WW 物理算法讨论沉淀到专题：区分 point mesh 与 track mesh 的触发时序，展开 `DoWeightWindows()` 的 roulette/splitting 逻辑，并记录先理解 cell、再处理 mesh 的审查顺序。
+
+- 2026-10-11：新增Field统计与体积归一化导读及阶段0档案指针，结果待独立复核；不修改F11冻结规则或生产实现。

@@ -1,0 +1,2 @@
+cd /tmp/f11-volume-runs-f_3ya2fp/uniform_n0
+/tmp/f11-volume-rmc-build-snapshot/bin/RMC inp

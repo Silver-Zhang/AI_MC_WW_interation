@@ -1,0 +1,154 @@
+independent volume check PASS
+{
+  "method": "independent parser and 3D ray/box arithmetic; no target-task analysis script imported",
+  "cases": {
+    "uniform_n0": {
+      "trace_sha256": "53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5",
+      "histories": 200,
+      "hit_histories_per_bin": 93,
+      "zero_histories_per_bin": 107,
+      "sum_weighted_length_per_bin_cm": 186.0,
+      "source_weight_denominator": 200,
+      "volume_cm3": 8.0,
+      "physical_text_group_nonzero": 18,
+      "internal_group": 13,
+      "values": [
+        {
+          "mesh": [
+            1,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        },
+        {
+          "mesh": [
+            2,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        }
+      ]
+    },
+    "uniform_n1": {
+      "trace_sha256": "53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5",
+      "histories": 200,
+      "hit_histories_per_bin": 93,
+      "zero_histories_per_bin": 107,
+      "sum_weighted_length_per_bin_cm": 186.0,
+      "source_weight_denominator": 200,
+      "volume_cm3": 8.0,
+      "physical_text_group_nonzero": 18,
+      "internal_group": 13,
+      "values": [
+        {
+          "mesh": [
+            1,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        },
+        {
+          "mesh": [
+            2,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        }
+      ]
+    },
+    "heter_n0": {
+      "trace_sha256": "53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5",
+      "histories": 200,
+      "hit_histories_per_bin": 93,
+      "zero_histories_per_bin": 107,
+      "sum_weighted_length_per_bin_cm": 186.0,
+      "source_weight_denominator": 200,
+      "volume_cm3": 8.0,
+      "physical_text_group_nonzero": 18,
+      "internal_group": 13,
+      "values": [
+        {
+          "mesh": [
+            1,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        },
+        {
+          "mesh": [
+            2,
+            1,
+            1
+          ],
+          "Ave": 0.93,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.93,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        }
+      ]
+    },
+    "heter_n1": {
+      "trace_sha256": "53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5",
+      "histories": 200,
+      "hit_histories_per_bin": 93,
+      "zero_histories_per_bin": 107,
+      "sum_weighted_length_per_bin_cm": 186.0,
+      "source_weight_denominator": 200,
+      "volume_cm3": 8.0,
+      "physical_text_group_nonzero": 18,
+      "internal_group": 13,
+      "values": [
+        {
+          "mesh": [
+            1,
+            1,
+            1
+          ],
+          "Ave": 0.11625,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.11625,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        },
+        {
+          "mesh": [
+            2,
+            1,
+            1
+          ],
+          "Ave": 0.11625,
+          "RE": 0.0760368079,
+          "expected_Ave": 0.11625,
+          "phi_density": 0.11625,
+          "zero_groups_verified": 29
+        }
+      ]
+    }
+  }
+}

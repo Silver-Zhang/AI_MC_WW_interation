@@ -1,0 +1,12 @@
+{
+  "histories": 200,
+  "hit": 93,
+  "zero": 107,
+  "segments": 200,
+  "source_segment_sha256": "53936bd102ec7f9ba84a1c212cd8733cce5d17edd8dc530ee86032c90c1c20b5",
+  "normal_equals_gdb_Tally": true,
+  "denominator_M": 200,
+  "Div": 1,
+  "called_path": "uniform",
+  "Normalize": 1
+}

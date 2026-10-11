@@ -8,6 +8,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |
+| 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |
 | 2026-10-11 | [f11-design-freeze](2026-10/20261011_01_f11-design-freeze/README.md) | 文档 / F11 v1 合并设计入库 | 已完成（design frozen；生产实现和后续测试未启动） | F11/F03/F09/F10/F12 | 正式设计入知识库04；D020；状态与交接同步；只改文档，阶段0–6待逐项授权 |
 | 2026-09-29 | [independent-f11-source-architecture-claude](2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) | 独立源码审查与架构设计 / F11 v1 | 已完成独立报告与设计；README于2026-10-11补齐 | F11 | 原结论YES WITH CORRECTIONS保留；独立正文未改；后续合并取舍见知识库04 |
 | 2026-09-29 | [f11-source-architecture-independent-design](2026-09/20260929_15_f11-source-architecture-independent-design/README.md) | 源码分析与独立架构设计 / F11 v1 | 已完成（设计待拍板，未实现） | F11 | 源码阅读报告 + 独立设计（A–H 链、P1–P9/T1–T12、七项建议）；新发现 uniform track-length 原始长度 vs heter 体积归一差异（未动态验证）；RMC 未修改 |
