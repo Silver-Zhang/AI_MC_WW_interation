@@ -75,6 +75,25 @@ MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verifica
 MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.ww.tsv
 MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.histories.jsonl
 MLVR_develop/2026-09/20260929_13_f11-persistent-session-e0-e4-execution/verification/**/*.snapshots.jsonl
+#   2026-10-11 F11 阶段1重构：原始运行/构建/诊断产物留本地（逐项 SHA256 见 logs/archive-manifest.json）
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-cases/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-cases/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-corrected-cases/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-existing-cases/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-existing-cases/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-hdf-dumps/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-hdf-dumps/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-diagnostics/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-diagnostics/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-diag-pilot/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-build/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-mpi-build/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-build/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-mpi-build/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-configure/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/baseline-mpi-configure/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-configure/
+MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/logs/refactor-mpi-configure/
 
 # ===== 编译产物 =====
 *.o

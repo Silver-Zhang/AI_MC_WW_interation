@@ -65,3 +65,9 @@ flowchart TD
 ## 阶段2仍缺什么
 
 FixedSource的完成/批次/计数、bank与哨兵、面源/自发裂变状态；ExternalSource工作源库/进度；tally Score/ScoreTemp/Sum1/Sum2/Ave/RE/高阶诊断及索引集合（保留registry）；AceData正反角色、伴随派生量及物理群截止；ParticleState几何/核素XS/微扰/伴随缓存；RNG有效段和static跳跃参数一致性；WW三界与状态；Timer逐次计时和Output逐次文件生命周期。**只列owner与风险，不实现CLEAR/SET/REBUILD，不声明repeated-run Ready。**
+
+## 实施后的工作树位置（HEAD c3ef0934 + changes.diff）
+
+仅两个批准文件有差异，未提交。CalcFixedSource.cpp:67为原入口，73–83保留timer/CBurnup并调三个成员；114为InitializeFixedSourceModel、141为ExecuteFixedSourcePrepared、772为FinalizeFixedSourceRun，774唯一ProcessTally调用。旧97–719行执行体原样位于新147–769（623行），没有第二份suite；CalMode.h:230/238/246声明对应方法。原source-map表格记录的是HEAD原文，实施工作树位置以本节及实际补丁为准。
+
+普通路径仍为wrapper计时/局部源副本→一次初始化→唯一core→最终统计→原可选输出/收尾。独立fresh-process回归与只读诊断见README §4，正式reset清单不变，未执行同进程重复调用。

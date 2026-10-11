@@ -1,0 +1,4074 @@
+{
+  "text_line_substitutions": [
+    "Build time  : suffix",
+    "Input File = timestamp only",
+    "Total Calculational Time: value",
+    "Time spent in each part: numbers",
+    "Time in/Total Calculation Time/Calculation rate/Initial time numbers"
+  ],
+  "hdf5_excluded_datasets": [],
+  "hdf5_header_filename": "normalize only HDF5 filename header",
+  "HDF5format": "17 significant digits",
+  "numerical_tolerance": 0,
+  "scope": "all datasets of Result/Info/State for task cases and all Result files for existing CTests; if nonphysical datasets appear, freeze exact exclusions before production changes",
+  "baseline_dataset_names": {
+    "mg-neutron-analog": [
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Re"
+      ]
+    ],
+    "mg-neutron-adjoint": [
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Re"
+      ]
+    ],
+    "np-representative": [
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/TotalBin/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell2/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell2/TotalBin/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally2/Cell1/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally2/Cell1/TotalBin/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally2/Cell2/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally2/Cell2/TotalBin/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally3/Cell1/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally3/Cell1/TotalBin/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally3/Cell2/TotalBin/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally3/Cell2/TotalBin/Re"
+      ]
+    ],
+    "mg-neutron-native-ww": [
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Re"
+      ]
+    ],
+    "mg-neutron-batch": [
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/CellTally1/Cell1/EnergyBin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin0/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin1/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin10/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin100/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin101/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin102/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin103/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin104/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin105/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin106/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin107/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin108/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin109/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin11/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin110/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin111/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin112/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin113/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin114/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin115/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin116/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin117/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin118/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin119/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin12/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin120/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin121/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin122/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin123/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin13/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin14/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin15/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin16/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin17/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin18/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin19/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin2/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin20/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin21/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin22/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin23/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin24/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin25/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin26/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin27/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin28/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin29/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin3/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin30/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin31/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin32/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin33/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin34/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin35/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin36/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin37/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin38/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin39/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin4/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin40/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin41/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin42/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin43/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin44/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin45/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin46/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin47/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin48/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin49/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin5/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin50/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin51/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin52/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin53/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin54/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin55/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin56/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin57/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin58/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin59/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin6/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin60/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin61/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin62/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin63/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin64/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin65/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin66/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin67/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin68/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin69/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin7/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin70/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin71/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin72/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin73/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin74/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin75/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin76/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin77/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin78/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin79/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin8/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin80/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin81/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin82/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin83/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin84/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin85/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin86/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin87/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin88/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin89/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin9/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin90/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin91/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin92/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin93/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin94/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin95/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin96/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin97/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin98/Re"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Mean"
+      ],
+      [
+        "inp.Result.h5",
+        "dataset    /Tally/MeshTally2/Bin99/Re"
+      ]
+    ]
+  }
+}

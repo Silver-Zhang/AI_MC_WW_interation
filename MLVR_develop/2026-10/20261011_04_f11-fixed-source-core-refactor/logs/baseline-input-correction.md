@@ -1,0 +1,1 @@
+新增adjoint输入的ADJOINT卡后缺少模块间空行，EXTERNALSOURCE被读作FIXEDSOURCE内部卡；输入校验退出1，无输运结果。仅在任务输入加入空行，物理配置/比较标准不变。原始失败保留baseline-cases/mg-neutron-adjoint；生产未修改。重新建立该例基线见baseline-corrected-cases，源码仍HEAD c3ef0934。

@@ -1,4 +1,4 @@
-# F11阶段1实施方案（待人工批准，尚未应用）
+# F11阶段1实施方案（实施前方案原文；现已获批实施）
 
 唯一设计基线：知识库04 §3.3/§5/§14。实际基线HEAD=c3ef093497ea42c54569a87ed3696642c8b42931。现有调用图/所有权/具体行号见source-map.md。
 
@@ -110,3 +110,7 @@ FinalizeFixedSourceRun(cFixedSource, CMaterial, CAceData, CTally);
 ## 审批内容
 
 待用户批准：只按以上两文件拆分、建立当前HEAD fresh-process baseline及规定回归、保留所有历史语义，完成后归档并停止；不做F11调度、Field/TARGET、CLEAR/SET/REBUILD或同进程重复运行。若审批前HEAD或工作树变化，先重新核查提案适用性与冲突。
+
+## 实施记录
+
+用户回复“批准，继续完成”后执行。两文件提案已原样应用，实际补丁见changes.diff；本文件上文保留审批时设计与风险，不把当时未执行的状态冒充当时已验收。最终验证与限制以README §4为准。

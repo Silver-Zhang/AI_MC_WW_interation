@@ -1,0 +1,7 @@
+{
+  "mg-neutron-analog": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-analog",
+  "mg-neutron-adjoint": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-corrected-runs/mg-neutron-adjoint",
+  "np-representative": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/np-representative",
+  "mg-neutron-native-ww": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-native-ww",
+  "mg-neutron-batch": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-batch"
+}

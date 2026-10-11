@@ -32,10 +32,12 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F08 | WW输入与应用链路 | E — Defect + D — Integration issue（历史源码审计时点；修复进展见对应任务） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合；F11 新动态导入与 topology 构建仍需实现 | `20260918_02_f08-weight-window-audit`；F11 新边界见 04 §10 |
 | F09 | Response统计与FOM | A — Ready（既有单标量信息读取子域）；F11 聚合统计未实现 | 旧 formal Forward 同一 `Tot` 行可读 R/RE_R 与 fixed-source time；F11 多 bin 目标须新增 history 级聚合，计时采用 prepare+transport+finalize，不将旧单 Tot 或旧计时直接视为新功能已验证 | `20260927_05_f09-response-fom-closure`；04 §6、§12 |
 | F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 保留 [Nspace,G]、角色/阶段、RE/status 和完整 G+1；F11 通道改为 RMC 内存→专用 HDF5；体积转换的阶段0最小验证见下方补充，待独立复核；不能一律照抄 Ave；重构与 WW 映射仍分开 | `20260927_06`、`20260927_07`、`20260927_08`；`20261011_01_f11-design-freeze`，04 §7、§10 |
-| F11 | 固定次数双向迭代调度基础 | **design frozen；production implementation not completed** | 正式合并方案已入知识库04；现有类扩展、CalMode 调度、唯一固定源核心、内部 TARGET 构源与文件交换；Task13/14 只支持限定实验生命周期；阶段0最小自验完成待独立复核，阶段1–6待逐项授权 | `20261011_01_f11-design-freeze`；设计 [04](04_F11_v1_架构与实施设计.md) |
+| F11 | 固定次数双向迭代调度基础 | **design frozen；production implementation not completed** | 正式合并方案已入知识库04；现有类扩展、CalMode 调度、唯一固定源核心、内部 TARGET 构源与文件交换；Task13/14 只支持限定实验生命周期；阶段1结构及限定ordinary回归已完成，待独立复核；阶段2–6未开始 | `20261011_01_f11-design-freeze`；设计 [04](04_F11_v1_架构与实施设计.md) |
 | F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复数据；Bootstrap 生命周期与 formal iteration 分离；完整 Field转换/重构/WW_A1 闭环尚未实现 | `20260927_04_f12-bootstrap-forward-chain`；04 §4 |
 
 **F11 单位转换阶段0（E3，待独立复核）**：2026-10-11 的未修改RMC、standard MGACE加载、单位源权重真空直线束四配置最小验证支持04 §7候选表：Normalize=1时uniform Ave是源归一化加权轨迹长度，Field/目标history共用c_i=1/V_i；heter Ave已除体积，共用c_i=1。两条路径Normalize=0均为长度，只作诊断。200历史含107零得分、V=8cm³，独立原始段裁剪参考及248/248行检查支持上述关系；未动态验证Adjoint/碰撞/WW/非等体积bin或全3D轴，未提升接口为Ready。完整结论、证据、转换表、W11/W12边界只在[任务§4](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md#4-结论与边界)维护。04冻结规则未改；新的Field/响应接口未实现。裂变连续F/A门禁仍见04 §14，既有F02单次能力分类不重判。
+
+**F11阶段1结构门禁（自验，ACCEPT WITH LIMITATIONS）**：已有CDCalMode扩展三个成员，普通入口与外源按值工作副本保留，原623行/六模式执行suite只保留一份；旧/新fresh-process原CTest均9/9、103/103确定性比较及三组RNG/内存/WW诊断一致。并行只编译、正式reset/同进程切换/Field与TARGET等未实现，不提升完整F11为Ready。完整证据、六个时间FOM值的处理及边界见[阶段1档案§4](../MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md#4-结论与边界)。
 
 ## F02当前结论
 
@@ -119,3 +121,5 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-10-11：F11 v1 网页合并方案正式入库，D020 记录设计冻结及仅文档授权。更新 F03/F09/F10/F11/F12 的新设计关联，并明确 Field 体积转换和裂变连续运行门禁尚未验证。旧实验分类和原始证据不重判；阶段 0–6 未在本轮启动。档案：`20261011_01_f11-design-freeze`。
 
 - 2026-10-11：阶段0 Field体积归一化最小动态验证及原始段oracle已归档（E3，待独立复核）；同期W11/W12见06。未修改04冻结规则及RMC，未进入阶段1。档案：`20261011_02_f11-field-volume-normalization`。
+
+- 2026-10-11：阶段1核心结构重构完成，自验与完整边界见20261011_04档案§4；RMC仅两文件未提交修改，不改变04冻结规则或tally体积语义，未进入阶段2。

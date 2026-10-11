@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0限定结论已获独立正文ACCEPT WITH LIMITATIONS，原复核README未定稿但用户已允许后续使用。阶段1仅授权分析/建档/设计；当前两文件提案和回归计划已完成，**待用户批准RMC源码修改**，未构建/实施/回归。原冻结决策仍见[D020](DECISIONS.md#d020)。
+阶段0限定结论保留。阶段1已获用户“批准，继续完成”后完成两文件结构拆分及规定回归，**ACCEPT WITH LIMITATIONS，待独立复核/用户验收**。生产RMC有未提交补丁，branch/HEAD仍c3ef0934；不擅自提交或推送。整体F11尚未完成，阶段2未开始。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-先看阶段1档案§3待审批决定及refactor-design/test-plan。批准后继续同一任务：先current-HEAD fresh baseline，再实施两文件拆分并确定性回归。生产实现未开始；本轮停在审批关口，不进入阶段2。
+先读阶段1档案§4、实际changes.diff及原始证据，进行独立复核/用户验收。阶段1本轮停止。阶段2必须新任务并单独授权；prepared入口未实现CLEAR/SET/REBUILD，不直接重复运行。
 
 ## 工作纪律
 

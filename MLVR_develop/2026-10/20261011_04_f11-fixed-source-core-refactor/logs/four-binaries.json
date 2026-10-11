@@ -1,0 +1,22 @@
+{
+  "baseline-build": {
+    "exe": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-build/bin/RMC",
+    "size": 722806728,
+    "sha256": "c754679822a300aee095561af849a52ff12c0f84b8f7cce4320e927760a286f2"
+  },
+  "baseline-mpi-build": {
+    "exe": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-mpi-build/bin/RMC",
+    "size": 809040104,
+    "sha256": "c7bcade6ec3e97af3c21e8d287147aff0890539b97485f4c2a9a656072378de1"
+  },
+  "refactor-build": {
+    "exe": "/tmp/20261011_04_f11-fixed-source-core-refactor/refactor-build/bin/RMC",
+    "size": 722932920,
+    "sha256": "2b432bc5898b939ae389b97da31b3eca934e6397f593da5a9703e5b4c1c1e07e"
+  },
+  "refactor-mpi-build": {
+    "exe": "/tmp/20261011_04_f11-fixed-source-core-refactor/refactor-mpi-build/bin/RMC",
+    "size": 809165888,
+    "sha256": "b399e6e8cb3dfd6a84eabf9c8874f8c9b037bc9505c0e5e4916d659288a60dc3"
+  }
+}

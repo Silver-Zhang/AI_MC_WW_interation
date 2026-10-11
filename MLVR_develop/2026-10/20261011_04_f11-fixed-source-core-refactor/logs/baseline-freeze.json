@@ -1,0 +1,56 @@
+{
+  "frozen_utc": "2026-10-11T09:13:55.894746+00:00",
+  "HEAD": "c3ef093497ea42c54569a87ed3696642c8b42931",
+  "ctest": {
+    "total": 9,
+    "passed": 9
+  },
+  "production_modified": false,
+  "cases": {
+    "mg-neutron-analog": {
+      "work": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-analog",
+      "input_sha256": "62cdc177359ce9dfdd30858c2145ce346e5e3c744c92d4e8239b3490e3df456a",
+      "tally_sha256": "eb04ff8dd982a12d45a2338d4c4c0e3cba3c6ba08139ed6031c8490c4f48c639"
+    },
+    "mg-neutron-adjoint": {
+      "work": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-corrected-runs/mg-neutron-adjoint",
+      "input_sha256": "d56e0f4f3bdc39556436ea7c563b67f9e9956d89622d64a34f038cbca4d1f20e",
+      "tally_sha256": "07f890bd0a9f5ec4a3740529ffc08619da6945b19f3f2b0781ae4c1db91b9ecd"
+    },
+    "np-representative": {
+      "work": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/np-representative",
+      "input_sha256": "2e22d770e5dc85dd881e4614d7dbb8fe874888c705138380b7357cf2d38a2581",
+      "tally_sha256": "4984e3597ce1e4f0a3cb3cb2c45e36000cc630260245d8ec5f3f3639657ba625"
+    },
+    "mg-neutron-native-ww": {
+      "work": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-native-ww",
+      "input_sha256": "19b4191db0e5232c2bf015b6542655e2a524cc260293c15929dc8046436c7371",
+      "tally_sha256": "1d050d6f8e94bae8a7de4de77026516d7fdfb0071b07afdfbb3372a4a8f85054"
+    },
+    "mg-neutron-batch": {
+      "work": "/tmp/20261011_04_f11-fixed-source-core-refactor/baseline-runs/mg-neutron-batch",
+      "input_sha256": "b33e5975bcdef1ad2dc4b9de512d41e3019756dd9e3c076083302c52e1c73f75",
+      "tally_sha256": "eb04ff8dd982a12d45a2338d4c4c0e3cba3c6ba08139ed6031c8490c4f48c639"
+    }
+  },
+  "diagnostics": {
+    "mg-neutron-analog": "logs/baseline-diag-pilot",
+    "mg-neutron-adjoint": "logs/baseline-diagnostics/mg-neutron-adjoint",
+    "mg-neutron-native-ww": "logs/baseline-diagnostics/mg-neutron-native-ww"
+  },
+  "baseline-configure": {
+    "exitcode": 0
+  },
+  "baseline-build": {
+    "exitcode": 0
+  },
+  "baseline-ctest": {
+    "exitcode": 0
+  },
+  "baseline-mpi-configure": {
+    "exitcode": 0
+  },
+  "baseline-mpi-build": {
+    "exitcode": 0
+  }
+}

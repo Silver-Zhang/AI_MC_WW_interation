@@ -1,0 +1,14 @@
+{
+  "changed_files": [
+    "src/CalMode.h",
+    "src/CalcFixedSource.cpp"
+  ],
+  "execution_body_identical": true,
+  "execution_body_lines": 623,
+  "execution_body_sha256": "65828f852a7fb5b8cf34332970257ac795702cf84a1a51503f3b54ca98a42173",
+  "initialization_identical": true,
+  "ordinary_tail_identical": true,
+  "fixed_source_ProcessTally_calls": 1,
+  "source_copy_signature_preserved": true,
+  "untracked_RMC_files": []
+}

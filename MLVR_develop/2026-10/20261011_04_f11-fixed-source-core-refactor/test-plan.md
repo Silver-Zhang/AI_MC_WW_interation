@@ -79,3 +79,13 @@ MPI条件分支编译检查：baseline与refactor各再建MPI=ON/OpenMP=ON/test=
 ## 失败与停止规则
 
 baseline编译/输入/核数据/原reference失败先保留原始证据，不能在新源码中顺带修复或更新参考来掩盖。baseline与新版本任何确定性差异、registry错误、ProcessTally重复或实际WW覆盖缺失都不得ACCEPT；定位差异并按授权范围修正重构，超范围修改先停下说明。验收区分编译成功、运行正常、数值一致三种结论。当前全部为计划，未运行。
+
+## 执行补充（保留事前计划，不回写伪造）
+
+实际命令和退出码在logs/<configure/build/ctest/...>/command.json及stdout/stderr/exitcode。先完成baseline configure/build、五任务用例、三诊断及9/9 CTest、MPI/OMP基线编译并写baseline-freeze.json，再应用生产补丁。新增adjoint输入模块空行修正见baseline-input-correction.md，失败原文保留，未改变物理设置/容差。
+
+既有execute.py会清理成功输出。首次基线CTest已在修改前通过；为保存确定性证据，修改后又用冻结的未修改binary与冻结原输入直接运行九例，不调用会删除输出的运行器，分别存baseline-existing-cases/refactor-existing-cases。追加捕获因原输出被清理而必要，未重建旧binary、未更新任何reference。
+
+初次全HDF5比较102/103，唯一差异为fixed_source_4启用统计检查时的六个wall-clock FOM数据值；源码StatisticsFunc.cpp:124–125/180/218与OutputTallyh5.cpp:259–284确认时间依赖。按照事前§7允许计时/FOM变化的类别，精确列六个路径并只规范其DATA体，保留类型、维度及全部其它物理数据，最终103/103。记录timing-FOM-classification.json，首次失败结果及diff完整保留；物理容差仍0。这是计时字段归类补充，不是放宽物理比较或改变reference。
+
+GDB原始stdout以lossless gzip保存，解压内容SHA见raw-diagnostic-gzip-manifest.json；HDF5完整17位数值转储也已gzip归档。四binary/缓存/flags/源manifest完整绑定，二进制与构建目录仅保留/tmp。脚本拒绝覆盖已有运行目录；复现时使用全新目录/证据副本。生产树现在含重构，重建旧基线须在私有副本用原HEAD的两源文件（或logs/*.before.*）还原，绝不回退生产RMC；其它src文件hash核对production-source-before.sha256.json。最终结论只看README §4。

@@ -1,0 +1,5 @@
+{
+  "mg-neutron-analog": "logs/baseline-diag-pilot",
+  "mg-neutron-adjoint": "logs/baseline-diagnostics/mg-neutron-adjoint",
+  "mg-neutron-native-ww": "logs/baseline-diagnostics/mg-neutron-native-ww"
+}

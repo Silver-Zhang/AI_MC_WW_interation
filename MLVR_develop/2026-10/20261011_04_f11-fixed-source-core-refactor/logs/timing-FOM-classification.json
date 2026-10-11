@@ -1,0 +1,20 @@
+{
+  "reason": "Test plan \u00a77 explicitly allowed wall-clock-dependent FOM values; initial HDF5 blanket comparison overlooked these exact paths, not a physics-tolerance relaxation",
+  "paths": [
+    "/Tally/CellTally2/Cell1/TotalBin/Batches_of_FOM",
+    "/Tally/CellTally2/Cell1/TotalBin/FOM",
+    "/Tally/CellTally2/Cell1/TotalBin/Fluctuated_FOM",
+    "/Tally/CellTally2/Cell3/TotalBin/Batches_of_FOM",
+    "/Tally/CellTally2/Cell3/TotalBin/FOM",
+    "/Tally/CellTally2/Cell3/TotalBin/Fluctuated_FOM"
+  ],
+  "file": "fixed_source_4/inp.Result.h5",
+  "source": [
+    "OutputTallyh5.cpp:259-284",
+    "StatisticsFunc.cpp:124-125,180,218"
+  ],
+  "first_comparison": "comparison/results.json:102/103",
+  "physical_tolerance": 0,
+  "metadata_shapes_types": "still exactly compared",
+  "reference_updates": false
+}

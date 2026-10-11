@@ -1,0 +1,14 @@
+{
+  "root": {
+    "HEAD": "9f5582a2b9647ebb7af562c7b585adaa6ef46b9b\n",
+    "branch": "main\n",
+    "status": "",
+    "ahead_behind": "0\t0\n"
+  },
+  "RMC": {
+    "HEAD": "c3ef093497ea42c54569a87ed3696642c8b42931\n",
+    "branch": "Neural_Network_WW_Iteration\n",
+    "status": "",
+    "ahead_behind": "0\t0\n"
+  }
+}

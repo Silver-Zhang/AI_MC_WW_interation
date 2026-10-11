@@ -1,0 +1,24 @@
+Internal ctest changing into directory: /tmp/20261011_04_f11-fixed-source-core-refactor/refactor-build
+Test project /tmp/20261011_04_f11-fixed-source-core-refactor/refactor-build
+    Start  62: test_fixed_source_adjoint
+    Start  63: test_fixed_source_photon
+    Start  65: test_fixed_source_photon_and_electron
+    Start  66: test_fixed_source_electron
+1/9 Test  #63: test_fixed_source_photon ............................   Passed    0.75 sec
+    Start  69: test_fixed_source_neutron_and_photon_and_electron
+2/9 Test  #62: test_fixed_source_adjoint ...........................   Passed    0.77 sec
+    Start  71: test_fixed_source_1
+3/9 Test  #71: test_fixed_source_1 .................................   Passed    1.98 sec
+    Start  74: test_fixed_source_4
+4/9 Test  #74: test_fixed_source_4 .................................   Passed    1.27 sec
+    Start 109: test_RestartFixRead
+5/9 Test  #66: test_fixed_source_electron ..........................   Passed    4.15 sec
+    Start 114: test_var_reduce_wwmesh_n
+6/9 Test  #65: test_fixed_source_photon_and_electron ...............   Passed    5.81 sec
+7/9 Test #109: test_RestartFixRead .................................   Passed    1.81 sec
+8/9 Test  #69: test_fixed_source_neutron_and_photon_and_electron ...   Passed    6.26 sec
+9/9 Test #114: test_var_reduce_wwmesh_n ............................   Passed    6.07 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) =  10.22 sec

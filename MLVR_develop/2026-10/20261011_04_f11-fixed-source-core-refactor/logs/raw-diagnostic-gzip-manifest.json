@@ -1,0 +1,32 @@
+[
+  {
+    "path": "logs/baseline-diag-pilot/stdout.txt.gz",
+    "raw_sha256": "6afcf17adf80e051e0054eb6327572907c57637b1c6908b6004fd86b30a07bcd",
+    "raw_size": 4282564
+  },
+  {
+    "path": "logs/baseline-diagnostics/mg-neutron-native-ww/stdout.txt.gz",
+    "raw_sha256": "27abc8bf34a39790156258b5cc63e08a5efcf6cd8b03f952fa7f72a47e9a3234",
+    "raw_size": 9080382
+  },
+  {
+    "path": "logs/baseline-diagnostics/mg-neutron-adjoint/stdout.txt.gz",
+    "raw_sha256": "1d774a7ee73d3025669d2d8bec9b7825734ae910e05a408262a616afd9f1b8b3",
+    "raw_size": 2175690
+  },
+  {
+    "path": "logs/refactor-diagnostics/mg-neutron-native-ww/stdout.txt.gz",
+    "raw_sha256": "65da7f0cef2fb2a95cb630a3fc3d4f263c4cf9fb0bb00b2c22ef4aa80b4869e2",
+    "raw_size": 9080382
+  },
+  {
+    "path": "logs/refactor-diagnostics/mg-neutron-adjoint/stdout.txt.gz",
+    "raw_sha256": "778a3f5df72138587b0564030124a1957dc977d613948ddd8bf9499372bdef25",
+    "raw_size": 2175690
+  },
+  {
+    "path": "logs/refactor-diagnostics/mg-neutron-analog/stdout.txt.gz",
+    "raw_sha256": "9b5608fce96b6e6e0b1efbda2278dc929d2cb26b5159b6bcff8acb6ba1fad2e8",
+    "raw_size": 4282564
+  }
+]

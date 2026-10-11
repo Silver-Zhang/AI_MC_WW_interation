@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-11T09:37:24.096475+00:00",
+  "changed_src": [
+    "RMC/src/CalMode.h",
+    "RMC/src/CalcFixedSource.cpp"
+  ],
+  "unchanged_src_count": 846,
+  "frozen04_unchanged": true,
+  "database_primary_files_unchanged": true,
+  "RMC_untracked_files": [],
+  "reference_and_tests_changed": false,
+  "no_agent_commit_push_branch_reset": true,
+  "exact_comparison": true,
+  "CTest_old_new": [
+    9,
+    9
+  ],
+  "archive_issues": 0,
+  "changes_diff_sha256": "3d5008a2840526800350cf8fb3ceb964d5e6c11e32cb9f4deffd8d7a6dfdde9a"
+}
