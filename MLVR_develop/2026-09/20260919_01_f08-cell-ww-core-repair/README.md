@@ -88,7 +88,7 @@ WWP_ISOLATION_OK: unused photon WWP leaves neutron cell WW tally byte-identical
 - **结论**：native `WEIGHTWINDOW` 的 WWP 参数生命周期已修复：`WWP:N/P/E` 现在独立存入每粒子类型参数数组，cell 和 native mesh 的 upper/survival 构造与 `DoWeightWindows()` 的 `MXSPLN` 读取使用同一来源。加入不同 `WWP:P` 的 neutron cell-WW 回归仍与基线 tally 字节一致，说明未使用 photon WWP 不再改变 neutron 统计策略；三粒子既有 cell-WW 回归均通过。
 - **不能推出什么**（边界）：不证明 mesh WW、MPI、adjoint+WW、split bank 状态或 WWINP 正确；不证明完整 WW 已 A — Ready；没有单粒子大样本 oracle，不能仅凭回归断言所有 roulette/splitting 情况均已独立验证；$E=0$ 首边界防护未实施。
 - **遗留 / 下一步**：先为 cell WW 建立 roulette/splitting 粒子级 oracle，并单独确认 $E=0$ 是否可达；之后进入 mesh 的数组长度、空间边界与 point/track 事件时序修复。
-- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，本地提交 `341c0238`；根工作区档案待同步提交；未 push。
+- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，提交 `341c0238`；已随 2026-10-11 推送入库（同步远端 4 提交后为 `c3ef0934`）；根工作区档案已入库。
 
 > **模式 C 追加 · 结果解释**：该结果支持“WWP 是粒子类型独立的统计控制参数，读取、构造和执行必须使用同一参数源”的假设：额外 photon WWP 不再影响 neutron cell-WW tally。三条回归的通过说明默认各粒子 cell 路径未退化；它不验证未运行的复杂权窗组合，也不量化方差/FOM 改善。
 

@@ -83,7 +83,7 @@ Error: WWMESH parameter count (11) does not match mesh count (10) times energy-b
 - **结论**：native WWMESH lower-bound 数组现在必须与真实空间 mesh 数×能群数严格一致。合法 10×1 输入保持三粒子 mesh WW 回归通过；9/11 项输入均在初始化期拒绝，消除了整数除法截断导致的运行期无定义映射。
 - **不能推出什么**（边界）：不证明 mesh WW 的 point/track 事件时序、异构最大边界、MPI、WWINP、split bank、adjoint+WW 或完整方差改善正确；多能群/异构 mesh 的同一检查逻辑未单独动态运行。
 - **遗留 / 下一步**：处理异构 mesh 最大边界 index；之后再审查 point/track mesh 事件时序与 MPI shared offset。
-- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，本地提交 `5ec595e1`；根工作区档案待同步提交；未 push。
+- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，提交 `5ec595e1`；已随 2026-10-11 推送入库（同步远端 4 提交后为 `c3ef0934`）；根工作区档案已入库。
 
 > **模式 C 追加 · 结果解释**：合法输入回归通过说明该检查不改变已支持的 mesh WW 映射；9/11 项输入被拒绝说明 RMC 不再把没有明确 $w_L(m,g)$ 含义的外部数组带入输运。该结果不外推到未测的多能群、异构、并行或事件时序问题。
 

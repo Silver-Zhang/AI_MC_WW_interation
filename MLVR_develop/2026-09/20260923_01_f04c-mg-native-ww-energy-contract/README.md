@@ -9,7 +9,7 @@
 | 报告人 | GitHub Copilot |
 | 关联知识库条目 | F04 |
 | 涉及文件 | `RMC/src/{WeightWindow.h,WeightWindows.cpp,DoMeshWeightWindow.cpp,DoWeightWindow.cpp,TrackWithWeightWindow.cpp,RayTracking.cpp,GmaGeoTracking.cpp}`；新增任务局部 V2–V5 输入/脚本/日志 |
-| 分支 / 提交 | RMC `Neural_Network_WW_Iteration` / 修复 commit `5cfb0f77`（未 push；基线 `b7d8a946`） |
+| 分支 / 提交 | RMC `Neural_Network_WW_Iteration` / 修复 commit `5cfb0f77`（已推送 2026-10-11；基线 `b7d8a946`） |
 
 ---
 
@@ -97,7 +97,7 @@ V2/V3 修正后输入、stdout/stderr 与结果见 `runs_source_energy_fixed/`�
 - **结论**：已修复 MG native WW 的能量坐标契约。`WWE:N` 现在统一表示物理 MeV 能量网格；MG forward/adjoint 在 native cell/track/point mesh 查窗前使用当前群中心物理能量；CE 行为保持原样。V2/V3 表明物理边界可使同一 MG source group 切换预期 WW bin；V5 energy-dependent 深穿透伴随 WW-on/off 合并 $z=0.29571$，未观察到修复引入 bias，并取得 9.27935× FOM。
 - **不能推出什么**（边界）：群中心是 MG 群的代表能量，不等同于群内连续谱；本任务不验证 MG photon/electron、MCNP `WWINP`、MPI/OpenMP、cylindrical mesh 或真实 MLVR 生成 window；CE 未改变仅由现有回归和 `GetErgValue` identity 分支支持。
 - **遗留 / 下一步**：修正后的 V2/V3 确认 0.4015 MeV 输入已进入高群用例，但仍只以输运碰撞数间接判断，不是直接观察选中 bin。下一步应新增 deterministic selected-bin/lower-bound 测试；第一版 MG 输入建议要求 `WWE:N` 边界与 MG 群边界一致（需要另行确认并实施输入校验）。若第一版需要 MG photon、MPI 或 `WWINP`，另立验证任务；`WWE:N=0` 仍会被 parser 作为显式上界而形成额外 bin，输入需省略 `WWE:N` 以表示默认单 interval，这一既有 parser 行为不在本任务修复范围。
-- **提交状态**：RMC 修复已本地 commit `5cfb0f77`（未 push，待 push 时机）；根工作区档案随 2026-09-23 提交入库；`runs/`、`runs_v5/`、`runs_source_energy_fixed/` 运行目录按归档体积规范不入库、仅保留本地。
+- **提交状态**：RMC 修复已 commit `5cfb0f77`，2026-10-11 随分支推送入库（同步远端 4 提交后为 `c3ef0934`）；根工作区档案随 2026-09-23 提交入库；`runs/`、`runs_v5/`、`runs_source_energy_fixed/` 运行目录按归档体积规范不入库、仅保留本地。
 
 > **模式 C 追加 · 结果解释**：修复前，MeV 边界与群编号在数值轴上混用；修复后，两者先回到同一物理能量轴再做 bin 选择。V5 的统计相容支持“本修复只纠正 WW 的选择，不改变伴随响应的期望”；FOM 增益说明所选深穿透 window 在该问题上有效，但不能推广为所有 window 的收益。
 

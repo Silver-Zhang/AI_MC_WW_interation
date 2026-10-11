@@ -9,7 +9,7 @@
 | 报告人 | GitHub Copilot |
 | 关联知识库条目 | W10 |
 | 涉及文件 | `RMC/src/WeightWindows.cpp`（修复）；`RMC/tests/MCNP_WeightWindow_MPI_multi_particle/`、`RMC/tests/MCNP_WeightWindow_MPI_ShareMem_multi_particle/`（新增回归）；`RMC/tests/{CMakeLists.txt,configure.yaml}`（注册）；本档案 `changes.diff`、`changes-new-files.diff`、`logs/` |
-| 分支 / 提交 | RMC `Neural_Network_WW_Iteration` / 基线 `41cf4559`；修复已在工作区完成，**未 commit**（硬规则 5：是否提交由用户决定） |
+| 分支 / 提交 | RMC `Neural_Network_WW_Iteration` / 基线 `41cf4559`；修复已 commit `b7d8a946`，已随 2026-10-11 推送入库（同步远端 4 提交后为 `c3ef0934`） |
 
 ---
 
@@ -159,9 +159,9 @@ diff MCNP_WeightWindow_MPI_multi_particle/reference_result \
   - 不能外推到跨节点共享窗口、`WWINP` `nr=16` 圆柱网格 + shared 组合、electron 第三粒子类型；
   - 实测 tally 一致性依赖“相同随机数流 + 相同 WW 参数”，不是统计等价性声明；
   - 修复前失败表现为 photon 参数错位（数值偏差而非崩溃）——越界读取未在本用例触发崩溃，不代表其他输入不会。
-- **遗留 / 下一步**：RMC 提交由用户决定（当前工作区改动未 commit）；可选的 CI 端确认；随后处理 W10 split `ParticleAttr`。
+- **遗留 / 下一步**：RMC 提交与推送已完成（`b7d8a946`，2026-10-11，用户拍板）；CI 端确认待观察；随后处理 W10 split `ParticleAttr`。
 - **物理导读同步**：本次为被 MLVR 第一版排除的 `WWINP` point mesh 路径上的工程修复，未改变物理结论、适用范围或风险描述，`MLVR_Physics_Guide/` 无需更新。
-- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration` 工作区改动，**未 commit / 未 push**（硬规则 5）；改动快照 `changes.diff`（跟踪文件）+ `changes-new-files.diff`（新增测试文件）；根工作区档案待提交。
+- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration` 提交 `b7d8a946`；已随 2026-10-11 推送入库；改动快照 `changes.diff`（跟踪文件）+ `changes-new-files.diff`（新增测试文件）；根工作区档案已入库。
 
 > **模式 C 追加 · 结果解释**：结果支持或否定了哪个假设；通过/失败在物理上说明什么；不可外推的边界在哪。
 

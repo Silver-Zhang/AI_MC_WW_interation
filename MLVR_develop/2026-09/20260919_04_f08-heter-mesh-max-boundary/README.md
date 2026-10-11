@@ -80,7 +80,7 @@ ctest --test-dir /tmp/rmc-f08-cell-ww-build --output-on-failure -R '^test_heter_
 - **结论**：异构 Cartesian/cylindrical mesh 的最大边界现与均匀 mesh 一致，按半开区间 $[x_{min},x_{max})$ 视为 mesh 外并返回 `-1`；消除了非法正 index 流入 point mesh WW 参数访问的路径。现有三条 mesh WW 回归与一条异构 mesh tally 回归均通过。
 - **不能推出什么**（边界）：不证明精确最大边界动态输入已被独立执行，也不证明内部边界、浮点容差、track 分段、圆柱 phi 周期、MPI、WWINP、split bank 或 adjoint+WW 正确。
 - **遗留 / 下一步**：优先审查 point/track mesh 的事件时序与 MPI shared mesh offset；再处理 split bank `ParticleAttr` 和 adjoint+WW 组合边界。
-- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，本地提交 `41cf4559`（中文提交信息）；根工作区档案待同步提交；未 push。
+- **提交状态**（分支 / commit / 谁 push）：RMC `Neural_Network_WW_Iteration`，提交 `41cf4559`（中文提交信息）；已随 2026-10-11 推送入库（同步远端 4 提交后为 `c3ef0934`）；根工作区档案已入库。
 
 > **模式 C 追加 · 结果解释**：四条现有回归通过说明统一边界语义没有破坏已覆盖 mesh 输运；代码推导说明 exact-max 状态不再构造非法正 index。该结果仅闭合最大外边界的索引安全性，不外推到未构造的动态边界点或其他 mesh 机制。
 
