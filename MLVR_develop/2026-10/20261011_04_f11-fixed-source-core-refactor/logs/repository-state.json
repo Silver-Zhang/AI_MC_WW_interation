@@ -1,0 +1,103 @@
+{
+  "pre_task_observed": {
+    "root_status": "",
+    "RMC_status": "",
+    "root_HEAD": "6152c7f0e70d4dadc4ecaddf5c95dc4b3e443ee8",
+    "RMC_HEAD": "c3ef093497ea42c54569a87ed3696642c8b42931"
+  },
+  "capture_time": "2026-10-11T08:30:51.878555+00:00",
+  "root": {
+    "branch": {
+      "stdout": "main\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "HEAD": {
+      "stdout": "70c2fd80996c6891499c68625824c2fe0da68cd3\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "status": {
+      "stdout": " M MLVR_develop/INDEX.md\n?? MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "diff": {
+      "stdout": "diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md\nindex 11cafe8..e43f439 100644\n--- a/MLVR_develop/INDEX.md\n+++ b/MLVR_develop/INDEX.md\n@@ -8,6 +8,7 @@\n \n | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |\n |---|---|---|---|---|---|\n+| 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) |  | 待设计 | F11 | |\n | 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |\n | 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |\n | 2026-10-11 | [f11-design-freeze](2026-10/20261011_01_f11-design-freeze/README.md) | 文档 / F11 v1 合并设计入库 | 已完成（design frozen；生产实现和后续测试未启动） | F11/F03/F09/F10/F12 | 正式设计入知识库04；D020；状态与交接同步；只改文档，阶段0–6待逐项授权 |\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "untracked": {
+      "stdout": "MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "submodules": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "upstream": {
+      "stdout": "origin/main\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "ahead_behind": {
+      "stdout": "0\t0\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "unpushed_commits": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    }
+  },
+  "RMC": {
+    "branch": {
+      "stdout": "Neural_Network_WW_Iteration\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "HEAD": {
+      "stdout": "c3ef093497ea42c54569a87ed3696642c8b42931\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "status": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "diff": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "untracked": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "submodules": {
+      "stdout": " 835e2d898d641e31ee377f4df9d51d4d9d20c52d dependencies/Eigen3 (heads/RMC_depend)\n 6236501f2803bf00ba06012a432e1e3760cd2578 dependencies/HighFive (v2.0-48-g6236501)\n-e51f1cbaf05af22d830992ad460c4467b7118392 dependencies/PNG\n-63cd9969b832e7b87c2a24b32ae216423b473968 dependencies/cgmf\n-bcd0d41457aa764bc485e2bfb245f7899fcde098 dependencies/coolprop\n-1d9d8b5ea64af77f78e93e70feebce241133d968 dependencies/fission\n cb1c789df5df85d5c67f431f723b97fd19036857 dependencies/fmt (9.1.0-2-gcb1c789d)\n ad0e89cbfb4d0c1ce4d097e134eb7be67baebb36 dependencies/spdlog (v1.2.1-2179-gad0e89cb)\n 58c4b50ded737c9a8b9464f275764e1cffd89507 dependencies/xtensor (0.20.10-2-g58c4b50)\n 9b9f46b070a17b213b84e8236f07fa220eedc9c1 dependencies/xtl (0.6.7-1-g9b9f46b)\n-ac068a0854e244d10ee13a14da4c2c6187e04eb2 dependencies/zlib\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "upstream": {
+      "stdout": "origin/Neural_Network_WW_Iteration\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "ahead_behind": {
+      "stdout": "0\t0\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "unpushed_commits": {
+      "stdout": "",
+      "stderr": "",
+      "exitcode": 0
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "proposal_only": true,
+  "RMC_modified": false,
+  "base_HEAD": "c3ef093497ea42c54569a87ed3696642c8b42931",
+  "execution_range": [
+    97,
+    719
+  ],
+  "execution_lines": 623,
+  "execution_body_sha256": "65828f852a7fb5b8cf34332970257ac795702cf84a1a51503f3b54ca98a42173",
+  "original_wrapper_signature_preserved": true,
+  "execution_body_appears_once_in_proposal": true,
+  "init_original_body_preserved": true,
+  "ordinary_tail_preserved": true,
+  "proposed_ProcessTally_call_count": 1,
+  "files": [
+    "src/CalMode.h",
+    "src/CalcFixedSource.cpp"
+  ]
+}

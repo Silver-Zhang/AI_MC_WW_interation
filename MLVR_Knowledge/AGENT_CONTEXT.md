@@ -7,7 +7,7 @@
 
 1. 根目录 [STATUS.md](../STATUS.md)：现在做到哪一步、下一步是否已授权。
 2. [F11 v1 正式设计](04_F11_v1_架构与实施设计.md)：按当前阶段读取，不必每次通读。
-3. [阶段0最新档案](../MLVR_develop/2026-10/20261011_02_f11-field-volume-normalization/README.md) §1/§3/§4；设计入库记录仍见20261011_01。
+3. [阶段1当前档案](../MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) §1/§3/§4；阶段0原档案与独立正文按当前任务指针读取。
 
 ## 当前主线
 
@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-2026-10-11用户随后明确授权阶段0：新输入/脚本、独立编译未修改RMC、小规模验证；已执行并归档，待独立复核。**阶段1–6未授权开工，本轮停止。** 原设计决策仍见[D020](DECISIONS.md#d020)，本轮执行授权见阶段0档案§3。
+阶段0限定结论已获独立正文ACCEPT WITH LIMITATIONS，原复核README未定稿但用户已允许后续使用。阶段1仅授权分析/建档/设计；当前两文件提案和回归计划已完成，**待用户批准RMC源码修改**，未构建/实施/回归。原冻结决策仍见[D020](DECISIONS.md#d020)。
 
 ## 权威顺序
 
@@ -29,12 +29,12 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 - 首版 standard MGACE、中子固定源、Linux 串行、Cartesian Type=1、Energy=-1、Normalize=1、native track-mesh WW；固定模型、网格、群和 WWP。
 - Bootstrap 无 WW、不是正式 iteration；一轮=A+F；不新增 batch 参数，不跨 iteration 合并统计；不自动收敛、best-anchor 或成品计算。
 - Field=[Nspace,G] 的 value+RE+status；原始场与重构场分开，重构场不复制 MC RE。
-- Field体积转换的阶段0证据/结论/边界见最新档案§4与02顶部速览；不能把Normalize=1一律解释为Ave已是通量密度，未验证项不得提升Ready。
+- Field体积转换的阶段0证据/结论/边界见原阶段0档案§4、独立复核正文与02顶部速览；不能把Normalize=1一律解释为Ave已是通量密度，未验证项不得提升Ready。
 - 起始权重、伴随尺度、多 bin 响应 history 统计、随机数段和 FOM 计时以 04 为准。非零裂变产生项须对应连续 F/A 门禁通过后才开放。
 
 ## 下一步
 
-阶段0最小验证已完成（E3，待独立复核），先复核最新档案。用户另行授权后才立项阶段1；生产实现未开始，不因前置自验通过自动拆分代码。
+先看阶段1档案§3待审批决定及refactor-design/test-plan。批准后继续同一任务：先current-HEAD fresh baseline，再实施两文件拆分并确定性回归。生产实现未开始；本轮停在审批关口，不进入阶段2。
 
 ## 工作纪律
 

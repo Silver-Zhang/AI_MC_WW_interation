@@ -1,0 +1,32 @@
+{
+  "database_root": "/home/silver/NucXS_Library/RMC_DATA",
+  "Python_modules": {
+    "yaml": true,
+    "h5py": false,
+    "numpy": false
+  },
+  "existing_stage0_build_is_not_current_HEAD_baseline": true,
+  "fresh_stage1_build_run": "not authorized yet; planned after approval",
+  "available_tools": {
+    "h5dump": {
+      "stdout": "/usr/bin/h5dump\n",
+      "stderr": "",
+      "exitcode": 0
+    },
+    "mpicxx": {
+      "stdout": "/usr/bin/mpicxx\n",
+      "stderr": "",
+      "exitcode": 0
+    }
+  },
+  "xsdir": {
+    "path": "/home/silver/NucXS_Library/RMC_DATA/xsdir",
+    "sha256": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b",
+    "size": 1116007
+  },
+  "multigroup/mgxsnp": {
+    "path": "/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp",
+    "sha256": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001",
+    "size": 5913327
+  }
+}

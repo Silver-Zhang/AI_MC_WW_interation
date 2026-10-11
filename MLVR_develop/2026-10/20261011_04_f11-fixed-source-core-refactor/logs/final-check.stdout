@@ -1,0 +1,20 @@
+{
+  "root": {
+    "HEAD": "70c2fd80996c6891499c68625824c2fe0da68cd3\n",
+    "branch": "main\n",
+    "status": " M MLVR_Knowledge/AGENT_CONTEXT.md\n M MLVR_develop/INDEX.md\n M STATUS.md\n?? MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/\n",
+    "ahead_behind": "0\t0\n"
+  },
+  "RMC": {
+    "HEAD": "c3ef093497ea42c54569a87ed3696642c8b42931\n",
+    "branch": "Neural_Network_WW_Iteration\n",
+    "status": "",
+    "ahead_behind": "0\t0\n"
+  },
+  "unchanged_RMC_src_files": 848,
+  "frozen04_unchanged": true,
+  "actual_production_changes_diff": "absent: no production changes",
+  "baseline_tests": "not run; approval pending",
+  "proposed_patch_apply_check_exitcode": 0,
+  "git_diff_check_exitcode": 0
+}

@@ -1,0 +1,52 @@
+{
+  "mg-neutron-analog.inp": {
+    "sha256": "62cdc177359ce9dfdd30858c2145ce346e5e3c744c92d4e8239b3490e3df456a",
+    "N": 5000,
+    "RNG": {
+      "type": 2,
+      "seed": 17,
+      "stride": 100000
+    },
+    "run_status": "not_run"
+  },
+  "mg-neutron-adjoint.inp": {
+    "sha256": "46c1a26488e08a49d618e0a6f32c8a4c2fb28c18c236c4e4f453f8c369f1c9e3",
+    "N": 5000,
+    "RNG": {
+      "type": 2,
+      "seed": 17,
+      "stride": 100000
+    },
+    "run_status": "not_run"
+  },
+  "np-representative.inp": {
+    "sha256": "2e22d770e5dc85dd881e4614d7dbb8fe874888c705138380b7357cf2d38a2581",
+    "N": 2000,
+    "RNG": {
+      "type": 2,
+      "seed": 17,
+      "stride": 100000
+    },
+    "run_status": "not_run"
+  },
+  "mg-neutron-native-ww.inp": {
+    "sha256": "19b4191db0e5232c2bf015b6542655e2a524cc260293c15929dc8046436c7371",
+    "N": 5000,
+    "RNG": {
+      "type": 2,
+      "seed": 17,
+      "stride": 100000
+    },
+    "run_status": "not_run"
+  },
+  "mg-neutron-batch.inp": {
+    "sha256": "b33e5975bcdef1ad2dc4b9de512d41e3019756dd9e3c076083302c52e1c73f75",
+    "N": 5000,
+    "RNG": {
+      "type": 2,
+      "seed": 17,
+      "stride": 100000
+    },
+    "run_status": "not_run"
+  }
+}
