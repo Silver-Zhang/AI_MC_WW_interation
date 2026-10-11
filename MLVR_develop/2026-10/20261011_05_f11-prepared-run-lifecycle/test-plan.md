@@ -1,6 +1,6 @@
 # 基线、fresh oracle 与 Stage2 门禁（运行前判据）
 
-导航：§1 身份/模型；§2 原七门禁与新增G0链接检查；§3比较标准/§3.1时间白名单；§4命令/证据/停止。当前只是设计，尚未生成运行输入/driver、编译或执行门禁；批准后先冻结baseline再修改生产源码。
+导航：§1 身份/模型；§2 原七门禁与新增G0链接检查；§3比较标准/§3.1时间白名单；§4命令/证据/停止。本文件主体保留实施前判据；用户已批准并执行。真实命令/退出码及结果入口在文末§5和README §4，不能将命令模板当作执行证据。
 
 ## 1. 固定条件与基线
 
@@ -72,7 +72,7 @@ Gate7负例：未Initialize调用Run；重复Initialize；Finish后Run或重建p
 
 ## 4. 命令、证据与停止
 
-以下是批准后要执行的命令模板，未运行。RUN_ROOT必须不存在，wrapper为每条命令保存cwd/环境/argv/stdout/stderr/exitcode。
+以下保留原审批时的命令模板，本段本身不是执行证据；真实命令与退出码见§5。RUN_ROOT必须不存在，wrapper为每条命令保存cwd/环境/argv/stdout/stderr/exitcode。
 
 ~~~bash
 F11_STAGE2_ROOT=/tmp/20261011_05_f11-prepared-run-lifecycle
@@ -116,8 +116,28 @@ python3 "$F11_STAGE2_TASK/tools/compare_lifecycle.py" \
 
 driver/inputs/compare_lifecycle.py/check_prepared_linkage.py及两个manifest将在批准后的实施步骤创建，命令中的接口按本方案定义。不能把本段当实际执行证据。fresh模式走正常RunCalculation，只设置准确RNG参数，不调用新Prepare；完整内存数据由只读GDB在其实际工作副本栈帧仍有效时抓取（不能返回后读取main的Tally副本）。观察器配置的输出目录与snapshot-dir一致。必要只读GDB观察命令仍为gdb -q -batch -x task-owned-trace.gdb --args binary…；记录真实传入ORNG，不误读global同名对象。
 
-批准后产物：logs/baseline-freeze.json，各build/ctest/run/negative/compare command与exit/stdout/stderr，所有输入及spec TSV，每run receipt、source/derived/RNG/bank/tally/WW snapshots、原始full序列lossless gzip及hash；binary/构建目录在/tmp，通过manifest绑定。不会把单文件>10MB未确认写入档案。
+实际归档要求：logs/baseline-freeze.json，各build/ctest/run/negative/compare command与exit/stdout/stderr，所有输入及spec TSV，每run receipt、source/derived/RNG/bank/tally/WW snapshots、原始full序列lossless gzip及hash；binary/构建目录在/tmp，通过manifest绑定。不会把单文件>10MB未确认写入档案。
 
 G0附加命令：在同一私有源码另以`-Dtest=OFF`配置确认target缺席并构建普通RMC；MPI/OMP/AIS/Python配置只按既有依赖可用性检查target注册条件，依赖缺失如实写未覆盖，不安装/改库绕过。根CMake源码门禁和serial实际链接必做；不得由条件分支审查声称对应并行输运已通过。G7a逐负例运行同一`--mode persistent --input ... --plan ...`入口并保存预期非零退出与失败阶段；G7b使用上述selftest命令，selftest自身退出0仅表示预期拒绝均发生，逐子项的异常/退出独立记录。
 
 结束判定区分“编译成功/运行结束/确定性等价”。实现或门禁未完成为BLOCKED（说明具体原因）；全受限门禁通过但非零裂变/并行等未支持为ACCEPT WITH LIMITATIONS；不把限制外项写Ready。完成Stage2立即停止，不自动进入Stage3，不commit/push。
+
+
+## 5. 实施后的证据索引与测试具体化
+
+- baseline在20:39:55 +0800、任何生产编辑前冻结，见logs/baseline-freeze.json。最终ordinary确定性比较见logs/ordinary-comparison-final-03；运行与GDB诊断见logs/refactor-*；原9个CTest及新增权重owner selftest见logs/implementation/final-ctest-02。
+- 正式序列输入及effective seed：inputs/lifecycle、logs/lifecycle-plans.json。重跑命令：`python3 tools/run_all_lifecycle.py <新的日志标签>`（从本任务目录执行）；每条实际命令、工作目录、stdout/stderr/退出码均由run_command.py记录。
+- 完整物理快照与逐history gzip序列按logs/gates-04/<序列>/{persistent,fresh-ID}存档。compare_lifecycle.py逐字段、逐元素、逐事件hash零容差；时间例外仅§3.1名单。原始数组按实际C++元素字节宽度取数，不含allocator容量区或未初始化尾字节。首轮gates-01观察器错误保留，不作通过证据。
+- FF的SCHECK诊断采用额外总通量cell tally，原按群cell CHECK=0、30群mesh仍保留。原因是未修改baseline已复现能群cell SCHECK崩溃（logs/implementation/baseline-scheck-energy）；prepared对此组合前置拒绝。未修改旧计分或reference。
+- 普通WEIGHT=D1在原parser就失败，不能作为加权源输运正例；常数WEIGHT=2与Type1/3照常完成新旧对照。66项负例预设与结果为logs/negative-plan.json、logs/negative-final-02；WEIGHT绑定是公开definition负例，实际权重audit是独立7项owner selftest，真实运行失败传播由stride=1覆盖。三者分别报告。
+- 比较器自测为tools/check_comparator.py和logs/comparator-selftest.json；只改任务快照内存副本，不修改生产状态/reference。原ordinary比较器少列两种已冻结的FOM check时间字段造成122/123；按§3.1原名单补齐后重比较，保留失败diff，未更改物理容差。
+- G0还保存test=OFF的普通构建及ON恢复，MPI/AIS/Python/MPI+OMP配置的target缺席检查；OpenMP-only是原CMake本身禁止的配置，其失败也保留。宏配置检查不代表并行/AIS/Python数值通过。
+
+测试脚本输出中的预计parser失败exit=1和GDB外层exit=0必须区分：正例只认实际inferior正常退出；baseline SCHECK的SIGSEGV不是成功。最终已完成门禁、未覆盖范围与Stage3条件只在README §4声明。
+
+
+导出取证补充：使用trace_exports.gdb在原OutputTallyh5已Flush之后复制每轮HDF，并在PrintPdfChart返回时取每个实际输出bin的PDF。初次exports-01发现旧writer的table及TooFewParticles条件字段重复写同一文件并非完整覆盖（首轮PDF63个bin、次轮73个bin逐项一致，但次轮文件残留10个旧字段及旧table）。因此**仅测试driver**在写下一张私有快照前调用现有HDF DeleteData("Tally")清上次输出组；不换输出句柄，不清生产统计、不改writer、不生成F11 Field。首轮原始失败保留。随后每轮整个HDF严格比较，仍只有§3.1五种精确字段例外。这是测试输出隔离，不声明普通旧writer自动具备per-run导出语义。
+
+最终全量transport取证使用gates-04。原FinishBreakpoint在每次采样/WW返回上有巨大调试开销；gates-01/02超时/终止记录保留。最终observer在CalcFixedSource.cpp:186取得刚返回的实际源，WW查询入口记录mesh/物理能量，在紧接的DoWeightWindows入口记录真正使用的三界，逐事件不抽样、不减N。每个查询必须被一个实际WW动作消费，否则比较失败。一次尝试在Finish.stop内delete断点触发GDB本身SIGSEGV（observer-speed-01），已弃用；不是RMC输运崩溃。
+
+最终资源比较澄清：不同WW工作负载的bank capacity可按实际峰值增长；每run live bank仍须仅剩规定哨兵。原Gate6的固定负载20轮warmup后capacity/FD稳定及4MiB上限保持不变；比较器错误地对所有WW变化要求相同capacity的失败记录保留。最终生产截止状态与全部数值使用gates-04重新取证，普通回归和CTest也由最终binary重跑。

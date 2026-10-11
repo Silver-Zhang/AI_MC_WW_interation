@@ -1,0 +1,6 @@
+[  0%] Built target RNG
+[  1%] Built target fmt
+[  3%] Built target spdlog
+[  6%] Built target Depth
+[ 53%] Built target RMC
+[100%] Built target RMCPreparedLifecycle

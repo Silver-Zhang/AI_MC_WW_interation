@@ -1,0 +1,349 @@
+{
+  "pilot": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 100,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/pilot-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "A",
+      "N": 100,
+      "offset": 100,
+      "seed": 1399499322989601297,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/pilot-fresh-2.inp",
+      "ww": 0
+    },
+    {
+      "id": 3,
+      "role": "F",
+      "N": 100,
+      "offset": 200,
+      "seed": 3475520122572489745,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/pilot-fresh-3.inp",
+      "ww": 0
+    }
+  ],
+  "ff": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 1000,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ff-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "F",
+      "N": 2000,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ff-fresh-2.inp",
+      "ww": 0
+    }
+  ],
+  "faf": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 1000,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "A",
+      "N": 1500,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-fresh-2.inp",
+      "ww": 0
+    },
+    {
+      "id": 3,
+      "role": "F",
+      "N": 2000,
+      "offset": 2500,
+      "seed": 7909072609005736465,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-fresh-3.inp",
+      "ww": 0
+    }
+  ],
+  "aa": [
+    {
+      "id": 1,
+      "role": "A",
+      "N": 1000,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/aa-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "A",
+      "N": 1500,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/aa-fresh-2.inp",
+      "ww": 0
+    }
+  ],
+  "ww": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 1000,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ww-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "F",
+      "N": 1000,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ww-fresh-2.inp",
+      "ww": 1
+    },
+    {
+      "id": 3,
+      "role": "F",
+      "N": 1000,
+      "offset": 2000,
+      "seed": 2898551591397074961,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ww-fresh-3.inp",
+      "ww": 2
+    },
+    {
+      "id": 4,
+      "role": "F",
+      "N": 1000,
+      "offset": 3000,
+      "seed": 2677826766351137809,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/ww-fresh-4.inp",
+      "ww": 0
+    }
+  ],
+  "faf-ww": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 500,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-ww-fresh-1.inp",
+      "ww": 1
+    },
+    {
+      "id": 2,
+      "role": "A",
+      "N": 500,
+      "offset": 500,
+      "seed": 6948616054811748881,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-ww-fresh-2.inp",
+      "ww": 2
+    },
+    {
+      "id": 3,
+      "role": "F",
+      "N": 500,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/faf-ww-fresh-3.inp",
+      "ww": 1
+    }
+  ],
+  "reuse": [
+    {
+      "id": 1,
+      "role": "F",
+      "N": 100,
+      "offset": 0,
+      "seed": 17,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-1.inp",
+      "ww": 0
+    },
+    {
+      "id": 2,
+      "role": "A",
+      "N": 100,
+      "offset": 100,
+      "seed": 1399499322989601297,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-2.inp",
+      "ww": 0
+    },
+    {
+      "id": 3,
+      "role": "F",
+      "N": 100,
+      "offset": 200,
+      "seed": 3475520122572489745,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-3.inp",
+      "ww": 0
+    },
+    {
+      "id": 4,
+      "role": "A",
+      "N": 100,
+      "offset": 300,
+      "seed": 8349559869096961553,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-4.inp",
+      "ww": 0
+    },
+    {
+      "id": 5,
+      "role": "F",
+      "N": 100,
+      "offset": 400,
+      "seed": 711855678567712785,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-5.inp",
+      "ww": 0
+    },
+    {
+      "id": 6,
+      "role": "A",
+      "N": 100,
+      "offset": 500,
+      "seed": 6948616054811748881,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-6.inp",
+      "ww": 0
+    },
+    {
+      "id": 7,
+      "role": "F",
+      "N": 100,
+      "offset": 600,
+      "seed": 3542780302808534033,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-7.inp",
+      "ww": 0
+    },
+    {
+      "id": 8,
+      "role": "A",
+      "N": 100,
+      "offset": 700,
+      "seed": 6789698939956309521,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-8.inp",
+      "ww": 0
+    },
+    {
+      "id": 9,
+      "role": "F",
+      "N": 100,
+      "offset": 800,
+      "seed": 2562969741647876113,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-9.inp",
+      "ww": 0
+    },
+    {
+      "id": 10,
+      "role": "A",
+      "N": 100,
+      "offset": 900,
+      "seed": 2054962563653890577,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-10.inp",
+      "ww": 0
+    },
+    {
+      "id": 11,
+      "role": "F",
+      "N": 100,
+      "offset": 1000,
+      "seed": 2131104056799056913,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-11.inp",
+      "ww": 0
+    },
+    {
+      "id": 12,
+      "role": "A",
+      "N": 100,
+      "offset": 1100,
+      "seed": 7095246900462401041,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-12.inp",
+      "ww": 0
+    },
+    {
+      "id": 13,
+      "role": "F",
+      "N": 100,
+      "offset": 1200,
+      "seed": 1185659112644319249,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-13.inp",
+      "ww": 0
+    },
+    {
+      "id": 14,
+      "role": "A",
+      "N": 100,
+      "offset": 1300,
+      "seed": 928841952567261713,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-14.inp",
+      "ww": 0
+    },
+    {
+      "id": 15,
+      "role": "F",
+      "N": 100,
+      "offset": 1400,
+      "seed": 2883735678714534929,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-15.inp",
+      "ww": 0
+    },
+    {
+      "id": 16,
+      "role": "A",
+      "N": 100,
+      "offset": 1500,
+      "seed": 2020381862547963409,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-16.inp",
+      "ww": 0
+    },
+    {
+      "id": 17,
+      "role": "F",
+      "N": 100,
+      "offset": 1600,
+      "seed": 6946065963066204177,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-17.inp",
+      "ww": 0
+    },
+    {
+      "id": 18,
+      "role": "A",
+      "N": 100,
+      "offset": 1700,
+      "seed": 5862079977929835025,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-18.inp",
+      "ww": 0
+    },
+    {
+      "id": 19,
+      "role": "F",
+      "N": 100,
+      "offset": 1800,
+      "seed": 3154941650265302033,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-19.inp",
+      "ww": 0
+    },
+    {
+      "id": 20,
+      "role": "A",
+      "N": 100,
+      "offset": 1900,
+      "seed": 6718233752035640849,
+      "input": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/inputs/lifecycle/reuse-fresh-20.inp",
+      "ww": 0
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+RMC/src/TreatAdjointMaterial.cpp:111:void CDAceData::ClearPreparedDerivedData() {
+RMC/src/TreatAdjointMaterial.cpp:119:  ClearPreparedDerivedData();
+RMC/src/TreatAdjointMaterial.cpp:125:bool CDAceData::HasNonzeroPreparedFissionProduction(CDMaterial &material) {
+RMC/src/PrepareFixedSourceRun.cpp:143:void CDCalMode::InitializePreparedFixedSourceRuns(const FixedSourceSeriesSpec &series, CDNeutronTransport &neutron, CDPhotonTransport &photon,
+RMC/src/PrepareFixedSourceRun.cpp:152:  CDRNG::ValidatePreparedType2Substream(series.rootSeed, series.firstHistoryOffset, 1, series.stride);
+RMC/src/PrepareFixedSourceRun.cpp:169:    requirePrepared(!ace.HasNonzeroPreparedFissionProduction(material), "nonzero/nonfinite nuSigmaF unsupported");
+RMC/src/PrepareFixedSourceRun.cpp:186:void CDCalMode::PrepareFixedSourceRun(const FixedSourceRunSpec &spec, const CDExternalSource &source,
+RMC/src/PrepareFixedSourceRun.cpp:191:  fixed.ResetRunState(); neutron.ResetPreparedRunCounters(preparedWeightCutoff);
+RMC/src/PrepareFixedSourceRun.cpp:192:  tally.ResetRunScores(spec.sourceHistories); ace.ClearPreparedDerivedData();
+RMC/src/PrepareFixedSourceRun.cpp:193:  particle.ResetForFixedSourceRun(); OWeightWindow.ClearPreparedNativeState();
+RMC/src/PrepareFixedSourceRun.cpp:194:  OTimer[Utility::FixedSource].ResetForPreparedRun(); OTimer[Utility::Tally].ResetForPreparedRun();
+RMC/src/PrepareFixedSourceRun.cpp:195:  fixed.SetPreparedRun(spec.sourceHistories, spec.role, spec.maxAdjointEnergyMeV);
+RMC/src/PrepareFixedSourceRun.cpp:197:  activeSource.ResetWorkingSourceFrom(source);
+RMC/src/PrepareFixedSourceRun.cpp:200:  OWeightWindow.InstallPreparedNativeState(spec.weightWindow, spec.role, geometry, *this, neutron, preparedWeightCutoff);
+RMC/src/PrepareFixedSourceRun.cpp:201:  particle.RebuildForFixedSourceRun(geometry, material, ace, spec.role, preparedEnergyCutoff, neutron.p_dWgtCutOff);
+RMC/src/PrepareFixedSourceRun.cpp:202:  rng.ConfigurePreparedType2Substream(preparedSeries.rootSeed, preparedNextOffset, spec.sourceHistories, preparedSeries.stride);
+RMC/src/PrepareFixedSourceRun.cpp:205:FixedSourceRunReceipt CDCalMode::RunPreparedFixedSource(const FixedSourceRunSpec &spec,
+RMC/src/PrepareFixedSourceRun.cpp:223:  const auto seed = CDRNG::ValidatePreparedType2Substream(preparedSeries.rootSeed, preparedNextOffset,
+RMC/src/PrepareFixedSourceRun.cpp:234:  source.CheckPreparedSourceDefinition(geometry);
+RMC/src/PrepareFixedSourceRun.cpp:260:    PrepareFixedSourceRun(spec, source, activeSource, neutron, ace, fixed, material, geometry, particle, tally, rng);
+RMC/src/PrepareFixedSourceRun.cpp:264:    ExecuteFixedSourcePrepared(*this, neutron, photon, electron, ace, fixed, material, geometry, particle,
+RMC/src/PrepareFixedSourceRun.cpp:268:    fixed.VerifyPreparedSourceWeights(spec.sourceHistories);
+RMC/src/PrepareFixedSourceRun.cpp:271:    FinalizeFixedSourceRun(fixed, material, ace, tally);
+RMC/src/PrepareFixedSourceRun.cpp:303:void CDCalMode::FinishPreparedFixedSourceRuns() {
+RMC/src/StatisticsTester.h:19:  void ResetForRun(long long histories);
+RMC/src/CalMode.h:42:  void InitializePreparedFixedSourceRuns(const FixedSourceSeriesSpec &series, CDNeutronTransport &neutron, CDPhotonTransport &photon,
+RMC/src/CalMode.h:46:  FixedSourceRunReceipt RunPreparedFixedSource(const FixedSourceRunSpec &spec,
+RMC/src/CalMode.h:51:  void FinishPreparedFixedSourceRuns();
+RMC/src/CalMode.h:199:  void PrepareFixedSourceRun(const FixedSourceRunSpec &spec, const CDExternalSource &source,
+RMC/src/CalMode.h:269:  void ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+RMC/src/CalMode.h:277:  void FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+RMC/src/WeightWindow.h:64:  void ClearPreparedNativeState();
+RMC/src/WeightWindow.h:65:  void InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
+RMC/src/WeightWindows.cpp:296:void CDWeightWindow::ClearPreparedNativeState() {
+RMC/src/WeightWindows.cpp:302:void CDWeightWindow::InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
+RMC/src/ParticleState.h:376:  void ResetForFixedSourceRun();
+RMC/src/ParticleState.h:377:  void RebuildForFixedSourceRun(CDGeometry &geometry, CDMaterial &material, CDAceData &ace,
+RMC/src/TallyData.cpp:112:void CDTallyData::ResetForRun(long long histories) {
+RMC/src/TallyData.cpp:116:  p_OStatisticsTester.ResetForRun(histories);
+RMC/src/ExternalSource.h:41:  void CheckPreparedSourceDefinition(CDGeometry &geometry) const;
+RMC/src/ExternalSource.h:42:  void ResetWorkingSourceFrom(const CDExternalSource &definition);
+RMC/src/InitiateTally.cpp:262:void CDTally::ResetRunScores(long long histories) {
+RMC/src/InitiateTally.cpp:263:  for (auto *data : p_pTallyDataPointer) data->ResetForRun(histories);
+RMC/src/RNG/StrideRNG.cpp:267:unsigned long long CDRNG::ValidatePreparedType2Substream(unsigned long long root,
+RMC/src/RNG/StrideRNG.cpp:282:void CDRNG::ConfigurePreparedType2Substream(unsigned long long root, unsigned long long offset,
+RMC/src/RNG/StrideRNG.cpp:286:  const auto seed = ValidatePreparedType2Substream(root, offset, histories, stride);
+RMC/src/RNG/RNG.h:625:  static unsigned long long ValidatePreparedType2Substream(unsigned long long root,
+RMC/src/RNG/RNG.h:627:  void ConfigurePreparedType2Substream(unsigned long long root, unsigned long long offset,
+RMC/src/CalcFixedSource.cpp:81:  ExecuteFixedSourcePrepared(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport,
+RMC/src/CalcFixedSource.cpp:84:  FinalizeFixedSourceRun(cFixedSource, CMaterial, CAceData, CTally);
+RMC/src/CalcFixedSource.cpp:142:void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+RMC/src/CalcFixedSource.cpp:773:void CDCalMode::FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+RMC/src/StatisticsFunc.cpp:619:void CDStatisticsTester::ResetForRun(long long histories) {
+RMC/src/ExternalSource.cpp:552:void CDExternalSource::CheckPreparedSourceDefinition(CDGeometry &geometry) const {
+RMC/src/ExternalSource.cpp:581:void CDExternalSource::ResetWorkingSourceFrom(const CDExternalSource &definition) {
+RMC/src/ParticleStateFun.cpp:316:void CDParticleState::ResetForFixedSourceRun() {
+RMC/src/ParticleStateFun.cpp:496:void CDParticleState::RebuildForFixedSourceRun(CDGeometry &geometry, CDMaterial &material, CDAceData &ace,
+RMC/src/Utility/Timer.h:97:    void ResetForPreparedRun() {
+RMC/src/FixedSource.h:190:  void ResetRunState();
+RMC/src/FixedSource.h:191:  void SetPreparedRun(long long histories, FixedSourceRole role, double maxAdjointEnergyMeV);
+RMC/src/FixedSource.h:193:  void CheckAndRecordPreparedSourceWeight(double weight);
+RMC/src/FixedSource.h:194:  void VerifyPreparedSourceWeights(long long histories) const;
+RMC/src/AceData.h:100:  void ClearPreparedDerivedData();
+RMC/src/AceData.h:102:  bool HasNonzeroPreparedFissionProduction(CDMaterial &material);
+RMC/src/Tally.h:31:  void ResetRunScores(long long histories);
+RMC/src/InitiateTrspt.cpp:107:void CDFixedSource::ResetRunState() {
+RMC/src/InitiateTrspt.cpp:128:void CDFixedSource::SetPreparedRun(long long histories, FixedSourceRole role, double maxAdjointEnergyMeV) {
+RMC/src/InitiateTrspt.cpp:145:void CDFixedSource::CheckAndRecordPreparedSourceWeight(double weight) {
+RMC/src/InitiateTrspt.cpp:159:void CDFixedSource::VerifyPreparedSourceWeights(long long histories) const {
+RMC/src/InitiateTrspt.cpp:171:  VerifyPreparedSourceWeights(histories);
+RMC/src/TallyData.h:34:  void ResetForRun(long long histories);
+RMC/src/SampleNeutronSource.cpp:205:      CheckAndRecordPreparedSourceWeight(cParticleState.p_dWgt);

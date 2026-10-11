@@ -1,0 +1,10 @@
+[
+  {
+    "role": "F",
+    "fixed_max_neutron": "0000000000003440",
+    "fixed_max_photon": "0000000000003440",
+    "neutron_energy_cutoff": "2342920ca19cc73b",
+    "weight_cutoff": "000000000000d03f",
+    "ace_adjoint": false
+  }
+]

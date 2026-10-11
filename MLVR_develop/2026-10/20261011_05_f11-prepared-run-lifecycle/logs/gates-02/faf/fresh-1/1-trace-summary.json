@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "FINALIZE_ENTRY": 1,
+    "HISTORY": 1000,
+    "RNG_BEFORE_SAMPLE": 1000,
+    "SEGMENT": 19601,
+    "SOURCE": 1000,
+    "TRACK": 1000
+  },
+  "initcounts": {
+    "InitiateAll": 1,
+    "InitiateMatAce": 1,
+    "InitiateTally": 1,
+    "ReadAceData": 1
+  },
+  "sha256": "1ce444d26536afa352fe5eefb9f7513fddd50289b4b787d2ff4a2986e7e95c2f"
+}

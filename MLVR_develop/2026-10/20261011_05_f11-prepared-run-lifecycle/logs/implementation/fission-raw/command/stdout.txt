@@ -1,0 +1,38 @@
+Breakpoint 1 at 0x46c9b0: file /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TreatAdjointMaterial.cpp, line 125.
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, CDAceData::HasNonzeroPreparedFissionProduction (this=this@entry=0x7ffffffef5c0, material=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TreatAdjointMaterial.cpp:125
+125	bool CDAceData::HasNonzeroPreparedFissionProduction(CDMaterial &material) {
+Copyrights Reserved by Reactor Engineering Analysis Laboratory(REAL).
+
+      RRRRRRRR       MM         MM        CCCCCCCC   
+      RRRRRRRRR      MMM       MMM      CCCCCCCCC    
+      RRR    RRR     MMMM     MMMM     CCC           
+      RRR    RR      MMMMM   MMMMM    CCC            
+      RRRRRRRR       MM MMM MMM MM    CCC            
+      RRR   RRR      MM  MMMMM  MM    CCC            
+      RRR    RRR     MM   MMM   MM     CCCCCCCCCC    
+      RRR     RRR   MMM         MMM      CCCCCCCCC   
+
+Code version: 3.5.0
+
+Build time  : 21:07:08 Oct 11 2026
+Git commit  : [blank git SHA]
+MPI parallel: OFF
+OMP parallel: OFF
+Visit REAL forum https://forum.reallab.org.cn for more information.
+
+RMC Calculation Start.
+Input File = inp     2026/10/11 21:21:18 Sunday 
+
+Reading input file...
+
+Reading XSDIR/ACE library...
+Finish reading XSDIR/ACE library.
+[Inferior 1 (process 2495918) exited with code 02]

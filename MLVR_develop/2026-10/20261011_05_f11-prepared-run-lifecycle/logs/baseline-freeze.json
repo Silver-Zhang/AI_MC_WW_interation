@@ -1,0 +1,38 @@
+{
+  "frozen_at": "2026-10-11T20:39:55.671198+08:00",
+  "rmc_head": "330f091eb0296e0d0124237ba7d9a22b81aee852",
+  "rmc_status": "clean",
+  "binary_sha256": "30092ab0a5c92a307eb37128c421e0cd6a0ecae3c2a4d64689e28dce99f0895a",
+  "database": {
+    "/home/silver/NucXS_Library/RMC_DATA/xsdir": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b",
+    "/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001"
+  },
+  "build": {
+    "baseline-build/CMakeCache.txt": "0d48dd9643137681a1c06fc6ec08558203725a1b4a02654d7eb330b0cb1d65c7",
+    "baseline-build/compile_commands.json": "ea7166f39a3afaf93f6cdb2193507a0da9e2b47782e0d2e5f052d9260c753851"
+  },
+  "cases": {
+    "mg-neutron-adjoint": 0,
+    "mg-neutron-analog": 0,
+    "mg-neutron-batch": 0,
+    "mg-neutron-native-ww": 0,
+    "np-representative": 0,
+    "ordinary-type1": 0,
+    "ordinary-type3": 0,
+    "ordinary-weight2": 0
+  },
+  "diagnostics": {
+    "mg-neutron-analog": "logs/baseline-diagnostics/mg-neutron-analog",
+    "mg-neutron-adjoint": "logs/baseline-diagnostics/mg-neutron-adjoint",
+    "mg-neutron-native-ww": "logs/baseline-diagnostics/mg-neutron-native-ww"
+  },
+  "ctest": "9/9 passed",
+  "source_manifest": "implementation/start.json",
+  "unavailable_case": "WEIGHT=D1 rejected by unchanged ReadSourceCard.cpp:111-116; preserved baseline exit 1; no parser extension authorized",
+  "versions": {
+    "g++ --version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "cmake --version": "cmake version 3.28.3",
+    "python3 --version": "Python 3.12.3",
+    "h5dump --version": "h5dump: Version 1.10.10"
+  }
+}

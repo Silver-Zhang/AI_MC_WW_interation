@@ -1,0 +1,435 @@
+# F11 Stage 2 — 正式实施 Persistent Fixed-Source Lifecycle
+
+## 一、任务授权与目标
+
+**我正式批准 F11 Stage 2 的生产代码实施。**
+
+批准范围为 Task 05 最新修订的 `lifecycle-design.md` §5 中列出的 29 个文件，以及 `test-plan.md` 中的 G0、Gate 1–7 验证任务。
+
+本次授权包括：
+
+- 修改批准范围内的 RMC 生产代码；
+- 新增正式的 fixed-source repeated-run API；
+- 实现 KEEP / CLEAR / SET / REBUILD 状态管理；
+- 开发必要的测试程序和验证脚本；
+- 编译、运行并分析实际 RMC 数值结果；
+- 形成完整的源码补丁及测试档案。
+
+**不需要再次提交实施设计等待批准。应按照已冻结的方案直接开展开发和测试。**
+
+但如果发现需要修改批准清单以外的生产文件、改变已冻结的物理定义、调整既有输运算法或更新 reference，必须说明原因并停止该部分工作，等待新的授权。
+
+本阶段最终目标：
+
+使 RMC 在一次完整模型初始化后，利用同一批 Geometry、Material、raw MGACE、Tally definition 和输运对象，连续执行多个相互独立的 Forward / Adjoint fixed-source half-run。
+
+每个 half-run 必须与对应的 fresh-process oracle 保持确定性数值等价。
+
+**本阶段不实现完整 MLVR 双向迭代控制。**
+
+---
+
+## 二、必须遵循的设计基线
+
+先阅读：
+
+- `AGENTS.md`
+- `STATUS.md`
+- `MLVR_Knowledge/AGENT_CONTEXT.md`
+- `MLVR_Knowledge/04_F11_v1_架构与实施设计.md`
+
+继续已有任务，不另建平行方案：
+
+`MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/`
+
+重点阅读：
+
+1. `lifecycle-design.md`
+2. `state-ownership.md`
+3. `source-call-graph.md`
+4. `test-plan.md`
+5. `README.md`
+
+独立审核依据：
+
+`MLVR_develop/2026-10/20261011_06_independent-f11-prepared-lifecycle-review/`
+
+尤其检查 Claude 指出的三项问题是否已进入最新设计：
+
+1. 测试 target 的全局对象链接所有权；
+2. 实际初始源权重与统计分母；
+3. 每个 prepared run 的独立计时和 legacy FOM 语义。
+
+以最新 Task 05 修订方案为实施依据，知识库 04 为唯一正式总体架构基线。
+
+此前 Task 13/14 只作为测试风险及历史证据参考，不得将私有实验 driver、friend access、placement-new 或初始化绕过机制直接引入生产代码。
+
+---
+
+## 三、开发前必须冻结原始基线
+
+RMC 此前确认的 Stage 1 基线：
+
+- Branch：`Neural_Network_WW_Iteration`
+- HEAD：`330f091eb0296e0d0124237ba7d9a22b81aee852`
+
+开始时重新检查当前实际 HEAD、工作树及远端关系。
+
+如果已有新修改，不得覆盖、reset 或 checkout。先判断是否会与 Stage 2 冲突；有冲突则报告并停止。
+
+按照 `test-plan.md`：
+
+1. 在独立目录复制未修改的 RMC 源码。
+2. Fresh configure/build 原始版本。
+3. 运行 Stage 1 已有代表性固定源和 CTest。
+4. 保存 baseline 源码 SHA256、可执行文件 SHA256、编译参数、核数据库身份、测试输入和原始输出。
+5. 完成 baseline 冻结后，才修改生产代码。
+
+禁止为了使新版本通过而修改旧 baseline、核数据库、测试 reference 或比较容差。
+
+不得在团队生产仓库中运行可能自动更新 submodule 的构建过程。
+
+---
+
+## 四、正式实施内容
+
+### 4.1 增加受控的多次运行入口
+
+按批准方案实现：
+
+- `InitializePreparedFixedSourceRuns()`
+- `RunPreparedFixedSource()`
+- `FinishPreparedFixedSourceRuns()`
+
+内部使用 private `PrepareFixedSourceRun()` 组织状态管理。
+
+Stage 1 已实现的三个内部函数保持其结构：
+
+- `InitializeFixedSourceModel()`
+- `ExecuteFixedSourcePrepared()`
+- `FinalizeFixedSourceRun()`
+
+必须确保：
+
+- 完整模型初始化只执行一次；
+- history/batch/descendant 输运循环只有一份；
+- 不重新调用整个 `RunCalculation()` 来模拟重复执行；
+- 同一批模型对象在所有 half-run 中保持有效；
+- 每次运行最终 `ProcessTally()` 只执行一次；
+- 普通 `CalcFixedSource()` 的原有行为不变。
+
+不要引入新的 Session/Manager 体系或平行的 `src/MLVR/` 输运实现。
+
+### 4.2 实现 KEEP / CLEAR / SET / REBUILD
+
+严格根据 `state-ownership.md`，在各自已有 owner 内实现需要的状态方法。
+
+**KEEP：**
+
+保留几何、材料基础定义、原始多群截面、计数器定义、mesh 和 tally registry。
+
+**CLEAR：**
+
+清除上一轮的完成标志、历史数、batch、粒子 bank、tally 数值矩、活动索引、统计诊断及其他运行暂态。
+
+**SET：**
+
+设置本次 role、source、NPS、RNG 子流、WW 身份和有效参数。
+
+**REBUILD：**
+
+重新构建正向/伴随角色相关截面、截止群号、粒子缓存和 native WW 三个实际界限。
+
+重点防止：
+
+- `TreatAdjointMaterial()` 的 `+=` 产生重复累加；
+- Forward 恢复时保留 Adjoint 派生数组；
+- `CDTally` 的 registry 重复注册；
+- 上一次的终止标志或后代 bank 阻止下一轮正确输运；
+- 原始物理 MeV 截止被误当成已经转换的内部群号；
+- WW-off 后继续使用上一轮的权窗参数。
+
+不得靠重复调用 `InitiateAll()` 或 `InitiateTally()` 完成这些操作。
+
+### 4.3 实现 Type 2 RNG 独立子流
+
+按 `lifecycle-design.md` §4 实施：
+
+- 保留原 LCG 随机数公式；
+- 正确计算每轮 effective seed 和 history offset；
+- 将 function-static skip 缓存改为正确的 RNG owner 状态；
+- 检查 RNG 周期及整数溢出；
+- 检查单条源历史及全部后代的随机数使用次数没有超过 stride；
+- 每轮记录实际 seed、stride、position 和最终状态。
+
+不得因修改 RNG 缓存而改变普通固定源现有 Type 1、Type 2、Type 3 的随机数序列。
+
+每次运行必须与使用相同有效 seed 的 fresh oracle 对照。
+
+### 4.4 实现严格的源权重合同
+
+按照最新 `lifecycle-design.md` §3.1：
+
+首版仅支持规定的单个定点、定能、定向、单位初始权重中子源，不支持用户定义的复杂 DISTRIBUTION 或偏倚源。
+
+在生产源抽样完成、粒子可能被提前终止之前，增加 prepared 专用的实际初始权重检查。
+
+要求：
+
+- 每条源历史都进行一次核查，包括零得分历史；
+- 不将 WW 后代粒子的权重计入起始源权重；
+- 独立累计实际起始权重和 W0；
+- 检查实际统计分母 D；
+- 成功时必须满足 `N = D = W0`，且所有源历史初始权重严格等于1；
+- 非单位权重或非有限值必须导致该次 prepared run 失败；
+- 不允许失败后继续运行或返回成功 receipt。
+
+普通 fixed-source 的原有 source sampling、weight 和 normalization 公式保持不变。
+
+### 4.5 实现 native WW 换轮更新
+
+复用现有 RMC 权重窗逻辑。
+
+每次运行正确安装或关闭 WW，并确保真实输运查窗使用本轮的：
+
+- lower bound；
+- survival bound；
+- upper bound。
+
+不重新实现 splitting/roulette。
+
+不能只修改 lower 数组而遗漏派生界限或旧的 weight-cutoff policy。
+
+### 4.6 实现单轮独立计时
+
+根据最新 `lifecycle-design.md` §3.2：
+
+使用 `std::chrono::steady_clock` 分别记录：
+
+- Prepare；
+- Transport；
+- Tally Finalize。
+
+计算：
+
+`T_MC = T_prepare + T_transport + T_finalize`
+
+并写入每次运行 receipt。
+
+现有 `StatisticsTester` 中使用进程 Total 和非零历史累计时间得到的旧 FOM，不得冒充本轮独立 MC FOM。
+
+保留旧统计公式及普通输出行为，将这些字段明确标记为 legacy。
+
+比较时仅允许 `test-plan.md` §3.1 中明确列出的时间相关字段存在差异。
+
+其他统计矩、Ave、RE、VoV、PDF 和非时间类统计诊断继续严格比较。
+
+---
+
+## 五、测试程序与真实生产接口
+
+新增 `RMCPreparedLifecycle` 测试 executable。
+
+严格执行最新版设计的 G0 全局对象所有权方案：
+
+- 普通 RMC 的 `main.cpp` 不修改；
+- 测试 target 排除原 `main.cpp`；
+- 测试专用 `globals.cpp` 为自身 executable 提供唯一的全局对象定义；
+- 不重复定义原有库或其他 translation unit 已持有的 extern；
+- 编译选项、宏、include 和链接库与对应 RMC 生产配置一致。
+
+测试 driver 必须调用实际生产生命周期 API，不能拥有另一份 history loop，不能通过修改内部字段伪造 prepared 状态。
+
+fresh oracle 必须走原始普通 `RunCalculation()`，而不是使用同一个新 Prepare 函数作为对照。
+
+注意 `RunCalculation()` 的按值和按引用语义：fresh 临时对象应在有效生命周期内由只读诊断采集数据，不能函数返回后访问失效对象。
+
+---
+
+## 六、严格执行 G0 和 Gate 1–7
+
+### G0：构建和链接正确性
+
+验证：
+
+- 普通 RMC 和 RMCPreparedLifecycle 均可链接；
+- 每个 executable 的全局单例恰好定义一次；
+- 不存在重复 main 或 unresolved extern；
+- 原有普通 RMC 构建没有受到影响；
+- 非支持配置不会误启用 prepared 功能。
+
+### Gate 1：普通固定源回归
+
+使用 Stage 1 已验收的用例与新补充的 RNG、加权源用例。
+
+检查：
+
+- Forward、Adjoint、native WW；
+- neutron、photon、electron 及已有耦合分支；
+- CTest 和数值结果；
+- RNG、history score、统计矩和输出。
+
+原有物理数值必须保持确定性一致。
+
+### Gate 2：Forward → Forward
+
+同进程：
+
+`F0(1000) → F1(2000)`
+
+与两次独立 fresh 运行分别比较。
+
+源位置、NPS、RNG 子流、tally、分母、bank 和 registry 均必须正确。
+
+### Gate 3：Forward → Adjoint → Forward
+
+同进程：
+
+`F0(1000) → A0(1500) → F0(2000)`
+
+三个 half-run 都必须与对应的 fresh oracle 一致。
+
+重点验证伴随派生截面、角色切换、截止和最终 Forward 恢复。
+
+### Gate 4：Adjoint → Adjoint
+
+同进程：
+
+`A0(1000) → A0(1500)`
+
+重点证明第二次 Adjoint 没有重复累加派生截面。
+
+### Gate 5：native WW 换轮更新
+
+运行：
+
+`WW-OFF → WW1 → WW2 → WW-OFF`
+
+并补充带 WW 的 F→A→F。
+
+必须实际观察 splitting、roulette、bank 操作和本轮三界查窗数据。
+
+### Gate 6：模型复用和资源
+
+验证：
+
+- MGACE 与完整模型初始化各一次；
+- tally registry 大小和对象身份稳定；
+- 同一批几何、材料与基础数据持续复用；
+- 20轮交替计算没有持续资源增长；
+- Output、Timer 和 FD 生命周期正确。
+
+### Gate 7：非法状态和受限输入拒绝
+
+按测试计划完成：
+
+- 未初始化运行；
+- 重复初始化；
+- 错误 owner；
+- 非法 NPS、role、seed、stride；
+- 非单位权重及用户 DISTRIBUTION；
+- WW 身份和数值错误；
+- 非零裂变产生项；
+- 不支持的运行模式；
+- RNG 子流越界。
+
+检查非法输入必须在正确阶段拒绝，且不能产生成功 receipt。
+
+严格区分静态源权重白名单测试、owner audit 单元负例和真实输运中运行时检查，不能互相替代。
+
+---
+
+## 七、执行顺序与失败处理
+
+按以下顺序推进：
+
+1. 冻结 Stage 1 baseline。
+2. 完成状态 owner 实现及生产生命周期入口。
+3. 完成 G0 编译链接检查。
+4. 完成 Gate 1 普通 fixed-source 回归。
+5. 逐项完成 Gate 2–7。
+6. 使用独立 fresh oracle 完成严格比较。
+7. 归档结果和实际源码差异。
+8. 停止，等待独立复核。
+
+过程中允许修正批准范围内实施造成的编译错误和明确的生命周期缺陷，但必须保留失败记录和修复原因。
+
+不得为通过测试而改变输运物理、放宽数值容差、删除失败用例或更新 reference。
+
+如果某项门禁未通过，应保留可复现证据；不能用其他门禁通过来代替。
+
+如果遇到超出批准清单的必要修改，应停止对应范围并报告，不擅自扩大授权。
+
+---
+
+## 八、当前功能适用范围
+
+本次只验收受限 Stage 2：
+
+- Linux；
+- serial，MPI/OMP off；
+- standard MGACE；
+- neutron fixed-source；
+- Type 2 RNG；
+- 单位有效初始源权重；
+- 当前允许的 Cartesian track-length tally；
+- 原生 mesh WW；
+- 已验证的非裂变材料条件。
+
+尚不开放：
+
+- 一般非零裂变产生项的连续 F/A；
+- MPI/OpenMP 多轮运行；
+- CE；
+- coupled neutron/photon/electron；
+- restart、surface source、Python source 等未覆盖运行配置。
+
+这些不应妨碍普通 RMC 原有功能继续使用。
+
+---
+
+## 九、交付与归档
+
+继续沿用：
+
+`MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/`
+
+不要重新建立平行 Stage 2 任务。
+
+交付：
+
+- 实际 `changes.diff`；
+- 所有新增生产文件的完整补丁与清单；
+- 编译与链接日志；
+- 原始与修改版本的二进制身份；
+- 各 Gate 的测试输入、命令、退出码、输出和判定；
+- 每个 half-run 的 receipt；
+- RNG、tally、adjoint XS、source、bank、WW 的独立验证记录；
+- persistent 与 fresh oracle 的逐项比较；
+- 失败记录及修复过程；
+- 最终结论和受限范围。
+
+原始大数据可保存在本地，并以 SHA256 manifest 关联；GitHub 归档保留可审查的关键证据，不必提交大型二进制和重复输出。
+
+在任务 README §4 中分别回答：
+
+1. 是否完成真正的同进程多次固定源运行？
+2. FF、FAF、AA 是否通过？
+3. 模型是否只完整初始化一次？
+4. RNG、tally、source、WW 是否存在残留或差异？
+5. 每次计算是否与 fresh oracle 一致？
+6. 普通 RMC 是否仍保持原行为？
+7. 是否存在尚未通过的 Gate？
+8. 是否具备进入 Stage 3 的技术条件？
+
+最终判定：
+
+`ACCEPT / ACCEPT WITH LIMITATIONS / BLOCKED`
+
+按实际结果同步 STATUS、INDEX 和相关接口记录，但不得将受限通过扩大解释为一般 F11 已经实现。
+
+**不要修改冻结的知识库04总体架构。**
+
+**不要自行 commit/push RMC 或根仓库。**
+
+**完成 Stage 2 后立即停止，不自动开展 Stage 3。**

@@ -1,0 +1,10 @@
+{
+  "mg-neutron-adjoint": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/mg-neutron-adjoint",
+  "mg-neutron-analog": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/mg-neutron-analog",
+  "mg-neutron-batch": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/mg-neutron-batch",
+  "mg-neutron-native-ww": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/mg-neutron-native-ww",
+  "np-representative": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/np-representative",
+  "ordinary-type1": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/ordinary-type1",
+  "ordinary-type3": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/ordinary-type3",
+  "ordinary-weight2": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-runs/ordinary-weight2"
+}

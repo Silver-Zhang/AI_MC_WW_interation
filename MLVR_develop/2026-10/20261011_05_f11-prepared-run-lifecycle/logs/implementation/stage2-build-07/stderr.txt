@@ -1,0 +1,86 @@
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp: In member function ‘CDFixBank& ParticleStack::top()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+   33 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:33: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size between 0 and 219 [-Wformat-overflow=]
+   38 |     sprintf(p_chXSFileName, "%s_%d", chXSName, p_OMXSTable.p_nHomRegion);
+      |                                 ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Tally.h:10,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 3 and 232 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:34: warning: ‘_’ directive writing 1 byte into a region of size between 0 and 219 [-Wformat-overflow=]
+   36 |     sprintf(p_chXSFileName, "%s%d_%d", chXSName, p_OMXSTable.p_nHomRegion, p_OMXSTable.p_nSubUnivIndex);
+      |                                  ^
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 4 and 243 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PrepareFixedSourceRun.cpp: In member function ‘FixedSourceRunReceipt CDCalMode::RunPreparedFixedSource(const FixedSourceRunSpec&, const CDExternalSource&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDSampling&, CDPerturbation&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PrepareFixedSourceRun.cpp:228:44: error: ISO C++ forbids comparison between pointer and integer [-fpermissive]
+  228 |   requirePrepared(Output.p_fpOutputFilePtr == validPreparedFile(preparedOutput),
+      |                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gmake[2]: *** [CMakeFiles/RMC.dir/build.make:5676: CMakeFiles/RMC.dir/src/PrepareFixedSourceRun.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:4373: CMakeFiles/RMC.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp: In member function ‘CDFixBank& ParticleStack::top()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+   33 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:33: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size between 0 and 219 [-Wformat-overflow=]
+   38 |     sprintf(p_chXSFileName, "%s_%d", chXSName, p_OMXSTable.p_nHomRegion);
+      |                                 ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Tally.h:10,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 3 and 232 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:34: warning: ‘_’ directive writing 1 byte into a region of size between 0 and 219 [-Wformat-overflow=]
+   36 |     sprintf(p_chXSFileName, "%s%d_%d", chXSName, p_OMXSTable.p_nHomRegion, p_OMXSTable.p_nSubUnivIndex);
+      |                                  ^
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 4 and 243 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PrepareFixedSourceRun.cpp: In member function ‘FixedSourceRunReceipt CDCalMode::RunPreparedFixedSource(const FixedSourceRunSpec&, const CDExternalSource&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDSampling&, CDPerturbation&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PrepareFixedSourceRun.cpp:228:44: error: ISO C++ forbids comparison between pointer and integer [-fpermissive]
+  228 |   requirePrepared(Output.p_fpOutputFilePtr == validPreparedFile(preparedOutput),
+      |                   ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gmake[2]: *** [tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/build.make:5676: tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/__/__/src/PrepareFixedSourceRun.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:14482: tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

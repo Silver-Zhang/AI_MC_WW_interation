@@ -1,0 +1,5 @@
+{
+  "mg-neutron-analog": "logs/refactor-diagnostics/mg-neutron-analog",
+  "mg-neutron-adjoint": "logs/refactor-diagnostics/mg-neutron-adjoint",
+  "mg-neutron-native-ww": "logs/refactor-diagnostics/mg-neutron-native-ww"
+}

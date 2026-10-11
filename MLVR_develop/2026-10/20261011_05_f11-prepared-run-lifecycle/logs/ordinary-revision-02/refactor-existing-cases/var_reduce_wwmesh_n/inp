@@ -1,0 +1,67 @@
+//2.9" WC tamper Sphere from LA-1114: HEU-MET-FAST-003
+Universe 0
+cell 1    1  & -2  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 1 
+cell 2    2  & -3  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 2.31087 
+cell 3    3  & -4  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 13.3231 
+cell 4    4  & -5  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 114.641 
+cell 5    5  & -6  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 1132.23 
+cell 6    6  & -7  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 11116.6 
+cell 7    7  & -8  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 113657  
+cell 8    8  & -9  & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 1.26453e+06  
+cell 9    9  & -10 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 1.43054e+07  
+cell 10   10 & -11 & 21 & -22 & 23 & -24       mat = 1   imp:n = 1  //imp:n = 1.6896e+08   
+cell 21   -1 : -21 : 22 : -23 : 24                       imp:n = 0  
+cell 22   11 : -21 : 22 : -23 : 24                       imp:n = 0  
+
+Surface
+surf 1   px   0
+surf 2   px   10
+surf 3   px   20
+surf 4   px   30
+surf 5   px   40
+surf 6   px   50
+surf 7   px   60
+surf 8   px   70
+surf 9   px   80
+surf 10  px   90
+surf 11  px   100
+surf 21  py   -50
+surf 22  py   50
+surf 23  pz   -50
+surf 24  pz   50
+
+Material
+mat 1  -1.0  //water
+       1001.60c  2  
+	   8016.60c  1  
+
+FIXEDSOURCE
+particle population = 1E5
+
+EXTERNALSOURCE
+source 1  particle=1  position=2.5  0  0  energy=2 
+
+//ParticleMode n
+
+//Photonuclear n
+
+WeightWindow
+wwmesh:n  0.5  0.25  0.125  0.0625  0.03125  0.015625  0.0078125  0.0039  0.00195  0.000977
+wwp:n   5 3 5
+WeightwindowMesh ScopeX = 10 BoundX = 0 100 ScopeY = 1 BoundY = -50 50 ScopeZ = 1 BoundZ = -50 50
+
+Tally
+MeshTally 1 type=1
+            ScopeX = 10 BoundX = 0 100
+            ScopeY = 1 BoundY = -50 50
+            ScopeZ = 1 BoundZ = -50 50
+
+
+
+
+
+
+
+
+
+

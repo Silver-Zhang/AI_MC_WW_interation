@@ -1,0 +1,8 @@
+{
+  "passed": false,
+  "physical_tolerance": 0,
+  "errors": [
+    "FD/registry/bank identity growth"
+  ],
+  "time_exceptions": []
+}

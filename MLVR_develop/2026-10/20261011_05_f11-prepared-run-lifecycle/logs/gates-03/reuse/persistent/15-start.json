@@ -1,0 +1,12 @@
+{
+  "aceAdj": false,
+  "fixedAdj": false,
+  "neutronCut": "000000000000d03f",
+  "rng": {
+    "RN_POSITION": 0,
+    "RN_POSITION_PRE": -1000,
+    "RN_SEED": 2883735678714534929,
+    "RN_SEED0": 2883735678714534929,
+    "RN_STRIDE": 100000
+  }
+}

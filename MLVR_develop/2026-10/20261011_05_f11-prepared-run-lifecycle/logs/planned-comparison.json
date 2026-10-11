@@ -1,0 +1,28 @@
+{
+  "physics": "exact IEEE bits, shapes, per-history full trace; tolerance=0",
+  "memory_time_fields": [
+    "p_vTime",
+    "p_vLargestTime",
+    "p_vFoMPerCycle",
+    "p_vFoMTot",
+    "p_vFlucFOM",
+    "p_vFoMValueCheck",
+    "p_vFoMBehaviourCheck"
+  ],
+  "hdf_time_suffixes": [
+    "/Batches_of_FOM",
+    "/FOM",
+    "/Fluctuated_FOM",
+    "/TenStatisticsChecks/FoMValueCheck",
+    "/TenStatisticsChecks/FoMBehaviourCheck"
+  ],
+  "ordinary_banner_exceptions": [
+    "Build time",
+    "Git commit (private snapshot banner vs source/patch manifest)",
+    "Input File date",
+    "known timer/rate fields"
+  ],
+  "RSS_limit_KiB": 4096,
+  "initcount": 1,
+  "N100_fresh": "Input parser requires N>100; harness sets actual N=100 and calls existing CheckFixedSource before ordinary RunCalculation, all model initialization retained. Same N, source, seed and data as prepared."
+}

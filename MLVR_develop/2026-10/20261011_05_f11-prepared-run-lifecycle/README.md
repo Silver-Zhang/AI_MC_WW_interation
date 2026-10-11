@@ -2,111 +2,95 @@
 
 | 项 | 内容 |
 |---|---|
-| 立项日期 | 2026-10-11；new_task.sh自动分配05 |
-| 状态 | 待决策 — READY FOR IMPLEMENTATION APPROVAL（仅设计收口） |
-| 任务类型 | 新功能 / 状态生命周期设计 |
-| 任务模式 | C — 深度物理研究与学习 |
+| 立项日期 | 2026-10-11；原new_task.sh自动分配05，沿用本任务 |
+| 状态 | 已完成（限定范围，自验通过；独立复核见任务07：NEEDS CORRECTION） |
+| 任务类型 / 模式 | F11 Stage2正式生命周期实现 / C |
 | 报告人 | Codex |
-| 关联知识库条目 | F11；唯一设计基线知识库04 |
-| 涉及文件 | 当前只写本任务档案与进度/知识库指针；拟生产文件见lifecycle-design §5 |
-| 分支 / 提交 | RMC Neural_Network_WW_Iteration / 330f091eb0296e0d0124237ba7d9a22b81aee852；根main / 80774e875f7bf759bbdef10fc5f6b31ea0f37afc（本次修订开始；原立项身份保留在logs） |
+| 设计基线 | 知识库04；Task06原独立设计审查保留 |
+| 修改范围 | 批准的29文件：24个已跟踪修改、5个新增；[清单](logs/implementation/actual-files.json) |
+| 仓库身份 | 根main / 7171b29e；RMC Neural_Network_WW_Iteration / 330f091e；开始时无已有冲突改动、无未推送提交；本次未提交/推送/切分支 |
 
 ## 1. 目标与范围
 
-实现一次完整模型初始化后的正式固定源多次运行准备，以同一批Geometry/Material/rawMGACE/Tally definitions支撑FF、FAF、AA，每个half-run独立且与fresh oracle确定性等价。依据用户完整Stage2任务，当前授权立项、源码分析和具体设计，§7要求设计完成后单独取得源码修改批准。
+实现一次完整模型初始化后的正式固定源多次运行入口，保持同一批Geometry、Material、raw MGACE、Tally definition和输运对象，连续执行相互独立的Forward/Adjoint half-run。逐段与普通RunCalculation的fresh-process oracle确定性比较。
 
-本次2026-10-11定向修订授权仅为只读核查、修改本Task05设计及同步进度指针。沿用原模式C任务05，不另建任务、不改Task06独立报告；用户最新请求§7/§8明确要求设计收口后停止、等待具体Stage2源码批准。
+本阶段仅支持受限Linux serial、standard MGACE、中子固定源、Type2 RNG、单个定点/定能/定向且实际单位初始权重源、Cartesian TL tally、native mesh WW及已验证的非裂变材料条件。没有CalcMLVR、TARGET、Field API、外部重构或完整FOM评价；未改W11/W12、阶段0结果、reference、核数据库和冻结04。未进入Stage3。
 
-本阶段不实现CalcMLVR/Bootstrap-K控制、MLVR parser、TARGET自动源、Field/WW HDF5或外部重构；不改体积计分/W11/W12/阶段0结果/reference/核数据库，不commit/push/reset/切分支。普通fixed-source六模式与source copy semantics继续保留。
-
-**物理解释（模式C）**：每个run的估计值只能含它自己的源历史（含零得分history）与后代，分母只属本run。切换A改变的是由相同raw核数据派生的算子，回F须恢复原正向角色/cache/WW policy；不能重新叠加上一A派生量。逐run的history/RNG/原始统计/派生数组/查窗与fresh完全一致才支持受限重复运行；任何一个half-run差异都会推翻“清理和重建已充分”的主张。
-
-原始材料/身份：完整任务文本logs/user-request.txt（附件请求正文，不是聊天转储）；logs/repository-start.json，stage1-start.diff/源文件及其哈希，stage2-start-src-sha256.json，source-evidence.txt，environment.json及compiler/cmake/python/hdf5原输出。参考[Task13实验](../../2026-09/20260929_13_f11-persistent-session-e0-e4-execution/F11_E0_E4_Dynamic_Experiment_Report.md)和[Task14独立复核](../../2026-09/20260929_14_independent-f11-e0-e4-dynamic-review/Independent_F11_E0_E4_Dynamic_Review.md)，只借风险/门禁，不搬实验seam。
+**物理解释（模式C）**：复用的是模型，不合并各轮样本。每条源历史及其后代的得分只进入本轮；零得分历史也在N内。单位有效起始权重需要独立实测W0并核对实际D，不能从输入WEIGHT=1或代码D←N直接推出。角色切换必须重建派生算子并恢复粒子/cache/WW策略；A→A不能重复累加。
 
 ## 2. 做法与证据
 
-交付四份待审批设计：
+先在私有目录fresh configure/build未修改330f，完成8个普通正例、9个CTest及三组500-history诊断，**20:39:55 +0800冻结后才改生产代码**。[baseline-freeze.json](logs/baseline-freeze.json)绑定原源码、binary、编译配置和核数据库；WEIGHT=D1在原parser就失败，单列保留，不算输运通过。
 
-- [state-ownership.md](state-ownership.md)：KEEP/CLEAR/SET/REBUILD逐状态组与当前行号。
-- [source-call-graph.md](source-call-graph.md)：现有混合传参/实际private helper、拟正式入口和caller所有权。
-- [lifecycle-design.md](lifecycle-design.md)：完整C++签名、Prepare时序、Type2子流、生产改动文件和回滚。
-- [test-plan.md](test-plan.md)：330f重建baseline、逐run fresh oracle、原七门禁及新增G0链接检查、源负例/计时精确白名单、零物理容差与执行命令。
+实现三个public入口InitializePreparedFixedSourceRuns、RunPreparedFixedSource、FinishPreparedFixedSourceRuns；private Prepare按各owner执行KEEP/CLEAR/SET/REBUILD。普通入口只增加进程owner冲突保护，原Stage1 execution core逐字保持，唯一输运循环未复制。源审计hook在实际采样后、输运前核查w；RNG原公式保留，skip缓存转owner并检查子流/逐history用数；WW安装三界或恢复OFF策略；receipt独立记录三段steady-clock时间。
 
-原立项时的静态定位：CalMode.h:172/230/238/246/330证实Stage1 helper实际private；CalcFixedSource.cpp:147–769仍是唯一623行suite，ProcessTally仅:774；RunCalculation.cpp:6–13混合传值不适合反复进入。伴随数组+=在TreatAdjointMaterial.cpp:46/50/56等；TallyData.cpp:17–24未清Sum3/活动索引；Timer.h:96–99旧reset未清recordTime；StrideRNG.cpp:86–88使用function-static skip缓存。
+接口、状态与调用图：[lifecycle-design](lifecycle-design.md)、[state-ownership](state-ownership.md)、[source-call-graph](source-call-graph.md)。预设标准与实际命令入口：[test-plan](test-plan.md)。当前源码定位：[source-map-final.txt](logs/implementation/source-map-final.txt)。
 
-选择：CDCalMode只增加三个受控public入口，内部Prepare协调各owner正式reset/rebuild；caller持有并持续借用同一批模型。固定raw数据/registry，局部active source副本，每run独立累计历史段。非零裂变产生项未门禁前在受限入口拒绝。
-
-**生产实施/运行：无。** 未修改RMC，不创建假changes.diff；Stage1原补丁仅存logs/stage1-start.diff。本轮未编译、未输运、未执行Gate1–7；证据仅E1静态分析；完整源码/文档保护检查见logs/design-verification.json，归档自检原文见logs/archive-check/。Type2周期/有效seed的精确只读模运算记录在logs/rng-period-analysis.json，不是MC验收。
-
-**独立审查后的三项定向修订**：审查依据为[Task06独立报告](../20261011_06_independent-f11-prepared-lifecycle-review/Independent_F11_Stage2_Review.md)及其risk-register/state-ownership-audit；原报告及其DESIGN REVIEW ONLY结论保持原样。本次实际HEAD下的原样修订请求见logs/design-revision/user-request.txt；新证据在[logs/design-revision/source-evidence.txt](logs/design-revision/source-evidence.txt)、extern-inventory.json、start.json；修订前五份文档原文另存before-*，不覆盖原logs。
-
-| 问题 / 当前事实 | 定向方案与拟修改点 | 观察行为 / 门禁 / 未开放范围 |
+| 门禁 | 真实结果 | 关键证据 |
 |---|---|---|
-| 全局链接：main.cpp:28–55定义单例，CMakeLists.txt:661–675将main纳入glob | 测试target源副本只排main，新增test-only globals.cpp逐对象定义一次；root CMake末尾注册，不改main或原tests/CMakeLists.txt；详见lifecycle-design §5.1 | G0源码表/宏/符号/link检查，G1普通回归；不支持宏下不注册prepared target，不宣称并行支持 |
-| 权重：SampleParticle.cpp:25–29、SampleValue.cpp:11–73可修正实际w；InitialBatchSource.cpp:298只是D←历史数 | 严格无用户分布的单点/定能/定向单位源合同；ExternalSource校验；SampleNeutronSource.cpp新增采样后guard；FixedSource owner独立实测W0；详见§3.1 | 每history检查w==1，含零得分；N/D/W0及次数分别记录，违规run失败无成功receipt；G1普通加权源回归、G2–G6逐段核验、G7a/b负例；不开放任意权重源 |
-| 计时：StatisticsFunc.cpp:124/184/218读Total，:177–180读非零history累计时间 | Prepare协调器steady_clock三段/求和receipt；旧统计公式保留并标legacy_mixed_not_per_run；详见§3.2 | G2–G6时间边界/标签检查，比较仅五个HDF统计后缀及对应内存字段例外，其余统计精确比较；不实现TARGET或新FOM评价 |
+| G0 构建/链接 | 两个executable成功链接；694个共同生产TU编译选项相同；各13个无条件全局单例及main各定义一次；test=OFF普通构建成功；不支持宏配置不注册prepared target | [linkage](logs/linkage/result.json)、[test-off](logs/linkage/test-off.json)、implementation/stage2-build-11 |
+| G1 普通回归 | 123/123确定性比较；原9个CTest及新增权重audit共10/10；Forward、Adjoint、WW、Type1/2/3、常数WEIGHT=2及原photon/electron/coupled代表分支保持 | [最终比较](logs/ordinary-comparison-final-03/results.json)、[CTest原始输出](logs/implementation/final-ctest-02/stdout.txt)、logs/refactor-* |
+| G2 FF | 1000→2000，每段源/RNG/原始矩/Ave/RE/VoV/PDF等价；源位置实际改变 | [FF比较](logs/gates-04/ff/comparison.json) |
+| G3 FAF | 1000→1500→2000，三段均等fresh；最终F派生清空，角色及截止恢复 | [FAF比较](logs/gates-04/faf/comparison.json) |
+| G4 AA | 1000→1500，两次完整A派生数组均逐项等fresh，无重复累加 | [AA比较](logs/gates-04/aa/comparison.json) |
+| G5 WW | OFF→WW1→WW2→OFF及FAF+WW每段等fresh；实际三界、split/roulette/bank均观察并验证 | [WW比较](logs/gates-04/ww/comparison.json)、[FAF+WW](logs/gates-04/faf-ww/comparison.json) |
+| G6 模型/资源 | 20轮F/A；完整初始化、MGACE读取、tally注册各一次；owner/raw/registry身份稳定；FD测量值19恒定；第4→20轮RSS净增84KiB，低于事前4MiB限制 | [复用比较](logs/gates-04/reuse/comparison.json)、[资源原表](logs/gates-04/reuse/persistent/resources.tsv) |
+| G7 拒绝/失败 | 66/66负例按预期拒绝；前置拒绝旧数值/计数/RNG不变；真实stride超额后无成功receipt且无法重试/Finish；实际权重owner单测7/7 | [负例结果](logs/negative-final-02/results.json)、[运行时失败](logs/negative-final-02/stride-runtime/command/stdout.txt)、CTest |
 
-本轮静态收口检查（[verification.json](logs/design-revision/verification.json)；可重跑verify-docs.py）：848个RMC src文件及源码集合不变，合计859个保护文件（含Task06、KB04及构建入口）hash不变；RMC工作区仍干净。五节结构、本任务相对链接和git diff --check通过；归档检查exit=0、需处理0项（31条旧档案提示，本任务无提示）。待审批清单共29个文件：25个生产src文件（其中2个新增）、根CMake及3个新增测试文件，逐项见[planned-files.json](logs/design-revision/planned-files.json)和lifecycle-design §5。此处只运行文档/保护检查，没有CMake、编译、CTest或输运实验。
+最终34个half-run，对照侧同样34个fresh进程，**每侧17500条源历史**。所有成功run实际N=D=W0，检查次数=N，min=max=1，违规数0。逐run数字、seed、draw上限、Ave/RE和事件数量见[run-results.md](run-results.md)与[完整摘要](logs/gate-results.json)。例如WW1/WW2的split/roulette/bank分别为2072/3397/3975和3313/5675/7499；实际查窗三界逐条符合本轮lower×原WWP。
 
-修订开始：root main/80774e875f7bf759bbdef10fc5f6b31ea0f37afc，RMC Neural_Network_WW_Iteration/330f091eb0296e0d0124237ba7d9a22b81aee852；两工作树干净，未推送本地提交均空。实际日志见start.json。本轮没有重新核验编译器/数据库运行可用性，以下环境是**原立项记录**，不得当作本轮新构建/测试证据；实施前按test-plan重新冻结身份。
+FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF（63/73个bin）及完整HDF（2519/2859个dataset）严格匹配，见[exports-final](logs/exports-final/ff/comparison.json)。只豁免事前列明的七个统计时间成员及五种HDF时间字段，其shape/数值类别/归属仍检查。比较器25项自测拒绝非时间字段、未知/缺失字段及非法时间类别的改动：[自测](logs/comparator-selftest.json)。没有把旧FOM作为本轮指标。
 
-真实环境与仓库检查输出（完整command/exit/stdout/stderr在logs）：
+截止字段追加核查已修正并进入最终门禁：F未启用的伴随max恢复默认20 MeV；本次A的物理30 MeV转换为群1；返回F恢复20。三类role、实际neutron cutoff/weight policy及派生数组均与fresh一致。非零产生项负例的U235原始νσf和材料数密度也已取出，其νΣf范围约0.00732490096–3.24095584 cm⁻¹，初始化拒绝，见[核数据实测](logs/implementation/fission-raw-final/nu-sigma-f.json)。
 
-~~~text
-RMC HEAD：330f091eb0296e0d0124237ba7d9a22b81aee852
-RMC branch：Neural_Network_WW_Iteration
-RMC status --porcelain：空
-upstream ahead/behind：0 0；未推送提交：空
-root HEAD：6e7516c14de322141aa2fb645e4de1ebdcc767ed
-root branch：main；upstream ahead/behind：0 0
-Stage1两源hash与其已验证构建manifest：一致
-GCC 13.3.0 / CMake 3.28.3 / Python 3.12.3 / HDF5 1.10.10
-保留Stage1 serial binary SHA：
-2b432bc5898b939ae389b97da31b3eca934e6397f593da5a9703e5b4c1c1e07e
-~~~
+**补丁与身份**：[changes.diff](changes.diff)包含24个跟踪文件；[new-files.diff](new-files.diff)完整包含5个新增文件。不能只取前者。[final-manifest.json](logs/implementation/final-manifest.json)绑定最终源码/私有构建副本/编译配置/binary/数据库/补丁；原baseline及未授权文件保护检查通过。GCC13.3、CMake3.28.3、HDF5 1.10.10、RelWithDebInfo，MPI/OMP/AIS/Python均off。baseline banner为330f，私有Stage2 banner为空Git SHA；身份以完整manifest核对，未冒用baseline SHA。
 
-初查看到c3ef0934和Stage1两文件未提交修改；读取期间外部操作将Stage1存档到330f091e并同步远端，根仓库也更新到6e7516c。随后读回hash一致且工作树干净，故以330f为Stage2基线；本Agent没有执行提交/push。先前尝试比对dirty diff因其已提交而失败，改为保存已归档Stage1补丁与源hash，没有恢复/覆盖代码。
-
-未覆盖验证：全部Stage2编译/输运/FF/FAF/AA/native-WW/RNG/资源/负例门禁；非零裂变连续切换；并行/Windows及受限profile之外功能。Stage1已有测试不能替代Stage2动态验证。
+每条运行命令、cwd、stdout/stderr、退出码和原始数据均留存于上述目录的command/或implementation/。失败与修正见[失败台账](logs/implementation/failure-ledger.md)，没有删除失败用例或更新reference。构建、binary和完整私有运行目录在`/tmp/20261011_05_f11-prepared-run-lifecycle/`；任务原始压缩轨迹和快照保留本地，哈希见evidence-manifest.json。
 
 ## 3. 决策记录
 
-**决定：本次三项修订已完成，Stage2源码修改仍待用户批准。** 建议批准当前[lifecycle-design §5完整清单](lifecycle-design.md#5-实际拟改文件理由回滚)及test-plan；批准后先完成330f fresh baseline冻结，再实施，不沿用修订前文件范围。
+**用户已正式批准实施**，原文：[user-authorization.txt](logs/implementation/user-authorization.txt)。批准最新设计§5的29文件与G0/Gate1–7，不需重复审批；本次严格在此范围内完成。早期设计待审批记录保留在logs/design-revision及logs/implementation/design-before-archive，不能把历史待审批状态当成当前权限。
 
-**决定人/日期：尚无Stage2源码批准。** 先前“批准，继续完成”针对Stage1；本次最新《Stage2—设计修订与实施前收口》§7/§8再次明确只授权设计、完成后等待批准。不能把这次修订或此前继续指令写成生产修改许可。
+**人类理解确认（模式C）**：用户授权明确限定单位有效权重、独立half-run、非零裂变/并行未开放及逐段fresh等价；本次按该合同实施。新结果仍待用户审阅和独立复核，未把Task06对旧设计的审查写成对本次代码的验收。
 
-| 风险 | 改动范围 | 验证与停止条件 | 回滚 |
-|---|---|---|---|
-| A派生+=、统计/银行/粒子缓存残留、RNG段重叠、WW-off保留旧cutoff、timer/句柄重入 | 已有owner扩展+根目录轻量spec/Prepare cpp+受限test driver；保留普通loop/数学公式；无TARGET/Field/MLVR调度 | G0链接及Gate1–7逐run fresh、全部原始physics零容差；任意差异保留证据并定位，超出文件清单/物理修复停止补审批 | 保存330f每文件原文/hash；仅恢复本任务且hash吻合的增量，新增文件先留证据；不用reset/checkout |
+实施中对旧能群cell SCHECK崩溃采取受限入口拒绝，未触及清单外scorer。测试driver仅清自己的上一张HDF Tally输出组来隔离快照，保持同一输出句柄；没有更改生产writer、数学公式或F11总体设计。
 
-**需批准的具体内容**：三个受控生产入口、各owner清理/重建方法、function-static RNG cache转owner及Type2用数保护、native WW运行间安装/关闭、timer新reset、受限测试target；prepared首版拒绝非零νΣf及未覆盖模式。普通入口和reference/数据库保持。
-
-**此次额外审批范围**：新增触及生产`src/SampleNeutronSource.cpp`的prepared专用检查hook；新增测试`tests/prepared_fixed_source_lifecycle/globals.cpp`；在原FixedSource/ExternalSource/Prepare/spec文件中补权重audit、实际D/W0、三段耗时及旧统计标签。`tests/CMakeLists.txt`从拟改清单移除，改由根CMake末尾注册新子目录。原`main.cpp`、通用source抽样/分母/tally公式和reference仍不改。完整清单以lifecycle-design §5为准；额外文件或算法变化必须重新说明并批准。
-
-**人类理解确认（模式C）：待取得。** 请确认受限FF/FAF/AA与逐段fresh一致只证明该子域生命周期，不证明一般可裂变材料/完整F11。未获得确认前，不写用户已理解或已批准。
+回滚应以330f和manifest为依据，逐文件保留当前结果后只撤销本任务增量；新增5文件与补丁需一起处理，不用reset/checkout覆盖工作区。何时提交/推送仍由用户决定，本轮没有执行。
 
 ## 4. 结论与边界
 
-- **当前判定：READY FOR IMPLEMENTATION APPROVAL。** 三项实施前缺口已在设计层面关闭，具体方案/文件/运行时拒绝/比较门禁可供用户审批；未发现仍阻止提交审批的设计问题。此判定只说明设计收口，**不是Stage2实现ACCEPT**；仍无生产改动或动态通过结论，档案/台账继续待决策。修订方案尚待独立复核，不能把Task06对旧稿的审查改写成对本次新稿的通过。
-- 已正式支持清理的状态：本阶段尚无新增实现；已有Stage1只有拆分入口。仅候选reset清单完成。
-- 已确认模型只加载一次：当前仅拟合同，Stage2尚未动态证明；保留一次初始化的现有路径定位。
-- FF/FAF/AA：未执行。fresh差异：尚未进行Stage2比较，不能写“无差异”。
-- WW-on/RNG可复现：已有Stage1单run证据保留；Stage2连续更新/子流未验证。
-- 裂变边界：prepared拟拒绝非零产生项；一般非零裂变FAFA不能借H2O门禁放行。
-- Stage3基础：尚未具备通过验收的Stage2运行基础，不启动Stage3。
-- 提交状态：本Agent未commit/push；RMC基线330f是外部阶段1归档操作，Stage2与该提交分开记录。原档案已随外部根工作区提交入库；本次修订随 2026-10-11 根工作区追加提交入库。
+**ACCEPT WITH LIMITATIONS —— 受限Stage2实现与自验完成；独立复核见任务07（NEEDS CORRECTION，2 项 P1）。**
 
-**仍未解决的适用范围**：任意源权重/用户分布、多源、并行/AIS/Python、一般非零裂变连续切换均未开放；旧StatisticsTester仍是legacy混合计时，不能作单run FOM；这些边界不会被本次设计收口提升Ready。
+| 验收问题 | 回答 |
+|---|---|
+| 1. 真正同进程多次运行？ | 是；一次Initialize，同一模型/对象上多次正式Run，每次Finalize一次。 |
+| 2. FF、FAF、AA？ | 全部逐段确定性通过，并包含FAF+WW。 |
+| 3. 模型完整初始化一次？ | 是；动态计数与owner/raw/registry身份共同验证。 |
+| 4. RNG/tally/source/WW残留或差异？ | 最终受限门禁未发现物理差异；权重、子流、统计和实际查窗均通过。 |
+| 5. 每次与fresh oracle一致？ | 是；34/34配对，物理容差0；时间例外逐字段记录。 |
+| 6. 普通RMC行为？ | 已测普通分支123/123确定性比较、原9个CTest通过；source copy semantics与唯一core保持。 |
+| 7. 尚未通过Gate？ | 最终受限G0/G1–7全部通过；历史失败已分类保留，限制外项目未验收。 |
+| 8. Stage3技术条件？ | 受限运行基础已具备；先独立复核并取得新阶段授权。本任务停止，不启动Stage3。 |
 
-**结果解释**：E1支持需要清理/重建的具体位置与owner划分；尚不能证明该清单充分。完成受限动态门禁后才形成物理数值与生命周期结论。知识库04冻结正文、阶段0实验/转换口径不变，F11整体仍implementation not completed。
+**未解决及未覆盖边界**：
+
+- 数值结论绑定本任务H2O、固定模型/群/网格、指定源和WW参数；不外推任意材料、复杂几何或所有可选功能。一般非零裂变连续F/A仍被拒绝。
+- MPI/OMP/AIS/Python只检查了target注册条件，未开展这些配置的多轮数值验收；CE、耦合粒子、restart、复杂/加权/分布源等不属于prepared支持范围。普通已有功能的代表回归不等于prepared支持。
+- **W13未修复**：未修改baseline已复现能群cell SCHECK崩溃。新入口拒绝该组合，用独立总通量cell诊断；W11/W12及体积语义保持。
+- 旧HDF writer不是完整覆盖式per-run输出，测试只隔离自己的输出组。Field/WW HDF5、TARGET及正式FOM仍未开发。
+- 起始权重运行时负例属于owner API单测；合法严格白名单不会自然生成非法初始权重。真实Run失败传播由stride超额门禁覆盖，未用私有注入伪造输运。
+- 旧StatisticsTester FOM明确标为legacy混合时间。GDB会影响所测耗时，本轮不作性能排名或加速比结论。未做sanitizer/Windows/无限规模资源验证。
+
+**结果解释**：本次证据支持限定对象生命周期和角色切换已实现；不代表完整F11闭环完成，也不改变冻结04或阶段0转换结论。Task06原报告保持原样；本次代码尚未取得独立审查结论。
 
 ## 5. 过程记录
 
-| 本地时间 | 操作/事件 |
+| 时间（2026-10-11，+0800） | 事件 |
 |---|---|
-| 2026-10-11 17:56 | new_task.sh f11-prepared-run-lifecycle F11 C 自动建立05；首次附件缺尾，后完整重传消除缺失 |
-| 2026-10-11 18:02 | 读回外部Stage1归档后的根/RMC身份；保存原Stage1补丁、源与manifest，未覆盖工作区 |
-| 2026-10-11 | 按KB04及Stage1/Task13/14指针检查owner相关路径；形成四份方案与预设门禁 |
-| 2026-10-11 18:58 | 归档自检需处理0项（31项旧档案提示，本任务无提示）；848个src文件/04 hash不变，任务链接与五节结构检查通过 |
-| 2026-10-11 | 收口时更正不存在的TallyProcess timer名称，补全fresh工作副本存活期取证；同步STATUS/INDEX/AGENT_CONTEXT和知识库指针，停止于§7审批 |
-| 2026-10-11 20:14 +0800 | 按用户定向修订请求核对Task06及当前330f源码；补齐全局TU唯一性、源权重静态/运行时防线、三段计时和逐字段例外；更新五份方案，Task06/KB04/RMC均保持；停止于生产修改审批 |
+| 17:56起 | 原任务自动建档、源码定位、生命周期设计；Stage1基线由外部归档为330f，Agent未提交。 |
+| 20:14起 | 按Task06补齐全局所有权、实际权重和单run时间三项设计缺口；设计历史原文保留。 |
+| 正式授权后 | 核查根/RMC干净状态及本地upstream，记录完整授权和身份；先构建未修改baseline。 |
+| 20:39:55 | 冻结baseline，随后开始29文件实施；私有构建、原普通回归、G0与逐段门禁。 |
+| 实施/自验 | 保存编译错误、旧SCHECK崩溃、观察器失败、HDF快照残留和截止字段差异；逐项修正授权范围内实现或明确拒绝，见失败台账。 |
+| 最终归档 | gates-04、ordinary-comparison-final-03、negative-final-02、exports-final及最终CTest全部完成；保存补丁、身份和原始证据，同步STATUS/INDEX/知识库/物理导读；停止待独立复核，无commit/push。 |
+| 归档轮 | 用户指示整理提交；大产物（trace jsonl.gz、状态快照、stdout/stderr 等约 363MB）留本地，哈希清单 logs/artifact-manifest.sha256；档案与判定证据随根工作区提交并推送双远端；RMC 未提交。 |

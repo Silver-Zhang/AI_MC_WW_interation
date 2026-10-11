@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "common_production_translation_units": 694,
+  "ordinary_only": [
+    "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/main.cpp"
+  ],
+  "harness_only": [
+    "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/tests/prepared_fixed_source_lifecycle/globals.cpp",
+    "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/tests/prepared_fixed_source_lifecycle/driver.cpp"
+  ],
+  "global_definitions": {
+    "RMC": {
+      "Output": 1,
+      "OMeshInfo": 1,
+      "OXSParaTableVec": 1,
+      "OWeightWindow": 1,
+      "OStatus": 1,
+      "OTimer": 1,
+      "cellVec": 1,
+      "OParticleTracker": 1,
+      "OController": 1,
+      "ORNG": 1,
+      "OCalMode": 1,
+      "RMC::IO::OLogger": 1,
+      "RMC::IO::OProcLogger": 1
+    },
+    "RMCPreparedLifecycle": {
+      "Output": 1,
+      "OMeshInfo": 1,
+      "OXSParaTableVec": 1,
+      "OWeightWindow": 1,
+      "OStatus": 1,
+      "OTimer": 1,
+      "cellVec": 1,
+      "OParticleTracker": 1,
+      "OController": 1,
+      "ORNG": 1,
+      "OCalMode": 1,
+      "RMC::IO::OLogger": 1,
+      "RMC::IO::OProcLogger": 1
+    }
+  },
+  "compile_options_identical": true
+}

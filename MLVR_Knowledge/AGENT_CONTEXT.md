@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0/1结论与边界见对应任务§4。阶段1已由外部归档操作提交至RMC 330f091e；当前Neural_Network_WW_Iteration与origin同步，Stage2开始时干净。阶段2任务05的owner矩阵、生产入口与门禁方案已完成，待§3批准；本轮无RMC修改/Stage2测试。实际身份见任务logs/repository-start.json。
+阶段0/1结论与边界见对应任务§4。RMC阶段1基线为330f091e；阶段2正式授权的29文件已实现并自验，当前为本地未提交修改。任务05 §4是实际判定、证据与限制的唯一交接入口；待独立复核，Task06旧设计审查不替代代码复核。最终身份与保护检查见任务logs/implementation/final-manifest.json。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-审阅阶段2lifecycle-design/state-ownership/source-call-graph/test-plan，按完整请求§7等待源码批准；批准后重建330f baseline再实施与自验。Stage1三个helper实际private，尚未正式reset，不直接重复调用当作生产能力。当前停于设计关口，不开始Stage3。
+独立复核Task05实际changes.diff/new-files.diff及最终gates-04证据。三个正式public入口已实现受限同进程生命周期；总体F11闭环、TARGET/Field/正式FOM仍未实现。新发现W13旧SCHECK边界与旧HDF快照隔离见任务§4。用户决定何时提交/推送；当前任务已停止，不开始Stage3。
 
 ## 工作纪律
 

@@ -1,0 +1,11 @@
+{
+  "fixed_source_1": 0,
+  "fixed_source_4": 0,
+  "fixed_source_adjoint": 0,
+  "var_reduce_wwmesh_n": 0,
+  "fixed_source_photon": 0,
+  "fixed_source_electron": 0,
+  "fixed_source_photon_and_electron": 0,
+  "fixed_source_neutron_and_photon_and_electron": 0,
+  "RestartFixRead": 0
+}

@@ -1,0 +1,45 @@
+////////   fixed source with tallies   ////////
+UNIVERSE 0
+cell 1   -1      mat = 1 tmp=293.5943084752171           // sphere inside
+cell 2   1 & -2  mat = 1 tmp=293.5943084752171           // sphere middle
+cell 3   2 & -3  mat = 2 tmp=293.5943084752171           // sphere outside
+cell 4   3       mat = 0  void = 1
+
+SURFACE
+surf  1  so  10  
+surf  2  so  20
+surf  3  so  30        
+
+MATERIAL
+mat 1  -10.045   // Fuel
+       92235.00c   6.89220E-03
+       92238.00c   2.17104E-02
+       8016.00c    4.48178E-02
+mat 2  -0.9     // Water
+       1001.00c   2.0
+       8016.00c   1.0
+sab 2  HH2O.71t      
+CeAce  tms = 1 otfptb = 1 ptable = 1
+
+Physics
+ParticleMode N
+Neutron MinEnergy=1.0E-20
+
+FixedSource 
+PARTICLE  population = 1000
+RNG type=2 seed=1 stride=100000
+
+EXTERNALSOURCE
+Source 1  particle=1 fraction=0.5 position=0 0 0  radius=10 axis=1 0 0 extent=1 energy=4 
+
+Tally
+CellTally  1  type = 1  cell = 1 2  energy = 0 6.25E-7 20
+CellTally  2  type = 2  cell = 1 2  energy = 0 6.25E-7 20
+CellTally  3  type = 3  cell = 1 2  energy = 0 6.25E-7 20
+CellTally  4  type = 4  cell = 1 2  energy = 0 6.25E-7 20
+CellTally  5  type = 1  cell = 1 2  time=0 5.0e-8  1.0e-7  5.0e-7 1.0e-6
+CellTally  6  type = 2  cell = 1 2  energy = 0 6.25E-7 20 time=0 5.0e-8  1.0e-7  5.0e-7 1.0e-6
+CellTally  7  type = 1  cell = 1 value = b1
+CellTally  8  type = 7  cell = 1 2  energy = 0 6.25E-7 20
+CellTally  9  type = 8  cell = 1 2  energy = 0 6.25E-7 20
+bin 1 type= 1 bound = 0 0.1 0.2

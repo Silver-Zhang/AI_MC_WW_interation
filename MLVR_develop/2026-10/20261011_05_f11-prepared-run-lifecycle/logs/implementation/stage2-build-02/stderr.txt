@@ -1,0 +1,154 @@
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PoissonBoxSampling.cpp: In member function ‘int CDGeometry::InPoissonBox(CDParticleState&, int, double*, double*, double&, bool&, CDRNG&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PoissonBoxSampling.cpp:267:1: warning: control reaches end of non-void function [-Wreturn-type]
+  267 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PoissonBoxSampling.cpp: In member function ‘int CDGeometry::InPoissonBox(CDParticleState&, int, double*, double*, double&, bool&, CDRNG&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/PoissonBoxSampling.cpp:267:1: warning: control reaches end of non-void function [-Wreturn-type]
+  267 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1082:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1082 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA or ACCUMROSSIALPHA must be specified if TOTALTIME is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1087:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1087 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA must be specified if TIMEBINS is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1093:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1093 |     [&]() {sprintf(Output.p_sPrintStr, "ACCUMROSSIALPHA must be specified if TIMEINTERVAL is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1082:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1082 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA or ACCUMROSSIALPHA must be specified if TOTALTIME is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1087:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1087 |     [&]() {sprintf(Output.p_sPrintStr, "ROSSIALPHA must be specified if TIMEBINS is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp: In lambda function:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ReadCellTallyCard.cpp:1093:40: warning: too many arguments for format [-Wformat-extra-args]
+ 1093 |     [&]() {sprintf(Output.p_sPrintStr, "ACCUMROSSIALPHA must be specified if TIMEINTERVAL is defined.\n", nTally_id);},
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergy::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:156:25: warning: control reaches end of non-void function [-Wreturn-type]
+  156 |     Output.OutputMessage([&]() {
+      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+  157 |       sprintf(Output.p_sPrintStr,
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  158 |               "Unsupported Fission energy type %d\n", type);
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  159 |     }, CDOutput::_ERROR);
+      |     ~~~~~~~~~~~~~~~~~~~~ 
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyEnergyDeposition::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:998:1: warning: control reaches end of non-void function [-Wreturn-type]
+  998 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyRecoverableEnergy::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:1108:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1108 |     RMC::IO::OLogger.fatal("unsupported recoverable energy type!");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergyRelease::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:1518:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1518 |     RMC::IO::OLogger.fatal("The component of fission energy release must be specified and in range of [1, 10]");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:97:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+   97 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Burnup.h:11,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:97:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Output.h:213:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:96:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:101:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+  101 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:101:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Output.h:200:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:100:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Utility/Function/Function.cpp: In static member function ‘static std::shared_ptr<Utility::Function::BaseFunction> Utility::Function::BaseFunction::instantiate(const std::string&, const std::string&, RMC::File::HDF5*)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Utility/Function/Function.cpp:24:22: warning: control reaches end of non-void function [-Wreturn-type]
+   24 |         OLogger.fatal("Unsupported function type {}", type);
+      |         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergy::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:156:25: warning: control reaches end of non-void function [-Wreturn-type]
+  156 |     Output.OutputMessage([&]() {
+      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+  157 |       sprintf(Output.p_sPrintStr,
+      |       ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  158 |               "Unsupported Fission energy type %d\n", type);
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  159 |     }, CDOutput::_ERROR);
+      |     ~~~~~~~~~~~~~~~~~~~~ 
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyEnergyDeposition::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:998:1: warning: control reaches end of non-void function [-Wreturn-type]
+  998 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyRecoverableEnergy::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:1108:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1108 |     RMC::IO::OLogger.fatal("unsupported recoverable energy type!");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp: In member function ‘virtual std::string TallyFissionEnergyRelease::to_string()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/TallyType.cpp:1518:27: warning: control reaches end of non-void function [-Wreturn-type]
+ 1518 |     RMC::IO::OLogger.fatal("The component of fission energy release must be specified and in range of [1, 10]");
+      |     ~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:97:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+   97 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Burnup.h:11,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:97:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Output.h:213:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:96:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp: In member function ‘void CDBurnup::VaryMat(CDMaterial&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:101:45: warning: ‘%s’ directive writing up to 999 bytes into a region of size 995 [-Wformat-overflow=]
+  101 |           sprintf(Output.p_sPrintStr, "Vary %s to be material %d at burnup step %d.\n",
+      |                                             ^~
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘CDBurnup::VaryMat(CDMaterial&)::<lambda()>’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:101:18,
+    inlined from ‘void CDOutput::OutputMessage(PrintMssgType, FILE*, int, int) [with PrintMssgType = CDBurnup::VaryMat(CDMaterial&)::<lambda()>]’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Output.h:200:14,
+    inlined from ‘void CDBurnup::VaryMat(CDMaterial&)’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/UpdateBurnedMatNucDen.cpp:100:29:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 42 and 1061 bytes into a destination of size 1000
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Utility/Function/Function.cpp: In static member function ‘static std::shared_ptr<Utility::Function::BaseFunction> Utility::Function::BaseFunction::instantiate(const std::string&, const std::string&, RMC::File::HDF5*)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Utility/Function/Function.cpp:24:22: warning: control reaches end of non-void function [-Wreturn-type]
+   24 |         OLogger.fatal("Unsupported function type {}", type);
+      |         ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

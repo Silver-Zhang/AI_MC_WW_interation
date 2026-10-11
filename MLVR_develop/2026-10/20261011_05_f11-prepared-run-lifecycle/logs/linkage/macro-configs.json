@@ -1,0 +1,22 @@
+[
+  {
+    "config": "omp",
+    "configure_exit": 1,
+    "prepared_target_present": null
+  },
+  {
+    "config": "mpi",
+    "configure_exit": 0,
+    "prepared_target_present": false
+  },
+  {
+    "config": "ais",
+    "configure_exit": 0,
+    "prepared_target_present": false
+  },
+  {
+    "config": "python",
+    "configure_exit": 0,
+    "prepared_target_present": false
+  }
+]

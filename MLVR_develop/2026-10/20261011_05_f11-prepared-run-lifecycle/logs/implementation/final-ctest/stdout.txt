@@ -1,0 +1,26 @@
+Internal ctest changing into directory: /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build
+Test project /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build
+      Start  62: test_fixed_source_adjoint
+ 1/10 Test  #62: test_fixed_source_adjoint ...........................   Passed    0.77 sec
+      Start  63: test_fixed_source_photon
+ 2/10 Test  #63: test_fixed_source_photon ............................   Passed    0.82 sec
+      Start  65: test_fixed_source_photon_and_electron
+ 3/10 Test  #65: test_fixed_source_photon_and_electron ...............   Passed    5.72 sec
+      Start  66: test_fixed_source_electron
+ 4/10 Test  #66: test_fixed_source_electron ..........................   Passed    3.50 sec
+      Start  69: test_fixed_source_neutron_and_photon_and_electron
+ 5/10 Test  #69: test_fixed_source_neutron_and_photon_and_electron ...   Passed    5.15 sec
+      Start  71: test_fixed_source_1
+ 6/10 Test  #71: test_fixed_source_1 .................................   Passed    1.91 sec
+      Start  74: test_fixed_source_4
+ 7/10 Test  #74: test_fixed_source_4 .................................   Passed    1.16 sec
+      Start 109: test_RestartFixRead
+ 8/10 Test #109: test_RestartFixRead .................................   Passed    1.65 sec
+      Start 114: test_var_reduce_wwmesh_n
+ 9/10 Test #114: test_var_reduce_wwmesh_n ............................   Passed    6.04 sec
+      Start 173: prepared_source_weight_audit
+10/10 Test #173: prepared_source_weight_audit ........................   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 10
+
+Total Test time (real) =  26.72 sec

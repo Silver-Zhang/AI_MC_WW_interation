@@ -1,0 +1,228 @@
+[
+  {
+    "name": "p_vRe",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/p_vRe/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "p_vSum3",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/p_vSum3/bits",
+      "run1/legacy/p_OCellTallyData/p_vSum3/n"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vpdfx",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vpdfx/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vpdfy",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vpdfy/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vLargestScore",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vLargestScore/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vSum3",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vSum3/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vSum4",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vSum4/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vMeanBehaviourCheck",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vMeanBehaviourCheck/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "statistics/p_vVoVValueCheck",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vVoVValueCheck/bits"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "unknown-field",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics:keys"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "missing-field",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics:keys"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "allowed/p_vFlucFOM",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFlucFOM"
+    ]
+  },
+  {
+    "name": "allowed/p_vFoMBehaviourCheck",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMBehaviourCheck"
+    ]
+  },
+  {
+    "name": "allowed/p_vFoMPerCycle",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMPerCycle"
+    ]
+  },
+  {
+    "name": "allowed/p_vFoMTot",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMTot"
+    ]
+  },
+  {
+    "name": "allowed/p_vFoMValueCheck",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMValueCheck"
+    ]
+  },
+  {
+    "name": "allowed/p_vLargestTime",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vLargestTime"
+    ]
+  },
+  {
+    "name": "allowed/p_vTime",
+    "expected_rejection": false,
+    "passed": true,
+    "errors": [],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vTime"
+    ]
+  },
+  {
+    "name": "time-check-domain",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMValueCheck:check-domain"
+    ],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMValueCheck"
+    ]
+  },
+  {
+    "name": "time-shape",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vTime:shape"
+    ],
+    "time_exceptions": []
+  },
+  {
+    "name": "time-category",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMTot:numeric-category"
+    ],
+    "time_exceptions": [
+      "run1/legacy/p_OCellTallyData/statistics/p_vFoMTot"
+    ]
+  },
+  {
+    "name": "receipt/unitSourceWeightsVerified",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "receipt/unitSourceWeightsVerified"
+    ]
+  },
+  {
+    "name": "receipt/statisticsFomIsRunMetric",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "receipt/statisticsFomIsRunMetric"
+    ]
+  },
+  {
+    "name": "receipt/statisticsTimingScope",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "receipt/statisticsTimingScope"
+    ]
+  },
+  {
+    "name": "receipt/timingScope",
+    "expected_rejection": true,
+    "passed": true,
+    "errors": [
+      "receipt/timingScope"
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "counts": {
+    "BANK": 7499,
+    "FINALIZE_ENTRY": 1,
+    "HISTORY": 1000,
+    "RNG_BEFORE_SAMPLE": 1000,
+    "ROULETTE": 5675,
+    "SEGMENT": 73177,
+    "SOURCE": 1000,
+    "SPLIT": 3313,
+    "TRACK": 8499,
+    "WW_QUERY": 76808
+  },
+  "initcounts": {
+    "InitiateAll": 1,
+    "InitiateMatAce": 1,
+    "InitiateTally": 1,
+    "ReadAceData": 1
+  },
+  "sha256": "88435fe0dd18d413b906f50a89cb135aaca51797c1315caf70ea95b743c8269c"
+}

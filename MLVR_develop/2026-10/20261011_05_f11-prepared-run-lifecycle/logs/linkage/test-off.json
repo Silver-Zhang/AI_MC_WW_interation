@@ -1,0 +1,17 @@
+[
+  {
+    "step": "g0-test-off-config",
+    "exit": 0,
+    "prepared_target_present": false
+  },
+  {
+    "step": "g0-test-off-build",
+    "exit": 0,
+    "prepared_target_present": false
+  },
+  {
+    "step": "g0-test-on-restore",
+    "exit": 0,
+    "prepared_target_present": true
+  }
+]

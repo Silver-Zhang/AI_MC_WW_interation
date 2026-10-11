@@ -1,0 +1,91 @@
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for HighFive failed with 128, please check
+  whether HighFive is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/Base/load_lib.cmake:39 (get_submodule)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for Eigen3 failed with 128, please check
+  whether Eigen3 is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/Base/load_lib.cmake:39 (get_submodule)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+
+CMake Warning (dev) at /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (CHOLMOD)
+  does not match the name of the calling package (Cholmod).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  dependencies/Eigen3/cmake/FindCholmod.cmake:86 (find_package_handle_standard_args)
+  dependencies/Eigen3/bench/spbench/CMakeLists.txt:16 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (UMFPACK)
+  does not match the name of the calling package (Umfpack).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  dependencies/Eigen3/cmake/FindUmfpack.cmake:50 (find_package_handle_standard_args)
+  dependencies/Eigen3/bench/spbench/CMakeLists.txt:24 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake:438 (message):
+  The package name passed to `find_package_handle_standard_args` (SUPERLU)
+  does not match the name of the calling package (SuperLU).  This can lead to
+  problems in calling code that expects `find_package` result variables
+  (e.g., `_FOUND`) to follow a certain pattern.
+Call Stack (most recent call first):
+  dependencies/Eigen3/cmake/FindSuperLU.cmake:93 (find_package_handle_standard_args)
+  dependencies/Eigen3/bench/spbench/CMakeLists.txt:32 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for fmt failed with 128, please check whether
+  fmt is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/Base/load_lib.cmake:39 (get_submodule)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for spdlog failed with 128, please check
+  whether spdlog is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/Base/load_lib.cmake:39 (get_submodule)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for xtensor failed with 128, please check
+  whether xtensor is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/Base/load_lib.cmake:39 (get_submodule)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+
+fatal: not a git repository (or any of the parent directories): .git
+CMake Warning at cmake/LoadPackage/Base/load_lib.cmake:20 (message):
+  git submodule update --init for xtl failed with 128, please check whether
+  xtl is downloaded manually.
+Call Stack (most recent call first):
+  cmake/LoadPackage/xtensor/load_xtensor.cmake:10 (get_submodule)
+  cmake/LoadPackage/Base/load_lib.cmake:45 (build_lib)
+  cmake/LoadPackage/load_package.cmake:57 (get_lib)
+  CMakeLists.txt:559 (load_package)
+
+

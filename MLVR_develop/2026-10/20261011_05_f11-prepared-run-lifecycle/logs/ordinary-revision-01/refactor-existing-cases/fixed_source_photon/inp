@@ -1,0 +1,63 @@
+UNIVERSE 0
+cell 1   -1 : 5 : 6 : -10     mat = 0         void=1
+cell 2   1 & -2 & -6 & 7      mat = 1        // h
+cell 3   2 & -3 & -6 & 7      mat = 2        // c
+cell 4   3 & -4 & -6 & 7      mat = 3        // be
+cell 5   4 & -5 & -6 & 7      mat = 4        // u
+cell 6   1 & -2 & -7 & 8      mat = 1        // o
+cell 7   2 & -3 & -7 & 8      mat = 2        // na
+cell 8   3 & -4 & -7 & 8      mat = 3        // h
+cell 9   4 & -5 & -7 & 8      mat = 4        // be
+cell 10  1 & -2 & -8 & 9      mat = 1        // be
+cell 11  2 & -3 & -8 & 9      mat = 2        // u
+cell 12  3 & -4 & -8 & 9      mat = 3        // c
+cell 13  4 & -5 & -8 & 9      mat = 4        // na
+cell 14  1 & -2 & -9 & 10     mat = 1        // o
+cell 15  2 & -3 & -9 & 10     mat = 2        // h
+cell 16  3 & -4 & -9 & 10     mat = 3        // o
+cell 17  4 & -5 & -9 & 10     mat = 4        // be
+
+SURFACE
+surf  1  PX  -30  
+surf  2  PX  -20 
+surf  3  PX   0  
+surf  4  PX   20 
+surf  5  PX   30  
+surf  6  PY   30 
+surf  7  PY   20  
+surf  8  PY    0 
+surf  9  PY  -20  
+surf 10  PY  -30    
+
+MATERIAL
+mat 1 	-0.0001
+	    1002.71c   1
+mat 2 	-1.8
+	    13027.71c  1
+mat 3 	-0.968
+	    14028.71c  1
+mat 4 	-0.001
+	    8016.71c   1
+
+Physics
+ParticleMode p
+Photon  PPRODUCEE = 0  TTB = 0  ANNIHILATION = 0  COHERENT = 1
+        PHOTONNUCLEUS =1  DOPPLER = 0  UPERERG = 100 ERGCUTGMA = 1.0E-3  ELECMULTITIMES = 1.0
+
+FixedSource 
+PARTICLE  population = 100000
+
+EXTERNALSOURCE
+Source 1  particle = 2 point = 5 5 5 fraction = 1.0 ENERGY = 20
+
+//PLOT  ColorScheme=9
+//PlotID 4  Type = slice   Color = Mat  Pixels=900 900   Vertexes=-30 -30 0  30 30 0
+
+//CRITICALITY
+//PowerIter   population = 5000 20 200   keff0 = 1.0 
+//InitSrc point = 5 5 5
+
+Tally
+CellTally 1 particle=1 type=1 cell=2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
+CellTally 2 Particle=2 type=1 cell=2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17
+//Bin 1 type=1 bound=0 1.00E-2 1.00E-1 10 20 50 70 100

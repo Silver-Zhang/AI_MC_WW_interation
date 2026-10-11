@@ -1,4 +1,4 @@
-# Stage2 具体实施方案（待批准）
+# Stage2 具体实施方案（已批准实施）
 
 导航：§1 合同与范围；§2 C++接口；§3 Prepare顺序、§3.1 源权重合同、§3.2 计时；§4 RNG；§5 改动文件/回滚、§5.1 全局对象链接。设计唯一基线为知识库04 §3.3/§5/§14。这里只细化Stage2，不修改冻结规则。
 
@@ -16,7 +16,7 @@ prepared入口明确拒绝：CE/MG-HDF5、MPI/OMP/AIS、photon/coupled、burnup/
 
 ## 2. 拟定 C++ 接口
 
-以下是待批准的新增签名，不是当前已经存在的API。数据定义位于根src/FixedSourceRunSpec.h，C++类型使用既有long long历史计数和uint64种子。
+以下签名已按用户正式授权实现；原设计及实施具体化分别保留在本节和§6。数据定义位于根src/FixedSourceRunSpec.h，C++类型使用既有long long历史计数和uint64种子。
 
 ~~~cpp
 enum class FixedSourceRole { Forward, Adjoint };
@@ -26,7 +26,7 @@ struct FixedSourceSeriesSpec {
   std::uint64_t stride;
   std::uint64_t firstHistoryOffset;
 };
-struct FixedSourceWWSpec {
+struct FixedSourceWeightWindowSpec {
   bool enabled;
   FixedSourceRole appliesToTransportRole;
   std::string identity;
@@ -38,9 +38,9 @@ struct FixedSourceRunSpec {
   long long sourceHistories;
   double maxAdjointEnergyMeV;
   std::string sourceIdentity;
-  FixedSourceWWSpec weightWindow;
+  FixedSourceWeightWindowSpec weightWindow;
 };
-struct FixedSourceStartWeightAudit {
+struct FixedSourceWeightAudit {
   long long sampledHistories;   // 实际经过采样后检查点的次数，含零得分历史
   long long nonUnitHistories;   // 非有限或不等于1；成功时必须为0
   double initialWeightSum;      // 独立逐次累加实测w；不是从N或D赋值
@@ -52,21 +52,22 @@ struct FixedSourceRunReceipt {
   long long requestedHistories;
   long long completedHistories;
   double normalizationDenominator; // 实际用于ProcessTally的D
-  FixedSourceStartWeightAudit sourceWeightAudit;
+  FixedSourceWeightAudit sourceWeightAudit;
   bool unitSourceWeightsVerified; // 仅全数检查并核对N=D=W0后为true
   double prepareSeconds, transportSeconds, tallyFinalizeSeconds, mcSeconds;
+  double measuredMcSeconds; // 独立 t3-t0 舍入核对
   std::string timingScope; // 固定"prepare+transport+finalize"（KB04 §12.1）
   std::string statisticsTimingScope; // "legacy_mixed_not_per_run"
   bool statisticsFomIsRunMetric; // 固定false；不提供TARGET/FOM新指标
   std::uint64_t rootSeed, effectiveSeed, stride, historyOffset;
-  std::uint64_t finalSeed;
+  std::uint64_t finalSeed, maximumHistoryDraws;
   long long finalPosition, finalPositionPre;
   long long batches, collisions, missedParticles;
   std::string sourceIdentity, weightWindowIdentity;
 };
 ~~~
 
-runId在序列内严格递增，identity只作审计，正确性依靠真实source/WW数据检查，不凭字符串认为数据合法。maxAdjointEnergyMeV每次均为物理值；Forward忽略伴随输运截止但恢复保存的物理默认值。两种role均非法时拒绝，不静默落入Forward。
+runId在序列内严格递增，identity只作审计，正确性依靠真实source/WW数据检查，不凭字符串认为数据合法。maxAdjointEnergyMeV每次均为物理值；Forward忽略spec中的伴随输运截止并恢复CDFixedSource未启用时的物理默认值20 MeV。两种role均非法时拒绝，不静默落入Forward。
 
 CDCalMode新增public签名如下。this就是CalMode owner，不再让caller传一个可能不同的cCalMode；传入所有模型/工作对象均为引用。
 
@@ -116,7 +117,7 @@ void SetPreparedRun(long long histories, FixedSourceRole role,
 void RebuildPreparedRunCutoffs(CDAceData &ace);
 void CheckAndRecordPreparedSourceWeight(double sampledWeight);
 void VerifyPreparedSourceWeights(long long expectedHistories) const;
-FixedSourceStartWeightAudit GetPreparedSourceWeightAudit() const;
+FixedSourceWeightAudit GetPreparedSourceWeightAudit() const;
 // CDNeutronTransport
 void ResetPreparedRunCounters(double weightCutoff);
 // CDTally / CDTallyData / CDStatisticsTester，各在自己的类中
@@ -142,7 +143,7 @@ void ConfigurePreparedType2Substream(std::uint64_t rootSeed,
 void FinishPreparedType2Substream();
 // CDWeightWindow
 void ClearPreparedNativeState();
-void InstallPreparedNativeState(const FixedSourceWWSpec &spec,
+void InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec,
     FixedSourceRole role, CDGeometry &geometry, CDCalMode &mode,
     CDNeutronTransport &neutron, double defaultWeightCutoff);
 // Utility::Timer
@@ -283,7 +284,7 @@ Output.h/OutputEnding.cpp只读，不新增生产文件归档协议；Prepare在
 
 其它extern沿原TU/库定义一次：`Data::DataBase::{indexFilesPath,DataPath,hdf5Directory,readHDF5}`在Data/Data.cpp:14–20；`Data::PhotonAtomicDataBase::{with_hdf5,elements,elements_index}`在Photon.cpp:549–552；`RMC::Config::Parallel::isMaster`在Utility/Config/Parallel.cpp:4–12（仅USE_MPI）；BurnupConstants.cpp:7/116/118/130/189的五个reaction/Q映射、NuclideConstants.cpp:8的MASS_ELEMENT随生产源；DepthOut/DepthRpt在DEPTH/DepthMain.cpp:17随Depth静态库。完整extern搜索在logs/design-revision/extern-inventory.json；这些符号绝不复制到globals.cpp。AIS/并行/Python依赖由原库/宏机制管理，本target不自行提供假stub。
 
-**CMake边界（实现待批准）**：根CMake在所有add_definitions完成后、末尾`cmake_policy(POP)`之前添加新子目录，条件为test=ON、CMAKE_SYSTEM_NAME=Linux、mpi/MPI_USE/openmp/OMP_USE/ais/pythonapi/USE_PYTHON_API全部关闭；不移动原tests子目录或修改其CTest注册。这样也继承:698之后的DEBUG_ATTACH/BACKTRACE/CATCH_ERROR等最终目录宏。子CMake用`get_target_property(... RMC SOURCES)`取得原列表的局部副本，核实绝对路径`${PROJECT_SOURCE_DIR}/src/main.cpp`恰好出现一次，再`list(REMOVE_ITEM ...)`仅排除此文件；不重新glob另一份生产清单，不修改原`source`变量或RMC target。加且仅加driver.cpp、globals.cpp各一次；生产新增Prepare cpp由原src glob取得，RNG/Depth仍只通过`${libraries}`链接而非再编入其源码。
+**CMake边界（已按批准方案实现）**：根CMake在所有add_definitions完成后、末尾`cmake_policy(POP)`之前添加新子目录，条件为test=ON、CMAKE_SYSTEM_NAME=Linux、mpi/MPI_USE/openmp/OMP_USE/ais/pythonapi/USE_PYTHON_API全部关闭；不移动原tests子目录或修改其CTest注册。这样也继承:698之后的DEBUG_ATTACH/BACKTRACE/CATCH_ERROR等最终目录宏。子CMake用`get_target_property(... RMC SOURCES)`取得原列表的局部副本，核实绝对路径`${PROJECT_SOURCE_DIR}/src/main.cpp`恰好出现一次，再`list(REMOVE_ITEM ...)`仅排除此文件；不重新glob另一份生产清单，不修改原`source`变量或RMC target。加且仅加driver.cpp、globals.cpp各一次；生产新增Prepare cpp由原src glob取得，RNG/Depth仍只通过`${libraries}`链接而非再编入其源码。
 
 测试target继承同目录C++标准、flags、include/link目录，并显式复用RMC target的COMPILE_DEFINITIONS/COMPILE_OPTIONS/INCLUDE_DIRECTORIES与`${libraries}`；不复制旧binary的flag猜测配置。普通RMC的add_executable、target_link_libraries、install保持原样。特殊MPI/OMP/AIS/Python构建不会创建本测试target；对应生产宏仍原样传给普通RMC。globals中的条件定义与main一致是防漂移约束，不表示本测试或prepared已支持这些模式。
 
@@ -291,4 +292,25 @@ driver使用全局`OCalMode`，另以明确名字`runRng`持有并传递实际RN
 
 **验收G0**：configure导出compile_commands，逐生产TU比较两个target的宏/包含目录/选项（仅object/output路径可不同）；检查target源表/链接map排除了原main、globals仅一个object、所有列出的全局定义唯一，`nm -C --defined-only`核对最终两个executable各一份main和无条件globals；非main的extern仍由原TU/库提供。链接不得存在重复/未解析符号。test=OFF下新target不存在且普通源集合只增加已批准的生产API文件；不支持宏配置不注册此target，已有普通RMC构建继续正常。须同时构建RMC和RMCPreparedLifecycle并跑G1普通回归，不能仅凭文档宣称链接已通过。
 
-**新增范围与风险**：相比修订前，生产多触及SampleNeutronSource.cpp一处guard；测试新增globals.cpp，移除不必要的tests/CMakeLists.txt修改。前者的普通分支/RNG不变由G1含加权源回归验证；后者有与main清单漂移风险，由extern inventory、源列表/符号唯一性检查及宏比较门禁约束。测试TU定义重复于另一个executable的main是明确隔离的构建安排，不在同一链接单元内重复定义。上述全部仍待§3用户批准，尚未创建或编译任何这些生产/测试文件。
+**新增范围与风险**：相比修订前，生产多触及SampleNeutronSource.cpp一处guard；测试新增globals.cpp，移除不必要的tests/CMakeLists.txt修改。前者的普通分支/RNG不变由G1含加权源回归验证；后者有与main清单漂移风险，由extern inventory、源列表/符号唯一性检查及宏比较门禁约束。测试TU定义重复于另一个executable的main是明确隔离的构建安排，不在同一链接单元内重复定义。上述29文件已由最新正式授权批准并实现；当前补丁、构建与门禁结论见README §2/§4。
+
+
+## 6. 2026-10-11 实施对应与具体化
+
+用户已正式批准§5全部29文件及G0/Gate1–7，原文在logs/implementation/user-authorization.txt；此前审批说明是设计历史。本版没有扩大文件清单。实际补丁为changes.diff与new-files.diff；实施结论只在README §4维护。
+
+- 生产入口实际位于CalMode.h:42起，协调实现PrepareFixedSourceRun.cpp；Stage1唯一执行核心没有复制或改写。全局owner预约在Closed/Failed后仍保留，禁止第二模型和普通入口重新初始化。
+- `sourceHistories`实际上限为`INT_MAX/2`，兼顾原bank容量的整数转换；受限源能量还须位于固定MG群范围。receipt增补`maximumHistoryDraws`及`measuredMcSeconds`，不增加新物理评价量。
+- 源审计成功终检后显式关闭guard；普通采样仅多一个默认false的分支。实际非法权重由owner单元负例验证，运行中失败传播由真实stride超额验证；两种证据不混同。旧parser只允许标量WEIGHT，`WEIGHT=D1`在原版即语法失败，因此没有将其报告为普通输运正例。用户分布负例通过ENERGY、方向依赖/子分布及FRACTION/BIASFRAC覆盖；WEIGHT绑定另用公开源definition对象负例。
+- StatisticsTester仅在已有选定诊断bin时调用ReSize(N)，防止原本空的未启用PDF向量被新建；清除本run旧统计临时文件，避免未导出HDF时的跨run污染。旧统计公式和普通reset不改。
+- 未修改330f baseline确认：`TallyCellByTL.cpp:205–215`的按能群cell SCHECK可访问空volume数组并崩溃。该文件不在授权清单，保持原样；prepared显式拒绝这个组合。测试仍保留全30群cell/mesh物理数据，同时增加无ENERGY的总通量cell诊断（按能群cell CHECK=0），完整检验RE/VoV/PDF等。失败输入、baseline堆栈及新入口拒绝证据均保留，不能把本任务当作该旧缺陷的修复。
+- 产生项检查覆盖全部已加载核素，是使用材料核素的保守超集；不改变raw数据。输出/HDF对象地址及主输出FD须保持有效；Total继续计时，FixedSource/Tally两个run计时器在成功和失败收尾停止。
+- `RMCPreparedLifecycle`调用真实public API。fresh模式在普通输入解析后通过公开CDFixedSource population及原CheckFixedSource设置N（小于输入卡最小101的N=100也如此），再走普通RunCalculation；不调用新Prepare，不跳过完整初始化。精确uint64 seed由公开RNG setter设置，避免原double parser损失精度。
+
+模型definition比对是本入口的防误用检查，不是允许caller修改其余模型内部字段的许可；所有Geometry/Material/rawXS/tally/WW定义必须固定。复杂几何、材料、非零裂变及未列的运行选项仍不借本次H2O门禁外推。没有TARGET/Field API或新FOM指标。
+
+
+测试输出隔离补充：普通OutputTallyh5含创建一次的table及条件字段，不能用累计文件充当一张新快照。测试driver在第二次及以后导出前仅清自己的旧Tally HDF组，再调用原writer；global Output及HDF句柄身份保持。生产lifecycle API不承担Field/HDF导出，本次没有更改OutputTallyh5.cpp。原失败与修正后逐轮HDF/PDF证据见test-plan §5。
+
+
+截止值补充核对：初次cutoffs检查发现Forward中未启用的伴随上限保留了spec的30 MeV，而普通Forward字段默认20 MeV。虽此前逐history数值已相等，仍在已批准的SetPreparedRun内明确恢复20 MeV；Adjoint继续将本次物理30 MeV定位为内部群1，回Forward恢复20而不是重复转换群1。最终全量gates-04同时严格比较这些字段，原差异记录保留在logs/cutoffs。

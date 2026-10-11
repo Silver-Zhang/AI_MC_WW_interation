@@ -1,0 +1,1 @@
+PREPARED_FAILURE prepared: energy-binned cell SCHECK unsupported; use a separate total-flux diagnostic tally

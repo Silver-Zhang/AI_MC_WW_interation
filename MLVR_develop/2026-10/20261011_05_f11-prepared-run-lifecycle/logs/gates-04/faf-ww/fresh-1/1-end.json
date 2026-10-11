@@ -1,0 +1,18 @@
+{
+  "fixed": {
+    "denominator": "0000000000407f40",
+    "p_llCurParNumEachPro": 500,
+    "p_llCurTotParNum": 500,
+    "p_llCurrentBatch": 1,
+    "p_llTotCollisionCount": 18028,
+    "p_nFinishCalculate": 5,
+    "p_nFixedSrcCount": 500
+  },
+  "rng": {
+    "RN_POSITION": 500,
+    "RN_POSITION_PRE": 499,
+    "RN_SEED": 8172618935326058825,
+    "RN_SEED0": 17,
+    "RN_STRIDE": 100000
+  }
+}

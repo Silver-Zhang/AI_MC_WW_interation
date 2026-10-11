@@ -1,0 +1,15 @@
+{
+  "aceAdj": false,
+  "fixedAdj": false,
+  "fixedMaxNeutron": "0000000000003440",
+  "fixedMaxPhoton": "0000000000003440",
+  "neutronCut": "3a8c30e28e79453e",
+  "neutronEnergyCutoff": "2342920ca19cc73b",
+  "rng": {
+    "RN_POSITION": 0,
+    "RN_POSITION_PRE": -1000,
+    "RN_SEED": 2898551591397074961,
+    "RN_SEED0": 2898551591397074961,
+    "RN_STRIDE": 100000
+  }
+}

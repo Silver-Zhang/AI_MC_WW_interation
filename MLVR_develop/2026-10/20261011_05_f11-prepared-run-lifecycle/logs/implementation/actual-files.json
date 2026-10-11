@@ -1,0 +1,37 @@
+{
+  "tracked": [
+    "CMakeLists.txt",
+    "src/AceData.h",
+    "src/CalMode.h",
+    "src/CalcFixedSource.cpp",
+    "src/ExternalSource.cpp",
+    "src/ExternalSource.h",
+    "src/FixedSource.h",
+    "src/InitiateTally.cpp",
+    "src/InitiateTrspt.cpp",
+    "src/NeutronTransport.h",
+    "src/ParticleState.h",
+    "src/ParticleStateFun.cpp",
+    "src/RNG/RNG.h",
+    "src/RNG/StrideRNG.cpp",
+    "src/SampleNeutronSource.cpp",
+    "src/StatisticsFunc.cpp",
+    "src/StatisticsTester.h",
+    "src/Tally.h",
+    "src/TallyData.cpp",
+    "src/TallyData.h",
+    "src/TreatAdjointMaterial.cpp",
+    "src/Utility/Timer.h",
+    "src/WeightWindow.h",
+    "src/WeightWindows.cpp"
+  ],
+  "new": [
+    "src/FixedSourceRunSpec.h",
+    "src/PrepareFixedSourceRun.cpp",
+    "tests/prepared_fixed_source_lifecycle/CMakeLists.txt",
+    "tests/prepared_fixed_source_lifecycle/driver.cpp",
+    "tests/prepared_fixed_source_lifecycle/globals.cpp"
+  ],
+  "count": 29,
+  "within_approved_scope": true
+}

@@ -1,0 +1,23 @@
+{
+  "passed": false,
+  "physical_tolerance": 0,
+  "errors": [
+    "run1/raw/0/JXS/bits",
+    "run1/raw/0/NXS/bits",
+    "run1/raw/0/PJXS/bits",
+    "run1/raw/0/PNXS/bits",
+    "run1/raw/1/JXS/bits",
+    "run1/raw/1/NXS/bits",
+    "run1/raw/1/PJXS/bits",
+    "run1/raw/1/PNXS/bits",
+    "run2/raw/0/JXS/bits",
+    "run2/raw/0/NXS/bits",
+    "run2/raw/0/PJXS/bits",
+    "run2/raw/0/PNXS/bits",
+    "run2/raw/1/JXS/bits",
+    "run2/raw/1/NXS/bits",
+    "run2/raw/1/PJXS/bits",
+    "run2/raw/1/PNXS/bits"
+  ],
+  "time_exceptions": []
+}

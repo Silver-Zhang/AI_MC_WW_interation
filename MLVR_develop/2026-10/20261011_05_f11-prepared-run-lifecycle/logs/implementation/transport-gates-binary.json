@@ -1,0 +1,6 @@
+{
+  "executable": "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-transport-gates-driver09",
+  "sha256": "cf63491d033986f2ee6c01ed7bfea4709672ab6a50d4417ca7cba0cc68153d9b",
+  "driver_sha256": "66064674cbe1ea95fd740429c5b03bc9abba92f37f098a696fac31de4dfda76d",
+  "scope": "gates-02 full GDB transport; later driver-only per-run test HDF group clear; production API/core unchanged"
+}

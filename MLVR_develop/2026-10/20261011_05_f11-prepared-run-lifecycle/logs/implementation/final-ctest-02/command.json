@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "env",
+    "-u",
+    "RMC_MPI_TEST",
+    "-u",
+    "RMC_OMP_TEST",
+    "RMC_DATA_PATH=/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH=/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build/bin",
+    "OMP_NUM_THREADS=1",
+    "ctest",
+    "--test-dir",
+    "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build",
+    "--output-on-failure",
+    "-R",
+    "^(test_(fixed_source_1|fixed_source_4|fixed_source_adjoint|var_reduce_wwmesh_n|fixed_source_photon|fixed_source_electron|fixed_source_photon_and_electron|fixed_source_neutron_and_photon_and_electron|RestartFixRead)|prepared_source_weight_audit)$"
+  ],
+  "cwd": "/home/workspace/AI_MC_WW_interation",
+  "started_utc": "2026-10-11T13:47:02.891898+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

@@ -1,0 +1,11 @@
+[  1%] Built target fmt
+[  1%] Built target RNG
+[  3%] Built target spdlog
+[  6%] Built target Depth
+[  6%] Building CXX object CMakeFiles/RMC.dir/src/ExternalSource.cpp.o
+[  6%] Building CXX object tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/__/__/src/ExternalSource.cpp.o
+[  6%] Building CXX object tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/driver.cpp.o
+[  6%] Linking CXX executable bin/RMC
+[ 53%] Built target RMC
+[ 53%] Linking CXX executable ../../bin/RMCPreparedLifecycle
+[100%] Built target RMCPreparedLifecycle

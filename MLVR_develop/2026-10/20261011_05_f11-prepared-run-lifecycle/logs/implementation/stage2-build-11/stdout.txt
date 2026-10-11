@@ -1,0 +1,10 @@
+[  0%] Built target RNG
+[  3%] Built target fmt
+[  3%] Built target spdlog
+[  6%] Built target Depth
+[  6%] Building CXX object CMakeFiles/RMC.dir/src/InitiateTrspt.cpp.o
+[  6%] Building CXX object tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/__/__/src/InitiateTrspt.cpp.o
+[  6%] Linking CXX executable bin/RMC
+[  6%] Linking CXX executable ../../bin/RMCPreparedLifecycle
+[ 52%] Built target RMCPreparedLifecycle
+[100%] Built target RMC

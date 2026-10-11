@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "modified_files": 29,
+  "half_runs": 34,
+  "histories_per_side": 17500,
+  "rss_growth_kib": 84,
+  "binaries": {
+    "RMC": {
+      "path": "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build/bin/RMC",
+      "sha256": "87a9ca29b3701042531d08baf3875f45c8e6458261da8c89f61e8419455c0477"
+    },
+    "RMCPreparedLifecycle": {
+      "path": "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build/bin/RMCPreparedLifecycle",
+      "sha256": "8a6940f55238af35e334e64ffd60523f704490a65f937c9c8ecb689eed16a3af"
+    }
+  }
+}

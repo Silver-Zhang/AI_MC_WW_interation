@@ -1,0 +1,22 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000555555999b44 in CDTally::ScoreCellTally (this=this@entry=0x7fffffff9870, flux=@0x7ffffffe2758: 1.3539922795664054, estimator=@0x7ffffffe2760: BaseTally::TallyEstimator::TRACKLENGTH, cGeometry=..., cParticleState=..., cAceData=..., cMaterial=..., ORNG=..., cSampling=..., cCriticality=0x0) at /usr/include/c++/13/bits/stl_vector.h:1126
+1126	      operator[](size_type __n) _GLIBCXX_NOEXCEPT
+#0  0x0000555555999b44 in CDTally::ScoreCellTally (this=this@entry=0x7fffffff9870, flux=@0x7ffffffe2758: 1.3539922795664054, estimator=@0x7ffffffe2760: BaseTally::TallyEstimator::TRACKLENGTH, cGeometry=..., cParticleState=..., cAceData=..., cMaterial=..., ORNG=..., cSampling=..., cCriticality=0x0) at /usr/include/c++/13/bits/stl_vector.h:1126
+#1  0x0000555555999cef in CDTally::TallyCellByTL (this=this@entry=0x7fffffff9870, cGeometry=..., cParticleState=..., cAceData=..., cMaterial=..., ORNG=..., cSampling=..., cCriticality=0x0) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/TallyCellByTL.cpp:323
+#2  0x000055555599747e in CDTally::TallyByTL (this=this@entry=0x7fffffff9870, bActiveCyc=bActiveCyc@entry=true, dTrackLen=1.3539922795664054, cGeometry=..., cAceData=..., cParticleState=..., cMaterial=..., ORNG=..., cSampling=..., cCriticality=0x0) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/TallyByTL.cpp:57
+#3  0x00005555559a873f in CDFixedSource::TransportParticleAndDoMeshWeightWindow (this=this@entry=0x7ffffffeba30, dTracklength=@0x7ffffffe2978: 1.3539922795664054, cAceData=..., cParticleState=..., cCalMode=..., cGeometry=..., cTally=..., cMaterial=..., cFixedSource=..., MeshWeightWindowType=1, cSampling=..., ORNG=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/TrackWithWeightWindow.cpp:34
+#4  0x000055555583f84f in CDFixedSource::RayTracking (this=this@entry=0x7ffffffeba30, cNeutronTransport=..., cGeometry=..., cMaterial=..., cAceData=..., cParticleState=..., cTally=..., ORNG=..., cSampling=..., cCalMode=..., cPerturb=...) at /usr/include/c++/13/bits/stl_vector.h:1126
+#5  0x00005555559a7914 in CDFixedSource::TrackHistory (this=this@entry=0x7ffffffeba30, cCalMode=..., cNeutronTransport=..., cPhotonTransport=..., cGeometry=..., cMaterial=..., cAceData=..., cParticleState=..., cTally=..., ORNG=..., cSampling=..., cPerturb=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/TrackHistory.cpp:215
+#6  0x000055555567996e in CDCalMode::ExecuteFixedSourcePrepared (this=this@entry=0x555555b75100 <OCalMode>, cCalMode=..., cNeutronTransport=..., cPhotonTransport=..., cElectronTransport=..., CAceData=..., cFixedSource=..., CMaterial=..., CGeometry=..., CParticleState=..., CTally=..., ORNG=..., cCriticality=..., cExternalSource=..., cSampling=..., cPerturb=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/CalcFixedSource.cpp:219
+#7  0x000055555567c5f2 in CDCalMode::CalcFixedSource (this=this@entry=0x555555b75100 <OCalMode>, cCalMode=..., cNeutronTransport=..., cPhotonTransport=..., cElectronTransport=..., CAceData=..., cFixedSource=..., CMaterial=..., CGeometry=..., CParticleState=..., CTally=..., ORNG=..., cCriticality=..., cExternalSource=..., cSampling=..., cPerturb=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/CalcFixedSource.cpp:80
+#8  0x000055555592f471 in CDCalMode::RunCalculation (this=this@entry=0x555555b75100 <OCalMode>, cCalMode=..., cNeutronTransport=..., cPhotonTransport=..., cElectronTransport=..., cAceData=..., cGeometry=..., cDepth=..., cCriticality=..., cMaterial=..., cParticleState=..., cConvergence=..., cTally=..., cBurnup=..., cFixedSource=..., ORNG=..., cME=..., cTTA=..., cAdjoint=..., cExternalSource=..., cSampling=..., cKinetics=..., cPerturb=...) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/RunCalculation.cpp:86
+#9  0x00005555555e4e04 in main (argc=<optimized out>, argv=<optimized out>) at /tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src/src/main.cpp:155

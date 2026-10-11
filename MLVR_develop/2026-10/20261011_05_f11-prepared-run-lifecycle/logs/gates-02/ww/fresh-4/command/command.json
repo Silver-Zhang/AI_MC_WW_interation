@@ -1,0 +1,35 @@
+{
+  "argv": [
+    "gdb",
+    "-q",
+    "-batch",
+    "-x",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/tools/trace_lifecycle.gdb",
+    "--args",
+    "/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-build/bin/RMCPreparedLifecycle",
+    "--mode",
+    "fresh",
+    "--input",
+    "inp",
+    "--data",
+    "/home/silver/NucXS_Library/RMC_DATA",
+    "--snapshot-dir",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/gates-02/ww/fresh-4",
+    "--effective-seed",
+    "2677826766351137809",
+    "--stride",
+    "100000",
+    "--histories",
+    "1000"
+  ],
+  "cwd": "/tmp/20261011_05_f11-prepared-run-lifecycle/gates-02/ww/fresh-4",
+  "started_utc": "2026-10-11T13:22:12.969142+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": "1",
+    "TZ": null
+  }
+}

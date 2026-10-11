@@ -1,0 +1,198 @@
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp: In member function ‘CDFixBank& ParticleStack::top()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+   33 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/NearestPBSurf.cpp: In member function ‘bool CDGeometry::CalcDisToParticleSurf(bool, std::vector<std::vector<double> >, double*, double*, double, double&, bool&, int, int, int&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/NearestPBSurf.cpp:282:1: warning: control reaches end of non-void function [-Wreturn-type]
+  282 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp: In member function ‘CDFixBank& ParticleStack::top()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/HistoryTree.cpp:33:1: warning: control reaches end of non-void function [-Wreturn-type]
+   33 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/NearestPBSurf.cpp: In member function ‘bool CDGeometry::CalcDisToParticleSurf(bool, std::vector<std::vector<double> >, double*, double*, double, double&, bool&, int, int, int&)’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/NearestPBSurf.cpp:282:1: warning: control reaches end of non-void function [-Wreturn-type]
+  282 | }
+      | ^
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:33: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size between 0 and 219 [-Wformat-overflow=]
+   38 |     sprintf(p_chXSFileName, "%s_%d", chXSName, p_OMXSTable.p_nHomRegion);
+      |                                 ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Tally.h:10,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 3 and 232 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:34: warning: ‘_’ directive writing 1 byte into a region of size between 0 and 219 [-Wformat-overflow=]
+   36 |     sprintf(p_chXSFileName, "%s%d_%d", chXSName, p_OMXSTable.p_nHomRegion, p_OMXSTable.p_nSubUnivIndex);
+      |                                  ^
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 4 and 243 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp: In member function ‘void CDParticleState::ResetForFixedSourceRun()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:365:3: error: ‘p_nNucTMP’ was not declared in this scope
+  365 |   p_nNucTMP = 0;
+      |   ^~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:366:3: error: ‘p_nSabNucTMP’ was not declared in this scope; did you mean ‘p_nSabNUC’?
+  366 |   p_nSabNucTMP = 0;
+      |   ^~~~~~~~~~~~
+      |   p_nSabNUC
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:374:3: error: ‘p_bIsDelayedNeutron’ was not declared in this scope
+  374 |   p_bIsDelayedNeutron = false;
+      |   ^~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:375:3: error: ‘p_bHasAngDistr’ was not declared in this scope
+  375 |   p_bHasAngDistr = false;
+      |   ^~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:376:3: error: ‘p_nProductionIndex’ was not declared in this scope
+  376 |   p_nProductionIndex = 0;
+      |   ^~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:377:3: error: ‘p_nLawIndex’ was not declared in this scope; did you mean ‘p_nErgIndex’?
+  377 |   p_nLawIndex = 0;
+      |   ^~~~~~~~~~~
+      |   p_nErgIndex
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:378:3: error: ‘p_ulAngErgDistrPos’ was not declared in this scope
+  378 |   p_ulAngErgDistrPos = 0;
+      |   ^~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:379:3: error: ‘p_ulMuDistrPos’ was not declared in this scope
+  379 |   p_ulMuDistrPos = 0;
+      |   ^~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:380:3: error: ‘p_nSabErgPos’ was not declared in this scope; did you mean ‘p_nSabIntplPos’?
+  380 |   p_nSabErgPos = 0;
+      |   ^~~~~~~~~~~~
+      |   p_nSabIntplPos
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:381:3: error: ‘p_nSabErgOutPos’ was not declared in this scope
+  381 |   p_nSabErgOutPos = 0;
+      |   ^~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:458:3: error: ‘p_eColType’ was not declared in this scope; did you mean ‘p_nColType’?
+  458 |   p_eColType = NeutronReactionType::REACTION_NONE;
+      |   ^~~~~~~~~~
+      |   p_nColType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:459:3: error: ‘p_eCoordinateType’ was not declared in this scope
+  459 |   p_eCoordinateType = Coordinate::None;
+      |   ^~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:460:3: error: ‘p_eLawIndex’ was not declared in this scope
+  460 |   p_eLawIndex = LawType::None; p_eLawType = LawType::None;
+      |   ^~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:460:32: error: ‘p_eLawType’ was not declared in this scope; did you mean ‘p_nLawType’?
+  460 |   p_eLawIndex = LawType::None; p_eLawType = LawType::None;
+      |                                ^~~~~~~~~~
+      |                                p_nLawType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:461:3: error: ‘p_eMuType’ was not declared in this scope; did you mean ‘SabMuType’?
+  461 |   p_eMuType = MuType::None; p_eSabMuType = SabMuType::None;
+      |   ^~~~~~~~~
+      |   SabMuType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:461:29: error: ‘p_eSabMuType’ was not declared in this scope; did you mean ‘p_nSabType’?
+  461 |   p_eMuType = MuType::None; p_eSabMuType = SabMuType::None;
+      |                             ^~~~~~~~~~~~
+      |                             p_nSabType
+gmake[2]: *** [CMakeFiles/RMC.dir/build.make:5382: CMakeFiles/RMC.dir/src/ParticleStateFun.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:33: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size between 0 and 219 [-Wformat-overflow=]
+   38 |     sprintf(p_chXSFileName, "%s_%d", chXSName, p_OMXSTable.p_nHomRegion);
+      |                                 ^~
+In file included from /usr/include/stdio.h:980,
+                 from /usr/include/c++/13/cstdio:42,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/CommonHead.h:15,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/Tally.h:10,
+                 from /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:4:
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:38:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 3 and 232 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp: In member function ‘void CDHomogenization::OutputMXSFile()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:34: warning: ‘_’ directive writing 1 byte into a region of size between 0 and 219 [-Wformat-overflow=]
+   36 |     sprintf(p_chXSFileName, "%s%d_%d", chXSName, p_OMXSTable.p_nHomRegion, p_OMXSTable.p_nSubUnivIndex);
+      |                                  ^
+In function ‘int sprintf(char*, const char*, ...)’,
+    inlined from ‘void CDHomogenization::OutputMXSFile()’ at /tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/OutputMXSFile.cpp:36:12:
+/usr/include/x86_64-linux-gnu/bits/stdio2.h:30:34: note: ‘__builtin___sprintf_chk’ output between 4 and 243 bytes into a destination of size 220
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+gmake[1]: *** [CMakeFiles/Makefile2:4373: CMakeFiles/RMC.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp: In member function ‘void CDParticleState::ResetForFixedSourceRun()’:
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:365:3: error: ‘p_nNucTMP’ was not declared in this scope
+  365 |   p_nNucTMP = 0;
+      |   ^~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:366:3: error: ‘p_nSabNucTMP’ was not declared in this scope; did you mean ‘p_nSabNUC’?
+  366 |   p_nSabNucTMP = 0;
+      |   ^~~~~~~~~~~~
+      |   p_nSabNUC
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:374:3: error: ‘p_bIsDelayedNeutron’ was not declared in this scope
+  374 |   p_bIsDelayedNeutron = false;
+      |   ^~~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:375:3: error: ‘p_bHasAngDistr’ was not declared in this scope
+  375 |   p_bHasAngDistr = false;
+      |   ^~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:376:3: error: ‘p_nProductionIndex’ was not declared in this scope
+  376 |   p_nProductionIndex = 0;
+      |   ^~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:377:3: error: ‘p_nLawIndex’ was not declared in this scope; did you mean ‘p_nErgIndex’?
+  377 |   p_nLawIndex = 0;
+      |   ^~~~~~~~~~~
+      |   p_nErgIndex
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:378:3: error: ‘p_ulAngErgDistrPos’ was not declared in this scope
+  378 |   p_ulAngErgDistrPos = 0;
+      |   ^~~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:379:3: error: ‘p_ulMuDistrPos’ was not declared in this scope
+  379 |   p_ulMuDistrPos = 0;
+      |   ^~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:380:3: error: ‘p_nSabErgPos’ was not declared in this scope; did you mean ‘p_nSabIntplPos’?
+  380 |   p_nSabErgPos = 0;
+      |   ^~~~~~~~~~~~
+      |   p_nSabIntplPos
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:381:3: error: ‘p_nSabErgOutPos’ was not declared in this scope
+  381 |   p_nSabErgOutPos = 0;
+      |   ^~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:458:3: error: ‘p_eColType’ was not declared in this scope; did you mean ‘p_nColType’?
+  458 |   p_eColType = NeutronReactionType::REACTION_NONE;
+      |   ^~~~~~~~~~
+      |   p_nColType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:459:3: error: ‘p_eCoordinateType’ was not declared in this scope
+  459 |   p_eCoordinateType = Coordinate::None;
+      |   ^~~~~~~~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:460:3: error: ‘p_eLawIndex’ was not declared in this scope
+  460 |   p_eLawIndex = LawType::None; p_eLawType = LawType::None;
+      |   ^~~~~~~~~~~
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:460:32: error: ‘p_eLawType’ was not declared in this scope; did you mean ‘p_nLawType’?
+  460 |   p_eLawIndex = LawType::None; p_eLawType = LawType::None;
+      |                                ^~~~~~~~~~
+      |                                p_nLawType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:461:3: error: ‘p_eMuType’ was not declared in this scope; did you mean ‘SabMuType’?
+  461 |   p_eMuType = MuType::None; p_eSabMuType = SabMuType::None;
+      |   ^~~~~~~~~
+      |   SabMuType
+/tmp/20261011_05_f11-prepared-run-lifecycle/stage2-src/src/ParticleStateFun.cpp:461:29: error: ‘p_eSabMuType’ was not declared in this scope; did you mean ‘p_nSabType’?
+  461 |   p_eMuType = MuType::None; p_eSabMuType = SabMuType::None;
+      |                             ^~~~~~~~~~~~
+      |                             p_nSabType
+gmake[2]: *** [tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/build.make:5382: tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/__/__/src/ParticleStateFun.cpp.o] Error 1
+gmake[2]: *** Waiting for unfinished jobs....
+gmake[1]: *** [CMakeFiles/Makefile2:14482: tests/prepared_fixed_source_lifecycle/CMakeFiles/RMCPreparedLifecycle.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

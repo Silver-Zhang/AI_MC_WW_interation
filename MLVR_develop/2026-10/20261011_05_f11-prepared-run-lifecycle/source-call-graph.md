@@ -1,8 +1,8 @@
-# 当前调用链与拟新增入口
+# 基线调用链与正式新增入口
 
-导航：§1 当前源码；§2 生产入口与所有权；§3 测试入口。行号绑定 RMC HEAD 330f091eb0296e0d0124237ba7d9a22b81aee852；实现后另存新定位，不覆盖本文件。
+导航：§1 基线源码；§2 生产入口与所有权；§3 测试入口；末节为实际实施对应。原定位绑定330f091e，当前改动后行号另存logs/implementation/source-map-final.txt，保留基线证据。
 
-## 1. 当前源码
+## 1. 基线源码
 
 ~~~text
 main.cpp:139–160
@@ -114,3 +114,12 @@ driver调用原前端读输入和建立输出，只在计算分派位置选择�
 源链（330f091e）：CheckSourceAndDistri.cpp:6–29做一次定义检查/规范化 → ExternalSource.cpp:50–57按FRACTION/BIASFRAC赋初始因子 → SampleParticle.cpp:25–29重置/分布修正/乘p_dWeight → SampleVariableFromDistri.cpp:13–16允许WEIGHT变量抽样 → SampleValue.cpp:11–73含prob/bias修正 → ExternalSource.cpp:347–349返回最终粒子。拟hook在SampleNeutronSource.cpp:203之后，早于:224–265的alive/几何早退；不是在WW后测权重。InitialBatchSource.cpp:298按完成N赋D，ProcessTally.cpp:364使用D；新audit独立取样累计W0，不改这两处。
 
 计时链（330f091e）：OutputHeading.cpp:29启动进程Total → StatisticsFunc.cpp:124、184/218读取Total → OutputEnding.cpp:46停止。另有CalcFixedSource.cpp:168/247的history interval → ProcessStatisticsBin.cpp:16–20/43的非零history时间 → StatisticsFunc.cpp:177–180/331–358的batch FOM/两个检查。新CalMode三段steady-clock只包围正式调用边界（t0/t1/t2/t3），不改旧统计调用链或全局Total；精确输出映射见test-plan §3.1。
+
+
+## 实施对应（2026-10-11）
+
+当前生产入口为CalMode.h:42–51；实现为PrepareFixedSourceRun.cpp中的Initialize/Run/Finish，private Prepare组织owner方法。Run → Prepare → 原ExecuteFixedSourcePrepared → 原FinalizeFixedSourceRun → 终检/receipt；普通CalcFixedSource仅增加进程owner冲突检查，原三helper及六模式分支保留。实际行号与补丁由logs/implementation/source-map-final.txt绑定。
+
+测试链接：根CMake末尾受test/Linux/serial/AIS-off/Python-off条件注册。tests/prepared_fixed_source_lifecycle/CMakeLists.txt复制RMC的SOURCES并恰好排除一份原main.cpp，driver.cpp拥有测试main，globals.cpp拥有其余13个无条件单例，原库/TU持有的extern不重复定义。G0的源集合、694个共同生产TU编译选项和nm定义计数在logs/linkage/。普通main.cpp与tests/CMakeLists.txt均未修改。
+
+fresh driver在普通ReadInputBlocks之后设置准确seed/实际N，然后调用原RunCalculation，工作副本存活期间由只读GDB取得快照；persistent调用三个正式public接口。driver只遍历run规格，没有history/batch/descendant循环。结束时由caller仅调用一次OutputEnding。

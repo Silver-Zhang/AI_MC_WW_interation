@@ -1,0 +1,20 @@
+--- baseline
++++ refactor
+@@ -337,7 +337,7 @@
+                      DATATYPE  H5T_STD_I32LE
+                      DATASPACE  SCALAR
+                      DATA {
+-                        0
++                        1
+                      }
+                   }
+                   DATASET "FoMValueCheck" {
+@@ -1030,7 +1030,7 @@
+                      DATATYPE  H5T_STD_I32LE
+                      DATASPACE  SCALAR
+                      DATA {
+-                        0
++                        1
+                      }
+                   }
+                   DATASET "FoMValueCheck" {

@@ -1,0 +1,45 @@
+Universe 0
+Cell 1    -1 & -2 & -3 & 11 & 12 & 13     Mat = 1                      
+Cell 2    (1 : 2 : 3 : -11 : -12 : -13) & -4 & -5 & -6 & 14 & 15 & 16    Mat = 1                    
+Cell 3    (4 : 5 : 6 : -14 : -15 : -16) & -7 & -8 & -9 & 17 & 18 & 19   Mat = 1                    
+Cell 4    7 : 8 : 9 : -17 : -18 : -19       void = 1      
+
+Surface
+surf 1  px  1
+surf 2  py  1
+surf 3  pz  1  
+surf 4  px  5
+surf 5  py  5
+surf 6  pz  5
+surf 7  px  10
+surf 8  py  10
+surf 9  pz  10
+surf 11  px  -1
+surf 12  py  -1
+surf 13  pz  -1  
+surf 14  px  -5
+surf 15  py  -5
+surf 16  pz  -5
+surf 17  px  -10
+surf 18  py  -10
+surf 19  pz  -10 
+
+Material
+Mat 1  0.1  92238.71c 1 8016.71c 2    //water 1002.30c 1
+//Sab 1 lwtr.60t
+
+Physics
+ParticleMode E
+Electron MaxEnergy = 100 MinEnergy = 1.0E-3 EPRODUCEP = 0  ErgLossStraggle = 0 
+         BREMSANGLE = 0 BREMS = 0 BREMSPHOTONMULTITIMES = 1.0 XRAYMULTITIMES = 0.0 KNOCKONMULTITIMES = 0.0
+         BREMSEACHSUBTEP = 0 BREMSERGLOSSMETHOD = 0
+
+FixedSource
+particle population = 10000
+
+EXTERNALSOURCE
+Source 1 Point = 0.0 0.0 0.0 fraction = 1.0 ENERGY = 30 Particle = 3
+
+Tally
+CellTally 1  Particle = 3 type = 1  Cell = 1
+CellTally 2  Particle = 3 type = 1  Cell = 2

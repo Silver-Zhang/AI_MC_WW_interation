@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "bash",
+    "tools/check-archives.sh"
+  ],
+  "cwd": "/home/workspace/AI_MC_WW_interation",
+  "started_utc": "2026-10-11T13:57:06.849972+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

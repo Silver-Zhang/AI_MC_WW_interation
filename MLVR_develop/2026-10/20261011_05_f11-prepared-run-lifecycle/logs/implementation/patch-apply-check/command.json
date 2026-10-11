@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "git",
+    "apply",
+    "--check",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/changes.diff",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/new-files.diff"
+  ],
+  "cwd": "/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src",
+  "started_utc": "2026-10-11T13:58:40.071749+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

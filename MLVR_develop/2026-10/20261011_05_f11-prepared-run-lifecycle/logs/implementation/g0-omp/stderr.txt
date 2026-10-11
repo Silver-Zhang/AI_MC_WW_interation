@@ -1,0 +1,4 @@
+CMake Error at CMakeLists.txt:207 (message):
+  OpenMP ON but MPI OFF builds are not allowed.
+
+
