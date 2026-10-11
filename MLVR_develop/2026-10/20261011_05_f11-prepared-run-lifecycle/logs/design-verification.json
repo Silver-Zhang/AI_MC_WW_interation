@@ -1,0 +1,24 @@
+{
+  "source_files_checked": 848,
+  "changed_source_files": [],
+  "new_source_files": [],
+  "RMC_status": {
+    "stdout": "",
+    "stderr": "",
+    "exitcode": 0
+  },
+  "RMC_HEAD": "330f091eb0296e0d0124237ba7d9a22b81aee852",
+  "frozen04_unchanged": true,
+  "README_sections": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "broken_task_links": [],
+  "over_10MiB_files": [],
+  "task_bytes": 270813,
+  "production_code_modified_by_stage2": false,
+  "stage2_builds_and_transport_tests_executed": false
+}

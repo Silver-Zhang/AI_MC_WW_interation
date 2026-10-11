@@ -1,0 +1,1316 @@
+
+RMC/src/CalMode.h:152-174
+152:   void RunCalculation(CDCalMode &cCalMode, CDNeutronTransport cNeutronTransport, CDPhotonTransport &cPhotonTransport,
+153:                       CDElectronTransport &cElectronTransport, CDAceData &cAceData, CDGeometry cGeometry,
+154:                       Depth_Class &cDepth, CDCriticality cCriticality, CDMaterial cMaterial,
+155:                       CDParticleState cParticleState, CDConvergence cConvergence, CDTally cTally, CDBurnup cBurnup,
+156:                       CDFixedSource &cFixedSource, CDRNG &ORNG, ME_Class &cME, TTA_Class &cTTA, CDAdjoint &cAdjoint,
+157:                       CDExternalSource &cExternalSource, CDSampling cSampling, CDKinetics &cKinetics,
+158:                       CDPerturbation &cPerturb);
+159: 
+160:   /**
+161:    * @brief 对所有需要修正的随机介质区域内的弥散颗粒实际填充率进行判断是否达到填充率精度要求，
+162:    *        若精度要求满足返回true
+163:    * @param cGeometry 几何类对象，此函数需要用到随机介质相关的几何信息来读取弥散颗粒填充率
+164:    * @param vParticlePreFrac 所有需要修正的随机介质区域内的弥散颗粒实际填充率
+165:    * @param vUnivIndex 所有需要修正的随机介质区域几何空间编号
+166:    * @return 是否达到填充率精度要求
+167:    */
+168:   bool CheckPackConvergence(CDGeometry cGeometry,
+169:                             vector<vector<double>> vParticlePreFrac,
+170:                             vector<int> vUnivIndex);
+171: 
+172: private:
+173:   /**
+174:    * @brief 进行临界计算
+
+RMC/src/CalMode.h:222-250
+222:   void
+223:   CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport, CDPhotonTransport &cPhotonTransport,
+224:                   CDElectronTransport &cElectronTransport, CDAceData &CAceData, CDFixedSource &cFixedSource,
+225:                   CDMaterial &CMaterial, CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+226:                   CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource, CDSampling &cSampling,
+227:                   CDPerturbation &cPerturb);
+228: 
+229:   // One-time initialization; not a repeated-run reset.
+230:   void InitializeFixedSourceModel(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+231:                                           CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+232:                                           CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+233:                                           CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+234:                                           CDBurnup &CBurnup, CDRNG &ORNG, CDSampling &cSampling,
+235:                                           CDPerturbation &cPerturb);
+236: 
+237:   // Requires initialized model and explicitly prepared run state.
+238:   void ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+239:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+240:                                 CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+241:                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+242:                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource &cExternalSource,
+243:                                 CDSampling &cSampling, CDPerturbation &cPerturb);
+244: 
+245:   // Complete statistics once; ordinary output remains in CalcFixedSource.
+246:   void FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+247:                                       CDAceData &CAceData, CDTally &CTally);
+248: 
+249:   /**
+250:    * @brief 进行燃耗计算
+
+RMC/src/CalMode.h:328-339
+328:                     CDBurnup cBurnup);
+329: 
+330: public:
+331:   /**
+332:    * @brief 构造函数
+333:    */
+334:   CDCalMode() = default;
+335: };
+336: 
+337: extern CDCalMode OCalMode;
+338: 
+339: #endif
+
+RMC/src/CalcFixedSource.cpp:67-83
+67: void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+68:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+69:                                 CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+70:                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+71:                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource,
+72:                                 CDSampling &cSampling, CDPerturbation &cPerturb) {
+73:   OTimer.reg(Utility::FixedSource);
+74:   OTimer.reg(Utility::Tally);
+75:   OTimer[Utility::FixedSource].start();
+76:   CDBurnup CBurnup;
+77:   InitializeFixedSourceModel(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport,
+78:                              CAceData, cFixedSource, CMaterial, CGeometry, CParticleState, CTally,
+79:                              CBurnup, ORNG, cSampling, cPerturb);
+80:   ExecuteFixedSourcePrepared(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport,
+81:                              CAceData, cFixedSource, CMaterial, CGeometry, CParticleState, CTally,
+82:                              ORNG, cCriticality, cExternalSource, cSampling, cPerturb);
+83:   FinalizeFixedSourceRun(cFixedSource, CMaterial, CAceData, CTally);
+
+RMC/src/CalcFixedSource.cpp:114-165
+114: void CDCalMode::InitializeFixedSourceModel(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+115:                                           CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+116:                                           CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+117:                                           CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+118:                                           CDBurnup &CBurnup, CDRNG &ORNG, CDSampling &cSampling,
+119:                                           CDPerturbation &cPerturb) {
+120:   bool bPhotonNucleus = cPhotonTransport.p_bPhotonNucleus;
+121:   cFixedSource.InitiateAll(cCalMode.p_nParticleMode, cNeutronTransport, CGeometry, CMaterial, CTally,
+122:                            CAceData, CParticleState, CBurnup, ORNG, cSampling, bPhotonNucleus,
+123:                            cPhotonTransport, cElectronTransport, cCalMode, cPerturb);
+124:   CParticleState.p_vONucCs.resize(CAceData.p_vNuclides.size());
+125:   CParticleState.p_vIsNucLocCellTmpChanged.resize(CAceData.p_vNuclides.size(), true);
+126: 
+127:   if (cCalMode.p_nParticleMode == CDCalMode::NeutronPhotonElectronMode ||
+128:       cCalMode.p_nParticleMode == CDCalMode::PhotonElectronMode ||
+129:       cCalMode.p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+130:       cCalMode.p_nParticleMode == CDCalMode::PhotonMode ||
+131:       cCalMode.p_nParticleMode == CDCalMode::ElectronMode) {
+132:     cElectronTransport.GenElectronCross(CAceData, CMaterial);
+133: 
+134:     OTimer.reg(Utility::PhotonTransport);
+135:     OTimer.reg(Utility::PhotonReaction);
+136:     OTimer.reg(Utility::PhotonXS);
+137:     OTimer.reg(Utility::PhotonTracking);
+138:   }
+139: }
+140: 
+141: void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
+142:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+143:                                 CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+144:                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+145:                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource &cExternalSource,
+146:                                 CDSampling &cSampling, CDPerturbation &cPerturb) {
+147:   time_t last_t = time(nullptr);
+148:   // todo: 1. maybe not compatible with continuous surface source
+149:   //       2. confirmed not compatible with statistics test
+150:   long long TotalCount = 0;
+151:   if (cFixedSource.GetLoadBalanceMethod() == CDFixedSource::TIME_REDUCE) {
+152:     TotalCount = LLONG_MAX;
+153:   }
+154: 
+155: 
+156:   if (cCalMode.p_nParticleMode == CDCalMode::NeutronMode) {
+157:     cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].push(CDFixBank());
+158:     while (cFixedSource.p_nFinishCalculate < 2) {
+159:       cFixedSource.DistributeSource(CGeometry, cExternalSource, ORNG);
+160:       if (cFixedSource.GetLoadBalanceMethod() != CDFixedSource::TIME_REDUCE) {
+161:         TotalCount = cFixedSource.p_llParIntervalEachPro;
+162:       }
+163:       for (long long Neu = 1; Neu <= TotalCount; Neu++) {
+164:         if (LoadBalanceTimeChecker(cFixedSource, Neu, &last_t)) {
+165:           break;
+
+RMC/src/CalcFixedSource.cpp:749-775
+749:             break;
+750:           }
+751:         }
+752:         CParticleState.p_dSimulateTime = OTimer[Utility::FixedSource].interval();
+753: #ifdef USE_MPI
+754:         CTally.SumUpTally(Particle + cFixedSource.p_llParticlePosEachPro,
+755:                           CParticleState.p_dSimulateTime);   // fixed-source calculations
+756: #else
+757:         CTally.SumUpTally(Particle, CParticleState.p_dSimulateTime);
+758: 
+759: #endif
+760:         if (cFixedSource.p_nFinishCalculate != -1) {
+761:           break;
+762:         }
+763:       }
+764:       cFixedSource.PrcoessBatchEnd(CTally, cNeutronTransport, CGeometry, CMaterial, CAceData, cExternalSource, cCalMode,
+765:                                    ORNG);
+766:     }
+767:   }
+768: 
+769:   FinalizeLoadBalanceChecker(cFixedSource);
+770: }
+771: 
+772: void CDCalMode::FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
+773:                                       CDAceData &CAceData, CDTally &CTally) {
+774:   CTally.ProcessTally(cFixedSource, CMaterial, CAceData);
+775: }
+
+RMC/src/FixedSource.h:192-229
+192:   CDFixedSource() {
+193:     p_llParIntervalEachPro = 0;
+194:     p_llParticlePosEachPro = 0;
+195:     p_nFinishCalculate = -1;
+196:     p_llUserInputParNum = 0;
+197:     p_llParNumRestart = 0;
+198:     p_llCurrentBatch = 0;
+199:     //p_nPhotonBankCount  = 0;
+200: 
+201:     p_dTotStartWgt = 0.0;
+202:     p_dTotStartWgtOrigin = .0;
+203: 
+204:     p_llCurParNumEachPro = 0;
+205:     p_llCurTotParNum     = 0;
+206:     p_llTimeParInterval  = 0;
+207:     p_llParNumToInputInterval = 0;
+208:     p_nMaxMissParCount = 10;
+209:     p_vSpontaFissNeuMul.resize(15, 0);
+210:     p_vInduceFissNeuMul.resize(15, 0);
+211:     p_vSpontaFissPhoMul.resize(50, 0);
+212:     p_vInduceFissPhoMul.resize(50, 0);
+213:     p_vFixedParticleSrcBank.resize(4);
+214:   }
+215: 
+216: #ifdef USE_MPI
+217:   /**
+218:    * @brief TIME_REDUCE负载均衡中非阻塞归约操作的MPI请求句柄
+219:    */
+220:   MPI_Request p_LoadBalanceRequest = MPI_REQUEST_NULL;
+221:   /**
+222:    * @brief TIME_REDUCE负载均衡中是否存在未完成的MPI_Iallreduce操作
+223:    */
+224:   bool p_bLoadBalanceReducing = false;
+225:   /**
+226:    * @brief 当前进程已完成的粒子数（作为MPI_Iallreduce输入）
+227:    */
+228:   long long p_llLoadBalanceSend = 0;
+229:   /**
+
+RMC/src/FixedSource.h:254-328
+254:   double p_dTotStartWgt;
+255:   /**
+256:    * @brief 原始的粒子初始总权重
+257:    */
+258:   double p_dTotStartWgtOrigin;
+259:   /**
+260:    * @brief 固定中子源库的粒子计数
+261:    */
+262:   int p_nFixedSrcBankCount;
+263:   /**
+264:    * @brief 通用源库计数
+265:    */
+266:   int p_nFixedSrcCount;
+267:   /**
+268:    * @brief 是否开启固定源伴随计算,默认不要开启
+269:    */
+270:   bool p_bIsAdjoint = false;
+271:   /**
+272:   * @brief 伴随中子的最大能量,默认值20MeV
+273:   */
+274:   double p_dMaxAdjointNeutronEnergy = 20;
+275:   /**
+276:    * @brief 伴随光子的最大能量,默认值20MeV
+277:    */
+278:   double p_dMaxAdjointPhotonEnergy = 20;
+279: 
+280:   /**
+281:   * @brief 从粒子库里下一个要拿出来的粒子的在粒子库中的位置
+282:   */
+283:   vector<int> p_sNextParticle = {0, 0, 0};
+284:   /**
+285:   * @brief 用于固定源以及屏蔽计算的粒子栈功能，一共四个位置，第一个是占位，剩余三个是中子、光子、电子（与粒子类型的枚举类型值相匹配）
+286:   */
+287:   vector<ParticleStack> p_vFixedParticleSrcBank;
+288: 
+289:   /**
+290:    * @brief 通用源库
+291:    */
+292:   vector <CDFixBank> p_vFixedSrc;
+293: //  /**
+294: //   * @brief 裂变中子源库
+295: //   */
+296:   vector <CDFixBank> p_vFixedSrcBank;
+297:   /**
+298:    * @brief 光子库
+299:    */
+300:   vector <CDFixBank> p_vPhotonBank;
+301:   /**
+302:    * @brief 光子库计数
+303:    */
+304:   int p_nPhotonBankCount;
+305:   /**
+306:    * @brief 电子库
+307:    */
+308:   vector<CDLiveParticle> p_vElectronBank;
+309:   /**
+310:    * @brief 电子库计数
+311:    */
+312:   int p_nElectronBankCount = 0;
+313: 
+314:   /**
+315:    * @brief 输运过程总碰撞次数
+316:    */
+317:   long long p_llTotCollisionCount = 0;//the total collision times for transport
+318:   /**
+319:    * @brief 光子输运过程总碰撞次数
+320:    */
+321:   long long p_llTotGammaColliCount = 0;//the total collision times for gamma transport
+322:   /**
+323:    * @brief 电子输运过程总碰撞次数
+324:    */
+325:   long long p_llTotElectronColliCount = 0;
+326:   /**
+327:    * @brief 电子反应产生光子的总权重
+328:    */
+
+RMC/src/FixedSource.h:345-418
+345:    * @brief 根据时间计算得到的粒子数间隔interval
+346:    */
+347:   long long p_llTimeParInterval;
+348:   /**
+349:    * @brief 当前batch，要达到输入文件中的interval还需计算的粒子数
+350:    */
+351:   long long p_llParNumToInputInterval;
+352:   /**
+353:    * @brief 当前进程每批次需要模拟计算的粒子数目
+354:    */
+355:   long long p_llParIntervalEachPro; //source particle number in each process each batch
+356:   /**
+357:    * @brief 当前进程分配的粒子初始位置
+358:    */
+359:   long long p_llParticlePosEachPro;
+360:   /**
+361:    * @brief 一共要计算的粒子数，在原始输入文件中指定
+362:    */
+363:   long long p_llUserInputParNum;
+364:   /**
+365:    * @brief 重启文件已经得到粒子数
+366:    */
+367:   long long p_llParNumRestart;
+368:   /**
+369:    * @brief 将固定源粒子分批计算的批数
+370:    */
+371:   long long p_llCurrentBatch;
+372:   /**
+373:    * @brief 每个进程中的当前粒子总数
+374:    */
+375:   long long p_llCurParNumEachPro;//current particle sum in each process
+376:   /**
+377:    * @brief 所有进程当前粒子总数
+378:    */
+379:   long long p_llCurTotParNum;//current particle sum of all processes approximately including the former particle sum
+380: 
+381:   /**
+382:    * @brief 多选项裂变多重性设置变量
+383:    */
+384:   vector<CDFissMult> p_vFissMult;
+385:   /**
+386:    * @brief 是否使用多选项裂变多重性设置（如MCNP６的FMULT）
+387:    */
+388:   bool p_bFissMult = false;
+389: 
+390:   /**
+391:    * @brief 负载均衡方法枚举类型
+392:    */
+393:   enum LOAD_BALANCE_METHOD {
+394:     NONE = 0,
+395:     TIME_REDUCE = 1
+396:   };
+397: 
+398:   /**
+399:    * @brief 负载均衡的方法
+400:    */
+401:   LOAD_BALANCE_METHOD LBMethod = NONE;
+402: 
+403:   /**
+404:    * @brief 负载均衡的方法
+405:    */
+406:   int LBTimeInterval = 60;
+407: 
+408:   /**
+409:    * @brief 面源
+410:    * @note
+411:    * -1-继续计算；
+412:    * 1-完成读取面源；
+413:    * 2-完成计算：完成读取面源在没有源读取的情况下；
+414:    * 3-完成计算：完成一个源的读取文件；
+415:    * 4-完成计算：完成没有源的读取文件；
+416:    * 5-完成计算：到达时间；
+417:    */
+418:   int p_nFinishCalculate; // -1-calculation go on;
+
+RMC/src/InitiateTrspt.cpp:60-101
+60: void CDFixedSource::InitiateTrspt(CDNeutronTransport &cNeutronTransport) {
+61:   /////////////////////////////////////////////////////
+62: # ifdef USE_MPI
+63:   if (OParallel.p_bUseFastBank) {
+64:     Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "Peer-to-peer fission bank gathering is used.\n");},
+65:     Output.p_fpOutputFilePtr, CDOutput::_FILE, CDOutput::_NORMAL);
+66:   }
+67: # endif
+68: 
+69:   /////////////////////////////////////
+70:   //if(!UseProbTableBool)
+71:   //{
+72:   //  printf("Probability table for unresolved resonance is not used!\n");
+73:   //  fprintf(Output.OutputFilePtr,"Probability table for unresolved resonance is not used!\n");
+74:   //}
+75: 
+76:   //////////// variable for tracking ////////////
+77:   p_dTotStartWgt = 1.0 * p_llParIntervalEachPro;
+78: 
+79:   p_nFixedSrcCount = 0;
+80: 
+81: 
+82:   p_llTotCollisionCount = 0;
+83:   cNeutronTransport.p_nMissParticleCount = 0;
+84: 
+85:   //////////// variable for bank ////////////
+86:   int bank_size = 0;
+87: 
+88: # ifdef USE_MPI
+89:   if (OParallel.p_bUseFastBank) {
+90:     bank_size = int(1.2 * p_llParIntervalEachPro / OParallel.p_nProcsNum);
+91:   } else {
+92:     bank_size = int(1.2 * p_llParIntervalEachPro);
+93:   }
+94: #else
+95:   bank_size = int(1.2 * p_llParIntervalEachPro);
+96: # endif
+97: 
+98:   p_vFixedSrc.resize(bank_size);
+99: 
+100:   return;
+101: }
+
+RMC/src/InitialBatchSource.cpp:30-38
+30: void CDFixedSource::DistributeSource(CDGeometry &cGeometry, CDExternalSource &cExternalSource, CDRNG &ORNG) {
+31:   p_llCurrentBatch++;
+32:   if (cExternalSource.p_nSourceType == cExternalSource.OrdinarySource) {
+33:     DistributeGeneralSource(cGeometry, ORNG);
+34:   } else {
+35:     DistributeSurfSource(cGeometry, cExternalSource, ORNG);
+36:   }
+37: 
+38: }
+
+RMC/src/InitialBatchSource.cpp:294-335
+294:   // 计算下一代需要计算粒子数  \n
+295:   if (cExternalSource.p_nSourceType == cExternalSource.OrdinarySource) {
+296:     CalcParticleInterval(bCalculationEnd);
+297:     //  根据输入的粒子初始权重计算初始总权重  \n
+298:     p_dTotStartWgt =  p_llCurTotParNum;;
+299:   } else {
+300:     CalcSurfParticleInterval(bCalculationEnd, cExternalSource);
+301:     if (cExternalSource.p_vSurfSrc[0].p_dSplit > 1.0) {
+302:       p_dTotStartWgt = cExternalSource.p_vSurfSrc[0].p_dSplit * p_dTotStartWgtOrigin * p_llCurTotParNum / p_dTotStartWgt;
+303:     } else {
+304:       p_dTotStartWgt = p_dTotStartWgtOrigin * p_llCurTotParNum / p_dTotStartWgt; //修改总权重
+305:     }
+306:     // 权重是否需要调整  \n
+307:   }
+308: 
+309: # ifdef USE_MPI
+310:   if (OParallel.p_bIsMaster) { // Only process  in master processor
+311: # endif
+312: 
+313:     double fissneutot = 0;
+314:     double fisstot = 0;
+315:     for (int i = 0; i < 10; i++) {
+316:       fisstot += p_vSpontaFissNeuMul[i];
+317: 
+318:       fissneutot += i * p_vSpontaFissNeuMul[i];
+319: 
+320:     }
+321:     if (fissneutot > 0) {
+322:       p_dTotStartWgt += fissneutot - fisstot;
+323:     }
+324:     for (int n = 0; n < cTally.p_vCellTally.size(); ++n) {
+325:       cTally.p_vCellTally[n].p_nHistory = p_llUserInputParNum;
+326:       if (cTally.p_vCellTally[n].p_nNormal == 1) {
+327:         cTally.p_vCellTally[n].p_nNormal = p_nFixedSrcCount;
+328:         continue;
+329:       }
+330:       cTally.p_vCellTally[n].p_nNormal = p_llUserInputParNum;
+331:     }
+332: # ifdef USE_MPI
+333:   }
+334: # endif
+335:   if (bCalculationEnd) {
+
+RMC/src/CheckTransport.cpp:51-72
+51: void CDFixedSource::CheckFixedSource() {
+52:   if (Output.p_llOutRestartInterval > p_llUserInputParNum) {
+53:     Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "interval in BinaryOut block is more than total particle number to be calculated !\n");},
+54:     Output.p_fpOutputFilePtr, CDOutput::_ERROR);
+55:   }
+56:   p_llParNumToInputInterval = p_llUserInputParNum;
+57:   //  restart interval and tally interval are both input in the input file
+58:   if (Output.p_llOutRestartInterval > 0) {
+59:     p_llParNumToInputInterval = min(p_llParNumToInputInterval, Output.p_llOutRestartInterval);
+60:   }
+61:   //  only one of restart interval and tally interval is input in the input file,the other one is 0
+62: 
+63:   if (Output.p_dStopTime > 0) {
+64:     int nProcess = 1;
+65: # ifdef USE_MPI
+66:     nProcess = OParallel.p_nProcsNum;
+67: # endif
+68:     p_llTimeParInterval = 200 * nProcess;
+69:   } else {
+70:     p_llTimeParInterval = p_llUserInputParNum;
+71:   }
+72: }
+
+RMC/src/TallyData.h:33-83
+33: public:
+34:   /**
+35:    * @brief 临时计数结果（固定源模式下单个粒子或临界模式下每代）
+36:    */
+37:   vector<double> p_vScore;        // temporary score
+38:   /**
+39:    * @brief 临时计数结果（临界模式下单个粒子）
+40:    */
+41:   vector<double> p_vScoreTemp;
+42:   /**
+43:    * @brief 存储最终的计数结果，用于计算平均值
+44:    */
+45:   vector<double> p_vSum1;
+46: 
+47: 
+48:   /**
+49:    * @brief 存储最终的计数结果的平方和，用于计算标准差
+50:    */
+51:   vector<double> p_vSum2;
+52:   /**
+53:    * @brief 计数值的平均值
+54:    */
+55:   vector<double> p_vAve;
+56:   /**
+57:    * @brief 计数值的标准差
+58:    */
+59:   vector<double> p_vRe;
+60:   /**
+61:    * @brief 存储每代的计数结果，该统计方式用于计算协方差
+62:    */
+63:   vector<double> p_vSum3;         // used to calculate covariance
+64: 
+65:   /**
+66:    * @brief 在当前的中子历史中，有计数的计数器的指数编号
+67:    */
+68:   set<int> p_setScoreIndex;       // scored indices during present histroy
+69: 
+70:   /**
+71:    * @brief 在当前的中子历史中，有计数的计数器的指数编号
+72:    * @note 只用于截面计数器
+73:    */
+74:   vector<int> p_vScoreIndex2;     // scored indices during present histroy
+75:   /**
+76:    * @brief 在当前的中子历史中，有计数的计数器步数
+77:    */
+78:   vector<int> p_vScoreStride;     // scored stride during present histroy
+79: 
+80:   /**
+81:    * @brief CellTallyData包含的统计检验数据
+82:    */
+83:   CDStatisticsTester p_OStatisticsTester;
+
+RMC/src/TallyData.cpp:17-25
+17: void CDTallyData::SetZero() { // expand size of tally data
+18:   CDGlobeFun::SetVecZero(p_vScore);
+19:   CDGlobeFun::SetVecZero(p_vScoreTemp);
+20:   CDGlobeFun::SetVecZero(p_vSum1);
+21:   CDGlobeFun::SetVecZero(p_vSum2);
+22:   CDGlobeFun::SetVecZero(p_vAve);
+23:   CDGlobeFun::SetVecZero(p_vRe);
+24: }
+25: 
+
+RMC/src/InitiateTally.cpp:45-70
+45:           oCellTally.p_vCumRossiAlphaTimeDiff.resize(nCumRossiAlphaDataSize);
+46:           for (int i = 0; i < nCumRossiAlphaDataSize; i++) {
+47:             oCellTally.p_vCumRossiAlphaTimeDiff[i] = oCellTally.p_dTimeInterval * (i + 1);
+48:           }
+49:         }
+50:       }
+51:       InitializeReact(cGeometry, cMaterial, oCellTally, oCellTally.p_nTallyParticle);
+52:       oCellTally.SetupCellTally(cAceData, p_nTotalCellTallyDataLen, p_vSingleBin);
+53:       if (!p_bUseStatisticsCheck) { oCellTally.p_bUseStatisticalCheck = false; }
+54:     }
+55:     SetupCellTallyData();           // /  Create cell tally data, accounting for Tally decomposition case
+56:     CDTallyData *p = &p_OCellTallyData;
+57:     p_pTallyDataPointer.push_back(p);
+58:   }
+59: 
+60:   if (p_bIsWithMeshTally) {
+61:     p_nTotMeshTallyDataLen = 0;
+62:     p_OMeshTallyData.Initiate();    // /  Clear all cell tally data
+63:     for (auto &oMeshTally : p_vMeshTally) {
+64:       oMeshTally.SetupMeshTally(cAceData, p_OMeshTallyData, p_nTotMeshTallyDataLen);
+65:       if (!p_bUseStatisticsCheck) { oMeshTally.p_bUseStatisticalCheck = false; }
+66:     }
+67:     SetupMeshTallyData();
+68:     CDTallyData *p = &p_OMeshTallyData;
+69:     p_pTallyDataPointer.push_back(p);
+70:   }
+
+RMC/src/InitiateTally.cpp:140-149
+140:     InitiateFETParameter();
+141:   }
+142: 
+143:   for (auto const &pTallyData : p_pTallyDataPointer) { //清零
+144:     pTallyData->SetZero();
+145:   }
+146: 
+147:   {
+148:     cAceData.NucFisQ[90232] = 171.91 ;
+149:     cAceData.NucFisQ[91233] = 175.57 ;
+
+RMC/src/StatisticsFunc.cpp:8-34
+8: void CDStatisticsTester::ReSize(long long nNumOfParticles) {
+9:   p_vSum1.resize(p_nBatch * p_nTallyToCheck);
+10:   p_vSum2.resize(p_nBatch * p_nTallyToCheck);
+11:   p_vSum3.resize(p_nBatch * p_nTallyToCheck);
+12:   p_vSum4.resize(p_nBatch * p_nTallyToCheck);
+13:   p_vTime.resize(p_nBatch * p_nTallyToCheck);
+14:   p_vAvePerCycle.resize(p_nBatch * p_nTallyToCheck);
+15:   p_vRePrevCycle.resize(p_nBatch * p_nTallyToCheck);
+16:   p_vVoVPrevCycle.resize(p_nBatch * p_nTallyToCheck);
+17:   p_vFoMPerCycle.resize(p_nBatch * p_nTallyToCheck);
+18:   p_vFoMTot.resize(p_nTallyToCheck);
+19:   p_vNpsPerBatch.resize(p_nTallyToCheck);
+20:   p_vNonZeroNum.resize(p_nTallyToCheck);
+21:   p_vNpsStored.resize(p_nBatch * p_nTallyToCheck);
+22:   p_vCurrentBatch.resize(p_nTallyToCheck);
+23:   p_vSlope.resize(p_nTallyToCheck);
+24:   p_vpdfx.resize(p_npdfBin);
+25:   p_vpdfy.resize(p_npdfBin);
+26:   p_vTempNum.resize(p_nTallyToCheck);
+27:   p_vTempScores.resize(200 * p_nTallyToCheck);
+28:   p_vLargestScore.resize(p_nTallyToCheck);
+29:   p_vLargestTime.resize(p_nTallyToCheck);
+30:   p_vFlucMean.resize(p_nTallyToCheck);
+31:   p_vFlucRe.resize(p_nTallyToCheck);
+32:   p_vFlucVoV.resize(p_nTallyToCheck);
+33:   p_vFlucFOM.resize(p_nTallyToCheck);
+34:   p_vFlucShiftCenter.resize(p_nTallyToCheck);
+
+RMC/src/StatisticsFunc.cpp:50-93
+50:   p_vTotMean.resize(p_nTallyToCheck);
+51: 
+52:   CDGlobeFun::SetVecZero(p_vSum1);
+53:   CDGlobeFun::SetVecZero(p_vSum2);
+54:   CDGlobeFun::SetVecZero(p_vSum3);
+55:   CDGlobeFun::SetVecZero(p_vSum4);
+56:   CDGlobeFun::SetVecZero(p_vTime);
+57:   CDGlobeFun::SetVecZero(p_vLargestTime);
+58:   CDGlobeFun::SetVecZero(p_vLargestScore);
+59:   CDGlobeFun::SetVecZero(p_vFlucMean);
+60:   CDGlobeFun::SetVecZero(p_vFlucRe);
+61:   CDGlobeFun::SetVecZero(p_vFlucVoV);
+62:   CDGlobeFun::SetVecZero(p_vFlucFOM);
+63:   CDGlobeFun::SetVecZero(p_vFlucShiftCenter);
+64:   CDGlobeFun::SetVecZero(p_vSlope);
+65:   CDGlobeFun::SetVecZero(p_vpdfx);
+66:   CDGlobeFun::SetVecZero(p_vpdfy);
+67:   CDGlobeFun::SetVecZero(p_vAvePerCycle);
+68:   CDGlobeFun::SetVecZero(p_vRePrevCycle);
+69:   CDGlobeFun::SetVecZero(p_vVoVPrevCycle);
+70:   CDGlobeFun::SetVecZero(p_vFoMPerCycle);
+71:   CDGlobeFun::SetVecZero(p_vFoMTot);
+72:   CDGlobeFun::SetVecZero(p_vTempScores);
+73:   CDGlobeFun::SetVecZero(p_vMeanBehaviourCheck);
+74:   CDGlobeFun::SetVecZero(p_vReValueCheck);
+75:   CDGlobeFun::SetVecZero(p_vReDeRateCheck);
+76:   CDGlobeFun::SetVecZero(p_vReDecreaseCheck);
+77:   CDGlobeFun::SetVecZero(p_vVoVValueCheck);
+78:   CDGlobeFun::SetVecZero(p_vVoVDecreaseCheck);
+79:   CDGlobeFun::SetVecZero(p_vVoVDeRateCheck);
+80:   CDGlobeFun::SetVecZero(p_vFoMBehaviourCheck);
+81:   CDGlobeFun::SetVecZero(p_vFoMValueCheck);
+82:   CDGlobeFun::SetVecZero(p_vPdfSlopeCheck);
+83:   CDGlobeFun::SetVecZero(p_vNpsStored);
+84:   CDGlobeFun::SetVecZero(p_vNonZeroNum);
+85:   CDGlobeFun::SetVecZero(p_vCurrentBatch);
+86:   CDGlobeFun::SetVecZero(p_vTempNum);
+87:   CDGlobeFun::SetVecValue(p_vNpsPerBatch, nNumOfParticles / p_nBatch);
+88:   CDGlobeFun::SetVecValue(p_vTooFewParticles, false);
+89:   CDGlobeFun::SetVecValue(p_vNormFactor, 1.0);
+90:   CDGlobeFun::SetVecZero(p_vNonZeroRe);
+91:   CDGlobeFun::SetVecZero(p_vZeroRe);
+92:   CDGlobeFun::SetVecZero(p_vShiftedCenter);
+93:   CDGlobeFun::SetVecZero(p_vTotMean);
+
+RMC/src/TreatAdjointMaterial.cpp:9-57
+9: void CDAceData::treatAdjointMaterial(int nParticleMode) { //处理伴随截面;
+10:   int maxParticle = CDParticleState::Neutron + 1;
+11:   if (nParticleMode == CDCalMode::NeutronMode) { ///check particle mode
+12:     maxParticle = CDParticleState::Neutron + 1;
+13:   } else if (nParticleMode == CDCalMode::NeutronPhotonMode || nParticleMode == CDCalMode::PhotonMode) { maxParticle = CDParticleState::Photon + 1; }
+14:   else if (nParticleMode == CDCalMode::NeutronPhotonElectronMode || nParticleMode == CDCalMode::PhotonElectronMode
+15:            || nParticleMode == CDCalMode::ElectronMode) { maxParticle = CDParticleState::Electron + 1; }
+16:   else { maxParticle = 0; }
+17:   int particleGrpNumber[4];
+18:   particleGrpNumber[0] = 0;
+19:   particleGrpNumber[CDParticleState::Neutron] = p_nNeuMltGrpNum;
+20:   particleGrpNumber[CDParticleState::Photon] = p_nPhoMltGrpNum;
+21:   particleGrpNumber[CDParticleState::Electron] = 0; //electron;todo：先不开发电子伴随
+22:   for (int i = 1; i < p_vNuclides.size(); i++) { //初始化pmg和fmg的大小
+23:     p_vNuclides[i].p_vAdjointCrossSection.resize(maxParticle + 1);
+24:     p_vNuclides[i].p_vAdjointFissionCrossSection.resize(maxParticle + 1);
+25:     for (int j = 0; j < maxParticle; j++) {
+26:       p_vNuclides[i].p_vAdjointCrossSection[j].resize(particleGrpNumber[j]);
+27:     }
+28:   }
+29:   for (int particleType = CDParticleState::Neutron; particleType < maxParticle; particleType++) {//计算pmg和fmg
+30:     for (int i = 1; i < p_vNuclides.size(); i++) { //i为当前处理的核素在p_vNuclides中的序号
+31:       double crossSectionSum = 0;
+32:       int crossSectionPosition = 0;
+33:       if (particleType == CDParticleState::Neutron) { //处理中子
+34:         crossSectionPosition = GetMgNeuLERG(i) - 1 +
+35:                                int(p_vNuclides[i].XSS[GetMgNeuLP0L(
+36:                                        i)]);
+37:         for (int jg = 0; jg < particleGrpNumber[particleType];
+38:              jg++) {//对此种核素、此种粒子的的全部对应能群进行遍历//
+39:           double f = 1;//todo:f是基于通量的偏倚参数，未来可以用gmg修改
+40:           if (GetMgNeuLNU(i) != 0) {
+41:             crossSectionSum = p_vNuclides[i].XSS[
+42:                                   GetMgNeuLNU(i) + jg]
+43:                               * p_vNuclides[i].XSS[
+44:                                   GetMgNeuLFIS(i) + jg]
+45:                               * f;
+46:             p_vNuclides[i].p_vAdjointFissionCrossSection[particleType] += crossSectionSum;
+47:           }
+48:           for (int jh = 0; jh < particleGrpNumber[particleType]; jh++) {
+49:             if (GetMgNeuLCHI(i) != 0)
+50:               p_vNuclides[i].p_vAdjointCrossSection[particleType][jh] +=
+51:                   crossSectionSum * p_vNuclides[i].XSS[GetMgNeuLCHI(i) + jh];
+52:             if ((jg - jh) > GetMgNeuUpScatNum(i) ||
+53:                 (jh - jg) > GetMgNeuDownScatNum(i)) {
+54:               continue;
+55:             }
+56:             p_vNuclides[i].p_vAdjointCrossSection[particleType][jh] +=
+57:                 p_vNuclides[i].XSS[crossSectionPosition] * f;
+
+RMC/src/InitiateAll.cpp:125-166
+125: void CDFixedSource::InitiateAll(int p_nParticleMode, CDNeutronTransport &cNeutronTransport, CDGeometry &cGeometry,
+126:                                 CDMaterial &cMaterial, CDTally &cTally, CDAceData &cAceData, CDParticleState &cParticleState,
+127:                                 CDBurnup &cBurnup, CDRNG &ORNG, CDSampling &cSampling, bool bPhotonNucleus,
+128:                                 CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+129:                                 CDCalMode &cCalMode, CDPerturbation &cPerturb) {
+130:   if (p_bIsAdjoint) { cAceData.p_bIsAdjoint = true; }
+131:   cMaterial.InitiateMatAce(p_nParticleMode, cGeometry, cTally, cAceData, cBurnup, cSampling, bPhotonNucleus);
+132: 
+133:   if (cPerturb.p_bDiffrOprtForTMP && cAceData.p_bUseOtfDb) {
+134:     cAceData.p_bTmpPerbOtfDb = true;
+135:   }
+136:   cPerturb.InitDifferentialOperator(cAceData.p_vNuclides, cMaterial, cGeometry, cParticleState.p_OPerbState);
+137: 
+138:   if (p_nParticleMode == CDCalMode::NeutronPhotonElectronMode ||
+139:       p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+140:       p_nParticleMode == CDCalMode::PhotonElectronMode ||
+141:       p_nParticleMode == CDCalMode::PhotonMode) {
+142:     cParticleState.InitiatePhotonXS(bPhotonNucleus, cAceData.p_vNuclides.size());
+143:   }
+144: 
+145:   cParticleState.energyCutoff(CDParticleState::Neutron) = cNeutronTransport.p_dEg0CutOff;
+146:   cParticleState.energyCutoff(CDParticleState::Photon) = cPhotonTransport.p_dErgCutGma;
+147:   cParticleState.energyCutoff(CDParticleState::Electron) = 0.;
+148:   cParticleState.energyCutoff(CDParticleState::Positron) = 0.;
+149: 
+150:   if (cAceData.p_bTMS) {
+151:     cAceData.InitiateTMS(cParticleState);
+152:   }
+153: 
+154:   InitiateTrspt(cNeutronTransport);
+155: 
+156:   cTally.InitiateTally(p_nParticleMode, cGeometry, cAceData, cMaterial, cBurnup, p_llUserInputParNum);
+157: 
+158:   auto pos = ORNG.GetPosition();
+159:   ReadBinary(cTally, cNeutronTransport.p_nMissNeutronCount, cCalMode, pos);
+160:   ORNG.SetPosition(pos);
+161: 
+162:   cParticleState.p_vNearestParticleID.resize(cGeometry.p_vUniverse.size());
+163:   cParticleState.p_vNearestPoissonBoxID.resize(cGeometry.p_vUniverse.size());
+164: 
+165:   // initialize p_dRealDisplace
+166:   cParticleState.p_dRealDisplace.resize((cGeometry.p_vUniverse.size() + 1));
+
+RMC/src/InitiateAll.cpp:173-205
+173:   if (p_bFissMult) {
+174:     cAceData.ifmult(p_vFissMult);
+175:   }
+176:   cMaterial.SetupMatNucFrc(cParticleState);
+177:   if (OWeightWindow.p_bWeightWindowGeneratorOn) {
+178:     OWeightWindow.InitiateWeightWindowGenerator(cGeometry, this);
+179:   }
+180:   if (OWeightWindow.p_bUseMCNPweightwindow) {
+181:     OWeightWindow.InitiateWeightWindow(cCalMode, cGeometry, this);
+182:   }
+183: 
+184: 
+185:   //InitiateExternalSource(cNeutronTransport, cGeometry, cAceData, cParticleState, ORNG);
+186: 
+187:   //当使用减方差方法时，粒子默认权重下限为1.0E-08///
+188:   if (cCalMode.p_nChangeNeuCutWgt == 2) {
+189:     cNeutronTransport.p_dWgtCutOff = 1.0E-08;
+190:     cPhotonTransport.p_dMinWgt = 1.0E-08;
+191:   }
+192:   if (p_bIsAdjoint) {
+193:     if (p_nParticleMode == CDCalMode::NeutronMode ||
+194:         p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+195:         p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
+196:       p_dMaxAdjointNeutronEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointNeutronEnergy, CDParticleState::Neutron);
+197:     }
+198:     if (p_nParticleMode == CDCalMode::NeutronPhotonMode ||
+199:         p_nParticleMode == CDCalMode::PhotonMode ||
+200:         p_nParticleMode == CDCalMode::PhotonElectronMode ||
+201:         p_nParticleMode == CDCalMode::NeutronPhotonElectronMode) {
+202:       p_dMaxAdjointPhotonEnergy = cAceData.LocateMgErgGrp(p_dMaxAdjointPhotonEnergy, CDParticleState::Photon);
+203:     }
+204:   }
+205: # ifdef USE_PYTHON_API
+
+RMC/src/InitiateAll.cpp:234-263
+234: void CDMaterial::SetupMatNucFrc(CDParticleState &cParticleState) {
+235:   cParticleState.p_vMatNucFrc.resize(p_vMatSet.size());
+236:   cParticleState.p_vMatNucID.resize(p_vMatSet.size());
+237: 
+238:   for (int i = 0; i < cParticleState.p_vMatNucFrc.size(); i++) {
+239: 
+240:     double sum = 0;
+241:     int    zaid = 0;
+242: 
+243:     cParticleState.p_vMatNucFrc[i].resize(p_vMatSet[i].p_vMatNucUserDen.size());
+244:     cParticleState.p_vMatNucID[i].resize(p_vMatSet[i].p_vMatNucID.size());
+245: 
+246:     for (int j = 0; j < p_vMatSet[i].p_vMatNucUserDen.size(); j++) {
+247:       sum += p_vMatSet[i].p_vMatNucUserDen[j];
+248: 
+249:       stringstream sstream;
+250:       string sAceNucAll = p_vMatSet[i].p_vMatNucID[j].p_chIdStr;
+251:       int nPos = sAceNucAll.find('.');
+252:       string ColNuc(sAceNucAll, 0, nPos);
+253:       sstream << ColNuc;
+254:       sstream >> zaid;
+255:       cParticleState.p_vMatNucID[i][j] = zaid;
+256:     }
+257: 
+258:     for (int j = 0; j < cParticleState.p_vMatNucFrc[i].size(); j++) {
+259:       cParticleState.p_vMatNucFrc[i][j] = p_vMatSet[i].p_vMatNucUserDen[j] / sum;
+260: 
+261:     }
+262:   }
+263: }
+
+RMC/src/ParticleState.h:395-416
+395:   CDParticleState() {
+396:     p_bIsCellChanged = true;
+397:     p_bIsMatChanged = true;
+398:     p_bIsCellTmpChanged = true;
+399:     p_bDensIsChanged = true;
+400: 
+401:     p_dSourceCellNeuImp = 1.0;
+402:     p_dSourceCellGmaImp = 1.0;
+403:     p_dSourceCellElecImp = 1.0;
+404:     p_dWgtCutOff = 0.25;
+405: 
+406:     // 注意，这里两个数组的长度要超过模型所具有的最大层级数，
+407:     // 目前的代码中默认模型不会超过100层。
+408:     // 尽管最好的办法是根据实际使用的模型来动态调整这两个数组的长度，
+409:     // 然而目前RMC的代码体系中，对CDParticleState的实例化过于混乱，
+410:     // 采用理论上最好的办法，实际上会引入很多重复代码，增加未来代码开发的风险。
+411:     // 所以此处直接假设用户使用的模型不会超过100层，这个数值已经非常高了，
+412:     // 就2021年RMC的应用范围来看，不会出现太大的问题。
+413:     // 此外，100长度的int型数组也没有过多占用内存。
+414:     // guoxiaoyu
+415:     CrossSurfIds.resize(100, 0);
+416:     CrossSurfLocIds.resize(100, 0);
+
+RMC/src/ParticleState.h:525-538
+525:   int p_nUfsParticleBankCount = 0;
+526:   /**
+527:   * @brief 是否为固定源伴随粒子
+528:   */
+529:   bool p_bIsAdjointParticle = false;
+530: 
+531:   /**
+532:    * @brief 在固定源伴随计算中需要的临时伴随截面变量
+533:    */
+534:   double p_dTempAdjointxSection = 0;
+535:   /**
+536:    * @brief UFS算法UFS粒子中子bank
+537:    */
+538:   vector<CDUfsFisBank> p_vUfsParticleBank;
+
+RMC/src/ParticleState.h:1140-1183
+1140:    * @brief 扰动状态
+1141:    */
+1142:   CDPerbState p_OPerbState;
+1143:   /**
+1144:    * @brief 伴随状态
+1145:    */
+1146:   CDAdjointState p_OAdjointState;
+1147: 
+1148:   /**
+1149:    * @brief 假粒子源
+1150:    */
+1151:   vector<CDPseudoParticle> p_vPseudoSrc;
+1152: 
+1153:   vector<CDProgenitorInformation> p_vProgenitorInformation;
+1154: 
+1155:   /**
+1156:    * @brief 假粒子库
+1157:    */
+1158:   vector<CDPseudoParticle> p_vPseudoBank;
+1159:   /**
+1160:    * @brief 是否使用多群裂变矩阵法计算多群伴随通量
+1161:    */
+1162:   bool p_bMGAdjFisMatrix{};
+1163:   /**
+1164:    * @brief MG adjoint fission matrix
+1165:    */
+1166:   vector<CDMGAdjFisMatrix> p_vMGAdjFisMatrix;
+1167: 
+1168:   /**
+1169:    * @brief 源中子的初始位置在每个裂变矩阵中的几何网格的下标
+1170:    */
+1171:   vector<int> p_vBornIndex;
+1172:   /**
+1173:    * @brief 在多群计算中中子处在的能群标号
+1174:    */
+1175:   int p_nMultiGrpNumber{};
+1176: 
+1177:   /**
+1178:    * @brief 粒子发生反应产生的次级粒子能量
+1179:    * todo for photon refactor
+1180:    */
+1181:   std::vector<double> secondaryEnergy{};
+1182: 
+1183:   std::vector<SecondParticle> secondaryParticles;
+
+RMC/src/ParticleStateFun.cpp:260-274
+260: void CDParticleState::ClearLevel() {
+261:   p_vCells.resize(0);
+262:   p_vLocUnivs.resize(0);
+263:   p_vLocCells.resize(0);
+264:   p_vLocCellsU.resize(0);
+265: }
+266: 
+267: void CDParticleState::ClearPrevParNeuHistory() {
+268:   ///reset particle and neutron history for each neutron
+269:   for (int nDisplaceCounter = 0; nDisplaceCounter < p_dDisplace.size(); nDisplaceCounter++) {
+270:     for (int nDisplaceVecCounter = 0; nDisplaceVecCounter <= 3; nDisplaceVecCounter++) {
+271:       p_dDisplace[nDisplaceCounter][nDisplaceVecCounter] = 0;
+272:       p_ParticlePosHistory[nDisplaceCounter][nDisplaceVecCounter] = 0;
+273:     }
+274:   }
+
+RMC/src/ExternalSource.cpp:25-60
+25: void CDExternalSource::NormlizeFraction() {
+26:   double dTotalFraction = 0.0;
+27:   double dTotalBiasFrac = 0.0;
+28:   //  get total fraction
+29:   //  对概率进行求和\n
+30:   for (int i = 0; i < p_vFraction.size(); ++i) {
+31:     dTotalFraction += p_vFraction[i];
+32:     //  如果没有定义BIASFRAC，则视为与真实FRACTION一致
+33:     //  偏倚概率不能是0\n
+34:     if (p_vBiasFrac[i] == 0) {
+35:       p_vBiasFrac[i] = p_vFraction[i];
+36:     }
+37:     dTotalBiasFrac += p_vBiasFrac[i];
+38:   }
+39:   //  对概率进行归一化处理\n
+40:   for (int i = 0; i < p_vFraction.size(); ++i) {
+41:     p_vFraction[i] = p_vFraction[i] / dTotalFraction;
+42:     p_vBiasFrac[i] = p_vBiasFrac[i] / dTotalBiasFrac;
+43:   }
+44: }
+45: 
+46: void CDExternalSource::SampleSourceParticle( CDParticleState &cParticleState, CDGeometry &cGeometry,
+47:     CDAceData &cAceData, CDRNG &ORNG, const vector<CDFissMult> &p_vFissMult) {
+48: 
+49:   double dAccumuFrac = 0;    //  当前对象的累积概率
+50:   double dKsi = ORNG.Rand(); //  随机数，用来抽取源对象
+51:   for (int i = 0; i < p_vFraction.size(); ++i) {
+52:     dAccumuFrac += p_vBiasFrac[i];
+53:     if (dKsi <= dAccumuFrac)
+54:       //if(nCurrentParticleNum <= int(dAccumulativeFraction * nTotalParticleNum + dKsi) )
+55:     {
+56:       //  各个源对象之间也存在偏倚抽样，粒子的初始权重设为1.0，如果有偏倚，则修改粒子的出射权重
+57:       cParticleState.p_dWgt = 1.0 * p_vFraction[i] / p_vBiasFrac[i];
+58:       if (p_vSource[i].p_nParticleType == 5) {
+59:         int jj = GetSpontaFissNucID(cParticleState, cGeometry, ORNG, cAceData, i);
+60:         Output.CheckInputParas(cParticleState.p_nNUC > 0,
+
+RMC/src/ExternalSource.h:151-193
+151:    * @brief 0-ordinary Source 1-Surface Read Source
+152:    */
+153:   int  p_nSourceType;
+154:   /**
+155:    * @brief 定义的自发裂变光子源对象
+156:    */
+157:   vector <CDParticleBank> p_vFixedInitPhoSrcBank;
+158:   /**
+159:    * @brief 自发裂变光子源数量
+160:    */
+161:   int p_nFixedInitPhoSrcBankCount = 0;
+162:   /**
+163:    * @brief 定义的自发裂变中子源对象
+164:    */
+165:   vector <CDParticleBank> p_vFixedInitSrcBank;
+166:   /**
+167:    * @brief 自发裂变中子源数量
+168:    */
+169:   int p_nFixedInitSrcBankCount = 0;
+170:   /**
+171:    * @brief 定义的接续面源对象
+172:    */
+173:   vector<CDSurfSrc> p_vSurfSrc;
+174:   /**
+175:    * @brief 定义的外源对象，对象可以有多个，每个源有对应的概率和偏倚概率，支持对源对象进行偏倚抽样
+176:    */
+177:   vector<CDSource> p_vSource;
+178:   /**
+179:    * @brief 定义源的比例权重
+180:    */
+181:   vector<double>  p_vFraction;
+182:   /**
+183:    * @brief 自发裂变中子分布
+184:    */
+185:   vector<int> p_vSpontaFissNeuMul;
+186:   /**
+187:    * @brief 自发裂变光子分布
+188:    */
+189:   vector<int> p_vSpontaFissPhoMul;
+190:   /**
+191:    * @brief 定义源的偏移参数
+192:    */
+193:   vector<double>  p_vBiasFrac;
+
+RMC/src/RNG/StrideRNG.cpp:76-102
+76: double LCG63_0::Rand() {
+77:   double dRand = double(RN_SEED) * RN_NORM;
+78:   RN_SEED = (((RN_MULT * RN_SEED) & RN_MASK) + RN_ADD) & RN_MASK;
+79:   return dRand;
+80: }
+81: 
+82: /**
+83:  * 根据每个核不同的RN_POSITION，得到每个核起始的随机数种子
+84:  */
+85: void LCG63_0::GetRandSeed() {
+86:   static unsigned long long ullRN_GK;
+87:   static unsigned long long ullRN_CK;
+88:   static unsigned long long ullRN_ISEED;
+89: 
+90:   if (RN_POSITION_PRE != (RN_POSITION - 1)) { //// only execute at the very beginning
+91:     GetSkipPara(RN_STRIDE, ullRN_GK, ullRN_CK);
+92:     unsigned long long ullGK_temp, ullCK_temp;
+93:     GetSkipPara(RN_STRIDE * RN_POSITION, ullGK_temp, ullCK_temp);
+94:     ullRN_ISEED = (((ullGK_temp * RN_SEED0) & RN_MASK) + ullCK_temp) & RN_MASK;
+95:   } else {
+96:     ullRN_ISEED = (((ullRN_GK * ullRN_ISEED) & RN_MASK) + ullRN_CK) & RN_MASK; ////
+97:   }
+98:   RN_SEED = ullRN_ISEED;
+99:   RN_POSITION_PRE = RN_POSITION;
+100:   RN_POSITION += 1;
+101: }
+102: 
+
+RMC/src/RNG/RNG.h:299-320
+299: /**
+300:  * 63-bit Linear Congruential Generator, c=0
+301:  */
+302: class LCG63_0 : public BasicRNG {
+303: public:
+304:   LCG63_0() {
+305:     RN_MULT = 3512401965023503517;
+306:     RN_ADD = 0;
+307:     RN_MOD = ((unsigned long long)(1) << 63);
+308:     RN_MASK = RN_MOD - 1; // 2**63 - 1
+309:     RN_NORM = double(1.0) / double(RN_MOD);
+310:     RN_SEED0 = 1;
+311:     RN_SEED = RN_SEED0;
+312:   }
+313: 
+314:   double Rand() override;
+315:   void GetRandSeed() override;
+316: 
+317:   /**
+318:    * @brief jump function of getting random seed after "RN_STRIDE" function(Rand) calls
+319:    * @param ullSkip RN_STRIDE
+320:    * @param ullGK 临时变量用于计算随机数种子
+
+RMC/src/RNG/RNG.h:414-432
+414: 
+415:   CDRNG() : type(rngLCG63_0) {
+416:     generator = make_shared<LCG63_0>(LCG63_0());
+417:   }
+418: 
+419:   explicit CDRNG(RNGType _type) : type(_type) {
+420:     ResetRNGType(_type);
+421:   }
+422: 
+423:   CDRNG(CDRNG &rng) : type(rng.type) {
+424:     ResetRNGType(rng.type);
+425:     SetSeed0(rng.GetSeed0());
+426:     SetSeed(rng.GetSeed());
+427:     SetINT128Seed0(rng.GetINT128Seed0());
+428:     SetINT128Seed(rng.GetINT128Seed());
+429:     SetStride(rng.GetStride());
+430:     SetPosition(rng.GetPosition());
+431:     SetPositionPre(rng.GetPositionPre());
+432:   }
+
+RMC/src/WeightWindows.cpp:79-102
+79: void CDWeightWindow::ProcessWeightWindow(CDGeometry &cGeometry, const int particleType, vector<double> &ErgBins,
+80:     vector<double> &WeightWindowParameter, double WUPN, double WSURVN) {
+81:   int totalWeightWindowParaNum = WeightWindowParameter.size();
+82:   int ergBinNum = int(ErgBins.size()) - 1;
+83:   int spatialNum = p_OWeightWindowMesh.GetTotMeshNum();
+84:   Output.CheckInputParas(totalWeightWindowParaNum == spatialNum * ergBinNum,
+85:   [&]() {
+86:     sprintf(Output.p_sPrintStr,
+87:             "WWMESH parameter count (%d) does not match mesh count (%d) times energy-bin count (%d).\n",
+88:             totalWeightWindowParaNum, spatialNum, ergBinNum);
+89:   }, CDOutput::_ERROR);
+90:   p_vMeshInformation[particleType].resize(spatialNum);//初始化带有权窗的几何的数目;
+91:   for (int i = 0; i < spatialNum; i++) {
+92:     p_vMeshInformation[particleType][i].resize(ergBinNum);
+93:     for (int j = 0; j < ergBinNum; j++) {
+94:       p_vMeshInformation[particleType][i][j].p_dLowerWeightBound = WeightWindowParameter[i * ergBinNum +
+95:           j];
+96:       p_vMeshInformation[particleType][i][j].p_dUpperWeightBound =
+97:           WUPN * p_vMeshInformation[particleType][i][j].p_dLowerWeightBound;
+98:       p_vMeshInformation[particleType][i][j].p_dSurvivalWeight =
+99:           WSURVN * p_vMeshInformation[particleType][i][j].p_dLowerWeightBound;
+100:     }
+101:   }
+102: }
+
+RMC/src/ReadWeightWindow.cpp:335-343
+335:           IsBlockEnd = true;
+336:         }
+337:       }
+338:       cCalMode.p_nVarRedMode[CDParticleState::Neutron] = cCalMode.TrackMeshWeightWindow;
+339:       cCalMode.p_nChangeNeuCutWgt = 2;
+340:       useMeshWeightWindow[CDParticleState::Neutron] = true;
+341:       OWeightWindow.p_bUseMeshWeightWindow = true;
+342:     } else if (sInputCardStr == "WWMESH:P") {
+343:       int nNext_p;
+
+RMC/src/ReadWeightWindow.cpp:421-427
+421:     if (useMeshWeightWindow[meshParticleType]) {
+422:       OWeightWindow.p_vEnergyBins[meshParticleType].push_back(
+423:           INFINITY_ENERGY);// 在指定的粒子的能量区间中加入无限大能量上限
+424:       OWeightWindow.ProcessWeightWindow(cGeometry, meshParticleType, OWeightWindow.p_vEnergyBins[meshParticleType],
+425:                                         vTemporaryWeightWindowPara[meshParticleType],
+426:                                         OWeightWindow.p_vWeightWindowPara[meshParticleType][CDWeightWindow::WUPN],
+427:                                         OWeightWindow.p_vWeightWindowPara[meshParticleType][CDWeightWindow::WSURVN]);
+
+RMC/src/TrackWithWeightWindow.cpp:9-38
+9: void CDFixedSource::TransportParticleAndDoMeshWeightWindow(double &dTracklength, CDAceData &cAceData,
+10:     CDParticleState &cParticleState, CDCalMode &cCalMode, CDGeometry &cGeometry, CDTally &cTally,
+11:     CDMaterial &cMaterial, CDFixedSource &cFixedSource, int MeshWeightWindowType, CDSampling &cSampling, CDRNG &ORNG) {
+12:   if (MeshWeightWindowType == cCalMode.TrackMeshWeightWindow) {
+13:     /// - 如果程序有网格权窗操作，还要进行网格权窗计算
+14:     OWeightWindow.DoTrackMeshWeightWindow(dTracklength, cParticleState, cFixedSource, cGeometry, cAceData, cMaterial,
+15:                                           cTally, cSampling, ORNG);
+16:     if (cParticleState.p_bIsKilled) {//如果粒子被网格权窗中途杀死了，则返回
+17:       return;
+18:     }
+19:   } else if (MeshWeightWindowType == cCalMode.PointMeshWeightWindow && !cAceData.p_bTMS) {
+20:     double dAverageFreeFlyDistance = 1 / cParticleState.p_dMacroTotCs;
+21:     while (dTracklength > dAverageFreeFlyDistance) {
+22:       cTally.TallyByTL(true, dAverageFreeFlyDistance, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+23:       cParticleState.FlyByLength(dAverageFreeFlyDistance);
+24:       OWeightWindow.DoPointMeshWeightWindow(cAceData, cParticleState, cFixedSource, ORNG);
+25:       if (cParticleState.p_bIsKilled) {
+26:         return;
+27:       }
+28:       dTracklength -= dAverageFreeFlyDistance;
+29:     }
+30:     cTally.TallyByTL(true, dTracklength, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+31:     cParticleState.FlyByLength(dTracklength);
+32:   } else {
+33:     if (!cAceData.p_bTMS) {
+34:       cTally.TallyByTL(true, dTracklength, cGeometry, cAceData, cParticleState, cMaterial, ORNG, cSampling);
+35:     }
+36:     /// - 每完成一次计算自由程+计算边界，便要更新光子的空间位置
+37:     cParticleState.FlyByLength(dTracklength);
+38:   }
+
+RMC/src/Utility/Timer.h:47-61
+47:     void start() {
+48:       running = true;
+49:       startTime = clock::now();
+50:     };
+51: 
+52:     /**
+53:      * @brief 暂停计时
+54:      */
+55:     void stop() {
+56:       if (running) {
+57:         std::chrono::duration<double> diff = clock::now() - startTime;
+58:         recordTime = diff.count();
+59:         runTime = runTime + recordTime;
+60:       }
+61:       running = false;
+
+RMC/src/Utility/Timer.h:82-103
+82:     double interval() {
+83:       if (running) {
+84:         std::chrono::duration<double> diff = clock::now() - startTime;
+85:         double dtime = recordTime;
+86:         recordTime = diff.count();
+87:         return (recordTime - dtime);
+88:       } else {
+89:         return -1;
+90:       }
+91:     }
+92: 
+93:     /**
+94:      * @brief 重置计时器，将累计时间置零
+95:      */
+96:     void reset() {
+97:       runTime = 0.0;
+98:       running = false;
+99:     };
+100:   };
+101: 
+102:   /**
+103:    * @brief 所有timer的集合
+
+RMC/src/Utility/Timer.h:123-128
+123:     void reg(int timerName) {
+124:       Timer newTimer;
+125:       timers.emplace(timerName, newTimer);
+126:     }
+127: 
+128:     /**
+
+RMC/src/RunCalculation.cpp:6-22
+6: void CDCalMode::RunCalculation(CDCalMode &cCalMode, CDNeutronTransport cNeutronTransport,
+7:                                CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
+8:                                CDAceData &cAceData, CDGeometry cGeometry, Depth_Class &cDepth,
+9:                                CDCriticality cCriticality, CDMaterial cMaterial, CDParticleState cParticleState,
+10:                                CDConvergence cConvergence, CDTally cTally, CDBurnup cBurnup,
+11:                                CDFixedSource &cFixedSource, CDRNG &ORNG, ME_Class &cME, TTA_Class &cTTA,
+12:                                CDAdjoint &cAdjoint, CDExternalSource &cExternalSource, CDSampling cSampling,
+13:                                CDKinetics &cKinetics, CDPerturbation &cPerturb) {
+14:   if (p_bSkipCalculation) {
+15:     Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "Calculation skipped.\n");}, Output.p_fpOutputFilePtr,
+16:     CDOutput::_WARNING);
+17:     return;
+18:   }
+19:   if (p_nRmcCalcMode == BurnupMode) {
+20:     cSampling.p_bIsBurn = true;
+21:   }
+22:   cSampling.InitialBeforeCalculation(cBurnup, ORNG);
+
+RMC/src/RunCalculation.cpp:83-91
+83:   case FixedSourceMode: {
+84:     Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "\n******** Calculation mode: fixed-source ********\n");},
+85:     Output.p_fpOutputFilePtr, CDOutput::_NORMAL);
+86:     CalcFixedSource(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport, cAceData,
+87:                     cFixedSource, cMaterial, cGeometry, cParticleState, cTally, ORNG, cCriticality,
+88:                     cExternalSource, cSampling, cPerturb);
+89:     break;
+90:   }
+91:   case QuasiStaticSMode: {
+
+RMC/src/main.cpp:27-47
+27: //////////  Global classes  //////////
+28: CDOutput Output;
+29: CDMeshInfo OMeshInfo;
+30: CDXSParaTableVec OXSParaTableVec;
+31: CDWeightWindow OWeightWindow;
+32: CDStatus OStatus;
+33: Utility::RMCTimer OTimer;
+34: CellVector cellVec;
+35: CDPTRAC OParticleTracker;
+36: RMC::Control OController;
+37: CDRNG ORNG;
+38: CDCalMode OCalMode;
+39: namespace RMC {
+40:   namespace IO {
+41:     Logger OLogger; // NOLINT(cert-err58-cpp)
+42:     Logger OProcLogger; // NOLINT(cert-err58-cpp)
+43:   }
+44: }
+45: using RMC::IO::OLogger;
+46: using RMC::IO::OProcLogger;
+47: 
+
+RMC/src/main.cpp:139-165
+139:   }
+140: 
+141:   ////////////// Read input file ////////////////
+142:   OInput.ReadInputBlocks(OCalMode, ONeutronTransport, OPhotonTransport, OElectronTransport, OGeometry,
+143:                          OMaterial, OAceData, OCriticality, OTally, OConvergence, OBurnup, OPlot,
+144:                          OFixedSource, ORNG, OAdjoint, OHomogenization, OExternalSource, OSampling,
+145:                          OKinetics, OPerturb);
+146: 
+147:   ////////////// Plot Image(geometry) ////////////////
+148:   OPlot.RunPlot(OGeometry, OMaterial, ORNG);
+149: 
+150:   ////////////// Generate Input File////////////////
+151:   Output.GenerateInpFile(OGeometry, OMaterial, OAceData, OCriticality, OTally, OConvergence,
+152:                          OBurnup, OFixedSource, ORNG, OPerturb);
+153: 
+154:   ////////////// Run Calculation ////////////////
+155:   OCalMode.RunCalculation(OCalMode, ONeutronTransport, OPhotonTransport, OElectronTransport, OAceData,
+156:                           OGeometry, ODepth, OCriticality, OMaterial,
+157:                           OParticleState, OConvergence, OTally, OBurnup,
+158:                           OFixedSource, ORNG, OME, OTTA, OAdjoint, OExternalSource,
+159:                           OSampling, OKinetics, OPerturb);
+160: 
+161:   ////////////// Write output ending ////////////////
+162:   Output.OutputEnding(OCalMode, OAdjoint, OCriticality, OFixedSource);
+163: 
+164:   ///////////////// Parallel Case ////////////////////////
+165: # ifdef USE_MPI
+
+RMC/CMakeLists.txt:661-676
+661: file(GLOB source src/*.h src/*.cpp)
+662: # todo: add a include directory to the root directory.
+663: include_directories(src)
+664: include_directories(include)
+665: 
+666: file(GLOB_RECURSE mesh_source src/Mesh/*.cpp src/Mesh/*.h)
+667: file(GLOB_RECURSE utility_source src/Utility/*.cpp src/Utility/*.h)
+668: file(GLOB_RECURSE xsparam_source src/XSParameterization/*.cpp src/XSParameterization/*.h)
+669: file(GLOB_RECURSE geometry_source src/Geometry/*.cpp src/Geometry/*.h)
+670: file(GLOB_RECURSE data_source src/Data/*.cpp src/Data/*.h)
+671: file(GLOB_RECURSE control_source src/Control/*.cpp src/Control/*.h)
+672: list(APPEND source ${mesh_source} ${utility_source} ${xsparam_source} ${geometry_source} ${data_source}
+673:     ${control_source})
+674: add_executable(${program} ${source})
+675: target_link_libraries(${program} ${libraries})
+676: 

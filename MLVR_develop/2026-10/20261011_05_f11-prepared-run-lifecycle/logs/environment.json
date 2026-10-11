@@ -1,0 +1,23 @@
+{
+  "db_root": "/home/silver/NucXS_Library/RMC_DATA",
+  "current_builds": {
+    "stage1-serial": {
+      "path": "/tmp/20261011_04_f11-fixed-source-core-refactor/refactor-build/bin/RMC",
+      "exists": true,
+      "sha256": "2b432bc5898b939ae389b97da31b3eca934e6397f593da5a9703e5b4c1c1e07e"
+    },
+    "stage1-mpi": {
+      "path": "/tmp/20261011_04_f11-fixed-source-core-refactor/refactor-mpi-build/bin/RMC",
+      "exists": true,
+      "sha256": "b399e6e8cb3dfd6a84eabf9c8874f8c9b037bc9505c0e5e4916d659288a60dc3"
+    }
+  },
+  "xsdir": {
+    "size": 1116007,
+    "sha256": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b"
+  },
+  "multigroup/mgxsnp": {
+    "size": 5913327,
+    "sha256": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001"
+  }
+}

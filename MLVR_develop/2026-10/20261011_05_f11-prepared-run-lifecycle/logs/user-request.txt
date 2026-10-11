@@ -1,0 +1,432 @@
+# F11 Stage 2 — RMC 同进程重复固定源运行与 Forward/Adjoint 状态管理
+
+## 一、任务目标
+
+在已完成的 F11 Stage 1 基础上，实现 RMC 固定源计算的正式多次运行准备机制，使同一个 RMC 进程能够：
+
+1. 完整初始化模型一次。
+2. 重复调用 Stage 1 提取的固定源执行核心。
+3. 在 Forward 和 Adjoint 之间正确切换。
+4. 每次计算使用独立的粒子数、随机数状态、源、tally 统计和权窗状态。
+5. 保留已经加载的几何、材料基础数据、原始 MGACE 和 tally definition。
+6. 每次计算结果与等价的独立进程 fixed-source 计算一致。
+
+**本任务解决 repeated-run lifecycle，不实现完整 MLVR 迭代控制器。**
+
+## 二、工作开始前必须阅读
+
+先阅读：
+
+- `AGENTS.md`
+- `STATUS.md`
+- `MLVR_Knowledge/AGENT_CONTEXT.md`
+- `MLVR_develop/README.md`
+- `MLVR_Knowledge/04_F11_v1_架构与实施设计.md`
+
+重点理解正式设计中：
+
+- 固定源初始化与执行分离；
+- KEEP / CLEAR / SET / REBUILD；
+- Stage 2 的功能边界；
+- F/A 切换、RNG、source、tally、WW 的状态所有权；
+- Stage 2 的验收条件。
+
+阅读已经完成的 Stage 1：
+
+`MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/`
+
+尤其：
+
+- `README.md`
+- `source-map.md`
+- `refactor-design.md`
+- `changes.diff`
+- `test-plan.md`
+- `logs/implementation-structure.json`
+
+同时参考 Task 13/14 的持久运行实验和独立复核，但不得直接将实验 driver、friend access、placement-new 或跳过初始化的 token 搬进生产代码。
+
+以知识库 04 为唯一正式设计基线。
+
+## 三、仓库和任务管理
+
+按照项目五步工作流新建任务，建议名称：
+
+`f11-prepared-run-lifecycle`
+
+任务模式 C，实际日期和编号由 `new_task.sh` 自动分配。
+
+开始前检查：
+
+- RMC 当前分支、HEAD 和远端关系；
+- 工作树已有修改；
+- Stage 1 的实际代码是否仍在当前工作树中；
+- Stage 1 是否已提交；
+- 已有构建、测试和核数据库环境。
+
+**特别注意：Stage 1 两文件修改此前保留在本地工作树，不能因为工作树不是 clean 就自动恢复或覆盖。**
+
+若 Stage 1 尚未提交，应明确保存 Stage 1 的源文件哈希与补丁，在后续记录中区分 Stage 1、Stage 2 各自的修改。
+
+严禁：
+
+- 自动 reset、checkout、清理已有代码；
+- 修改核数据库及既有 reference；
+- 擅自 commit/push RMC 或根仓库；
+- 把 Stage 1 的修改错误归入 Stage 2 补丁。
+
+## 四、先进行源码与状态生命周期分析
+
+重点检查以下真实对象及调用链。
+
+### 1. CDFixedSource
+
+检查：
+
+- 当前完成历史数；
+- 用户要求的 NPS；
+- batch 编号和进度；
+- 各种粒子 bank、后代 bank、哨兵；
+- 运行结束标志；
+- 归一化分母；
+- 负载平衡和接续计算相关状态。
+
+明确哪些字段需要每次 CLEAR，哪些需要 SET，哪些不能直接覆盖。
+
+### 2. CDTally / CDTallyData
+
+检查：
+
+- Score、ScoreTemp；
+- Sum1、Sum2、Sum3；
+- Ave、RE；
+- touched indices、stride；
+- StatisticsTester；
+- tally pointer registry。
+
+目标是保留 tally 的定义、mesh、offset、登记指针，只重置上一轮的统计数值和必要的统计诊断状态。
+
+不得通过反复 `InitiateTally()` 来清空统计。
+
+### 3. CDAceData / CDMaterial
+
+重点检查：
+
+- 正向与伴随角色标志；
+- `TreatAdjointMaterial()` 的派生截面；
+- 伴随散射、裂变相关数组；
+- 是否存在 `+=` 累加；
+- 正向恢复时哪些派生数据必须清空；
+- 能量截止的物理值与内部群号转换。
+
+不得反复读取原始 MGACE。
+
+特别防止伴随数组未清零导致 A→A 或 F→A→F→A 中重复累加。
+
+### 4. CDParticleState
+
+检查每次计算开始前必须恢复的：
+
+- 几何位置与材料缓存；
+- 核素截面缓存；
+- 伴随角色；
+- 粒子生存和终止状态；
+- 临时抽样数据；
+- 与群号、截止相关的运行状态。
+
+在对应 owner 中提供正式重置/重建方法，不在调用端逐个手动修改大量内部字段。
+
+### 5. CDExternalSource
+
+明确：
+
+- 保留原始真实 Forward source；
+- 保存或构造当前合法 Adjoint source definition；
+- 每次运行使用干净的 active source；
+- 普通 `CalcFixedSource()` 的原有按值 source 语义继续保留；
+- 运行期间修改临时源库，不应污染下一次计算的源定义。
+
+阶段 2 可以使用现有 RMC 通用源结构提供测试伴随源。
+
+**不在本阶段实现 TARGET→伴随源自动构造。**
+
+### 6. CDRNG
+
+检查：
+
+- 当前实际传入输运的 RNG owner；
+- seed、seed0、stride；
+- position、position_pre；
+- static skip-ahead 缓存；
+- 不同 half-run 的随机数段分配。
+
+按冻结设计约束实现可复现的每次运行随机数设置。
+
+第一版优先限定已验证的 Type 2 RNG，不擅自扩大支持范围。
+
+每次运行的有效 seed、offset、stride 必须可记录，并能用独立 fresh-process 运行复现。
+
+### 7. CDWeightWindow
+
+检查：
+
+- WW mesh topology；
+- neutron WW 能量边界；
+- lower、survival、upper；
+- WW 开关和角色；
+- 上一轮数据残留；
+- `ProcessWeightWindow()` 与真实输运查窗链。
+
+Stage 2 需要保证每次计算使用正确的现有 native WW 状态。
+
+不实现新的 WW HDF5 导入协议，不重新编写 splitting/roulette。
+
+### 8. Output / Timer
+
+检查普通 RMC 的进程级输出句柄、timer 生命周期及清理逻辑。
+
+多次 fixed-source 执行不得反复调用整个 `OutputEnding()`，也不能在不同运行之间错误关闭全局输出资源。
+
+Stage 2 可使用任务私有的每次运行快照和日志验证生命周期，不提前设计最终 MLVR 文件归档系统。
+
+## 五、提出正式 Prepare 合同
+
+设计统一的运行准备步骤，建议：
+
+`CDCalMode::PrepareFixedSourceRun(...)`
+
+其职责按照固定顺序组织：
+
+```text
+上次运行已完成
+    ↓
+CLEAR：清除上轮运行状态
+    ↓
+SET：设置角色、源、NPS、RNG、WW
+    ↓
+REBUILD：重建伴随截面、截止和粒子缓存
+    ↓
+CHECK：校验本次运行可以安全开始
+    ↓
+ExecuteFixedSourcePrepared()
+    ↓
+FinalizeFixedSourceRun()
+```
+
+具体状态清理方法应属于各自已有的 RMC 类，例如：
+
+- `CDFixedSource::ResetRunState`
+- `CDTally::ResetRunScores`
+- `CDAceData::PrepareFixedSourceMode`
+- `CDParticleState::ResetForFixedSourceRun`
+
+以上名称仅为建议，需要依据真实源码确定接口。
+
+不要新增 MLVRManager、GenericSession 或平行 `src/MLVR/` 子系统。
+
+如需要轻量 `FixedSourceRunSpec` 保存 role、NPS、seed、source/WW identity 等信息，可以提出，但不得创建第二套模型 owner。
+
+## 六、必须解决的调用入口问题
+
+Stage 1 的 prepared core 是 `CDCalMode` 的内部方法。
+
+本阶段必须提出一个**真实、可复用、可由测试验证的生产调用入口**，让一次初始化后的多个 half-run 使用同一批工作对象。
+
+注意：
+
+`RunCalculation()` 存在按值与按引用混合传参。
+
+因此不能采用：
+
+```text
+调用 RunCalculation
+返回 main
+再次调用 RunCalculation
+```
+
+来冒充保持相同对象的 persistent session。
+
+也不能在每次运行前重新构造完整 Geometry、Material、AceData 或 Tally。
+
+请明确：
+
+1. 一次初始化后的对象由谁持有；
+2. 多次运行如何使用同一批对象；
+3. 如何维持 Stage 1 的普通 fixed-source 包装入口；
+4. 测试如何通过正式生产接口进入多次运行；
+5. 是否需要增加少量受控测试入口，而不提前实现完整 CalcMLVR。
+
+不要仅为了测试方便，把所有私有字段或函数改成 public，也不要加入测试专用的状态绕过机制。
+
+## 七、先完成设计，等待人工批准
+
+**这是必须遵守的审批关口。**
+
+先交付：
+
+- 现有状态所有权矩阵；
+- KEEP/CLEAR/SET/REBUILD 逐字段或逐状态组清单；
+- 新旧调用图；
+- 准备函数调用顺序；
+- 实际修改文件清单；
+- C++ 函数签名；
+- 每个对象的生命周期；
+- F/A 切换的物理风险；
+- RNG 子流方案；
+- 测试入口及验收方案。
+
+在任务 README 第 3 节记录需要用户批准的内容。
+
+**完成设计后停止，等待明确批准再修改 RMC 生产源码。**
+
+用户本次要求进入 Stage 2，代表可以立项和进行设计，不自动代表批准所有尚未提出的代码改动。
+
+## 八、获批准后的实现边界
+
+批准后，只实现：
+
+- 固定源重复运行所需状态管理；
+- 正向/伴随角色切换；
+- 原始模型和数据的复用；
+- 合法的源、NPS、随机数及权窗状态设置；
+- 必要的状态不变量检查；
+- 能证明真实 prepared core 被重复执行的最小测试机制。
+
+不得实现：
+
+- 完整 `CalcMLVR()` Bootstrap/K 次调度；
+- MLVR 输入卡；
+- TARGET 自动伴随源；
+- history 级 TARGET 响应与 FOM 新接口；
+- Field/WW HDF5；
+- 外部 Python 重构调用；
+- 高级神经网络；
+- 自动收敛和跨 iteration 历史累计。
+
+## 九、测试与验收门禁
+
+### Gate 1：原有计算不受影响
+
+继续使用 Stage 1 的 deterministic baseline。
+
+代表性普通 Forward、Adjoint、native WW 和既有 fixed-source CTest 必须保持正确。
+
+已验证普通路径不能因新增 Prepare API 而发生数值变化。
+
+### Gate 2：Forward → Forward
+
+同一进程：
+
+```text
+初始化一次
+Forward N1
+Prepare
+Forward N2
+```
+
+两个运行都应与对应参数的独立 fresh-process oracle 一致。
+
+检查 tally 未混入上轮历史、bank 清空、历史数和归一化分母正确、RNG 可复现、registry 不重复增长。
+
+### Gate 3：Forward → Adjoint → Forward
+
+同一进程：
+
+```text
+初始化一次
+Forward
+Prepare
+Adjoint
+Prepare
+Forward
+```
+
+检查全部角色标志、伴随派生数组清理与重建、粒子缓存、群截止和最终 Forward 恢复。
+
+每一个 half-run 都需要对应的 fresh-process oracle，而不只是比较最后一次 Forward。
+
+### Gate 4：Adjoint → Adjoint
+
+连续执行两次 Adjoint，确认伴随散射和裂变派生数据没有因重复准备而意外累加。
+
+### Gate 5：WW 状态与真实输运
+
+在已有 native WW 路径下，至少验证一次 WW-on、实际 splitting/roulette 和后代库处理。
+
+如验证 WW 值在运行间更新，应使用现有内存/native WW 处理链，不提前实现 Stage 4 的 HDF5。
+
+确认实际输运读取了本次应使用的 WW，而不是仅仅修改输入数组。
+
+### Gate 6：模型复用与资源状态
+
+确认：
+
+- MGACE/材料基础数据只进行一次完整初始化；
+- tally definition 与 registry 不重复创建；
+- 几何和模型 owner 没有隐式重新构造；
+- 每次运行结束 bank、统计和计数正常；
+- 输出句柄、timer 不发生非法重入；
+- 多次执行没有明显持续增长的资源泄漏。
+
+### Gate 7：失败与边界
+
+错误角色、非法 NPS、无效源、WW 与本次角色不一致、未初始化直接运行等情况，应被拒绝而不是默默执行。
+
+使用非裂变 H2O 作为第一组连续运行门禁。
+
+如果需要宣称支持有非零裂变产生项的材料，必须额外完成具有非零裂变贡献的 F→A→F→A 连续运行与 fresh oracle 对照。
+
+未通过该门禁前，不能宣称已经支持一般可裂变材料的连续 F/A 切换；应明确保留限制或在受限入口执行拒绝检查。
+
+## 十、验证纪律
+
+每条 fresh oracle 使用完全对应的 role、source、NPS、RNG、WW 和模型。
+
+对于要求确定性等价的路径，比较源历史、RNG、关键状态、原始 Score/Sum1/Sum2、Ave/RE 和完整 Field 数据；不得只看最终 Tally 文本是否接近。
+
+区别运行时间差异与物理数值差异，不通过扩大物理容差放行。
+
+完整保存：
+
+- 构建配置和程序版本；
+- 原始输入；
+- 每次 half-run 的实际完成历史数；
+- 归一化分母；
+- RNG 状态；
+- F/A 模式；
+- tally/WW 快照；
+- fresh 对照及失败记录。
+
+不能运行的实验写明未覆盖，不得伪造通过。
+
+## 十一、交付和停止条件
+
+任务目录至少包含：
+
+- `README.md`
+- `lifecycle-design.md`
+- `state-ownership.md`
+- `source-call-graph.md`
+- `test-plan.md`
+- `changes.diff`（实际修改后）
+- `logs/` 下的实际执行证据
+
+新增未跟踪生产文件须单独纳入变更快照。
+
+归档时同步 STATUS、INDEX 和相关知识库变更记录。
+
+最终说明：
+
+1. 哪些状态已经正式支持重复初始化前的清理；
+2. 哪些模型数据确实只加载了一次；
+3. F→F、F→A→F、A→A 是否通过；
+4. 有没有任何 fresh-process 数值差异；
+5. WW-on 和 RNG 是否可复现；
+6. 裂变连续切换的支持边界；
+7. Stage 3 是否已经具备必要的运行基础。
+
+判定：
+
+`ACCEPT / ACCEPT WITH LIMITATIONS / BLOCKED`
+
+**完成阶段 2 后停止，不能自动开始阶段 3。不得自行 commit/push。**

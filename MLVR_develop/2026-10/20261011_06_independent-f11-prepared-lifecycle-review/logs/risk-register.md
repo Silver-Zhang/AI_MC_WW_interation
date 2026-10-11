@@ -1,0 +1,18 @@
+# Stage 2 Lifecycle Review Risk Register
+
+| Priority | Risk | Current source basis | Status / required stop condition |
+|---|---|---|---|
+| P0 | Re-entry with terminal fixed-source state, old denominator or live bank | `InitiateTrspt` only initializes selected fields; core terminates on `p_nFinishCalculate` and owns sentinels. | Blocked until a production owner reset and FF/FAF/AA fresh-oracle evidence prove clean start/end state. |
+| P0 | Repeated adjoint build accumulates derived cross sections or fission production | `treatAdjointMaterial` resizes and uses `+=`. | Blocked until clear-before-rebuild exists and AA/FAF snapshots match fresh. H2O cannot lift the nonzero-fission restriction. |
+| P0 | F after A retains role, cache or converted cutoff | Current initialization only visibly sets ACE adjoint true; A cutoff is overwritten with group representation; source sampling only sets particle role true. | Blocked until explicit F restoration and F/A/F dynamic evidence. |
+| P0 | Tally reuse accumulates score/statistics or duplicates registry | `SetZero` omits Sum3 and active-list state; full `InitiateTally` pushes registry pointers. | Blocked until registry-preserving reset and raw before/after snapshots pass. |
+| P0 | RNG substreams overlap or static cache belongs to wrong stream | Type2 `GetRandSeed` uses function-static fast-path cache. | Blocked until owner-scoped cache and draw-limit evidence demonstrate exact persistent/fresh sequencing. |
+| P1 | Dynamic WW update leaves stale derived bounds or active policy while OFF | Actual lookup reads lower/survival/upper; processor derives all three; WW object is global. | Blocked until WW ON/OFF and split/roulette/bank events demonstrate physical use of new bounds. |
+| P1 | Process-global output/timer lifecycle is invoked per half-run | Output, timer and WW are globals; process ending occurs in `main`; timer reset leaves `recordTime`. | Blocked until a run contract preserves handles and demonstrates stable timer/FD state. |
+| P1 | A proposed test driver proves a private harness rather than production behavior | Existing Stage 1 helpers are private; current public repeated-run API does not exist. | Require test executable to call only implemented public production API, without private tokens, loop copies or state injection. |
+| P1 | Test-only executable cannot link correct process-global singleton definitions | CMake currently globs all `src/*.cpp`, including `main.cpp` ([CMakeLists.txt:660-674](../../../../RMC/CMakeLists.txt#L660-L674)); the globals required by production units are defined in `main.cpp` ([main.cpp:28-55](../../../../RMC/src/main.cpp#L28-L55)). | The design must either factor one production global/bootstrap translation unit shared by main and the driver, or explicitly exclude only `main.cpp` and define every required global once in the driver under matching feature macros. “Create globals like main” is insufficient and risks unresolved or duplicate symbols. |
+| P2 | Scope grows beyond serial MG neutron restricted profile | Several particle modes and process features share the same existing core, but their resets are not audited by a serial neutron case. | Reject at entry; do not infer CE/MPI/OMP/coupled/restart/burnup/Python/TIME_REDUCE support from Stage 2 validation. |
+
+## Review conclusion
+
+The risks are not observed failures in a Stage 2 implementation: no such implementation was found. They are unresolved source-backed failure modes that must remain active implementation gates. Any Stage 2 source change that expands the file/feature scope or attempts to remove these gates requires renewed design review and user approval.

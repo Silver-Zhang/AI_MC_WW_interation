@@ -1,0 +1,17 @@
+{
+  "multiplier": 3512401965023503517,
+  "modulus": 9223372036854775808,
+  "multiplier_mod_8": 5,
+  "period_for_odd_seeds": 2305843009213693952,
+  "a_to_period_mod_modulus": 1,
+  "a_to_half_period_mod_modulus": 4611686018427387905,
+  "purpose": "read-only exact modular arithmetic supporting design; no MC transport experiment",
+  "example_root_seed": 17,
+  "stride": 100000,
+  "effective_seeds": {
+    "0": 17,
+    "1000": 2131104056799056913,
+    "3000": 2677826766351137809,
+    "4500": 1970214766957607441
+  }
+}

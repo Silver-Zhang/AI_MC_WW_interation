@@ -1,0 +1,8 @@
+{
+  "argv": [
+    "bash",
+    "tools/check-archives.sh"
+  ],
+  "cwd": "/home/workspace/AI_MC_WW_interation",
+  "exitcode": 0
+}

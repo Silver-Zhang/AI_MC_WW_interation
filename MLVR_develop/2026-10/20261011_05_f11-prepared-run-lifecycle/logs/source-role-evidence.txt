@@ -1,0 +1,62 @@
+RMC HEAD 330f091e; source SampleNeutronSource.cpp; read-only excerpt
+  180  void CDFixedSource::SampleFixSource(CDCalMode &OCalMode, CDNeutronTransport &cNeutronTransport,
+  181                                      CDPhotonTransport &cPhotonTransport, CDGeometry &cGeometry,
+  182                                      CDParticleState &cParticleState, CDExternalSource &cExternalSource,
+  183                                      CDAceData &cAceData, CDMaterial &cMaterial, CDSampling &cSampling,
+  184                                      CDRNG &ORNG, long long Neu) {
+  185    cParticleState.p_bTMSReject = false;
+  186    ///////////////  flag of kill particle //////////////////////
+  187    cParticleState.ClearLevel();   //  清除粒子的栅元位置信息\n
+  188  
+  189    cParticleState.set_alive();
+  190  
+  191    if (cExternalSource.p_nSourceType == cExternalSource.OrdinarySource) {
+  192  # ifdef USE_PYTHON_API
+  193      /// 如果使用了外源子程序，则调用子程序（即python脚本）
+  194      if (OPythonInterface.p_bSourceSub) {
+  195        OPythonInterface.SampleParticleFromSubroutine(cParticleState, cGeometry, cAceData,
+  196            cMaterial, cSampling,
+  197            ORNG, Neu);
+  198      } else {
+  199        cExternalSource.SampleSourceParticle(cParticleState, cGeometry, cAceData, ORNG, p_vFissMult);
+  200      }
+  201  #else
+  202      cExternalSource.SampleSourceParticle(cParticleState, cGeometry, cAceData, ORNG, p_vFissMult);
+  203  # endif
+  204      cParticleState.p_sCellPassed.clear();
+  205      cParticleState.p_sSurfaceCrossed.clear();
+  206    }
+  207    //////////////////// Get position, direction, energy and weight ////////////////////////////
+  208    else if (cExternalSource.p_nSourceType == cExternalSource.SurfaceReadSource) {
+  209      cExternalSource.p_vSurfSrc[0].SampleParticle(*this, cParticleState, OCalMode, ORNG);
+  210      cParticleState.SetSourceNeutronWeight();
+  211      if (p_nFinishCalculate == 2 || p_nFinishCalculate == 4) { return; }
+  212      cParticleState.p_sCellPassed.clear();
+  213      cParticleState.p_sSurfaceCrossed.clear();
+  214      if (!cParticleState.alive()) {
+  215        return;
+  216      }
+  217    } else {
+  218      Output.OutputMessage([&]() {
+  219        sprintf(Output.p_sPrintStr, "unknown external source type.\n");
+  220      }, CDOutput::_ERROR);
+  221    }
+  222    if (cAceData.p_bIsAdjoint) { cParticleState.p_bIsAdjointParticle = true; } //如果使用了固定源伴随计算则粒子是以伴随粒子形式进行输运
+  223  
+  224    if (!cParticleState.alive()) {
+  225      return;
+  226    }
+  227    if (cExternalSource.p_nFixedInitSrcBankCount > 0) {
+  228      p_nFixedSrcCount = p_nFixedSrcCount + cExternalSource.p_nFixedInitSrcBankCount;
+  229    }
+  230  
+  231    ++ p_nFixedSrcCount;//若是自发裂变，该语句会将当前中子累加上.
+  232    /////////////////////// Locate fission source ///////////////////////
+  233    if (cParticleState.p_vLocUnivs.empty()) {
+  234      bool bSourceLocate = false;
+  235      cParticleState.p_nCELL = cGeometry.LocateParticle(cParticleState, 0, cParticleState.p_dPos,
+  236                               cParticleState.p_dDir, ORNG, bSourceLocate);
+  237    }
+  238    if (cParticleState.p_nCELL == -1) { // wrong initial source
+  239      Output.OutputMessage([&]() {
+  240        sprintf(Output.p_sPrintStr,

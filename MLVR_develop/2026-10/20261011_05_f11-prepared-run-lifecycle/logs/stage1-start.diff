@@ -1,0 +1,138 @@
+diff --git a/src/CalMode.h b/src/CalMode.h
+index 167ed0dc..3f42e69d 100644
+--- a/src/CalMode.h
++++ b/src/CalMode.h
+@@ -226,6 +226,26 @@ private:
+                   CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource, CDSampling &cSampling,
+                   CDPerturbation &cPerturb);
+ 
++  // One-time initialization; not a repeated-run reset.
++  void InitializeFixedSourceModel(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
++                                          CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
++                                          CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                          CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
++                                          CDBurnup &CBurnup, CDRNG &ORNG, CDSampling &cSampling,
++                                          CDPerturbation &cPerturb);
++
++  // Requires initialized model and explicitly prepared run state.
++  void ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
++                                CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
++                                CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
++                                CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource &cExternalSource,
++                                CDSampling &cSampling, CDPerturbation &cPerturb);
++
++  // Complete statistics once; ordinary output remains in CalcFixedSource.
++  void FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                      CDAceData &CAceData, CDTally &CTally);
++
+   /**
+    * @brief 进行燃耗计算
+    * @param cCalMode 计算模式
+diff --git a/src/CalcFixedSource.cpp b/src/CalcFixedSource.cpp
+index 8493612a..4423cba8 100644
+--- a/src/CalcFixedSource.cpp
++++ b/src/CalcFixedSource.cpp
+@@ -74,6 +74,49 @@ void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutro
+   OTimer.reg(Utility::Tally);
+   OTimer[Utility::FixedSource].start();
+   CDBurnup CBurnup;
++  InitializeFixedSourceModel(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport,
++                             CAceData, cFixedSource, CMaterial, CGeometry, CParticleState, CTally,
++                             CBurnup, ORNG, cSampling, cPerturb);
++  ExecuteFixedSourcePrepared(cCalMode, cNeutronTransport, cPhotonTransport, cElectronTransport,
++                             CAceData, cFixedSource, CMaterial, CGeometry, CParticleState, CTally,
++                             ORNG, cCriticality, cExternalSource, cSampling, cPerturb);
++  FinalizeFixedSourceRun(cFixedSource, CMaterial, CAceData, CTally);
++
++  if (cPerturb.p_bDiffrOprt) {
++    cPerturb.CalcFixedSrcPerbCoeffs(cFixedSource.p_llUserInputParNum);
++    cPerturb.OutputFixSrcPerbCoeffs();
++  }
++
++  if (OWeightWindow.p_bWeightWindowGeneratorOn) {
++#ifdef USE_MPI
++    OWeightWindow.GatherTotalWeight();
++#endif
++    OWeightWindow.CalculateWeightWindow();
++    OWeightWindow.OutputWWOUTFile(CGeometry, cCalMode.p_nParticleMode);
++  }
++#ifdef USE_MPI
++  MPI_Barrier(MPI_COMM_WORLD);
++  if (OWeightWindow.p_bUseSharedMPIWeightWindow) {
++    MPI_Win_free(&OWeightWindow.WeightWindowParaDataShareWindow);
++  }
++#endif
++  Output.OutputWrtSurfSrc(CGeometry);
++  Output.OutputSummary(cCalMode, cNeutronTransport, cFixedSource, CTally, CMaterial);
++# ifdef USE_PYTHON_API
++  //如果使用了外源子程序，则在此关闭python解释器
++  if (OPythonInterface.p_bSourceSub) {
++    OPythonInterface.FinalizePython();
++  }
++# endif
++  OTimer[Utility::FixedSource].stop();
++}
++
++void CDCalMode::InitializeFixedSourceModel(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
++                                          CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
++                                          CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                          CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
++                                          CDBurnup &CBurnup, CDRNG &ORNG, CDSampling &cSampling,
++                                          CDPerturbation &cPerturb) {
+   bool bPhotonNucleus = cPhotonTransport.p_bPhotonNucleus;
+   cFixedSource.InitiateAll(cCalMode.p_nParticleMode, cNeutronTransport, CGeometry, CMaterial, CTally,
+                            CAceData, CParticleState, CBurnup, ORNG, cSampling, bPhotonNucleus,
+@@ -93,7 +136,14 @@ void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutro
+     OTimer.reg(Utility::PhotonXS);
+     OTimer.reg(Utility::PhotonTracking);
+   }
++}
+ 
++void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTransport &cNeutronTransport,
++                                CDPhotonTransport &cPhotonTransport, CDElectronTransport &cElectronTransport,
++                                CDAceData &CAceData, CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
++                                CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource &cExternalSource,
++                                CDSampling &cSampling, CDPerturbation &cPerturb) {
+   time_t last_t = time(nullptr);
+   // todo: 1. maybe not compatible with continuous surface source
+   //       2. confirmed not compatible with statistics test
+@@ -717,34 +767,9 @@ void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutro
+   }
+ 
+   FinalizeLoadBalanceChecker(cFixedSource);
++}
+ 
++void CDCalMode::FinalizeFixedSourceRun(CDFixedSource &cFixedSource, CDMaterial &CMaterial,
++                                      CDAceData &CAceData, CDTally &CTally) {
+   CTally.ProcessTally(cFixedSource, CMaterial, CAceData);
+-
+-  if (cPerturb.p_bDiffrOprt) {
+-    cPerturb.CalcFixedSrcPerbCoeffs(cFixedSource.p_llUserInputParNum);
+-    cPerturb.OutputFixSrcPerbCoeffs();
+-  }
+-
+-  if (OWeightWindow.p_bWeightWindowGeneratorOn) {
+-#ifdef USE_MPI
+-    OWeightWindow.GatherTotalWeight();
+-#endif
+-    OWeightWindow.CalculateWeightWindow();
+-    OWeightWindow.OutputWWOUTFile(CGeometry, cCalMode.p_nParticleMode);
+-  }
+-#ifdef USE_MPI
+-  MPI_Barrier(MPI_COMM_WORLD);
+-  if (OWeightWindow.p_bUseSharedMPIWeightWindow) {
+-    MPI_Win_free(&OWeightWindow.WeightWindowParaDataShareWindow);
+-  }
+-#endif
+-  Output.OutputWrtSurfSrc(CGeometry);
+-  Output.OutputSummary(cCalMode, cNeutronTransport, cFixedSource, CTally, CMaterial);
+-# ifdef USE_PYTHON_API
+-  //如果使用了外源子程序，则在此关闭python解释器
+-  if (OPythonInterface.p_bSourceSub) {
+-    OPythonInterface.FinalizePython();
+-  }
+-# endif
+-  OTimer[Utility::FixedSource].stop();
+ }

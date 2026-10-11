@@ -7,7 +7,7 @@
 
 1. 根目录 [STATUS.md](../STATUS.md)：现在做到哪一步、下一步是否已授权。
 2. [F11 v1 正式设计](04_F11_v1_架构与实施设计.md)：按当前阶段读取，不必每次通读。
-3. [阶段1当前档案](../MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) §1/§3/§4；阶段0原档案与独立正文按当前任务指针读取。
+3. [阶段2当前档案](../MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) §1/§3/§4及具体方案；阶段1/阶段0按指针读取。
 
 ## 当前主线
 
@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0限定结论保留。阶段1已获用户“批准，继续完成”后完成两文件结构拆分及规定回归，**ACCEPT WITH LIMITATIONS，待独立复核/用户验收**。生产RMC有未提交补丁，branch/HEAD仍c3ef0934；不擅自提交或推送。整体F11尚未完成，阶段2未开始。
+阶段0/1结论与边界见对应任务§4。阶段1已由外部归档操作提交至RMC 330f091e；当前Neural_Network_WW_Iteration与origin同步，Stage2开始时干净。阶段2任务05的owner矩阵、生产入口与门禁方案已完成，待§3批准；本轮无RMC修改/Stage2测试。实际身份见任务logs/repository-start.json。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-先读阶段1档案§4、实际changes.diff及原始证据，进行独立复核/用户验收。阶段1本轮停止。阶段2必须新任务并单独授权；prepared入口未实现CLEAR/SET/REBUILD，不直接重复运行。
+审阅阶段2lifecycle-design/state-ownership/source-call-graph/test-plan，按完整请求§7等待源码批准；批准后重建330f baseline再实施与自验。Stage1三个helper实际private，尚未正式reset，不直接重复调用当作生产能力。当前停于设计关口，不开始Stage3。
 
 ## 工作纪律
 
