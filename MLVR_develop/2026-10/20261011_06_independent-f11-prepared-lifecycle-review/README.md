@@ -61,7 +61,7 @@ Task 05 recorded stage2_builds_and_transport_tests_executed: false
 ## 4. 结论与边界
 
 - **结论：** `DESIGN REVIEW ONLY`。Stage 1 的单一执行 core 为正确的结构前提；现有 RMC 不具有已实施的 repeated prepared fixed-source lifecycle。
-- **设计判断：** Task 05 对 CLEAR/SET/REBUILD、原始数据保持、RNG 子流、WW 三界与非零裂变限制的处理方向与独立 source 审核一致；它仍只是待实施设计。
+- **设计判断：** Task 05 对 CLEAR/SET/REBUILD、原始数据保持、RNG 子流、WW 三界与非零裂变限制的处理方向与独立 source 审核一致；它仍只是待实施设计。实施前还须修正三项具体设计缺口：test target 的全局 singleton 链接所有权、非单位/偏倚 source distribution 下的真实初始权重与分母合同、以及由 process-global `Total` timer 导致的统计 FOM 计时归属。详见风险表。
 - **不能推出什么：** 不可声称 FF/FAF/AA/WW-on/模型复用已通过；不可外推到裂变材料、CE、MPI/OpenMP、耦合粒子、restart、burnup、Python source 或完整 F11。
 - **遗留 / 下一步：** 等待用户是否批准 Task 05 的具体 Stage 2 实施；若实施，必须完成 E1–E6 fresh-oracle 比较后再做动态独立复核。
 - **提交状态：** 本审核未修改 RMC、未 commit/push。RMC 在审核结束仍为 `330f091e` 且工作树无本审核改动。档案随 2026-10-11 根工作区提交入库。
