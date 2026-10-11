@@ -7,8 +7,8 @@
 | 任务模式 | C — 深度物理研究与学习 |
 | 类型 / 关联KB | 最小结构重构；F11，04 §3.3/§5/§14 |
 | 实施授权 | 用户在方案提交后明确回复“批准，继续完成”，记录见§3 |
-| 实际改动 | 仅RMC/src/CalMode.h、RMC/src/CalcFixedSource.cpp；未提交 |
-| 提交/保护 | 本Agent未commit/push、切分支或reset；未改核数据库、既有测试/reference、W11/W12或阶段0实验；档案随根工作区提交入库（关键数据；原始运行/构建/诊断产物留本地，逐项 SHA256 见 logs/archive-manifest.json） |
+| 实际改动 | 仅RMC/src/CalMode.h、RMC/src/CalcFixedSource.cpp；已按用户决定以单次提交存档推送 `330f091e` |
+| 提交/保护 | 本Agent轮内未commit/push、切分支或reset；未改核数据库、既有测试/reference、W11/W12或阶段0实验；用户于 2026-10-11 决定将本改动以单次提交存档推送（RMC `330f091e`）；档案随根工作区提交入库（关键数据；原始运行/构建/诊断产物留本地，逐项 SHA256 见 logs/archive-manifest.json） |
 
 ## 1. 目标与范围
 
@@ -137,5 +137,6 @@ Failed: []
 | 2026-10-11 | 原样应用提案并生成实际changes.diff；新版两配置编译、所有用例/CTest/诊断完成 |
 | 2026-10-11 | 补存被CTest运行器清理的原例输出；保留输入语法失败与首次102/103比较，按预设时间分类最终103/103 |
 | 2026-10-11 | 保存lossless原始证据及manifest，更新STATUS/INDEX/KB接口变更指针；完成阶段1，停止 |
+| 2026-10-11 | 用户决定以单次提交存档并推送：RMC `330f091e`（c3ef0934→330f091e，分支与 origin 同步）；档案/STATUS/INDEX 提交状态同步 |
 
 归档最终自检（logs/final-implementation-verification.*，退出0）：仅批准的两生产文件变化，846个其它src文件/04正文/主数据库身份保持；branch/HEAD不变，无本Agent提交或推送，git diff --check通过，归档需处理0项（历史提示31项未越范围处理）。新增任务验证工具完整补丁另存new-task-tools.patch；原始证据及其它新增档案文件逐项SHA256见logs/archive-manifest.json。

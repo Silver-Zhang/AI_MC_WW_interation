@@ -11,7 +11,7 @@
 | 阶段0 | 限定转换结论及独立报告保留；实验、W11/W12未修改 |
 | 阶段1 | 获用户明确批准后，完成两文件Initialize/ExecutePrepared/Finalize；[结论/证据/边界](MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md#4-结论与边界) |
 | 验证 | 旧/新CTest均9/9；103/103确定性比较；RNG/IEEE统计/WW事件一致；MPI/OMP只编译 |
-| 仓库 | RMC branch/HEAD不变，批准的两文件留工作树；本Agent无commit/push/切分支/reset |
+| 仓库 | RMC 阶段1两文件已按用户决定以单次提交存档推送（`330f091e`，分支与 origin 同步）；Agent 轮内无提交/push |
 
 ## 2. 下一步与授权
 

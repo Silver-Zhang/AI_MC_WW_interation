@@ -8,7 +8,8 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) | 模式C / 阶段1结构重构设计 | 已完成（ACCEPT WITH LIMITATIONS；待独立复核） | F11 | 未提交；两文件核心拆分完成；证据/边界见任务§4，阶段2未开始 |
+| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) |  | 待设计 | F11 | |
+| 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) | 模式C / 阶段1结构重构设计 | 已完成（ACCEPT WITH LIMITATIONS；待独立复核） | F11 | 已单次提交存档推送（RMC `330f091e`）；两文件核心拆分完成；证据/边界见任务§4，阶段2未开始 |
 | 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |
 | 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |
 | 2026-10-11 | [f11-design-freeze](2026-10/20261011_01_f11-design-freeze/README.md) | 文档 / F11 v1 合并设计入库 | 已完成（design frozen；生产实现和后续测试未启动） | F11/F03/F09/F10/F12 | 正式设计入知识库04；D020；状态与交接同步；只改文档，阶段0–6待逐项授权 |
