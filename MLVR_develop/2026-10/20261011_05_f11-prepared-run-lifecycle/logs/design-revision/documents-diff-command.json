@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md",
+    "STATUS.md",
+    "MLVR_develop/INDEX.md"
+  ],
+  "exit": 0,
+  "stderr": "",
+  "stdout_path": "documents.diff",
+  "scope": "documentation only; not a production patch"
+}

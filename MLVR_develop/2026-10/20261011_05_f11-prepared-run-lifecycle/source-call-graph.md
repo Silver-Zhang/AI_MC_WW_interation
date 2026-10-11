@@ -21,9 +21,9 @@ main.cpp:139–160
             旧 WWG/MCNP、权重截止、伴随截止群定位等普通功能
         ExecuteFixedSourcePrepared（:141–770）
           唯一执行 suite：:147–769，共623行、六种粒子模式
-          neutron：:156–276
+          neutron：:156–259
             sentinel → DistributeSource / InitialBatchSource
-            每历史：GetRandSeed → SampleFixSource
+            每历史：GetRandSeed → SampleFixSource（当前普通抽样链见下文；本HEAD尚无prepared权重hook）
               TrackHistory → native WW → descendants drain
               SumUpTally → PrcoessBatchEnd
         FinalizeFixedSourceRun（:772–775）
@@ -54,13 +54,20 @@ CDCalMode::InitializePreparedFixedSourceRuns
   ↓
 caller 提供单个 RunSpec + const source definition
 CDCalMode::RunPreparedFixedSource
-  先校验参数和上次 Finalized（尚未清除任何旧结果）
+  校验系列状态；steady-clock t0
+  校验参数/静态source白名单（尚未清除任何旧结果）
   构造局部 active source 工作对象
   private PrepareFixedSourceRun
     CLEAR → SET → REBUILD → CHECK
-  private ExecuteFixedSourcePrepared：原唯一 suite
+  steady-clock t1 → private ExecuteFixedSourcePrepared：原唯一 suite
+    每history仍由SampleFixSource采样
+      普通源SampleSourceParticle返回 → prepared专用CheckAndRecordPreparedSourceWeight
+      此后才可能kill/输运/WW；零得分也核查，descendant不重复核查
+  steady-clock t2 → 核验实际N/D/W0及所有采样次数
   private FinalizeFixedSourceRun：ProcessTally 一次
-  检查实际历史/银行/角色；停止本次 timer；返回 receipt
+  后验N/D/W0/银行/角色/RNG；关闭run guards、停止本次 timer；steady-clock t3
+  返回带三段时间、实际D/W0及legacy统计标签的成功receipt
+  任一采样/执行/统计期异常 → Failed，无成功receipt、禁止继续
   ↓
 caller 在下次 Prepare 前读取本次 tally/任务私有快照
   可再次调用同一个 RunPreparedFixedSource，不重新初始化模型
@@ -79,9 +86,21 @@ Initialize必须是这批对象的第一次模型初始化；不允许拿已走�
 
 ## 3. 测试入口
 
-新增 test-only executable RMCPreparedLifecycle，使用生产类与上述 public API，不使用 friend、placement-new、初始化绕过 token 或自建输运循环。其源文件在 tests/prepared_fixed_source_lifecycle/driver.cpp；生产实现只增加根 src/PrepareFixedSourceRun.cpp 和轻量数据头。
+新增 test-only executable RMCPreparedLifecycle，使用生产类与上述 public API，不使用 friend、placement-new、初始化绕过 token 或自建输运循环。入口位于 tests/prepared_fixed_source_lifecycle/driver.cpp；全局定义独占 tests/prepared_fixed_source_lifecycle/globals.cpp，driver不得再定义。生产实现新增根 src/PrepareFixedSourceRun.cpp 和轻量数据头，同时扩展既有owner；唯一新采样核查hook在SampleNeutronSource.cpp，loop不复制。
 
-CMake在 test=ON、MPI/OMP/AIS/Python-off 时从现有 source 列表排除 src/main.cpp，链接同一批生产源与既有 libraries，再加入 driver。主 RMC target 的源集合/编译参数不改。driver按 main.cpp 的正常前端创建全局对象、读输入和建立输出；只在计算分派位置选择：
+根CMake在全部feature定义之后、最终policy POP之前注册新子目录；Linux、test=ON且MPI/OMP/AIS/Python全关闭时，子CMake从RMC target的SOURCES属性副本**仅排除绝对路径src/main.cpp**，加入driver.cpp及globals.cpp各一次；复用生产libraries/编译属性，普通RMC及tests/CMakeLists.txt保持。逐全局的唯一TU、其余extern的既有定义、宏和G0检查见[lifecycle-design §5.1](lifecycle-design.md#51-测试target和全局定义的唯一所有权修订问题1)，不能只凭“按main初始化”代替链接合同。
+
+~~~text
+普通RMC：生产源（含main及其全局定义） + 原libraries
+测试RMCPreparedLifecycle：相同生产源 − main.cpp + driver.cpp + globals.cpp + 原libraries
+  globals.cpp：Output/OMeshInfo/OXSParaTableVec/OWeightWindow/OStatus/OTimer/cellVec/
+               OParticleTracker/OController/::ORNG/OCalMode/两个Logger；
+               OPythonInterface与OParallel仍按原宏定义（本测试配置关闭）
+  其余extern：仍在Data/Photon/Constants/Parallel生产TU及Depth库，不在测试TU复制
+  driver：全局OCalMode + 局部runRng（与main局部ORNG语义一致） + 稳定模型owner
+~~~
+
+driver调用原前端读输入和建立输出，只在计算分派位置选择：
 
 - persistent：一次 Initialize，逐行 Run，最后 Finish。
 - fresh：每个进程仅一次普通 RunCalculation；所有模型初始化/普通包装/ProcessTally照常执行。大整数有效seed从十进制字符串按 uint64 精确读取，调用既有RNG设置方法后进入普通路径。
@@ -89,3 +108,9 @@ CMake在 test=ON、MPI/OMP/AIS/Python-off 时从现有 source 列表排除 src/m
 计划文件是测试私有 TSV，不是生产 MLVR parser。它只选择已有源定义、role/NPS和native lower，不从TARGET造源。fresh逐例使用相同源与WW的普通输入卡；禁止使用新 Prepare 作为唯一 fresh oracle。快照由公开的既有数据/受控 receipt读取；需要观察history/WW事件和raw-load次数时复用任务私有只读GDB，观察器不改变运行状态。
 
 **fresh内存取证**：RunCalculation的Tally/ParticleState/NeutronTransport等工作副本会在返回时销毁。fresh的原始数组/cache/role必须由只读GDB在Execute/Finalize实际引用参数所在栈帧仍存活时抓取，不能在返回后读取main中的未初始化副本。fresh driver的snapshot-dir只管理输出位置和可在返回后读取的引用owner记录；完整数值快照由观察器取实际工作对象。persistent则可在Run返回后、下一Prepare之前直接读取原绑定Tally，history/WW事件仍在执行期观察。两种取证均不得写入被测状态。
+
+## 4. 三项修订的实际调用位置
+
+源链（330f091e）：CheckSourceAndDistri.cpp:6–29做一次定义检查/规范化 → ExternalSource.cpp:50–57按FRACTION/BIASFRAC赋初始因子 → SampleParticle.cpp:25–29重置/分布修正/乘p_dWeight → SampleVariableFromDistri.cpp:13–16允许WEIGHT变量抽样 → SampleValue.cpp:11–73含prob/bias修正 → ExternalSource.cpp:347–349返回最终粒子。拟hook在SampleNeutronSource.cpp:203之后，早于:224–265的alive/几何早退；不是在WW后测权重。InitialBatchSource.cpp:298按完成N赋D，ProcessTally.cpp:364使用D；新audit独立取样累计W0，不改这两处。
+
+计时链（330f091e）：OutputHeading.cpp:29启动进程Total → StatisticsFunc.cpp:124、184/218读取Total → OutputEnding.cpp:46停止。另有CalcFixedSource.cpp:168/247的history interval → ProcessStatisticsBin.cpp:16–20/43的非零history时间 → StatisticsFunc.cpp:177–180/331–358的batch FOM/两个检查。新CalMode三段steady-clock只包围正式调用边界（t0/t1/t2/t3），不改旧统计调用链或全局Total；精确输出映射见test-plan §3.1。

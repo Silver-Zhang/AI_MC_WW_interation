@@ -1,0 +1,67 @@
+{
+  "protected_changed": [],
+  "protected_count": 859,
+  "rmc_source_count": 848,
+  "rmc_source_set_unchanged": true,
+  "task06_file_set_unchanged": true,
+  "broken_links": [],
+  "readme_five_sections": true,
+  "planned_files": 29,
+  "planned_new_files": 5,
+  "scope_hooks_documented": true,
+  "approval_pending": true,
+  "diff_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "rmc_git_status": {
+    "argv": [
+      "git",
+      "-C",
+      "RMC",
+      "status",
+      "--porcelain"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "root_head": {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "80774e875f7bf759bbdef10fc5f6b31ea0f37afc\n",
+    "stderr": ""
+  },
+  "rmc_head": {
+    "argv": [
+      "git",
+      "-C",
+      "RMC",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "330f091eb0296e0d0124237ba7d9a22b81aee852\n",
+    "stderr": ""
+  },
+  "stage2_builds_or_transport_executed": false,
+  "documents_sha256": {
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md": "06d02f59501b7934894014b4d7b55ed354f127fe655878e35fefb87f821c7ff8",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md": "de7c57870659fd8765ecfa1a45d5505eee762a9e5beff45fe52fcae13df009b3",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md": "d7d01540c12da3e0e8605e08a4c1aad8d50d4ccb96afee8c97ff42017d0feb03",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md": "6a757079697ebb814a396200397f844897eb3b493106e90ef37ef991e54ba11f",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md": "a3469ac194f6c81dd5648caa6799d8d1cd4a1c9ed2810d93dcf1e1cfb57dc3db"
+  },
+  "time": "2026-10-11T20:19:52.238079+08:00",
+  "passed": true
+}

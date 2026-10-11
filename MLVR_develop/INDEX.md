@@ -9,7 +9,7 @@
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
 | 2026-10-11 | [independent-f11-prepared-lifecycle-review](2026-10/20261011_06_independent-f11-prepared-lifecycle-review/README.md) | 模式C / 阶段2独立 source/design 审核 | 已完成（DESIGN REVIEW ONLY） | F11 | Task 05 仅设计、无生产改动或动态门禁；当前 RMC 不可据此宣称 persistent lifecycle 已验证 |
-| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | 待决策 | F11 | owner矩阵、入口签名、Prepare/RNG及七门禁已写；待§3批准源码修改；无生产改动/Stage2测试，结论见任务§4 |
+| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | 待决策 | F11 | 按Task06修订链接所有权/实测源权重/分段计时；完整清单待§3批准，修订待独立复核；无生产改动/Stage2测试，结论见任务§4 |
 | 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) | 模式C / 阶段1结构重构设计 | 已完成（ACCEPT WITH LIMITATIONS；待独立复核） | F11 | 已单次提交存档推送（RMC `330f091e`）；两文件核心拆分完成；证据/边界见任务§4，阶段2新任务见05 |
 | 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |
 | 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |

@@ -1,0 +1,565 @@
+diff --git a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md
+index 220bca4..c403fa3 100644
+--- a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md
++++ b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md
+@@ -3,18 +3,20 @@
+ | 项 | 内容 |
+ |---|---|
+ | 立项日期 | 2026-10-11；new_task.sh自动分配05 |
+-| 状态 | 待决策 |
++| 状态 | 待决策 — READY FOR IMPLEMENTATION APPROVAL（仅设计收口） |
+ | 任务类型 | 新功能 / 状态生命周期设计 |
+ | 任务模式 | C — 深度物理研究与学习 |
+ | 报告人 | Codex |
+ | 关联知识库条目 | F11；唯一设计基线知识库04 |
+ | 涉及文件 | 当前只写本任务档案与进度/知识库指针；拟生产文件见lifecycle-design §5 |
+-| 分支 / 提交 | RMC Neural_Network_WW_Iteration / 330f091eb0296e0d0124237ba7d9a22b81aee852；根main / 6e7516c14de322141aa2fb645e4de1ebdcc767ed |
++| 分支 / 提交 | RMC Neural_Network_WW_Iteration / 330f091eb0296e0d0124237ba7d9a22b81aee852；根main / 80774e875f7bf759bbdef10fc5f6b31ea0f37afc（本次修订开始；原立项身份保留在logs） |
+ 
+ ## 1. 目标与范围
+ 
+ 实现一次完整模型初始化后的正式固定源多次运行准备，以同一批Geometry/Material/rawMGACE/Tally definitions支撑FF、FAF、AA，每个half-run独立且与fresh oracle确定性等价。依据用户完整Stage2任务，当前授权立项、源码分析和具体设计，§7要求设计完成后单独取得源码修改批准。
+ 
++本次2026-10-11定向修订授权仅为只读核查、修改本Task05设计及同步进度指针。沿用原模式C任务05，不另建任务、不改Task06独立报告；用户最新请求§7/§8明确要求设计收口后停止、等待具体Stage2源码批准。
++
+ 本阶段不实现CalcMLVR/Bootstrap-K控制、MLVR parser、TARGET自动源、Field/WW HDF5或外部重构；不改体积计分/W11/W12/阶段0结果/reference/核数据库，不commit/push/reset/切分支。普通fixed-source六模式与source copy semantics继续保留。
+ 
+ **物理解释（模式C）**：每个run的估计值只能含它自己的源历史（含零得分history）与后代，分母只属本run。切换A改变的是由相同raw核数据派生的算子，回F须恢复原正向角色/cache/WW policy；不能重新叠加上一A派生量。逐run的history/RNG/原始统计/派生数组/查窗与fresh完全一致才支持受限重复运行；任何一个half-run差异都会推翻“清理和重建已充分”的主张。
+@@ -28,14 +30,26 @@
+ - [state-ownership.md](state-ownership.md)：KEEP/CLEAR/SET/REBUILD逐状态组与当前行号。
+ - [source-call-graph.md](source-call-graph.md)：现有混合传参/实际private helper、拟正式入口和caller所有权。
+ - [lifecycle-design.md](lifecycle-design.md)：完整C++签名、Prepare时序、Type2子流、生产改动文件和回滚。
+-- [test-plan.md](test-plan.md)：330f重建baseline、逐run fresh oracle、七门禁、零物理容差与执行命令。
++- [test-plan.md](test-plan.md)：330f重建baseline、逐run fresh oracle、原七门禁及新增G0链接检查、源负例/计时精确白名单、零物理容差与执行命令。
+ 
+-当前静态定位：CalMode.h:172/230/238/246/330证实Stage1 helper实际private；CalcFixedSource.cpp:147–769仍是唯一623行suite，ProcessTally仅:774；RunCalculation.cpp:6–13混合传值不适合反复进入。伴随数组+=在TreatAdjointMaterial.cpp:46/50/56等；SetZero.cpp:17–25未清Sum3/活动索引；Timer.h:96–99旧reset未清recordTime；StrideRNG.cpp:86–88使用function-static skip缓存。
++原立项时的静态定位：CalMode.h:172/230/238/246/330证实Stage1 helper实际private；CalcFixedSource.cpp:147–769仍是唯一623行suite，ProcessTally仅:774；RunCalculation.cpp:6–13混合传值不适合反复进入。伴随数组+=在TreatAdjointMaterial.cpp:46/50/56等；TallyData.cpp:17–24未清Sum3/活动索引；Timer.h:96–99旧reset未清recordTime；StrideRNG.cpp:86–88使用function-static skip缓存。
+ 
+ 选择：CDCalMode只增加三个受控public入口，内部Prepare协调各owner正式reset/rebuild；caller持有并持续借用同一批模型。固定raw数据/registry，局部active source副本，每run独立累计历史段。非零裂变产生项未门禁前在受限入口拒绝。
+ 
+ **生产实施/运行：无。** 未修改RMC，不创建假changes.diff；Stage1原补丁仅存logs/stage1-start.diff。本轮未编译、未输运、未执行Gate1–7；证据仅E1静态分析；完整源码/文档保护检查见logs/design-verification.json，归档自检原文见logs/archive-check/。Type2周期/有效seed的精确只读模运算记录在logs/rng-period-analysis.json，不是MC验收。
+ 
++**独立审查后的三项定向修订**：审查依据为[Task06独立报告](../20261011_06_independent-f11-prepared-lifecycle-review/Independent_F11_Stage2_Review.md)及其risk-register/state-ownership-audit；原报告及其DESIGN REVIEW ONLY结论保持原样。本次实际HEAD下的原样修订请求见logs/design-revision/user-request.txt；新证据在[logs/design-revision/source-evidence.txt](logs/design-revision/source-evidence.txt)、extern-inventory.json、start.json；修订前五份文档原文另存before-*，不覆盖原logs。
++
++| 问题 / 当前事实 | 定向方案与拟修改点 | 观察行为 / 门禁 / 未开放范围 |
++|---|---|---|
++| 全局链接：main.cpp:28–55定义单例，CMakeLists.txt:661–675将main纳入glob | 测试target源副本只排main，新增test-only globals.cpp逐对象定义一次；root CMake末尾注册，不改main或原tests/CMakeLists.txt；详见lifecycle-design §5.1 | G0源码表/宏/符号/link检查，G1普通回归；不支持宏下不注册prepared target，不宣称并行支持 |
++| 权重：SampleParticle.cpp:25–29、SampleValue.cpp:11–73可修正实际w；InitialBatchSource.cpp:298只是D←历史数 | 严格无用户分布的单点/定能/定向单位源合同；ExternalSource校验；SampleNeutronSource.cpp新增采样后guard；FixedSource owner独立实测W0；详见§3.1 | 每history检查w==1，含零得分；N/D/W0及次数分别记录，违规run失败无成功receipt；G1普通加权源回归、G2–G6逐段核验、G7a/b负例；不开放任意权重源 |
++| 计时：StatisticsFunc.cpp:124/184/218读Total，:177–180读非零history累计时间 | Prepare协调器steady_clock三段/求和receipt；旧统计公式保留并标legacy_mixed_not_per_run；详见§3.2 | G2–G6时间边界/标签检查，比较仅五个HDF统计后缀及对应内存字段例外，其余统计精确比较；不实现TARGET或新FOM评价 |
++
++本轮静态收口检查（[verification.json](logs/design-revision/verification.json)；可重跑verify-docs.py）：848个RMC src文件及源码集合不变，合计859个保护文件（含Task06、KB04及构建入口）hash不变；RMC工作区仍干净。五节结构、本任务相对链接和git diff --check通过；归档检查exit=0、需处理0项（31条旧档案提示，本任务无提示）。待审批清单共29个文件：25个生产src文件（其中2个新增）、根CMake及3个新增测试文件，逐项见[planned-files.json](logs/design-revision/planned-files.json)和lifecycle-design §5。此处只运行文档/保护检查，没有CMake、编译、CTest或输运实验。
++
++修订开始：root main/80774e875f7bf759bbdef10fc5f6b31ea0f37afc，RMC Neural_Network_WW_Iteration/330f091eb0296e0d0124237ba7d9a22b81aee852；两工作树干净，未推送本地提交均空。实际日志见start.json。本轮没有重新核验编译器/数据库运行可用性，以下环境是**原立项记录**，不得当作本轮新构建/测试证据；实施前按test-plan重新冻结身份。
++
+ 真实环境与仓库检查输出（完整command/exit/stdout/stderr在logs）：
+ 
+ ~~~text
+@@ -57,28 +71,32 @@ GCC 13.3.0 / CMake 3.28.3 / Python 3.12.3 / HDF5 1.10.10
+ 
+ ## 3. 决策记录
+ 
+-**决定：待用户批准。** 建议采纳lifecycle-design的受限owner生命周期接口与test-plan，批准后先完成330f fresh baseline冻结，再按§5文件清单修改生产源码并运行门禁。
++**决定：本次三项修订已完成，Stage2源码修改仍待用户批准。** 建议批准当前[lifecycle-design §5完整清单](lifecycle-design.md#5-实际拟改文件理由回滚)及test-plan；批准后先完成330f fresh baseline冻结，再实施，不沿用修订前文件范围。
+ 
+-**决定人/日期：尚无Stage2源码批准。** 先前“批准，继续完成”针对Stage1；最新“继续完成”推进当前工作，完整Stage2 §7明确要求具体方案提交后再批准，不能转写为尚未提出代码的批准。
++**决定人/日期：尚无Stage2源码批准。** 先前“批准，继续完成”针对Stage1；本次最新《Stage2—设计修订与实施前收口》§7/§8再次明确只授权设计、完成后等待批准。不能把这次修订或此前继续指令写成生产修改许可。
+ 
+ | 风险 | 改动范围 | 验证与停止条件 | 回滚 |
+ |---|---|---|---|
+-| A派生+=、统计/银行/粒子缓存残留、RNG段重叠、WW-off保留旧cutoff、timer/句柄重入 | 已有owner扩展+根目录轻量spec/Prepare cpp+受限test driver；保留普通loop/数学公式；无TARGET/Field/MLVR调度 | Gate1–7逐run fresh、全部原始physics零容差；任意差异保留证据并定位，超出文件清单/物理修复停止补审批 | 保存330f每文件原文/hash；仅恢复本任务且hash吻合的增量，新增文件先留证据；不用reset/checkout |
++| A派生+=、统计/银行/粒子缓存残留、RNG段重叠、WW-off保留旧cutoff、timer/句柄重入 | 已有owner扩展+根目录轻量spec/Prepare cpp+受限test driver；保留普通loop/数学公式；无TARGET/Field/MLVR调度 | G0链接及Gate1–7逐run fresh、全部原始physics零容差；任意差异保留证据并定位，超出文件清单/物理修复停止补审批 | 保存330f每文件原文/hash；仅恢复本任务且hash吻合的增量，新增文件先留证据；不用reset/checkout |
+ 
+ **需批准的具体内容**：三个受控生产入口、各owner清理/重建方法、function-static RNG cache转owner及Type2用数保护、native WW运行间安装/关闭、timer新reset、受限测试target；prepared首版拒绝非零νΣf及未覆盖模式。普通入口和reference/数据库保持。
+ 
++**此次额外审批范围**：新增触及生产`src/SampleNeutronSource.cpp`的prepared专用检查hook；新增测试`tests/prepared_fixed_source_lifecycle/globals.cpp`；在原FixedSource/ExternalSource/Prepare/spec文件中补权重audit、实际D/W0、三段耗时及旧统计标签。`tests/CMakeLists.txt`从拟改清单移除，改由根CMake末尾注册新子目录。原`main.cpp`、通用source抽样/分母/tally公式和reference仍不改。完整清单以lifecycle-design §5为准；额外文件或算法变化必须重新说明并批准。
++
+ **人类理解确认（模式C）：待取得。** 请确认受限FF/FAF/AA与逐段fresh一致只证明该子域生命周期，不证明一般可裂变材料/完整F11。未获得确认前，不写用户已理解或已批准。
+ 
+ ## 4. 结论与边界
+ 
+-- **当前判定：BLOCKED（等待§7明确源码批准；不是实验失败）。** 源码分析、具体接口/文件方案与门禁已经可review；尚无Stage2生产改动或动态通过结论，档案/台账状态为待决策。
++- **当前判定：READY FOR IMPLEMENTATION APPROVAL。** 三项实施前缺口已在设计层面关闭，具体方案/文件/运行时拒绝/比较门禁可供用户审批；未发现仍阻止提交审批的设计问题。此判定只说明设计收口，**不是Stage2实现ACCEPT**；仍无生产改动或动态通过结论，档案/台账继续待决策。修订方案尚待独立复核，不能把Task06对旧稿的审查改写成对本次新稿的通过。
+ - 已正式支持清理的状态：本阶段尚无新增实现；已有Stage1只有拆分入口。仅候选reset清单完成。
+ - 已确认模型只加载一次：当前仅拟合同，Stage2尚未动态证明；保留一次初始化的现有路径定位。
+ - FF/FAF/AA：未执行。fresh差异：尚未进行Stage2比较，不能写“无差异”。
+ - WW-on/RNG可复现：已有Stage1单run证据保留；Stage2连续更新/子流未验证。
+ - 裂变边界：prepared拟拒绝非零产生项；一般非零裂变FAFA不能借H2O门禁放行。
+ - Stage3基础：尚未具备通过验收的Stage2运行基础，不启动Stage3。
+-- 提交状态：本Agent未commit/push；RMC基线330f是外部阶段1归档操作，Stage2与该提交分开记录。档案随 2026-10-11 根工作区提交入库。
++- 提交状态：本Agent未commit/push；RMC基线330f是外部阶段1归档操作，Stage2与该提交分开记录。原档案已随外部根工作区提交入库；本次修订保留在未提交工作区。
++
++**仍未解决的适用范围**：任意源权重/用户分布、多源、并行/AIS/Python、一般非零裂变连续切换均未开放；旧StatisticsTester仍是legacy混合计时，不能作单run FOM；这些边界不会被本次设计收口提升Ready。
+ 
+ **结果解释**：E1支持需要清理/重建的具体位置与owner划分；尚不能证明该清单充分。完成受限动态门禁后才形成物理数值与生命周期结论。知识库04冻结正文、阶段0实验/转换口径不变，F11整体仍implementation not completed。
+ 
+@@ -91,3 +109,4 @@ GCC 13.3.0 / CMake 3.28.3 / Python 3.12.3 / HDF5 1.10.10
+ | 2026-10-11 | 按KB04及Stage1/Task13/14指针检查owner相关路径；形成四份方案与预设门禁 |
+ | 2026-10-11 18:58 | 归档自检需处理0项（31项旧档案提示，本任务无提示）；848个src文件/04 hash不变，任务链接与五节结构检查通过 |
+ | 2026-10-11 | 收口时更正不存在的TallyProcess timer名称，补全fresh工作副本存活期取证；同步STATUS/INDEX/AGENT_CONTEXT和知识库指针，停止于§7审批 |
++| 2026-10-11 20:14 +0800 | 按用户定向修订请求核对Task06及当前330f源码；补齐全局TU唯一性、源权重静态/运行时防线、三段计时和逐字段例外；更新五份方案，Task06/KB04/RMC均保持；停止于生产修改审批 |
+diff --git a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md
+index 856291b..51ff601 100644
+--- a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md
++++ b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md
+@@ -1,12 +1,12 @@
+ # Stage2 具体实施方案（待批准）
+ 
+-导航：§1 合同与范围；§2 C++接口；§3 Prepare顺序；§4 RNG；§5改动文件/回滚。设计唯一基线为知识库04 §3.3/§5/§14。这里只细化Stage2，不修改冻结规则。
++导航：§1 合同与范围；§2 C++接口；§3 Prepare顺序、§3.1 源权重合同、§3.2 计时；§4 RNG；§5 改动文件/回滚、§5.1 全局对象链接。设计唯一基线为知识库04 §3.3/§5/§14。这里只细化Stage2，不修改冻结规则。
+ 
+ ## 1. 合同与范围
+ 
+ caller在一个连续栈帧持有完整模型与工作对象。CDCalMode提供一次初始化、一次run、结束三个public入口；每次run内部清理并调用原私有执行core，不接受caller声明“我已经初始化”的token。模型、raw核数据、tally definition/registry在Initialize后固定且不得复制/移动；每个run有自己的active source和清零统计。接口只允许完整half-run间切换，执行中不能修改source/WW。
+ 
+-第一批生产prepared入口限定standard MGACE、neutron-only、Linux串行、RNG Type2、普通现有单位初始权重源、Cartesian Type1/track-length/Energy=-1/Normalize=1、native track-mesh WW。MG群数随固定模型，首批门禁使用30n/12p H2O。source/role/NPS/有效RNG段/native lower可变；geometry/material/rawXS/群/mesh/WWP保持。Bootstrap/K循环不属于这个入口。
++第一批生产prepared入口限定standard MGACE、neutron-only、Linux串行、RNG Type2、§3.1限定的单个定点/定能/定向单位权重源、Cartesian Type1/track-length/Energy=-1/Normalize=1、native track-mesh WW。MG群数随固定模型，首批门禁使用30n/12p H2O。source/role/NPS/有效RNG段/native lower可变；geometry/material/rawXS/群/mesh/WWP保持。Bootstrap/K循环不属于这个入口。
+ 
+ prepared入口明确拒绝：CE/MG-HDF5、MPI/OMP/AIS、photon/coupled、burnup/kinetics/perturb/material sampling/TMS、restart/surface-source/停止时间/TIME_REDUCE、Python源、spontaneous-fission源、MCNP/point/cell WW/WWG、CAP/FET/cs等未覆盖tally功能以及特殊weight policy。不删除或限制普通CalcFixedSource的这些已有分支。固定NPS应可由原单run/batch机制完整结束，且已有bank分配的int容量换算必须无溢出，不新增batch参数。
+ 
+@@ -40,12 +40,24 @@ struct FixedSourceRunSpec {
+   std::string sourceIdentity;
+   FixedSourceWWSpec weightWindow;
+ };
++struct FixedSourceStartWeightAudit {
++  long long sampledHistories;   // 实际经过采样后检查点的次数，含零得分历史
++  long long nonUnitHistories;   // 非有限或不等于1；成功时必须为0
++  double initialWeightSum;      // 独立逐次累加实测w；不是从N或D赋值
++  double minimumInitialWeight, maximumInitialWeight;
++};
+ struct FixedSourceRunReceipt {
+   std::uint64_t runId;
+   FixedSourceRole role;
+   long long requestedHistories;
+   long long completedHistories;
+-  double normalizationDenominator;
++  double normalizationDenominator; // 实际用于ProcessTally的D
++  FixedSourceStartWeightAudit sourceWeightAudit;
++  bool unitSourceWeightsVerified; // 仅全数检查并核对N=D=W0后为true
++  double prepareSeconds, transportSeconds, tallyFinalizeSeconds, mcSeconds;
++  std::string timingScope; // 固定"prepare+transport+finalize"（KB04 §12.1）
++  std::string statisticsTimingScope; // "legacy_mixed_not_per_run"
++  bool statisticsFomIsRunMetric; // 固定false；不提供TARGET/FOM新指标
+   std::uint64_t rootSeed, effectiveSeed, stride, historyOffset;
+   std::uint64_t finalSeed;
+   long long finalPosition, finalPositionPre;
+@@ -102,6 +114,9 @@ void ResetRunState();
+ void SetPreparedRun(long long histories, FixedSourceRole role,
+                     double maxAdjointEnergyMeV);
+ void RebuildPreparedRunCutoffs(CDAceData &ace);
++void CheckAndRecordPreparedSourceWeight(double sampledWeight);
++void VerifyPreparedSourceWeights(long long expectedHistories) const;
++FixedSourceStartWeightAudit GetPreparedSourceWeightAudit() const;
+ // CDNeutronTransport
+ void ResetPreparedRunCounters(double weightCutoff);
+ // CDTally / CDTallyData / CDStatisticsTester，各在自己的类中
+@@ -134,7 +149,7 @@ void InstallPreparedNativeState(const FixedSourceWWSpec &spec,
+ void ResetForPreparedRun();
+ ~~~
+ 
+-HasNonzeroPreparedFissionProduction只查询实际使用材料，按当前1-based群号1…G调用standard MG getter，不改GetMgCs算法；locator缺失/范围错误拒绝，不能把无法核查的产生项当零。CheckPreparedSourceDefinition检查restricted ordinary neutron source、合法distribution、有效weight；可以在验证副本上复用旧CheckSourceAndDistri，不对canonical/active数据重复归一化。有效初始权重不仅要求SOURCE WEIGHT=1，还要求Fraction/BiasFrac不引入非单位偏倚。active工作对象由Run局部创建，ResetWorkingSourceFrom只复制definition与清临时库。
++HasNonzeroPreparedFissionProduction只查询实际使用材料，按当前1-based群号1…G调用standard MG getter，不改GetMgCs算法；locator缺失/范围错误拒绝，不能把无法核查的产生项当零。CheckPreparedSourceDefinition按§3.1白名单检查已经由普通前端完成一次检查/规范化的canonical definition；不调用旧CheckSourceAndDistri二次规范化，不接受未完成解析的任意手工对象。active工作对象由Run局部创建，ResetWorkingSourceFrom只复制definition与清临时库。采样后检查和独立W0累计归CDFixedSource，不归测试driver。
+ 
+ 粒子方法按state-ownership逐组显式清理，不使用外部逐字段赋值、placement-new或盲目复制上一run。Stage1三个helper的签名/原623行suite保持；普通CalcFixedSource按值source保持，仅加已进入prepared模型生命周期的冲突检查；从未进入新API的普通路径行为保持。
+ 
+@@ -145,14 +160,55 @@ HasNonzeroPreparedFissionProduction只查询实际使用材料，按当前1-base
+ Initialize先注册已有FixedSource/Tally timer，保存默认physics/weight policy，建立Forward/WW-off基础状态；在禁止material sampling的受限profile下仍复用sampling.InitialBeforeCalculation一次，然后完整调用Stage1 InitializeFixedSourceModel一次。Init使用已解析合法输入N建立定义形状；首个run也必须经过同一Prepare，不能跳过清理。模型初始化时间由任务私有clock记录，不新增生产timer枚举。
+ 
+ 1. **前置检查**：ModelReady/Finalized；绑定对象、registry/definition/WW shape与输出句柄有效；上次已Finalize一次、真实后代已排空、run timer不在running。验证role/NPS/source/WW/能量物理值/子流总范围；候选lower复制成已检查工作数据后才CLEAR。无效规格产生零条输运历史，旧结果不被抹掉。
+-2. **CLEAR**：FixedSource.ResetRunState；Neutron计数；Tally.ResetRunScores（含Sum3/活动索引/StatisticsTester）；Ace.ClearPreparedDerivedData；Particle.ResetForFixedSourceRun；WW.ClearPreparedNativeState；本次FixedSource/Tally timer全量reset。删除旧sentinel，不能删除尚未完成真实后代。
+-3. **SET**：FixedSource.SetPreparedRun设置本次N/interval/restart=0/finish=-1/role/物理max；复制canonical source为active；ConfigurePreparedType2Substream设置实际rng；本次WW身份/开关按spec。runId与sourceIdentity只记录，不替代物理检查。
++2. **CLEAR**：FixedSource.ResetRunState（含起始权重audit清零/guard关闭）；Neutron计数；Tally.ResetRunScores（含Sum3/活动索引/StatisticsTester）；Ace.ClearPreparedDerivedData；Particle.ResetForFixedSourceRun；WW.ClearPreparedNativeState；本次FixedSource/Tally timer全量reset。删除旧sentinel，不能删除尚未完成真实后代。
++3. **SET**：FixedSource.SetPreparedRun设置本次N/interval/restart=0/finish=-1/role/物理max；复制canonical source为active；启用FixedSource的prepared源权重guard；ConfigurePreparedType2Substream设置实际rng；本次WW身份/开关按spec。runId与sourceIdentity只记录，不替代物理检查。
+ 4. **REBUILD**：Ace.PrepareFixedSourceMode在零数组上复用原伴随算法或F清空状态；FixedSource.RebuildPreparedRunCutoffs从物理MeV定位A群号；native WW复用ProcessWeightWindow生成三个界限并恢复正确weight policy；particle重建mat-nuc/geometry形状与XS cache/role/cutoffs。
+ 5. **CHECK**：N与分母初始值、所有Score/Sum零、活动集合空、每槽bank空（core尚未加哨兵）、registry不变；三个role标志一致；A派生shape合法/F派生无残留；实际RNG状态匹配；真实native查询数据与role正确；min-energy cutoff保持旧语义。
+ 6. **执行**：开启本次FixedSource timer，调用唯一ExecuteFixedSourcePrepared；core沿原时序采样/输运/WW/统计，不能另写loop。
+-7. **统计结束**：FinalizeFixedSourceRun一次，检查completed=N、实际分母=N（单位有效初始权重且无自发源）、finish=2、真实后代排空、RNG的历史段数量与N一致；停止timer，FinishPreparedType2Substream关闭run guard；返回receipt并允许caller读取本次统计。
++7. **统计结束**：先VerifyPreparedSourceWeights(N)及核对completed=N、D=N=W0，再FinalizeFixedSourceRun一次；后验确认ProcessTally使用的实际D没有变化、finish=2、真实后代排空、RNG的历史段数量与N一致；停止timer并关闭本run的源权重/RNG guard；只在所有检查成功后返回receipt。采样权重失败时不得进入Finalize或返回成功receipt。
++
++时间边界、旧StatisticsTester的两种时间来源及逐字段例外见§3.2。进程Output/HDF句柄不在half-run关闭；已有临时统计文本可能追加，测试私有快照分run保存，不把它冒充最终MLVR归档。
++
++### 3.1 源形式、实际权重与分母（修订问题2）
++
++**当前事实（330f091e）**：Source.h:49–51/454的`p_dWeight`只是源的一个系数。ExternalSource.cpp:25–43分别规范化FRACTION和BIASFRAC（未指定bias时替代为fraction），:50–57按bias选源并把粒子权重置为fraction/bias。SampleVariableFromDistri.cpp:8–16可以从WEIGHT变量分布重新写`p_dWeight`；SampleValue.cpp:11–18/25–31/38–73还能因子分布、离散/直方/插值的probability/bias比值修正粒子权重。SampleParticle.cpp:14–29在被接受的抽样尝试中再乘`p_dWeight`；ExternalSource.cpp:347–349完成普通抽样并保存source neutron weight。InitialBatchSource.cpp:295–298却直接把当前完成历史数赋给`p_dTotStartWgt`，:313–322另有自发裂变修正；ProcessTally.cpp:364–393实际以该值作D。故输入WEIGHT=1、每次实际w=1、D=N是三个不同命题；只断言最后一个会漏检前两个。
++
++**确定采用的首版白名单**（不扩展任意权重归一化，也不改变KB04冻结规则）：
++
++- OrdinarySource，恰好一个`p_vSource`，PARTICLE=1；固定POINT恰好三个有限坐标，固定正有限ENERGY、固定有限非零VECTOR且DIRECMIU=1。允许的显式变量只有FRACTION、BIASFRAC、PARTICLE、POINT、VECTOR、DIRECMIU、ENERGY、WEIGHT；WEIGHT可省略为默认1。ENERGY须落在固定MG模型可接受的物理能量范围。F0/F1/A0均已属于此子集；方向算法原有的Rand调用照旧保留，不能因定向而删抽样。
++- `p_dWeight==1.0`；源原始FRACTION=1，BIASFRAC只允许未给定默认0或显式1。已规范化的外部源`p_vFraction`、`p_vBiasFrac`均须为单元素`[1.0]`，有限且相等。前端的普通一次规范化保留；本入口只读核验，不重新规范化，不能通过修正概率掩盖非法定义。
++- 禁止所有用户DISTRIBUTION（包括看似恒1的WEIGHT分布、无偏能量分布、偏倚/依赖/子分布）。`p_vDitributions.size()==1`仅允许构造器保留的0号占位（ExternalSource.h:47–49），不能错误要求empty。所有源的分布名称/枚举/用户索引map、层级列表必须无绑定，`p_vDistriIndex`全部0；形状/标志不一致同样拒绝。
++- 禁止多源、CELL约束、transform、surface/restart/Python/自发源、球/柱/体源和其余抽样形式；transform数组只保留0号占位，TIME=0/NORM=1等非启用默认状态必须一致。未定义的备用值不当成采样配置；canonical来自合法普通前端，接口不承担修复任意损坏C++对象。无偏分布和各向同性等可能守恒的形式也暂不开放，需新增证明/门禁后单独扩围，不能因此删普通路径功能。
++
++**运行时实现边界**：新增一处生产hook在`SampleNeutronSource.cpp`的`CDFixedSource::SampleFixSource`普通源分支，当前:203之后、:204之前（共同的`#endif`之后）。此处`SampleSourceParticle`已返回最终源权重，尚未执行alive提前返回、几何丢失/零重要性kill（:224–265）、输运/WW；读`cParticleState.p_dWgt`，仅当FixedSource自己的prepared guard启用时调用`CheckAndRecordPreparedSourceWeight`。不写粒子、不抽随机数、不统计descendant；因此零得分/随后被kill的源history也经过检查一次。prepared禁用的普通路径只多一个恒false guard判断，旧抽样/权重/分母赋值完全保持；唯一623行transport suite不改。
++
++`FixedSource.h`新guard有类内默认false（普通构造不依赖新Prepare）；`SetPreparedRun`启用guard；`ResetRunState`清计数、和、min/max及guard；三项新audit方法实现放`InitiateTrspt.cpp`，audit存储在`CDFixedSource`，轻量数据类型在`FixedSourceRunSpec.h`。正常样本要求`isfinite(w) && w==1.0`，**不设近似容差、不重标权重**；先记录实际采样次数，独立累加有限w，第一条有限样本设置min/max，此后更新极值。发现非单位/非有限值，记录nonUnitHistories、history序号和原值后立即抛runtime_error；NaN/Inf不加进有限和，错误日志明确partial audit。Run协调器catch后标Failed、记runId/sourceIdentity/失败阶段、禁止继续，调用者拿不到成功receipt；已有部分tally只能作为失败证据。
++
++Finalize前`VerifyPreparedSourceWeights(N)`核验audit采样次数=N、nonUnit=0、min=max=1、实测W0=N；Run协调器另外核对completed=N及实际D=N；receipt在Finalize后保存实际D、同一audit和`unitSourceWeightsVerified=true`。W0绝不由N/D反向填充。为double精确单位累加，N≤2^53且仍受原bank整数容量更严格限制。成功后关闭guard；Failed系列不得重用。错误规格仍在CLEAR之前拒绝，保留旧有效结果。
++
++**可观察门禁**：G2/G3/G4/G5/G6每段均检查N/D/W0、每history w和检查次数；G7a逐输入拒绝WEIGHT-variable/偏倚/依赖/多源/非单位源；G7b直接调用同一owner audit方法的无私有注入单元负例，补足严格白名单下无法自然到达的非单位/NaN运行时防线。采样hook及Run失败传播另做控制流检查；不把owner单测写成同进程输运证据。普通可用的加权/分布源须补旧/新回归，证明限制仅在prepared入口生效。
++
++### 3.2 单run计时与旧统计FOM（修订问题3）
++
++**当前事实（330f091e）**：OutputHeading.cpp:12/29注册并启动进程Total；OutputEnding.cpp:46停止，:82关闭句柄。StatisticsFunc.cpp:124–125的`p_vFoMTot`及:184/218的`p_vFlucFOM`使用这个进程时间。另一条链是CalcFixedSource.cpp:168/247–253的history interval，经ProcessStatisticsBin.cpp:16–20/43只对非零得分history累计`p_vTime`和largestTime，再由StatisticsFunc.cpp:177–180生成batch FOM，:331–358生成两个FOM诊断。因此旧统计计时是**混合口径**，不是每个字段都基于Total，更不是本轮T_MC。Timer.reset()在Timer.h:96–99遗漏recordTime，重置FixedSource/Tally不能修复Total的归属。
++
++**确定方案**：不改上述公式或普通计时逻辑。新`RunPreparedFixedSource`在`PrepareFixedSourceRun.cpp`用独立`std::chrono::steady_clock`记录局部区间，不新增timer枚举，也不reset/stop进程Total。生产receipt字段及固定timingScope见§2；这些计时值不从旧FOM或Total倒推。
++
++| 区间 | 起止与归属 |
++|---|---|
++| Prepare | t0：合法系列状态检查后、source/WW/spec前置检查及active副本创建之前；t1：Prepare所有CLEAR/SET/REBUILD/CHECK完成并启动本次FixedSource timer后、调用Execute之前。包含源校验/复制、WW三界安装、RNG配置；不含一次性Initialize和计划/WW文件读入 |
++| transport | t1至t2（唯一Execute返回即刻）。包含源抽样、权重guard、history/batch/descendant/WW及原有循环内统计与诊断开销，不称为纯粒子飞行CPU时间；不为计时改原loop |
++| tally finalize | t2至t3：权重/分母终检、唯一Finalize/ProcessTally、bank/role/RNG终检、关闭本run guards和停止本次FixedSource timer；t3在成功receipt组装与快照文件写出之前。包含本轮统计结束和必要收尾 |
++| T_MC | `prepareSeconds + transportSeconds + tallyFinalizeSeconds`，在生产侧按这一加法赋`mcSeconds`；应与steady-clock区间t3−t0符合浮点舍入。Scope固定`prepare+transport+finalize`；用户称的T_tally_finalize即冻结设计T_finalize |
++| 进程Total | 原来从Heading至Ending，覆盖初始化/所有run/间隔及输出，保持原语义。只作进程指标/只读观察证据，不能当run时长 |
+ 
+-时间覆盖按阶段分别记Prepare/core/Finalize。原普通路径timer顺序不动；本阶段不实现F11目标响应/FOM API。StatisticsTester的已有FOM使用Total墙钟，所以它的时间/FOM与fresh可以不同，原始physics数组不可不同。进程Output/HDF句柄不在half-run关闭；已有临时统计文本可能追加，测试私有快照分run保存，不把它冒充最终MLVR归档。
++保留旧core/ProcessTally内部原有stdout、临时统计文件等开销，随所属区间计入；排除caller在边界外的快照、正式Field写出/WW文件读取/外部算法。这与KB04 §12.1指定的文件交换排除项一致。失败只有带阶段的错误/部分耗时日志，无成功receipt和MC成功指标。观测GDB会增加墙钟；带GDB的数值门禁不用于性能排名。
++
++`statisticsTimingScope="legacy_mixed_not_per_run"`和`statisticsFomIsRunMetric=false`随每个prepared receipt输出；driver在私有snapshot及导出的旧统计数据manifest附同样标签。若输出legacy统计文件，必须有对应run-id sidecar元数据；不把文件中的旧FOM复制为run FOM。Stage2不添加TARGET响应/RE_R/FOM计算，也不改普通OutputSummary/OutputEnding/HDF格式。
++
++**精确比较例外**：内存仅`p_vTime`、`p_vLargestTime`、`p_vFoMPerCycle`、`p_vFoMTot`、`p_vFlucFOM`、`p_vFoMValueCheck`、`p_vFoMBehaviourCheck`及粒子`p_dSimulateTime`属于已有可证明的时间派生字段；HDF仅OutputTallyh5.cpp:210–217/261/283写出的5个相应后缀可例外，完整名单在test-plan §3.1。时间数组仍须正确reset/shape/归属；旧非run FOM必须保留值并标注口径。其余StatisticsTester的矩、Ave、RE、VoV、PDF、largest score、非时间诊断严格比较；禁止整个StatisticsTester忽略，禁止泛匹配所有含FOM或Time的键。
++
++**门禁**：G2/G3/G4/G5/G6检查三段非负有限、求和恒等与每次timer正确停止；G2启用SCHECK的第二run在两次run之间加已记录的约100ms driver间隔，证明Total增加而该间隔在t0之外。G1普通输出/数值回归保持；比较器自测必须拒绝RE/Sum3/PDF/非时间check的人工损坏，仍保存并列出每个允许时间差异。时间域的允许舍入和不要求fresh等时详见test-plan，不能放宽物理容差。
+ 
+ ## 4. Type2 子流
+ 
+@@ -179,10 +235,11 @@ root17/stride100000时offset0、1000、3000、4500的有效seed分别为17、213
+ | 文件（均相对RMC） | 拟改动 |
+ |---|---|
+ | src/CalMode.h | 三个受控public入口、private Prepare、生命周期/非拥有绑定/固定policy；旧helper保留private |
+-| src/PrepareFixedSourceRun.cpp（新增） | Initialize/Prepare/Run/Finish协调和检查；无history loop、无模型owner |
+-| src/FixedSourceRunSpec.h（新增） | 上述轻量spec/receipt/role；无parser/模型/资源owner |
++| src/PrepareFixedSourceRun.cpp（新增） | Initialize/Prepare/Run/Finish协调、失败传播、D/W0终检、独立三段计时和receipt口径；无history loop、无模型owner |
++| src/FixedSourceRunSpec.h（新增） | 上述轻量spec/receipt/role/source-weight audit，含三段时长和legacy统计标签；无parser/模型/资源owner |
+ | src/CalcFixedSource.cpp | 普通入口prepared生命周期冲突检查；原初始化/623行suite/Finalize/普通tail不重写 |
+-| src/FixedSource.h、src/InitiateTrspt.cpp | FixedSource reset/set/cutoff方法；NeutronTransport计数方法在现有相关cpp追加；不再次InitiateAll |
++| src/FixedSource.h、src/InitiateTrspt.cpp | FixedSource reset/set/cutoff及源权重guard/audit/终检方法；NeutronTransport计数方法也追加在InitiateTrspt.cpp；不再次InitiateAll |
++| src/SampleNeutronSource.cpp（本次补入清单） | SampleFixSource普通源采样返回后的prepared专用权重检查hook；不改抽样算法、不写粒子、不动core |
+ | src/NeutronTransport.h | 声明计数/default policy恢复接口 |
+ | src/Tally.h、src/InitiateTally.cpp | 新run-score reset遍历既有registry；原InitiateTally不改 |
+ | src/TallyData.h、src/TallyData.cpp | 包含Sum3与索引的完整reset；旧SetZero不改 |
+@@ -193,10 +250,45 @@ root17/stride100000时offset0、1000、3000、4500的有效seed分别为17、213
+ | src/RNG/RNG.h、src/RNG/StrideRNG.cpp | owner skip cache、Type2子流配置、prepared用数检查；旧LCG公式保留 |
+ | src/WeightWindow.h、src/WeightWindows.cpp | 本次native三界安装/关闭和真实policy切换；不改split/roulette/查窗算法 |
+ | src/Utility/Timer.h | 新prepared全量reset；旧普通reset保持 |
+-| CMakeLists.txt、tests/CMakeLists.txt、tests/prepared_fixed_source_lifecycle/CMakeLists.txt（新增）、driver.cpp（新增） | 受限test target及正式API driver；既有reference/测试模型保持 |
++| CMakeLists.txt | 在全部feature定义之后新增受限测试子目录；普通RMC源/链接及原tests注册保持，细节见§5.1 |
++| tests/prepared_fixed_source_lifecycle/CMakeLists.txt（新增） | 派生RMC源列表，精确排除main.cpp，加driver/globals，复用libraries/编译属性，注册新测试 |
++| tests/prepared_fixed_source_lifecycle/driver.cpp（新增） | 正式API driver，fresh入口、receipt/snapshot口径、源audit单测模式；不定义进程全局对象 |
++| tests/prepared_fixed_source_lifecycle/globals.cpp（新增，本次补入清单） | 测试executable独占的全局对象定义，精确清单/宏见§5.1；普通RMC不编入 |
++
++tests/CMakeLists.txt从原拟改清单移除：新子目录由根CMake末尾显式添加，既有测试注册不变。Source.h/SampleParticle.cpp/SampleVariableFromDistri.cpp/SampleValue.cpp/InitialBatchSource.cpp/ProcessTally.cpp/OutputTallyh5.cpp/OutputHeading.cpp全部只读；不修通用源或统计公式。
+ 
+ Output.h/OutputEnding.cpp只读，不新增生产文件归档协议；Prepare在CalMode检查已有公开句柄，driver输出任务私有snapshot。RunCalculation.cpp/main.cpp不改；不建立src/MLVR。实现中若发现额外owner状态要求更改此表之外生产文件，应先补具体原因与审批记录。
+ 
+ 批准后先在私有副本重建330f baseline，保存源manifest、编译选项和Gate1原输出，之后才改生产树。本任务changes.diff只对330f包含Stage2增量；新增untracked生产文件单独git diff --no-index /dev/null保存并加入清单，不以空git diff漏报。logs/stage1-start.diff为已提交Stage1原补丁，不算本任务改动。
+ 
+ 回滚不reset/checkout：保存每个修改文件的330f原文/sha；只在无他人新改动且hash吻合时逐文件恢复本任务旧内容，新增文件也先验证是本任务创建，再移到任务证据目录。若发现并行改动，停止由用户处理。全部禁止commit/push、参考值/核数据库更新；Gate失败保留原文并定位，不能扩大物理容差。
++
++### 5.1 测试target和全局定义的唯一所有权（修订问题1）
++
++**当前事实**：CMakeLists.txt:661–673通配并合并生产源，:674–675建立RMC并链接`${libraries}`；RNG静态库在:629–632另行加入，Python可选库在:637–653。main.cpp:28–55同时定义入口依赖的13个无条件全局对象和2个条件对象。只排main而不补定义会缺符号，保留main又加driver会产生两个main；把测试globals放src/则会被普通glob重复编入。
++
++**唯一选择**：原`main.cpp`完全不改。新增测试专用`tests/prepared_fixed_source_lifecycle/globals.cpp`作为测试target的全局定义translation unit，driver只含入口和局部模型。两个executable互相不链接，各有且仅有自己的main及以下定义：
++
++| 定义（保留main中的顺序/namespace） | 普通RMC唯一TU | RMCPreparedLifecycle唯一TU | 条件 |
++|---|---|---|---|
++| `CDOutput Output`；`CDMeshInfo OMeshInfo`；`CDXSParaTableVec OXSParaTableVec` | src/main.cpp:28–30 | tests/prepared_fixed_source_lifecycle/globals.cpp | 无 |
++| `CDWeightWindow OWeightWindow`；`CDStatus OStatus`；`Utility::RMCTimer OTimer` | src/main.cpp:31–33 | 同上 | 无 |
++| `CellVector cellVec`；`CDPTRAC OParticleTracker`；`RMC::Control OController` | src/main.cpp:34–36 | 同上 | 无 |
++| `CDRNG ORNG`；`CDCalMode OCalMode` | src/main.cpp:37–38 | 同上 | 无 |
++| `RMC::IO::Logger OLogger`、`OProcLogger` | src/main.cpp:39–43 | 同上，保留namespace | 无 |
++| `CDPythonInterface OPythonInterface` | src/main.cpp:48–51 | 同上，含相同PythonInterface头 | `USE_PYTHON_API` |
++| `CDParallel OParallel` | src/main.cpp:53–55 | 同上 | `USE_MPI` |
++
++头文件取main的生产类型声明所需集合：CalMode.h、Input.h、PhotonTransport.h、ElectronTransport.h、Utility/Timer.h、Utility/IO/Logger.h、Status.h、Control/Control.h，Python头保留原guard。不得在driver或任何header再定义这些对象，也不include main.cpp。OMP/AIS没有额外main全局定义；类型布局仍必须服从同一生产宏，不能为driver局部#undef。
++
++其它extern沿原TU/库定义一次：`Data::DataBase::{indexFilesPath,DataPath,hdf5Directory,readHDF5}`在Data/Data.cpp:14–20；`Data::PhotonAtomicDataBase::{with_hdf5,elements,elements_index}`在Photon.cpp:549–552；`RMC::Config::Parallel::isMaster`在Utility/Config/Parallel.cpp:4–12（仅USE_MPI）；BurnupConstants.cpp:7/116/118/130/189的五个reaction/Q映射、NuclideConstants.cpp:8的MASS_ELEMENT随生产源；DepthOut/DepthRpt在DEPTH/DepthMain.cpp:17随Depth静态库。完整extern搜索在logs/design-revision/extern-inventory.json；这些符号绝不复制到globals.cpp。AIS/并行/Python依赖由原库/宏机制管理，本target不自行提供假stub。
++
++**CMake边界（实现待批准）**：根CMake在所有add_definitions完成后、末尾`cmake_policy(POP)`之前添加新子目录，条件为test=ON、CMAKE_SYSTEM_NAME=Linux、mpi/MPI_USE/openmp/OMP_USE/ais/pythonapi/USE_PYTHON_API全部关闭；不移动原tests子目录或修改其CTest注册。这样也继承:698之后的DEBUG_ATTACH/BACKTRACE/CATCH_ERROR等最终目录宏。子CMake用`get_target_property(... RMC SOURCES)`取得原列表的局部副本，核实绝对路径`${PROJECT_SOURCE_DIR}/src/main.cpp`恰好出现一次，再`list(REMOVE_ITEM ...)`仅排除此文件；不重新glob另一份生产清单，不修改原`source`变量或RMC target。加且仅加driver.cpp、globals.cpp各一次；生产新增Prepare cpp由原src glob取得，RNG/Depth仍只通过`${libraries}`链接而非再编入其源码。
++
++测试target继承同目录C++标准、flags、include/link目录，并显式复用RMC target的COMPILE_DEFINITIONS/COMPILE_OPTIONS/INCLUDE_DIRECTORIES与`${libraries}`；不复制旧binary的flag猜测配置。普通RMC的add_executable、target_link_libraries、install保持原样。特殊MPI/OMP/AIS/Python构建不会创建本测试target；对应生产宏仍原样传给普通RMC。globals中的条件定义与main一致是防漂移约束，不表示本测试或prepared已支持这些模式。
++
++driver使用全局`OCalMode`，另以明确名字`runRng`持有并传递实际RNG（对应main.cpp:60的局部ORNG）；全局`::ORNG`必须链接存在，但不得误当作该run RNG。main.cpp:142–162的输入/输出前端与进程收尾由driver调用同一生产方法；计算点persistent仅调用三个公开lifecycle API，fresh仅普通RunCalculation。不得借global副本复制模型或另造loop。
++
++**验收G0**：configure导出compile_commands，逐生产TU比较两个target的宏/包含目录/选项（仅object/output路径可不同）；检查target源表/链接map排除了原main、globals仅一个object、所有列出的全局定义唯一，`nm -C --defined-only`核对最终两个executable各一份main和无条件globals；非main的extern仍由原TU/库提供。链接不得存在重复/未解析符号。test=OFF下新target不存在且普通源集合只增加已批准的生产API文件；不支持宏配置不注册此target，已有普通RMC构建继续正常。须同时构建RMC和RMCPreparedLifecycle并跑G1普通回归，不能仅凭文档宣称链接已通过。
++
++**新增范围与风险**：相比修订前，生产多触及SampleNeutronSource.cpp一处guard；测试新增globals.cpp，移除不必要的tests/CMakeLists.txt修改。前者的普通分支/RNG不变由G1含加权源回归验证；后者有与main清单漂移风险，由extern inventory、源列表/符号唯一性检查及宏比较门禁约束。测试TU定义重复于另一个executable的main是明确隔离的构建安排，不在同一链接单元内重复定义。上述全部仍待§3用户批准，尚未创建或编译任何这些生产/测试文件。
+diff --git a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md
+index d6ba4ea..812e8b9 100644
+--- a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md
++++ b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/source-call-graph.md
+@@ -21,9 +21,9 @@ main.cpp:139–160
+             旧 WWG/MCNP、权重截止、伴随截止群定位等普通功能
+         ExecuteFixedSourcePrepared（:141–770）
+           唯一执行 suite：:147–769，共623行、六种粒子模式
+-          neutron：:156–276
++          neutron：:156–259
+             sentinel → DistributeSource / InitialBatchSource
+-            每历史：GetRandSeed → SampleFixSource
++            每历史：GetRandSeed → SampleFixSource（当前普通抽样链见下文；本HEAD尚无prepared权重hook）
+               TrackHistory → native WW → descendants drain
+               SumUpTally → PrcoessBatchEnd
+         FinalizeFixedSourceRun（:772–775）
+@@ -54,13 +54,20 @@ CDCalMode::InitializePreparedFixedSourceRuns
+   ↓
+ caller 提供单个 RunSpec + const source definition
+ CDCalMode::RunPreparedFixedSource
+-  先校验参数和上次 Finalized（尚未清除任何旧结果）
++  校验系列状态；steady-clock t0
++  校验参数/静态source白名单（尚未清除任何旧结果）
+   构造局部 active source 工作对象
+   private PrepareFixedSourceRun
+     CLEAR → SET → REBUILD → CHECK
+-  private ExecuteFixedSourcePrepared：原唯一 suite
++  steady-clock t1 → private ExecuteFixedSourcePrepared：原唯一 suite
++    每history仍由SampleFixSource采样
++      普通源SampleSourceParticle返回 → prepared专用CheckAndRecordPreparedSourceWeight
++      此后才可能kill/输运/WW；零得分也核查，descendant不重复核查
++  steady-clock t2 → 核验实际N/D/W0及所有采样次数
+   private FinalizeFixedSourceRun：ProcessTally 一次
+-  检查实际历史/银行/角色；停止本次 timer；返回 receipt
++  后验N/D/W0/银行/角色/RNG；关闭run guards、停止本次 timer；steady-clock t3
++  返回带三段时间、实际D/W0及legacy统计标签的成功receipt
++  任一采样/执行/统计期异常 → Failed，无成功receipt、禁止继续
+   ↓
+ caller 在下次 Prepare 前读取本次 tally/任务私有快照
+   可再次调用同一个 RunPreparedFixedSource，不重新初始化模型
+@@ -79,9 +86,21 @@ Initialize必须是这批对象的第一次模型初始化；不允许拿已走
+ 
+ ## 3. 测试入口
+ 
+-新增 test-only executable RMCPreparedLifecycle，使用生产类与上述 public API，不使用 friend、placement-new、初始化绕过 token 或自建输运循环。其源文件在 tests/prepared_fixed_source_lifecycle/driver.cpp；生产实现只增加根 src/PrepareFixedSourceRun.cpp 和轻量数据头。
++新增 test-only executable RMCPreparedLifecycle，使用生产类与上述 public API，不使用 friend、placement-new、初始化绕过 token 或自建输运循环。入口位于 tests/prepared_fixed_source_lifecycle/driver.cpp；全局定义独占 tests/prepared_fixed_source_lifecycle/globals.cpp，driver不得再定义。生产实现新增根 src/PrepareFixedSourceRun.cpp 和轻量数据头，同时扩展既有owner；唯一新采样核查hook在SampleNeutronSource.cpp，loop不复制。
+ 
+-CMake在 test=ON、MPI/OMP/AIS/Python-off 时从现有 source 列表排除 src/main.cpp，链接同一批生产源与既有 libraries，再加入 driver。主 RMC target 的源集合/编译参数不改。driver按 main.cpp 的正常前端创建全局对象、读输入和建立输出；只在计算分派位置选择：
++根CMake在全部feature定义之后、最终policy POP之前注册新子目录；Linux、test=ON且MPI/OMP/AIS/Python全关闭时，子CMake从RMC target的SOURCES属性副本**仅排除绝对路径src/main.cpp**，加入driver.cpp及globals.cpp各一次；复用生产libraries/编译属性，普通RMC及tests/CMakeLists.txt保持。逐全局的唯一TU、其余extern的既有定义、宏和G0检查见[lifecycle-design §5.1](lifecycle-design.md#51-测试target和全局定义的唯一所有权修订问题1)，不能只凭“按main初始化”代替链接合同。
++
++~~~text
++普通RMC：生产源（含main及其全局定义） + 原libraries
++测试RMCPreparedLifecycle：相同生产源 − main.cpp + driver.cpp + globals.cpp + 原libraries
++  globals.cpp：Output/OMeshInfo/OXSParaTableVec/OWeightWindow/OStatus/OTimer/cellVec/
++               OParticleTracker/OController/::ORNG/OCalMode/两个Logger；
++               OPythonInterface与OParallel仍按原宏定义（本测试配置关闭）
++  其余extern：仍在Data/Photon/Constants/Parallel生产TU及Depth库，不在测试TU复制
++  driver：全局OCalMode + 局部runRng（与main局部ORNG语义一致） + 稳定模型owner
++~~~
++
++driver调用原前端读输入和建立输出，只在计算分派位置选择：
+ 
+ - persistent：一次 Initialize，逐行 Run，最后 Finish。
+ - fresh：每个进程仅一次普通 RunCalculation；所有模型初始化/普通包装/ProcessTally照常执行。大整数有效seed从十进制字符串按 uint64 精确读取，调用既有RNG设置方法后进入普通路径。
+@@ -89,3 +108,9 @@ CMake在 test=ON、MPI/OMP/AIS/Python-off 时从现有 source 列表排除 src/m
+ 计划文件是测试私有 TSV，不是生产 MLVR parser。它只选择已有源定义、role/NPS和native lower，不从TARGET造源。fresh逐例使用相同源与WW的普通输入卡；禁止使用新 Prepare 作为唯一 fresh oracle。快照由公开的既有数据/受控 receipt读取；需要观察history/WW事件和raw-load次数时复用任务私有只读GDB，观察器不改变运行状态。
+ 
+ **fresh内存取证**：RunCalculation的Tally/ParticleState/NeutronTransport等工作副本会在返回时销毁。fresh的原始数组/cache/role必须由只读GDB在Execute/Finalize实际引用参数所在栈帧仍存活时抓取，不能在返回后读取main中的未初始化副本。fresh driver的snapshot-dir只管理输出位置和可在返回后读取的引用owner记录；完整数值快照由观察器取实际工作对象。persistent则可在Run返回后、下一Prepare之前直接读取原绑定Tally，history/WW事件仍在执行期观察。两种取证均不得写入被测状态。
++
++## 4. 三项修订的实际调用位置
++
++源链（330f091e）：CheckSourceAndDistri.cpp:6–29做一次定义检查/规范化 → ExternalSource.cpp:50–57按FRACTION/BIASFRAC赋初始因子 → SampleParticle.cpp:25–29重置/分布修正/乘p_dWeight → SampleVariableFromDistri.cpp:13–16允许WEIGHT变量抽样 → SampleValue.cpp:11–73含prob/bias修正 → ExternalSource.cpp:347–349返回最终粒子。拟hook在SampleNeutronSource.cpp:203之后，早于:224–265的alive/几何早退；不是在WW后测权重。InitialBatchSource.cpp:298按完成N赋D，ProcessTally.cpp:364使用D；新audit独立取样累计W0，不改这两处。
++
++计时链（330f091e）：OutputHeading.cpp:29启动进程Total → StatisticsFunc.cpp:124、184/218读取Total → OutputEnding.cpp:46停止。另有CalcFixedSource.cpp:168/247的history interval → ProcessStatisticsBin.cpp:16–20/43的非零history时间 → StatisticsFunc.cpp:177–180/331–358的batch FOM/两个检查。新CalMode三段steady-clock只包围正式调用边界（t0/t1/t2/t3），不改旧统计调用链或全局Total；精确输出映射见test-plan §3.1。
+diff --git a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md
+index bbe35c9..7de9fab 100644
+--- a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md
++++ b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/state-ownership.md
+@@ -6,20 +6,22 @@
+ 
+ | Owner / 当前源码 | KEEP | CLEAR | SET / REBUILD / 检查 |
+ |---|---|---|---|
+-| CDCalMode；CalMode.h:113–125、230–249 | 模型粒子模式；普通入口/私有core；固定physics与WW定义快照 | 每次receipt临时状态；不清整个CalMode | 新增私有生命周期枚举、owner绑定和累计history offset；设置本次neutron WW var-red与p_nChangeNeuCutWgt；拒绝非法状态重入 |
++| CDCalMode；CalMode.h:113–125、230–249 | 模型粒子模式；普通入口/私有core；固定physics与WW定义快照 | 每次receipt临时状态/steady-clock局部区间；不清整个CalMode | 新增私有生命周期枚举、owner绑定和累计history offset；设置本次neutron WW var-red与p_nChangeNeuCutWgt；拒绝非法状态重入 |
+ | CDGeometry / CDMaterial；InitiateAll.cpp:131、165–178、234–264 | 几何/材料定义、密度、基础核素索引；对象地址；固定能群；已有model内部结构 | 不清模型；binary/ptrac输出启用的输入在受限入口拒绝 | Material.SetupMatNucFrc仅重建particle拥有的p_vMatNucFrc/p_vMatNucID；不再次InitiateMatAce |
+ | CDAceData / Nuclide；InitiateMatAce.cpp:8–29、63–66；TreatAdjointMaterial.cpp:9–102 | NXS/JXS、XSS/PXSS、MG群边界与原始XS、核素定义和地址 | 每次清p_vAdjointCrossSection及p_vAdjointFissionCrossSection；F也清，不只把flag关掉 | p_bIsAdjoint=role；A在零化后的派生数组上调用原treatAdjointMaterial；F保留raw数据且派生为空；逐使用材料/核素/群检查νΣf，非零拒绝 |
+-| CDFixedSource；FixedSource.h:192–213、243–418 | 输入物理选项、maxMiss、load balance配置（受限NONE）；模型无关definition | 完成历史、batch、currentPARTICLE、源计数、collision N/P/E、miss、induced gamma、四类裂变multiplicity统计、分母、restart累计/时间interval临时量 | NPS>0；restart=0；finish=-1；interval按本次N和既有串行分配逻辑；角色flag；Adjoint最大能量从保存的物理MeV重新LocateMgErgGrp，绝不再转换旧内部群号 |
++| CDFixedSource；FixedSource.h:192–213、243–418 | 输入物理选项、maxMiss、load balance配置（受限NONE）；模型无关definition | 完成历史、batch、currentPARTICLE、源计数、独立起始权重audit（实际次数/W0/min/max/违规数，guard关闭）、collision N/P/E、miss、induced gamma、四类裂变multiplicity统计、分母、restart累计/时间interval临时量 | NPS>0且≤2^53并满足原bank容量限制；restart=0；finish=-1；interval按本次N和既有串行分配逻辑；角色flag；Adjoint最大能量从保存的物理MeV重新LocateMgErgGrp，绝不再转换旧内部群号；SetPreparedRun启用权重guard，SampleFixSource采样返回后逐history审计（含零得分），Finalize前后核对N/D/W0，成功才关闭guard/出receipt |
+ | FixedSource banks；FixedSource.h:283–309；CalcFixedSource.cpp:156、213–230 | bank容器类型和四个粒子槽，不持有活粒子 | ParticleStack逐槽清空；p_sNextParticle归零；fixed/photon/electron临时bank和计数清除；旧p_vFixedSrc内容清并按既有capacity逻辑配置 | CLEAR前检查上一轮已完成且无真实后代；core自己push一次neutron sentinel。结束neutron stack的一个哨兵不是残留粒子；其它槽/真实计数应为空。p_vFixedSrc预分配长度不是live bank计数 |
+ | CDNeutronTransport；NeutronTransport.h:37–41；InitiateTrspt.cpp:60–101 | 原physical energy cutoff、默认weight policy和物理选项 | p_nMissParticleCount与p_nMissNeutronCount等当前计数 | WW-on恢复普通native路径的weight cutoff=1e-8；WW-off恢复本次模型初始默认policy，禁止沿用上轮WW修改的值。首批用例默认0.25，显式特殊weight policy未门禁前拒绝 |
+ | CDTally；InitiateTally.cpp:57–145；Tally.h:893–943 | mesh/energy/Normalize/offset/bin定义、tally对象与pointer registry大小/指针顺序 | 对registry内每个TallyData清数值及临时集合；不反复InitiateTally、不resize definition容器、不push registry | p_bIsPerHstry=true、p_bIsPerCyc=false；已有tally flags保持；每次 N 用于统计诊断重置。首批只cell/Cartesian track mesh；CAP/FET/perturb/cs等专门状态未覆盖的输入拒绝 |
+-| CDTallyData；TallyData.h:33–83；SetZero.cpp:17–25；SumUpTally.cpp:66–72 | 已分配数值shape；登记关系；统计检查选定bin | Score、ScoreTemp、Sum1、Sum2、Sum3、Ave、RE全部零化；p_setScoreIndex、p_vScoreIndex2、p_vScoreStride清空 | stride/index2是当前history的活动工作列表，不是definition offset。新ResetForRun直接完整清理，旧SetZero行为不改；Sum3不强行改变原shape |
+-| CDStatisticsTester；StatisticsTester.h:39–174；StatisticsFunc.cpp:8–93 | p_vIndexOfTallyData、选定bin、batch/check/pdf定义与阈值 | Sum1–4、Time、largest/fluctuation、pdf/slope、检查flags、stored/count/current batch/temp、p_vGatherScores、Ave/RE/VoV/FOM/mean/shift等所有run数组 | 复用ReSize(N)并显式补齐scalar默认，如p_nCyc=1；NpsPerBatch依据当前N。首批SCHECK case的N为原诊断batch数的整数倍；不重写统计公式 |
++| CDTallyData；TallyData.h:33–83；TallyData.cpp:17–24；SumUpTally.cpp:66–72 | 已分配数值shape；登记关系；统计检查选定bin | Score、ScoreTemp、Sum1、Sum2、Sum3、Ave、RE全部零化；p_setScoreIndex、p_vScoreIndex2、p_vScoreStride清空 | stride/index2是当前history的活动工作列表，不是definition offset。新ResetForRun直接完整清理，旧SetZero行为不改；Sum3不强行改变原shape |
++| CDStatisticsTester；StatisticsTester.h:39–174；StatisticsFunc.cpp:8–93 | p_vIndexOfTallyData、选定bin、batch/check/pdf定义与阈值 | Sum1–4、Time、largest/fluctuation、pdf/slope、检查flags、stored/count/current batch/temp、p_vGatherScores、Ave/RE/VoV/FOM/mean/shift等所有run数组 | 复用ReSize(N)并显式补齐scalar默认，如p_nCyc=1；NpsPerBatch依据当前N。首批SCHECK case的N为原诊断batch数的整数倍；不重写统计公式；旧FoMTot/FlucFOM依赖Total，batch FOM依赖非零history计时，随receipt标legacy_mixed_not_per_run；只有test-plan §3.1精确名单允许时间差异 |
+ | CDParticleState；ParticleState.h:395–416、423–714、854–996、1142–1183、1366–1373 | 不保存上轮物理缓存；model引用仍由caller持有 | 当前pos/dir/energy/time/weight和存活/终止状态；cell/surface/level定位栈、passed sets、几何暂存；nuc XS cache；temp抽样、secondaryEnergy/Particles、MGAdjFisMatrix及perturb临时量（对应选项拒绝） | owner方法按上述字段组显式恢复fresh默认；cell/mat/temp/density与逐核素temp-change flags=true；ONucCs匹配现有核素数；mat-nuc向量及nearest/Poisson/realDisplace按原Initialize形状重建；role和各粒子energyCutoff/importance/weight policy明确设置 |
+-| CDExternalSource；ExternalSource.h:151起；ExternalSource.cpp:25–44；CheckSourceAndDistri.cpp:6–8 | caller的真实Forward/合法Adjoint源definition和distribution不变，保存hash/identity | active source的fixed-init neutron/photon banks及counts、临时surfsource状态（输入拒绝此模式） | 每run复制已验证canonical definition到局部工作source，再清临时库；不修改canonical；不再次归一化已经解析的active概率以免改变位序。新构造definition仅创建时复用旧CheckSourceAndDistri一次 |
++| CDExternalSource；ExternalSource.h:151起；ExternalSource.cpp:25–44；CheckSourceAndDistri.cpp:6–8 | caller已规范化一次的canonical单个定点/定能/定向中子源，保存hash/identity；本阶段禁用所有用户distribution（仅保留0号占位） | active source的fixed-init neutron/photon banks及counts、临时surfsource状态（输入拒绝此模式） | 每run复制已验证canonical definition到局部工作source，再清临时库；不修改canonical；不再次归一化已经解析的active概率以免改变位序。新构造definition仅创建时复用旧CheckSourceAndDistri一次；CheckPreparedSourceDefinition静态白名单见lifecycle-design §3.1，不能以SOURCE WEIGHT=1替代实际采样检查 |
+ | 实际CDRNG；RNG.h:52–55、302–315、415–431；StrideRNG.cpp:76–101 | Type2乘数/模数/Rand算法；整个序列root seed与固定stride | 移到owner的skip cache失效；history用数计数归零；不得读同名未传入global ORNG | seed0=seed=effectiveSeed；position=0、position_pre=-1000；本次history段/总范围检查；owner cache有效性由RNG管理 |
+ | global CDWeightWindow；WeightWindow.h:160–242；WeightWindows.cpp:79–101；ReadWeightWindow.cpp:421–427 | Cartesian topology、neutron能量边界（含唯一Inf终边界）、WWP、mesh编号顺序 | 上轮native neutron lower/upper/survival及运行身份失效；不开/关WWG/MCNP共享资源 | 校验角色与fixed shape、positive finite lower及三界有限；复用原ProcessWeightWindow安装本次三界；WW-off关闭真实var-red查询链，可保留固定topology但不保留生效旧bounds |
+-| Output / OTimer；Output.h:278–298；OutputEnding.cpp:8–42；Utility/Timer.h:47–99 | 进程输出/HDF5句柄、Total/ReadInputBlock timer、OutputEnding只一次 | 仅run所用FixedSource/Tally timer：runTime、recordTime、startTime；拒绝清理running timer | 新ResetForPreparedRun；普通Timer.reset不改。core开始前开启FixedSource，Finalize后停止；输出句柄身份/FD有效性检查，任务私有snapshot每run关闭自身文件 |
++| Output / OTimer；Output.h:278–298；OutputEnding.cpp:8–42；Utility/Timer.h:47–99 | 进程输出/HDF5句柄、Total/ReadInputBlock timer、OutputEnding只一次 | 仅run所用FixedSource/Tally timer：runTime、recordTime、startTime；拒绝清理running timer | 新ResetForPreparedRun；普通Timer.reset不改。core开始前开启FixedSource，Finalize后停止；输出句柄身份/FD有效性检查，任务私有snapshot每run关闭自身文件。CalMode另用steady_clock记录Prepare/Execute/Finalize三段及其和；Total绝不reset作本轮值，旧统计FOM仅作legacy数据 |
++
++进程对象链接所有权保持两套executable各一份定义：普通main.cpp不变；测试globals.cpp独占13个无条件对象及原宏控制的2个对象，其余extern仍属原生产TU/库。实际输运RNG是driver局部runRng，不是全局::ORNG；完整定义/宏/CMake/G0合同见[lifecycle-design §5.1](lifecycle-design.md#51-测试target和全局定义的唯一所有权修订问题1)。这不改变KEEP/CLEAR/SET/REBUILD所有权。
+ 
+ CDFixedSource若干旧未使用字段在constructor未初始化，例如p_nFixedSrcBankCount/p_nPhotonBankCount/p_nMissParCount。新owner reset应明确写它们；fresh对照不读取未初始化的无效字节来宣称“完全状态相等”，只比较合法且实际使用的状态。
+ 
+@@ -30,6 +32,8 @@ CDFixedSource若干旧未使用字段在constructor未初始化，例如p_nFixed
+ - F恢复必须同时恢复FixedSource/Ace/Particle角色、物理最大能量及cache/WW policy。仅关Ace标志不足以证明F输运恢复。
+ - 原最小neutron energy cutoff由ReadPhysicsBlock.cpp设置，当前MG路径未发现与Adjoint max相同的转换。Stage2保持普通fresh路径语义，首批采用既有微小默认值；不借生命周期任务修正其物理算法。
+ - raw核数据始终只读。H2O无非零裂变贡献，AA只能门禁其散射派生和零裂变数组；不证明一般可裂变材料。受限入口检查原始使用材料的产生项并拒绝非零νΣf，不可通过关闭产生过程伪装为H2O。
++- 新源限制只证明受限单位权重合同；D按历史数赋值不等于测得W0。采样后hook只读粒子，在任何alive/kill早退之前检查一次，WW和后代权重不加入W0。实际分母赋值和tally公式不改；失败run无成功receipt。
++- 三段steady-clock归CalMode本run；旧StatisticsTester仍含进程Total和非零history两类时间，不能把清数组当成时间口径转换。时长/例外门禁见test-plan §3.1。
+ - W11/W12及tally体积计分保持；全mesh比较的是原始RMC数据和同一既有转换后的任务私有视图，不建立Field API。尚无新物理验证结论，物理导读本轮不改。
+ 
+ 静态证据强度E1；KEEP地址/定义不变、CLEAR覆盖、派生值和WW真实使用都仍需test-plan的动态门禁，不能由此表直接标Ready。
+diff --git a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md
+index 8282d39..5340271 100644
+--- a/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md
++++ b/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md
+@@ -1,16 +1,16 @@
+ # 基线、fresh oracle 与 Stage2 门禁（运行前判据）
+ 
+-导航：§1 身份/模型；§2 七门禁；§3比较标准；§4命令/证据/停止。当前只是设计，尚未生成运行输入/driver、编译或执行门禁；批准后先冻结baseline再修改生产源码。
++导航：§1 身份/模型；§2 原七门禁与新增G0链接检查；§3比较标准/§3.1时间白名单；§4命令/证据/停止。当前只是设计，尚未生成运行输入/driver、编译或执行门禁；批准后先冻结baseline再修改生产源码。
+ 
+ ## 1. 固定条件与基线
+ 
+ RMC baseline为330f091eb0296e0d0124237ba7d9a22b81aee852。两Stage1文件sha与已验证构建manifest一致；保留的Stage1串行binary在logs/environment.json绑定，不作为唯一基线。新建/tmp/20261011_05_f11-prepared-run-lifecycle/baseline-src及baseline-build私有副本；不在生产RMC运行会更新submodule的CMake、不checkout生产分支。
+ 
+-配置固定RelWithDebInfo、GCC13.3、CMake3.28.3、HDF5 1.10.10；MPI/OMP/AIS/Python-off、loadmodules=ON、test=ON、mpiproc/ompthrd=1，与Stage1相同。当前Python3.12.3、h5dump可用；没有h5py/numpy，不依赖它们比较。保存cache/flags/command/依赖、源码manifest和binary SHA。
++配置固定RelWithDebInfo、GCC13.3、CMake3.28.3、HDF5 1.10.10；MPI/OMP/AIS/Python-off、loadmodules=ON、test=ON、mpiproc/ompthrd=1，与Stage1相同。原立项记录为Python3.12.3、h5dump可用；当时没有h5py/numpy，不依赖它们比较。实施前重新确认上述环境；保存cache/flags/command/依赖、源码manifest和binary SHA。
+ 
+ 数据库 /home/silver/NucXS_Library/RMC_DATA；xsdir sha256=970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b，multigroup/mgxsnp sha256=1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001。读取而不修改。H2O使用1001.50m/8016.50m，30n/12p。已有92235.50m只用于“非零产生项拒绝”负例，先记录其实际νΣf，不伪造产生项。
+ 
+-第一组模型从Stage1 MG输入复制到本任务，不改原文件：x=[0,20]、y/z=[-5,5]的H2O盒，4个x mesh、每bin体积500cm³；Type1/track TL/Energy=-1/Normalize1，cell+全30群及Tot mesh数据。前向F0：point(0.5,0,0)、+x、E=2MeV、unit weight；伴随A0：point(19.5,0,0)、-x、E=2MeV、physical neutron max=30MeV（fresh ADJOINT卡两值30/20，未启用photon保持20MeV默认）；F1可用point(1.5,0,0)以验证新源实际生效。core源抽样算法保持。源选定distribution在创建canonical definition时只规范化一次。
++第一组模型从Stage1 MG输入复制到本任务，不改原文件：x=[0,20]、y/z=[-5,5]的H2O盒，4个x mesh、每bin体积500cm³；Type1/track TL/Energy=-1/Normalize1，cell+全30群及Tot mesh数据。前向F0：point(0.5,0,0)、+x、E=2MeV、unit weight；伴随A0：point(19.5,0,0)、-x、E=2MeV、physical neutron max=30MeV（fresh ADJOINT卡两值30/20，未启用photon保持20MeV默认）；F1可用point(1.5,0,0)以验证新源实际生效。core源抽样算法保持。源definition通过普通前端检查/规范化一次；prepared首版只允许单个固定POINT/ENERGY/VECTOR+DIRECMIU=1且WEIGHT=1的无用户分布源（lifecycle-design §3.1），不使用DISTRIBUTION。
+ 
+ 所有序列独立进程初始化rootSeed=17、stride=100000、firstOffset=0；offset累计本序列已完成N。fresh的每一条run都有相同role/NPS/source/WW/seed0/seed/stride/local position=0/pre=-1000，而不把root17重复用于每个oracle。有效seed按lifecycle-design公式精确计算并留存十进制uint64，旧double输入parser不承载这些大seed。
+ 
+@@ -18,16 +18,23 @@ RMC baseline为330f091eb0296e0d0124237ba7d9a22b81aee852。两Stage1文件sha与
+ 
+ | Gate | 设置与执行 | 必要判据 |
+ |---|---|---|
+-| 1 普通回归 | 重建330f旧版与Stage2新版；复用Stage1五任务输入、9个原CTest、三组500-history只读诊断；LCG共用cache的普通Type1/Type3各补一个500-history旧/新对照（保持seed17/stride100000） | physics零容差，源/RNG/IEEE数组/WW事件及输出同Stage1；原six-mode分支保留；不是仅“编译成功” |
+-| 2 FF | F0 N=1000 offset0；F1 N=2000 offset1000；各自fresh一次 | 每run完整数值/历史/RNG等价；N=1000/2000，分母同N；源identity与实际采样point改变；CLEAR前后、bank/registry不累积 |
++| 0 构建/全局所有权 | root末尾新子目录注册；源表/compile_commands/link.map/nm检查，test=OFF与不支持宏配置的target注册检查 | main/globals各executable恰好一份；原生产TU宏/选项一致；无重复或未解析extern；普通RMC和原CTest注册保持。不是宣称MPI/OMP/AIS/Python prepared可用 |
++| 1 普通回归 | 重建330f旧版与Stage2新版；复用Stage1五任务输入、9个原CTest、三组500-history只读诊断；LCG共用cache的普通Type1/Type3各补一个500-history旧/新对照（保持seed17/stride100000）；另从任务副本生成普通WEIGHT=2与普通WEIGHT变量分布两个旧/新对照各500 histories，不改变参考输入/结果 | physics零容差，源/RNG/IEEE数组/WW事件及输出同Stage1；原six-mode分支保留；不是仅“编译成功” |
++| 2 FF | F0 N=1000 offset0；F1 N=2000 offset1000；各自fresh一次 | 每run完整数值/历史/RNG等价；N=1000/2000，实际D=独立W0=N且全部采样w=1；源identity与实际采样point改变；CLEAR前后、bank/registry不累积 |
+ | 3 FAF | F0 1000 O0；A0 1500 O1000；F0 2000 O2500；三个fresh | 每run均等价；Fixed/Ace/Particle role一致；A派生数组每项等fresh；最后F派生清空、cutoff与cache/weight policy恢复 |
+ | 4 AA | A0 1000 O0；A0 1500 O1000；两个fresh | 第二A仍逐元素等fresh、不+=叠加；散射与零裂变派生shape/内容检查；不得外推非零裂变支持 |
+ | 5 native WW | 同一F序列OFF → WW1 → WW2 → OFF，每runN=1000，offset0/1000/2000/3000；四个fresh；另FAF+WW三个500-history（F:WW1/A:WW2/F:WW1，offset0/500/1000）逐个fresh | WW1用Stage1交替lower0.1/1.0；WW2在固定shape上改为0.05/0.5；保持WWP；至少on case有split>0且roulette>0、bank pop/drain真实发生。真实查询记录mesh/物理energy/三界与本run数组吻合；OFF无WW查询且default weight cutoff恢复 |
+ | 6 模型/资源 | 上述全序列观察raw加载/注册调用；另固定N=100、F/A交替20个half-run，日志逐行写文件不累存 | raw MGACE读取/InitiateMatAce/InitiateTally各仅初始化一次；owner地址、raw数据digest、definition、registry大小/顺序保持。每runFinalize一次；end bank计数正常、timer停止、进程句柄有效、FD数不持续增长；warmup后live容器shape/capacity稳定 |
+ | 7 负例 | 下列每种各独立child process，也在完成一个run之后测试可前置拒绝的无效规格 | 规范化错误信息、非零退出；前置拒绝无新history/旧tally不变；准备后失败标Failed、不继续；不伪造成功receipt |
+ 
++G2–G6每个成功half-run额外要求：receipt记录实际N/D/W0、逐history检查次数、min=max=1、违规数0及unitSourceWeightsVerified=true；源检查不多抽RNG、WW/后代权重不误计入W0。三段计时及旧统计标签必须满足§3.1。FF不同N、FAF/AA、FAF+WW和20轮复用仍一段一个fresh oracle，没有删减原门禁。
++
+ Gate7负例：未Initialize调用Run；重复Initialize；Finish后Run或重建prepared模型；wrong-owner引用；非法role枚举；N=0/负值；空/非neutron/非单位有效weight源；WW role错/shape错/负数/NaN；无固定WW topology时要求ON；非Type2/偶seed/stride=0/offset乘法溢出或越周期；stride=1触发真实history超额；执行未结束/重复Finalize的状态禁止（生产API不得提供手动finalize绕过入口）；非零νΣf材料拒绝；受限profile之外CE/photon/restart/TIME_REDUCE等至少代表性拒绝。
+ 
++**G7a 源合同前置负例**：任务私有输入分别覆盖常数WEIGHT=2、WEIGHT=D1（至少两值；另恒1也拒绝）、SOURCE WEIGHT=1但ENERGY等分布带非平凡prob/bias、依赖/子分布、两个源FRACTION≠BIASFRAC、多源即使比例相等、无偏分布、非Point/有CELL/transform。普通parser须先能合法解析，保存规范化后的变量绑定与概率，才能认定是prepared拒绝而非语法错误；必要数值非法项以owner API传参验证，不伪造生产对象。每项首run和一个成功run后各一次，预期在CLEAR前拒绝，零新增GetRandSeed、旧结果不变、无成功receipt；不依赖输入WEIGHT字段或D=N作通过依据。
++
++**G7b 采样后防线负例**：严格白名单内没有自然生成非单位权重的正常输入，不能声称用上述前置拒绝已覆盖采样后检查。driver新增`--mode source-weight-audit-selftest`，对独立CDFixedSource按正式ResetRunState/SetPreparedRun方法启动audit，然后直接调用生产CheckAndRecordPreparedSourceWeight(1.0/2.0/0.0/负数/NaN/Inf)及VerifyPreparedSourceWeights。检验正常单位值和实际累加、首次非单位/非有限抛异常、次数不足终检失败；没有friend、私有写入或替代transport loop。这仅是owner单元门禁，单列结果；整条Run失败传播由同一catch的真实stride超额负例及源码控制流复核覆盖，成功receipt只能在所有终检后构造。运行时若真实抽到非法w，必须在输运该粒子/Finalize之前失败，保留run/history/w/audit错误证据且该系列不得继续。不得为触发负例放宽source白名单或在生产接口加测试注入开关。
++
+ 禁止人工写私有状态制造负例。重入/结束中的状态检查通过API序列及代码路径确认，不能为测试开放private field。正例所有half-run与真正fresh进程一对一匹配；不能只比较最后F、最终文本或两张输入数组。
+ 
+ 若WW1/WW2未触发必需事件，判覆盖不足，保留结果并调整预先记录的新case（同时重建fresh），不能把零事件当通过。若要解除非零裂变限制，必须另经用户批准增加有非零裂变贡献的FAFA每段fresh与实际产生事件门禁；本版默认不解除。
+@@ -38,9 +45,30 @@ Gate7负例：未Initialize调用Run；重复Initialize；Finish后Run或重建p
+ 2. 捕获Finalize前的原始Score/ScoreTemp/Sum1/Sum2/Sum3，以及Finalize后的所有tally Ave/RE、各30群与Tot、完整spatial bin。用每个double的IEEE uint64/hex或可还原hexfloat序列逐项比较，shape/顺序必须同，物理容差=0；摘要hash必须绑定原始序列文件。原mesh不除体积改写；任务私有通量视图可使用阶段0既有c_i表，对照也必须相等，但不宣称Field API完成。
+ 3. touched/index2/scoreStride结束与下次开始的合法状态；registry地址相同只比较persistent各run间，不跨进程比较ASLR地址。fresh/persistent比较对象类型、shape、offset与定义hash；unused legacy未初始化字段不读取。当前fresh在SampleNeutronSource.cpp:222首次源采样后才把particle伴随flag置true；prepared CHECK提前置本次role。此采样前标志时序差异明确允许，必须在第一条源采样后及所有真实输运中逐history核对三类role，不能据此排除任何输运期差异。WW-off保留topology与fresh没有运行窗的数据representation可以不同，只允许明确的未启用存储差别；实际开关/policy与零查询必须等价。
+ 4. 每次A全部派生向量与fresh逐项相同；F无旧派生。物理MeV及其A内部群号分别记录，不把群号作为下次物理输入。raw核数据内容/地址在persistent序列前后保持；只允许角色派生与粒子缓存变动。
+-5. StatisticsTester启用一组FF不同N门禁，采用20的整数倍N。所有不依赖墙钟的scores/counts/mean/RE/VoV/PDF及其checks精确比较；Time/largestTime/FOM及明确由时间派生的FOM检查可不同，清零/有效/归属本run仍须成立。sum/mean等不能按时间类别排除。普通输出允许日期、构建banner、耗时、吞吐、时间FOM及临时路径变化；其余内容精确比较，事前白名单和路径写进比较脚本manifest。
++5. StatisticsTester启用一组FF不同N门禁，采用20的整数倍N，并必须有非零得分≥50的实际诊断bin；不够则覆盖不足，不能跳过整个统计器。所有不依赖墙钟的scores/counts/mean/RE/VoV/PDF及其checks精确比较；只有§3.1逐字段白名单允许时间差异，并校验清零、shape、数值类别和语义标签。普通输出日期/构建banner/耗时/吞吐/临时路径按既有Stage1命名字段记录，不能用模糊正则删除任意数值行。所有例外路径在首次运行前固定于比较manifest。
+ 6. Gate6先warmup前三次，后续各run定义/registry/FD身份、活动bank及固定shape/capacity不持续增加；记录/proc/self/status的VmRSS、FD数。第4→20次净RSS增加预设上限4MiB，超过就定位分配来源，不能事后放宽。RSS单点不等于泄漏证明；若失败或明确可疑再做有限sanitizer/heap诊断，与旧普通路径区别。未做sanitizer不得宣称完整内存安全。
+-7. 所有运行/比较exit=0方可通过；负例exit非零且拒绝在预期阶段。Gate1–7任一物理差异、未观察真实WW、重复初始化、状态污染或跨段超额都不能ACCEPT；保留失败证据，不更新reference或靠统计误差放行。
++7. 所有运行/比较exit=0方可通过；负例exit非零且拒绝在预期阶段。G0或Gate1–7任一链接/物理差异、未观察真实WW、重复初始化、状态污染或跨段超额都不能ACCEPT；保留失败证据，不更新reference或靠统计误差放行。
++
++### 3.1 时间字段的封闭例外表与计时门禁
++
++以下仅豁免fresh/persistent的时间数值相等；保留两侧原值、shape、发生run和例外理由。表外字段默认严格比较；缺失字段、非法shape、错run标签仍失败。按完整已枚举tally路径注册，禁止`*FOM*`/整个StatisticsTester对象跳过。
++
++| 内存字段 | 真实依赖/当前位置 | HDF对应（相对具体诊断bin的Path） |
++|---|---|---|
++| `p_vTime` | 非零得分history的dSimTime累计；ProcessStatisticsBin.cpp:16/43 | 无直接输出 |
++| `p_vLargestTime` | 最大得分history的时间；StatisticsFunc.cpp:96–100 | 无直接输出 |
++| `p_vFoMPerCycle` | batch时间；StatisticsFunc.cpp:177–180 | `/Batches_of_FOM`（OutputTallyh5.cpp:283） |
++| `p_vFoMTot` | 进程OTimer[Total]；StatisticsFunc.cpp:124–125 | `/FOM`（OutputTallyh5.cpp:217） |
++| `p_vFlucFOM` | 进程Total + largestTime；StatisticsFunc.cpp:184/218 | `/Fluctuated_FOM`（OutputTallyh5.cpp:261） |
++| `p_vFoMValueCheck`、`p_vFoMBehaviourCheck` | batch FOM检查；StatisticsFunc.cpp:331–358 | `/TenStatisticsChecks/FoMValueCheck`、`/TenStatisticsChecks/FoMBehaviourCheck`（OutputTallyh5.cpp:210–211） |
++| Particle的`p_dSimulateTime` | history interval；CalcFixedSource.cpp:247 | 无直接对应统计HDF字段 |
++
++因此HDF统计例外是以上**五个确切后缀**，不是整个统计dataset集合。StatisticsTester的Sum1–4、Nps/NonZero/Stored/CurrentBatch、Ave/RE/VoV、ZeroRe/NonZeroRe、PDF数据/slope、largest score、mean/shift/fluctuation的非FOM量以及其余八个诊断必须严格比较。特定空bin的既有NaN/Inf按同一已记录未定义类别匹配，有限物理值保持bitwise零容差；不能用时间例外隐藏某侧才出现的非法统计值。旧FOM未定义情况同样记录原因，不填epsilon。
++
++- 每个run开始时reset后的七个统计时间/FOM成员必须为原定义零状态；过程history时间有限非负，shape匹配本N/check定义。FOM有效域按原公式分母/RE判定，不拿“时间例外”接受随机NaN/Inf或越界。G2至少一个有效统计bin用于验证公式依赖与标签，旧p_vFoMTot/p_vFlucFOM保留且标为进程相关，batch时间/FOM标为非零history口径，均不是本轮T_MC。
++- receipt三段均有限非负，`timingScope=prepare+transport+finalize`，`statisticsTimingScope=legacy_mixed_not_per_run`、`statisticsFomIsRunMetric=false`。`mcSeconds`须与receipt三个double按同顺序相加的值bitwise相等；与独立保存steady-clock t3−t0的差≤`8*epsilon(double)*max(1,abs(t3−t0))`秒（仅舍入检验，绝非输运容差），不要求fresh/persistent耗时相等。GDB观察时间不作性能结论。
++- 在启用SCHECK的FF两次Run之间，driver用steady_clock记录约100ms显式间隔（在下一t0之前）。核实Total仍连续、无reset/stop；下一run的t0/t1/t2/t3均在间隔之后，T_MC仅来自该四点。不能用旧Total或旧Time差替代这三个receipt字段。Finalize计时包含必要终检及停止run timer；Initialize、读取输入/spec/WW文件、snapshot写出不纳入。
++- 比较器自测只修改**任务私有快照副本**：以上时间字段变化应报告允许差异；RE、Sum3、PDF、largest score、MeanBehaviourCheck/VoV检查各单独改变应非零退出；增加未知字段/删除字段也失败。测试不修改生产状态/reference。时间标签若漏写、旧FOM被冒充run指标，也失败。
+ 
+ ## 4. 命令、证据与停止
+ 
+@@ -56,7 +84,7 @@ printf '%s\n' 330f091eb0296e0d0124237ba7d9a22b81aee852 > "$F11_STAGE2_ROOT/basel
+ cmake -S "$F11_STAGE2_ROOT/baseline-src" -B "$F11_STAGE2_ROOT/baseline-build" \
+   -Dmpi=OFF -Dopenmp=OFF -Dloadmodules=ON -Dtest=ON \
+   -Dmpiproc=1 -Dompthrd=1 -Dais=OFF -Dpythonapi=OFF -Dpersonal=OFF \
+-  -DCMAKE_BUILD_TYPE=RelWithDebInfo
++  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+ cmake --build "$F11_STAGE2_ROOT/baseline-build" -j 8
+ env -u RMC_MPI_TEST -u RMC_OMP_TEST RMC_DATA_PATH="$F11_STAGE2_DB" \
+   RMC_PATH="$F11_STAGE2_ROOT/baseline-build/bin" OMP_NUM_THREADS=1 \
+@@ -66,6 +94,12 @@ env -u RMC_MPI_TEST -u RMC_OMP_TEST RMC_DATA_PATH="$F11_STAGE2_DB" \
+ # 复用或复制适配到本任务，先检查其实际CLI，冻结baseline后才改生产树。
+ # 新stage2-src/stage2-build私有副本用同样configure/flags构建。
+ cmake --build "$F11_STAGE2_ROOT/stage2-build" --target RMC RMCPreparedLifecycle -j 8
++# G0: configure同时保存source列表；测试target生成链接map，比较compile_commands及symbols。
++nm -C --defined-only "$F11_STAGE2_ROOT/stage2-build/bin/RMC" > "$F11_STAGE2_TASK/logs/rmc-symbols.txt"
++nm -C --defined-only "$F11_STAGE2_ROOT/stage2-build/bin/RMCPreparedLifecycle" > "$F11_STAGE2_TASK/logs/prepared-symbols.txt"
++python3 "$F11_STAGE2_TASK/tools/check_prepared_linkage.py" \
++  --build "$F11_STAGE2_ROOT/stage2-build" --manifest "$F11_STAGE2_TASK/logs/planned-linkage.json"
++"$F11_STAGE2_ROOT/stage2-build/bin/RMCPreparedLifecycle" --mode source-weight-audit-selftest
+ "$F11_STAGE2_ROOT/stage2-build/bin/RMCPreparedLifecycle" \
+   --mode persistent --input "$F11_STAGE2_TASK/inputs/model.inp" \
+   --plan "$F11_STAGE2_TASK/inputs/faf.tsv" --data "$F11_STAGE2_DB" \
+@@ -80,8 +114,10 @@ python3 "$F11_STAGE2_TASK/tools/compare_lifecycle.py" \
+   --manifest "$F11_STAGE2_TASK/logs/planned-comparison.json"
+ ~~~
+ 
+-driver/inputs/compare_lifecycle.py及manifest将在批准后的实施步骤创建，命令中的接口按本方案定义。不能把本段当实际执行证据。fresh模式走正常RunCalculation，只设置准确RNG参数，不调用新Prepare；完整内存数据由只读GDB在其实际工作副本栈帧仍有效时抓取（不能返回后读取main的Tally副本）。观察器配置的输出目录与snapshot-dir一致。必要只读GDB观察命令仍为gdb -q -batch -x task-owned-trace.gdb --args binary…；记录真实传入ORNG，不误读global同名对象。
++driver/inputs/compare_lifecycle.py/check_prepared_linkage.py及两个manifest将在批准后的实施步骤创建，命令中的接口按本方案定义。不能把本段当实际执行证据。fresh模式走正常RunCalculation，只设置准确RNG参数，不调用新Prepare；完整内存数据由只读GDB在其实际工作副本栈帧仍有效时抓取（不能返回后读取main的Tally副本）。观察器配置的输出目录与snapshot-dir一致。必要只读GDB观察命令仍为gdb -q -batch -x task-owned-trace.gdb --args binary…；记录真实传入ORNG，不误读global同名对象。
+ 
+ 批准后产物：logs/baseline-freeze.json，各build/ctest/run/negative/compare command与exit/stdout/stderr，所有输入及spec TSV，每run receipt、source/derived/RNG/bank/tally/WW snapshots、原始full序列lossless gzip及hash；binary/构建目录在/tmp，通过manifest绑定。不会把单文件>10MB未确认写入档案。
+ 
++G0附加命令：在同一私有源码另以`-Dtest=OFF`配置确认target缺席并构建普通RMC；MPI/OMP/AIS/Python配置只按既有依赖可用性检查target注册条件，依赖缺失如实写未覆盖，不安装/改库绕过。根CMake源码门禁和serial实际链接必做；不得由条件分支审查声称对应并行输运已通过。G7a逐负例运行同一`--mode persistent --input ... --plan ...`入口并保存预期非零退出与失败阶段；G7b使用上述selftest命令，selftest自身退出0仅表示预期拒绝均发生，逐子项的异常/退出独立记录。
++
+ 结束判定区分“编译成功/运行结束/确定性等价”。实现或门禁未完成为BLOCKED（说明具体原因）；全受限门禁通过但非零裂变/并行等未支持为ACCEPT WITH LIMITATIONS；不把限制外项写Ready。完成Stage2立即停止，不自动进入Stage3，不commit/push。
+diff --git a/MLVR_develop/INDEX.md b/MLVR_develop/INDEX.md
+index fca6aa2..1413e63 100644
+--- a/MLVR_develop/INDEX.md
++++ b/MLVR_develop/INDEX.md
+@@ -9,7 +9,7 @@
+ | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
+ |---|---|---|---|---|---|
+ | 2026-10-11 | [independent-f11-prepared-lifecycle-review](2026-10/20261011_06_independent-f11-prepared-lifecycle-review/README.md) | 模式C / 阶段2独立 source/design 审核 | 已完成（DESIGN REVIEW ONLY） | F11 | Task 05 仅设计、无生产改动或动态门禁；当前 RMC 不可据此宣称 persistent lifecycle 已验证 |
+-| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | 待决策 | F11 | owner矩阵、入口签名、Prepare/RNG及七门禁已写；待§3批准源码修改；无生产改动/Stage2测试，结论见任务§4 |
++| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | 待决策 | F11 | 按Task06修订链接所有权/实测源权重/分段计时；完整清单待§3批准，修订待独立复核；无生产改动/Stage2测试，结论见任务§4 |
+ | 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) | 模式C / 阶段1结构重构设计 | 已完成（ACCEPT WITH LIMITATIONS；待独立复核） | F11 | 已单次提交存档推送（RMC `330f091e`）；两文件核心拆分完成；证据/边界见任务§4，阶段2新任务见05 |
+ | 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |
+ | 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |
+diff --git a/STATUS.md b/STATUS.md
+index 052bdfc..32a9daf 100644
+--- a/STATUS.md
++++ b/STATUS.md
+@@ -1,6 +1,6 @@
+ # 项目状态（人只看这一页）
+ 
+-> **最后更新：2026-10-11**。F11 v1设计冻结；阶段2源码分析与具体方案完成，**待决策（源码修改尚未批准）**。
++> **最后更新：2026-10-11**。F11 v1设计冻结；阶段2三项设计修订完成，**待决策（源码修改尚未批准）**。
+ > [正式设计](MLVR_Knowledge/04_F11_v1_架构与实施设计.md) ｜ [阶段2档案](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) ｜ [任务台账](MLVR_develop/INDEX.md) ｜ [Agent交接](MLVR_Knowledge/AGENT_CONTEXT.md)
+ 
+ ## 1. 当前进度
+@@ -11,18 +11,18 @@
+ | 阶段0 | 限定转换结论及独立报告保留；实验、W11/W12未修改 |
+ | 阶段1 | 获用户明确批准后，完成两文件Initialize/ExecutePrepared/Finalize；[结论/证据/边界](MLVR_develop/2026-10/20261011_04_f11-fixed-source-core-refactor/README.md#4-结论与边界) |
+ | 阶段1验证 | 旧/新CTest均9/9；103/103确定性比较；RNG/IEEE统计/WW事件一致；MPI/OMP只编译 |
+-| 阶段2 | 模式C任务05；owner矩阵/生产入口签名/子流/七门禁已写；当前[结论与边界](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
++| 阶段2 | 模式C任务05；按Task06审查定向修订，完整文件清单/门禁待审批；当前[结论与边界](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+ | 仓库 | RMC 阶段1两文件已按用户决定以单次提交存档推送（`330f091e`，分支与 origin 同步）；Agent 轮内无提交/push |
+ 
+ ## 2. 下一步与授权
+ 
+-先审阅阶段2[具体方案](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md)及[测试判据](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md)，在任务§3批准后才改RMC。完整Stage2请求§7要求这个单独关口；当前没有Stage2源码改动或运行门禁。
++先审阅阶段2修订后的[具体方案](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/lifecycle-design.md)及[测试判据](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/test-plan.md)，在任务§3批准后才改RMC。最新“设计修订与实施前收口”§7/§8要求这个单独关口；当前没有Stage2源码改动或运行门禁。
+ 
+ | 阶段 | 当前状态 |
+ |---|---|
+ | 0：Field体积归一 | 限定结论已可供后续使用 |
+ | 1：固定源核心 | 完成，待独立复核；本任务停止 |
+-| 2：CLEAR/SET/REBUILD、重复运行 | 设计完成，待源码批准；Gate1–7未执行 |
++| 2：CLEAR/SET/REBUILD、重复运行 | 设计修订完成，待源码批准；G0/Gate1–7未执行 |
+ | 3–6：TARGET/Field/WW/外部调用/闭环 | 未开始 |
+ 
+ prepared入口尚不具备正式reset能力，不能直接重复调用当作F11闭环。未覆盖并行数值、Windows、完整可选功能等，详见任务§4。

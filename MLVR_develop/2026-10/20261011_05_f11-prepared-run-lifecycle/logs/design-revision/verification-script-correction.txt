@@ -1,0 +1,1 @@
+First document-check invocation exited 1 before checks: repository root used parents[6], resolving to /home/workspace rather than the repository. Corrected to parents[5] and reran. No RMC or protected file was written by the failed invocation.

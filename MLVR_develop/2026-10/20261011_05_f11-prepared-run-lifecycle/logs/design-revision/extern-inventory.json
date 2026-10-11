@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "rg",
+    "-n",
+    "^\\s*extern\\b",
+    "RMC/src",
+    "--glob",
+    "*.h",
+    "--glob",
+    "*.cpp"
+  ],
+  "exit": 0,
+  "stdout": "RMC/src/MeshInfo.h:113:extern CDMeshInfo OMeshInfo;\nRMC/src/XSParameterization/XSParameterization.h:491:extern CDXSParaTableVec OXSParaTableVec;\nRMC/src/ParallelClass.h:618:extern CDParallel OParallel;\nRMC/src/CalMode.h:337:extern CDCalMode OCalMode;\nRMC/src/WeightWindow.h:489:extern CDWeightWindow OWeightWindow;\nRMC/src/Geometry/OverviewGeometry.h:102:extern CellVector cellVec;\nRMC/src/Photon.h:369:    extern bool with_hdf5;\nRMC/src/Photon.h:374:    extern std::vector<PhotonInteractions> elements;\nRMC/src/Photon.h:378:    extern std::unordered_map<int, int> elements_index;\nRMC/src/RNG/RNG.h:620:extern CDRNG ORNG;\nRMC/src/PythonInterface/PythonInterface.h:153:extern CDPythonInterface OPythonInterface;\nRMC/src/PythonInterface/CInterfaceFunction.cpp:8:extern \"C\" {\nRMC/src/Status.h:284:extern CDStatus OStatus;\nRMC/src/Output.h:430:extern CDOutput Output;\nRMC/src/ParticleTrack.h:366:extern CDPTRAC OParticleTracker;\nRMC/src/NuclideConstants.h:17:extern std::unordered_map<int, std::string> MASS_ELEMENT;\nRMC/src/BurnupConstants.h:150:extern std::unordered_map<int, std::string> REACTION_NAME;\nRMC/src/BurnupConstants.h:155:extern std::unordered_map<std::string, ReactionType> REACTION_TYPE;\nRMC/src/BurnupConstants.h:160:extern std::unordered_map<ReactionType, int> EXCITED_REACTION_TYPE;\nRMC/src/BurnupConstants.h:166:extern std::unordered_map<int, double> FISSION_Q;\nRMC/src/BurnupConstants.h:171:extern std::unordered_map<int, double> CAPTURE_Q;\nRMC/src/Utility/Timer.h:166:extern Utility::RMCTimer OTimer;\nRMC/src/Data/Data.h:16:    extern std::string indexFilesPath;\nRMC/src/Data/Data.h:20:    extern std::string DataPath;\nRMC/src/Data/Data.h:25:    extern std::string hdf5Directory;\nRMC/src/Data/Data.h:31:    extern bool readHDF5;\nRMC/src/Control/Control.h:70:extern RMC::Control OController;\nRMC/src/Utility/Config/Parallel.h:11:      extern bool isMaster;\nRMC/src/DEPTH/Depth_Class.h:30:extern ofstream DepthOut, DepthRpt;\nRMC/src/DEPTH/DepthMain.cpp:19:extern void CallDepth();\nRMC/src/Utility/IO/Logger.h:221:    extern Logger OLogger;\nRMC/src/Utility/IO/Logger.h:225:    extern Logger OProcLogger;\n",
+  "stderr": ""
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "git",
+    "-C",
+    "RMC",
+    "status",
+    "--short",
+    "--branch"
+  ],
+  "cwd": "/home/workspace/AI_MC_WW_interation",
+  "exit": 0,
+  "stdout": "## Neural_Network_WW_Iteration...origin/Neural_Network_WW_Iteration\n",
+  "stderr": ""
+}

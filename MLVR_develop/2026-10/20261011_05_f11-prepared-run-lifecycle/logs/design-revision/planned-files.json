@@ -1,0 +1,150 @@
+{
+  "scope": "planned only; awaits user approval; no source changes",
+  "files": [
+    {
+      "path": "src/CalMode.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/PrepareFixedSourceRun.cpp",
+      "action": "new",
+      "executed": false
+    },
+    {
+      "path": "src/FixedSourceRunSpec.h",
+      "action": "new",
+      "executed": false
+    },
+    {
+      "path": "src/CalcFixedSource.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/FixedSource.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/InitiateTrspt.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/SampleNeutronSource.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/NeutronTransport.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/Tally.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/InitiateTally.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/TallyData.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/TallyData.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/StatisticsTester.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/StatisticsFunc.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/AceData.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/TreatAdjointMaterial.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/ParticleState.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/ParticleStateFun.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/ExternalSource.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/ExternalSource.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/RNG/RNG.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/RNG/StrideRNG.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/WeightWindow.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/WeightWindows.cpp",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "src/Utility/Timer.h",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "CMakeLists.txt",
+      "action": "modify",
+      "executed": false
+    },
+    {
+      "path": "tests/prepared_fixed_source_lifecycle/CMakeLists.txt",
+      "action": "new",
+      "executed": false
+    },
+    {
+      "path": "tests/prepared_fixed_source_lifecycle/driver.cpp",
+      "action": "new",
+      "executed": false
+    },
+    {
+      "path": "tests/prepared_fixed_source_lifecycle/globals.cpp",
+      "action": "new",
+      "executed": false
+    }
+  ]
+}

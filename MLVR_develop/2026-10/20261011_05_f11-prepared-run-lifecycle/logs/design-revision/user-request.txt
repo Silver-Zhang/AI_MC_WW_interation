@@ -1,0 +1,181 @@
+# F11 Stage 2 — 设计修订与实施前收口
+
+## 一、任务目标
+
+根据 F11 阶段 2 的 Claude 独立审查结论，修订 Codex 已完成的生命周期设计，解决三个明确的实施前问题，使现有方案达到可以提交用户批准生产代码修改的状态。
+
+本次是**现有设计的定向修订，不是重新设计 Stage 2，也不是开始 Stage 2 编码**。
+
+## 二、首先阅读
+
+遵循 AGENTS.md 和项目工作流，先读取：
+
+- `STATUS.md`
+- `MLVR_Knowledge/AGENT_CONTEXT.md`
+- `MLVR_Knowledge/04_F11_v1_架构与实施设计.md`
+
+然后阅读当前阶段 2 的设计：
+
+`MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/`
+
+重点：
+
+- `README.md`
+- `lifecycle-design.md`
+- `state-ownership.md`
+- `source-call-graph.md`
+- `test-plan.md`
+
+独立审核材料：
+
+`MLVR_develop/2026-10/20261011_06_independent-f11-prepared-lifecycle-review/`
+
+重点：
+
+- `Independent_F11_Stage2_Review.md`
+- `logs/risk-register.md`
+- `logs/state-ownership-audit.md`
+
+以知识库04为唯一冻结设计基线，保留原有 KEEP/CLEAR/SET/REBUILD、Type2 RNG、受限运行入口、FF/FAF/AA 动态门禁。
+
+## 三、修正问题 1：测试程序的全局对象链接所有权
+
+Claude 指出，RMC 的 `main.cpp` 定义了多个全局单例，而现有 CMake 使用源文件通配机制。
+
+需要确认并明确：
+
+1. `RMCPreparedLifecycle` 测试 target 如何排除原 `main.cpp`。
+2. 全局 `Output`、`OTimer`、`OWeightWindow`、`OCalMode`、RNG 以及其他 extern 对象由哪个 translation unit 定义。
+3. 每个必需全局对象必须恰好定义一次。
+4. 相关定义如何与 MPI/OMP/AIS/Python 编译宏保持一致。
+5. 测试程序如何使用真正的生产 lifecycle API，而不是重新实现 fixed-source loop。
+6. 测试 target 和普通 RMC executable 如何保持既有构建、链接行为。
+
+选择一套明确、最小侵入的实现方案，并写入 `lifecycle-design.md`。
+
+列出准确的拟修改 CMake 文件、全局对象定义位置和验证方法。
+
+不能仅写“测试程序按照 main.cpp 初始化”。
+
+## 四、修正问题 2：源权重与归一化分母
+
+原方案将有效起始源权重视为1，并要求分母等于N，但此条件目前校验不充分。
+
+请检查：
+
+- `CDSource::p_dWeight`
+- WEIGHT 类型的源分布变量
+- FRACTION / BIASFRAC
+- distribution sampling 中的权重修正
+- source sampling 的最终实际粒子权重
+- `CDFixedSource::p_dTotStartWgt` 的真实计算方式
+
+明确区分：
+
+- 用户输入中 `SOURCE WEIGHT=1`；
+- 每条实际采样的源历史初始权重等于1；
+- RMC 最终用于统计的归一化分母等于N。
+
+这三者不能自动认为等价。
+
+本阶段优先采用**严格限制首版源形式**的方式：
+
+1. 对可能改变有效源权重的 WEIGHT-variable、偏倚/依赖分布和其他不支持的抽样形式，进行显式拒绝，除非能够证明该形式恒保持单位有效初始权重。
+2. 在实际源抽样后增加必要的检查方案，验证每条 history 的有效初始权重。
+3. receipt记录实际统计分母及必要的起始权重核查信息。
+4. 若运行中发现不满足合同的源权重，必须阻止该次运行被标记为成功，不能只因当前代码把分母设成N就认为验证通过。
+5. 普通 `CalcFixedSource()` 的历史行为不变。
+
+把受限 source 合同、拟修改的具体函数、运行时拒绝机制及负例测试写入设计和测试计划。
+
+本阶段不扩展到任意权重源的通用统计归一化。
+
+## 五、修正问题 3：每轮统计 FOM 的计时归属
+
+现有 `StatisticsTester::CalcFlucInfluence()` 使用进程级 `OTimer[Total]`，该计时器不能代表单次 prepared run。
+
+请分别明确：
+
+- 进程级 Total 时间；
+- 本次 Prepare 时间；
+- 本次 Execute/transport 时间；
+- 本次 Finalize/tally-processing 时间；
+- 当前 StatisticsTester 中依赖进程累计时间的 FOM 数据。
+
+原则：
+
+1. 普通 fixed-source 的计时逻辑不改变。
+2. prepared run 必须能够记录本次独立的 Prepare、transport 和 tally finalize 耗时。
+3. 后续正式 F11 FOM 以冻结设计约定的本次 MC 时间口径为准：\
+   `T_MC = T_prepare + T_transport + T_tally_finalize`。
+4. 当前基于进程 Total 的 StatisticsTester 时间/FOM 不得冒充独立 prepared run 的指标。
+5. 若 Stage 2 不修改现有 StatisticsTester 的时间计算公式，必须明确将相关累计时间/FOM 标记为非本轮指标，并在比较器中只针对有证据的时间相关字段实施例外。
+6. 非时间相关的 tally、RE、统计矩和诊断数据继续严格比较，不能整体跳过 StatisticsTester。
+
+请确定具体实现方案，列出计时边界、拟增加的 receipt 字段、比较规则及需要修改的文件。
+
+不要把 Stage 3 的 TARGET 响应或完整 FOM 评价功能提前开发到本阶段。
+
+## 六、同步更新实施方案
+
+完成三项修订后，对以下现有文件做最小必要更新：
+
+- `lifecycle-design.md`
+- `state-ownership.md`（涉及状态所有权时）
+- `source-call-graph.md`（涉及调用/链接关系时）
+- `test-plan.md`
+- Task 05 `README.md` 的设计及待决策说明
+
+Task 06 Claude 的独立审核报告作为历史审查证据保留，不改写原结论。
+
+对三项问题分别给出：
+
+- 当前源码事实与准确位置；
+- 问题为何发生；
+- 选择的解决方案；
+- 实际拟修改的文件/函数；
+- 可观察的正确行为；
+- 对应验收门禁；
+- 未解决的适用范围。
+
+检查此前拟定的 Stage 2 文件清单是否仍完整；如果需要新增文件，必须明确写出原因、影响和风险，等待用户批准。
+
+特别检查三项修订是否影响 FF、FAF、AA、WW-on、模型复用、普通固定源回归和负例的测试安排。
+
+## 七、授权和停止条件
+
+本次授权仅包括：
+
+- 只读源码核查；
+- 修订 Task 05 设计文档；
+- 检查文档间一致性；
+- 输出可供人工审批的最终实施变更清单。
+
+不得：
+
+- 修改 RMC 生产源码；
+- 编写或应用生产补丁；
+- 开始 Stage 2 编译/输运实验；
+- 修改既有 reference、核数据库或基准；
+- 重新设计整个 F11；
+- 启动 Stage 3；
+- 擅自 commit/push、reset、切分支。
+
+现有 Stage 1 提交 `330f091e` 是此前记录的基线。开始时检查当前实际 HEAD 和工作区；若已变化，以实际状态核对，不强行回退。
+
+## 八、最终交付
+
+最后给出一份精炼的实施前审查结论：
+
+1. Claude 提出的三项问题是否全部关闭；
+2. 具体选用了什么解决方案；
+3. Stage 2 最终需要修改哪些生产文件；
+4. 哪些接口、物理限制和测试门禁保持不变；
+5. 是否还存在阻止实施的设计问题；
+6. 是否建议进入生产源码修改审批。
+
+结论采用：
+
+`READY FOR IMPLEMENTATION APPROVAL / NEEDS CORRECTION / BLOCKED`
+
+**完成后停止，等待用户批准具体的 Stage 2 源码修改。不要直接实施。**
