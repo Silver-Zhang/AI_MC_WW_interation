@@ -1,5 +1,7 @@
 # RMC功能审查矩阵
 
+> **2026-10-11 设计同步**：F11 v1 已冻结入库，现行架构和实施顺序见 [04_F11_v1_架构与实施设计.md](04_F11_v1_架构与实施设计.md)。设计冻结不等于生产实现或测试通过；本轮不重新判定既有 F02/F04 等物理能力分类。历史 text/source 验证范围保留，新内部构源、HDF5 通道、多 bin 响应统计及体积转换按 04 的门禁逐项验证。
+
 ## 目的
 
 记录双向迭代WW基础框架所需功能与RMC现有能力之间的对应关系。
@@ -22,22 +24,24 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 | F01 | Forward fixed-source MC | A — Ready（限定第一版子域） | standard MGACE、fixed-source neutron、MPI/OpenMP-off serial：200k histories 正常结束，source/transport/tally 非零 | `20260927_03_f01-f05-forward-field-closure` |
 | F02-A | 多群Adjoint transport功能存在性 | 已完成 | 入口、调用链、实际行为 | `20260824_04_f02-mg-adjoint-transport-audit` |
 | F02-B | 多群Adjoint物理正确性审查 | A — Ready（有界） | MPI-off serial 与已验证本机 MPI/MPI+OpenMP 配置；raw formal、统计门禁、CTest 与 checksum 已绑定至冻结快照 | `20260828_01_f02-mpi-off-serial-provenance`；`20260830_01`、`20260831_01~03` |
-| F03 | Adjoint source定义 | C — Verify（冻结首版子域） | E2：外部 response→source 映射的 cell 体积积分、空间×MG 群非负标量响应，已完成 source support/MG 定位/一阶矩/无偏与有偏纠偏/复合响应 formal；未见 RMC 内建 response-to-source | `20260825_09_f03-adjoint-source-definition-audit` |
+| F03 | Adjoint source定义 | 既有外部构源 C — Verify（冻结子域）；F11 内建构源设计已定，未实现 | 历史 E2 是 cell 体积积分、空间×MG 非负标量响应的外部映射验证；F11 改为 RMC 内部根据同一 TARGET 构造简单伴随源，新功能须独立验收，不能借旧结果放行 | `20260825_09_f03-adjoint-source-definition-audit`；`20261011_01_f11-design-freeze`，04 §6 |
 | F04 | Adjoint + WW兼容性 | C — Verify（冻结子域；MG `WWE:N` 物理能量契约已修复） | standard ASCII 30-group H2O、fixed-source neutron adjoint、native `WWMESH` track mesh、Linux MPI-off serial：E1 组合链，E2 smoke，E3 paired oracle；MG lookup 已统一通过群中心物理能量选择 `WWE:N`，V2/V3 forward/adjoint bin oracle 通过，V5 energy-dependent 100 cm slab 5×1M 合并 $z=0.29571$、FOM 9.27935×；不外推至 point mesh、耦合粒子、MPI/OpenMP 或多 mesh | `20260920_03_f04-adjoint-weight-window`；`20260923_01_f04c-mg-native-ww-energy-contract` |
-| F05 | Forward spatial-energy field tally | A — Ready（限定第一版子域） | Cartesian Type=1 track-length、`Energy=-1`、`Normalize=1`、serial text：2 spatial × 30 MG rows，Ave/RE 可恢复；HDF5 energy-axis 仍排除 | `20260927_03_f01-f05-forward-field-closure` |
-| F06 | Adjoint spatial-energy field tally | C — Verify（冻结子域：serial text-first Cartesian） | standard MGACE、fixed-source neutron adjoint、Type=1、`Energy=-1`、`Normalize=1`、MPI-off serial：text `inp.Tally` 可恢复 2 spatial × 30 group $\phi^\dagger_{i,g}$；HDF5 无能群轴；geometry/source warnings 未消除；R1/R2 两轮独立复核结论一致 | `20260926_01_f06-adjoint-spatial-energy-field`；独立复核 `20260926_02`、`20260926_03` |
+| F05 | Forward spatial-energy field tally | A — Ready（限定第一版子域） | Cartesian Type=1 track-length、`Energy=-1`、`Normalize=1`、serial text：2 spatial × 30 MG rows，Ave/RE 可恢复；HDF5 energy-axis 仍排除；F11 通量单位转换另受下方说明约束 | `20260927_03_f01-f05-forward-field-closure` |
+| F06 | Adjoint spatial-energy field tally | C — Verify（冻结子域：serial text-first Cartesian） | standard MGACE、fixed-source neutron adjoint、Type=1、`Energy=-1`、`Normalize=1`、MPI-off serial：text `inp.Tally` 可恢复 2 spatial × 30 group 数据；HDF5 无能群轴；geometry/source warnings 未消除；R1/R2 两轮独立复核结论保留；F11 通量单位转换另受下方说明约束 | `20260926_01_f06-adjoint-spatial-energy-field`；独立复核 `20260926_02`、`20260926_03` |
 | F07 | Field统计与RE输出 | C — Verify（限定 serial text-first Cartesian 子域） | Source-history RE 公式与 WW bank-drain 归属已确认；独立复核完成一个 field bin 的 10-seed native WW-on 经验校准（PTRAC 确认启用，`Q=0.88769`）；`Ave=0, RE=0` 不是零不确定度，非单位/不等源权重、并行及全部 field bins 未覆盖 | `20260927_01_f07-field-statistical-uncertainty`；独立复核 `20260927_02` |
-| F08 | WW输入与应用链路 | E — Defect + D — Integration issue（源码审计，当前 commit） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合 | `20260918_02_f08-weight-window-audit` |
-| F09 | Response统计与FOM | A — Ready（限定第一版子域） | formal Forward serial text run 可从同一 scalar Type=1 track-length `Tot` 行读取 `R=3.1144E+01`、`RE_R=1.7665E-03`，stdout 可读取 `Time in Fixed Source Calculation=10.507 s`；外部单-run FOM=`3.04995888026261e4 1/s`；不含 RMC 内部 FOM、Bootstrap 或多 run 合并 | `20260927_05_f09-response-fom-closure` |
-| F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 第一版 serial text MG neutron：独立复核的三项小修正已写回（负 `Ave` 拒绝、source-normalization denominator/provenance、flux-density 单位）；完整 G+1 物理边界仍须来自权威群定义；无 parser/算法/WW 实现 | `20260927_06_f10-field-reconstruction-boundary`；复核 `20260927_07`；修订 `20260927_08` |
-| F11 | 固定次数双向迭代调度基础 | 待审查 | 多阶段运行组织 | — |
-| F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复 `phi0[i,g]` + `RE0[i,g]`；Bootstrap 生命周期与 formal iteration 分离 | `20260927_04_f12-bootstrap-forward-chain` |
+| F08 | WW输入与应用链路 | E — Defect + D — Integration issue（历史源码审计时点；修复进展见对应任务） | splitting/roulette、cell/mesh/MCNP 输入、split bank、MPI shared mesh、adjoint 组合；F11 新动态导入与 topology 构建仍需实现 | `20260918_02_f08-weight-window-audit`；F11 新边界见 04 §10 |
+| F09 | Response统计与FOM | A — Ready（既有单标量信息读取子域）；F11 聚合统计未实现 | 旧 formal Forward 同一 `Tot` 行可读 R/RE_R 与 fixed-source time；F11 多 bin 目标须新增 history 级聚合，计时采用 prepare+transport+finalize，不将旧单 Tot 或旧计时直接视为新功能已验证 | `20260927_05_f09-response-fom-closure`；04 §6、§12 |
+| F10 | Field Reconstruction数据边界 | **design frozen；implementation not completed** | 保留 [Nspace,G]、角色/阶段、RE/status 和完整 G+1；F11 通道改为 RMC 内存→专用 HDF5；候选体积转换仍待动态确认，不能一律照抄 Ave；重构与 WW 映射仍分开 | `20260927_06`、`20260927_07`、`20260927_08`；`20261011_01_f11-design-freeze`，04 §7、§10 |
+| F11 | 固定次数双向迭代调度基础 | **design frozen；production implementation not completed** | 正式合并方案已入知识库04；现有类扩展、CalMode 调度、唯一固定源核心、内部 TARGET 构源与文件交换；Task13/14 只支持限定实验生命周期，阶段0–6待逐项授权 | `20261011_01_f11-design-freeze`；设计 [04](04_F11_v1_架构与实施设计.md) |
+| F12 | Bootstrap直接模拟链路 | A — Ready（限定首版 MC-side chain） | 20k-history、无 WW 的 standard MGACE fixed-source neutron forward；2 spatial × 30 MG text rows 可恢复数据；Bootstrap 生命周期与 formal iteration 分离；完整 Field转换/重构/WW_A1 闭环尚未实现 | `20260927_04_f12-bootstrap-forward-chain`；04 §4 |
+
+**F11 的单位与适用范围补充（未新增动态证据）**：Task15 的 uniform/heter track-length 体积处理差异为静态发现。04 §7 明确候选转换和阶段0验证，不将 `Normalize=1` 或 E4 内存—文本一致性当作所有路径均已正确体积归一的证明。既有原始数据与历史分类保留；新 Field/响应接口未通过相应门禁前不得宣称可用。非零裂变产生项的连续 F/A 开放门禁见 04 §14，不因此推翻既有 F02 的单次输运验证。
 
 ## F02当前结论
 
 F02-A 已确认默认标准 ACE 多群路径存在固定源伴随输运链。
 
-F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。当前冻结作用域为 Linux x86_64、`ais=OFF`、standard ASCII MGACE、fixed-source neutron adjoint，以及两类已验证执行配置：MPI-off serial build（OpenMP off）与本机 Open MPI 4.1.6 的 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`。该范围为 **A — Ready（有界）**：source—binary provenance、formal raw evidence、响应级验证、条件角 aggregate 主检验、CTest 与 checksum 均已闭合。
+F02-B 源码层独立复核确认的 W5/W6/W7/W9 均已完成独立修复和针对性验证。当前冻结作用域为 Linux x86_64、`ais=OFF`、standard ASCII MGACE、fixed-source neutron adjoint，以及两类已验证执行配置：MPI-off serial build（OpenMP off）与本机 Open MPI 4.1.6 的 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`。该范围为 **A — Ready（有界）**：source—binary provenance、formal raw evidence、响应级验证、条件角 aggregate 主检验、CTest 与 checksum 已闭合。
 
 1. W5 修复前，局部密度比例 $r\ne1$ 时散射与裂变权重相对正确值多出 $1/r$；当前已改用局部总原子密度并通过 V2 密度不变性验证。
 2. W6 修复前在 `NNUBAR>1` 时混用 total/prompt nubar；当前运行时前驱群抽样已统一使用 total locator。部署双表数据的逐群核与概率差为 0，动态输入完成 10,000 个源历史和 2,487 条 bank 后继。
@@ -112,3 +116,4 @@ W9 局部修复之后，原 C 门槛已由三个独立任务全部闭合：
 - 2026-09-27：F09 完成轻量 formal Forward response/FOM 信息闭环（A 模式）：200k-history、standard MGACE fixed-source neutron、MPI/OMP-off serial；同一 target `Tot` 行提供 `R=3.1144E+01` 与 `RE_R=1.7665E-03`，stdout 提供 fixed-source time `10.507 s`，外部单-run FOM=`3.04995888026261e4 1/s`；Bootstrap 不参与 FOM，未实现 RMC 内部 FOM。档案：`20260927_05_f09-response-fom-closure`。
 - 2026-09-27：F10 第一版 Field Reconstruction 数据边界设计冻结；接口合同与证据边界见 `20260927_06_f10-field-reconstruction-boundary` §4 和设计文档。状态仅为 **design frozen**，未实现 Adapter/parser、Reconstruction 或 WW Builder；RMC 未修改。
 - 2026-09-27：F10 独立审查 `20260927_07` 的 **ACCEPT WITH MINOR CORRECTIONS** 三项意见已由用户批准，并在 `20260927_08` 写回设计；从本次修订后正式 **design frozen**，实现仍未开始。
+- 2026-10-11：F11 v1 网页合并方案正式入库，D020 记录设计冻结及仅文档授权。更新 F03/F09/F10/F11/F12 的新设计关联，并明确 Field 体积转换和裂变连续运行门禁尚未验证。旧实验分类和原始证据不重判；阶段 0–6 未在本轮启动。档案：`20261011_01_f11-design-freeze`。

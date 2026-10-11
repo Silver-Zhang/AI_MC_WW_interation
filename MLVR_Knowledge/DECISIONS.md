@@ -157,3 +157,15 @@
 决定：接受 F02 已验证并行范围为 A — Ready（有界）。范围严格限于 Linux x86_64、本机 Open MPI 4.1.6、standard ASCII MGACE、`FIXEDSOURCE` neutron adjoint、`ais=OFF`，以及 MPI `2×1/4×1`、MPI+OpenMP `2×2/2×4`；原 MPI `4×1` seed 41/rank 3 isotropic Holm 诊断拒绝保留为风险记录。更多 rank/thread、跨节点、不同 MPI 实现和其他未测机制不在本决定内，首次使用须另行针对性验收。
 
 状态：Frozen
+
+## D020
+
+日期：2026-10-11
+
+决定：将 2026-09-29 网页复核合并的 F11 v1 方案正式入库为 [04_F11_v1_架构与实施设计.md](04_F11_v1_架构与实施设计.md)，作为后续开发的唯一设计基线。采用 RMC 内部固定 K 轮调度、现有类扩展与唯一固定源执行核心、简单 TARGET 内部构源，以及 Field/WW HDF5 文件交换；外部仅负责场重构与权窗映射。Task 15/16 原独立设计保留，合并取舍见 04 §2。
+
+继承与变更：D005/D008/D009/D011/D012 等边界继续有效；D010 的启动方式在本版明确为“无 WW 的正向启动计算”，不据此自动关闭全部原有减方差机制。旧 F03 外部构源、F10 text-only 设计与本版不一致处，以 04 为新设计要求；这不把旧验证升级为新接口已验证，也不覆盖 D019 的既有 F02 能力结论。
+
+授权：用户要求先敲定设计、提交文档、本地 fetch 后再逐步开发或测试。本次只授权文档入库和相关台账同步；阶段 0–6、源码改动、RMC commit/push 和测试运行仍逐项确认，不自动执行。
+
+状态：**Frozen（设计）；production implementation not completed**。候选体积转换、非零伴随裂变重建和新接口门禁仍待验证。来源与过程见 [20261011_01_f11-design-freeze](../MLVR_develop/2026-10/20261011_01_f11-design-freeze/README.md)。

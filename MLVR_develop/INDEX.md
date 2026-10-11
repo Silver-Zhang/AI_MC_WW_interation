@@ -2,12 +2,14 @@
 
 > 一行一个任务。新增由 `new_task.sh` 自动追加，状态变化手工/由 Agent 更新。
 > 状态词表见 [README.md](README.md)。
+> **F11 当前设计入口（2026-10-11）**：[知识库 04](../MLVR_Knowledge/04_F11_v1_架构与实施设计.md)。历史任务行保留当时结论；不因设计冻结自动启动测试或实现。
 
 ## 进行中 / 已处理
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
-| 2026-09-29 | [independent-f11-source-architecture-claude](2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) | 独立源码审查与架构设计 / F11 v1 | 实施中（独立审查与设计；README 未定稿） | F11 | source audit + v1 设计文档已成稿（Ready to freeze: YES WITH CORRECTIONS，5 项条件）；先立预审查问题、未读 Task 15；README §4/§5 待定稿 |
+| 2026-10-11 | [f11-design-freeze](2026-10/20261011_01_f11-design-freeze/README.md) | 文档 / F11 v1 合并设计入库 | 已完成（design frozen；生产实现和后续测试未启动） | F11/F03/F09/F10/F12 | 正式设计入知识库04；D020；状态与交接同步；只改文档，阶段0–6待逐项授权 |
+| 2026-09-29 | [independent-f11-source-architecture-claude](2026-09/20260929_16_independent-f11-source-architecture-claude/README.md) | 独立源码审查与架构设计 / F11 v1 | 已完成独立报告与设计；README于2026-10-11补齐 | F11 | 原结论YES WITH CORRECTIONS保留；独立正文未改；后续合并取舍见知识库04 |
 | 2026-09-29 | [f11-source-architecture-independent-design](2026-09/20260929_15_f11-source-architecture-independent-design/README.md) | 源码分析与独立架构设计 / F11 v1 | 已完成（设计待拍板，未实现） | F11 | 源码阅读报告 + 独立设计（A–H 链、P1–P9/T1–T12、七项建议）；新发现 uniform track-length 原始长度 vs heter 体积归一差异（未动态验证）；RMC 未修改 |
 | 2026-09-29 | [independent-f11-e0-e4-dynamic-review](2026-09/20260929_14_independent-f11-e0-e4-dynamic-review/README.md) | 独立复核 / F11 E0–E4 动态证据 | 已完成（ACCEPT WITH LIMITATIONS） | F11 | 先立判据后读结果；独立重跑 analyzer/comparator 复现 PASS；E1/E3/E4 可接受，E0/E2/归一化受限；Task 13 manifest 一处 README 哈希不一致（整理所致，已修复）；未改 RMC/AIMC |
 | 2026-09-29 | [f11-persistent-session-e0-e4-execution](2026-09/20260929_13_f11-persistent-session-e0-e4-execution/README.md) | 动态实验 / F11 E0–E4 | 已完成（E0–E4 全 PASS，限定实验 lifecycle contract） | F11 | task-private P0/P1+driver；fresh exact、F/A state、真实WW2 lookup、tally reset/内存2×30/G+1；共享RMC未改；未选架构；大体积产物（ww.tsv/私有快照/trace）留本地 |
