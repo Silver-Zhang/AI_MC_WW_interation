@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0/1结论与边界见对应任务§4。RMC阶段1基线为330f091e；阶段2正式授权的29文件已实现并自验，当前为本地未提交修改。任务05 §4是实际判定、证据与限制的唯一交接入口；Task07修复前独立审查为NEEDS CORRECTION；2026-10-12 P1 修复后的独立复核结论为 NEEDS CORRECTION：Universe fingerprint 在受限确定性 profile 内闭合，但 WW energy-bin outer shape 在 neutron 索引前未验证。当前身份、增量补丁和保护检查见任务logs/p1-correction/final-manifest.json；旧证据保留。
+阶段0/1结论与边界见原任务§4。RMC阶段1基线330f091e，阶段2原29文件为本地未提交成果。最新交接入口为[WW energy-bin最终独立复核§4](../MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界)：Task02 已关闭 prepared native definition container 和末界索引缺口，但 raw MG 非有限能量在转换前未受控拒绝、direct Install 未独立验证 lower 值，结论为 NEEDS CORRECTION。Task05及Task07、20261012_01历史独立审查原文保留。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-独立复核档案 `20261012_01_independent-f11-stage2-p1-correction-review` 已判 NEEDS CORRECTION。下一步必须由用户决定是否单独授权修复 P1-02：在访问 neutron energy-bin 前验证 WW outer/inner container shape，并新增绑定前和首轮后的负例；完成后需再次独立复核。gates-04与Task07历史报告原样保留；总体F11闭环、TARGET/Field/正式FOM仍未实现，当前不开始Stage3。
+Task02 的定向修复与自验已完成，但 Task03 最终独立复核判定 `NEEDS CORRECTION`，详见[Task03](../MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md)：须由用户另行决定是否授权两项最小 P1 修复（MG raw 非有限能量的转换前 guard，以及 Install 独立 lower/derived/split 校验），完成后再次独立复核；不得验收、提交或进入 Stage3。总体F11闭环、TARGET/Field/正式FOM仍未实现。
 
 ## 工作纪律
 

@@ -1,0 +1,2634 @@
+{
+  "passed": true,
+  "total": 78,
+  "passed_count": 78,
+  "physical_tolerance": 0,
+  "tests": [
+    {
+      "name": "bind-outer-empty",
+      "phase": "bind",
+      "mutation": "outer-empty",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-empty bins= mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-outer-one",
+      "phase": "bind",
+      "mutation": "outer-one",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-one bins=[0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-inner-empty",
+      "phase": "bind",
+      "mutation": "inner-empty",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-empty bins=[0,][][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-inner-one",
+      "phase": "bind",
+      "mutation": "inner-one",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-inner-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-one bins=[0,][0,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-duplicate",
+      "phase": "bind",
+      "mutation": "duplicate",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-duplicate",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION duplicate bins=[0,][0,1,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-descending",
+      "phase": "bind",
+      "mutation": "descending",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-descending",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION descending bins=[0,][0,2,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-nan-interior",
+      "phase": "bind",
+      "mutation": "nan-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-nan-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-interior bins=[0,][0,nan,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-nan-terminal",
+      "phase": "bind",
+      "mutation": "nan-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-nan-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-terminal bins=[0,][0,nan,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-inf-interior",
+      "phase": "bind",
+      "mutation": "inf-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-inf-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-interior bins=[0,][0,inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-inf-terminal",
+      "phase": "bind",
+      "mutation": "inf-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-inf-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-terminal bins=[0,][0,inf,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-negative-inf",
+      "phase": "bind",
+      "mutation": "negative-inf",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-negative-inf",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-inf bins=[0,][-inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-missing-sentinel",
+      "phase": "bind",
+      "mutation": "missing-sentinel",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-missing-sentinel",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION missing-sentinel bins=[0,][0,30,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-negative-first",
+      "phase": "bind",
+      "mutation": "negative-first",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-negative-first",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-first bins=[0,][-1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-energy-dimension",
+      "phase": "bind",
+      "mutation": "energy-dimension",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-energy-dimension",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION energy-dimension bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-mesh-ragged",
+      "phase": "bind",
+      "mutation": "mesh-ragged",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-mesh-ragged",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-ragged bins=[0,][0,1e+22,][0,][0,] mesh=[][0,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-mesh-outer-empty",
+      "phase": "bind",
+      "mutation": "mesh-outer-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-mesh-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh= parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-mesh-outer-one",
+      "phase": "bind",
+      "mutation": "mesh-outer-one",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-mesh-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-mesh-outer-two",
+      "phase": "bind",
+      "mutation": "mesh-outer-two",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-mesh-outer-two",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-two bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-mesh-inner-empty",
+      "phase": "bind",
+      "mutation": "mesh-inner-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-mesh-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-parameters-outer-empty",
+      "phase": "bind",
+      "mutation": "parameters-outer-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-parameters-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters= topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-parameters-outer-one",
+      "phase": "bind",
+      "mutation": "parameters-outer-one",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-parameters-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-parameters-inner-empty",
+      "phase": "bind",
+      "mutation": "parameters-inner-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-parameters-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-parameters-inner-short",
+      "phase": "bind",
+      "mutation": "parameters-inner-short",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-parameters-inner-short",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-short bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-other-particle",
+      "phase": "bind",
+      "mutation": "other-particle",
+      "expected_reason": "WW prepared topology must contain neutron windows only",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW prepared topology must contain neutron windows only\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-other-particle",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION other-particle bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][1,1,1,1,][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW prepared topology must contain neutron windows only"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-non-cartesian",
+      "phase": "bind",
+      "mutation": "non-cartesian",
+      "expected_reason": "no fixed Cartesian WW topology",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: no fixed Cartesian WW topology\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-non-cartesian",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION non-cartesian bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=2 meshes=4",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: no fixed Cartesian WW topology"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "bind-count-overflow",
+      "phase": "bind",
+      "mutation": "count-overflow",
+      "expected_reason": "mesh/energy count exceeds int range",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW mesh/energy count exceeds int range\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/bind-count-overflow",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION count-overflow bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=2147483647",
+        "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW mesh/energy count exceeds int range"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 0
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::InitializePreparedFixedSourceRuns",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-outer-empty",
+      "phase": "after",
+      "mutation": "outer-empty",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-empty bins= mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-outer-one",
+      "phase": "after",
+      "mutation": "outer-one",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-one bins=[0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-inner-empty",
+      "phase": "after",
+      "mutation": "inner-empty",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-empty bins=[0,][][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-inner-one",
+      "phase": "after",
+      "mutation": "inner-one",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-inner-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-one bins=[0,][0,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-duplicate",
+      "phase": "after",
+      "mutation": "duplicate",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-duplicate",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION duplicate bins=[0,][0,1,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-descending",
+      "phase": "after",
+      "mutation": "descending",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-descending",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION descending bins=[0,][0,2,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-nan-interior",
+      "phase": "after",
+      "mutation": "nan-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-nan-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-interior bins=[0,][0,nan,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-nan-terminal",
+      "phase": "after",
+      "mutation": "nan-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-nan-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-terminal bins=[0,][0,nan,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-inf-interior",
+      "phase": "after",
+      "mutation": "inf-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-inf-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-interior bins=[0,][0,inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-inf-terminal",
+      "phase": "after",
+      "mutation": "inf-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-inf-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-terminal bins=[0,][0,inf,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-negative-inf",
+      "phase": "after",
+      "mutation": "negative-inf",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-negative-inf",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-inf bins=[0,][-inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-missing-sentinel",
+      "phase": "after",
+      "mutation": "missing-sentinel",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-missing-sentinel",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION missing-sentinel bins=[0,][0,30,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-negative-first",
+      "phase": "after",
+      "mutation": "negative-first",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-negative-first",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-first bins=[0,][-1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-energy-dimension",
+      "phase": "after",
+      "mutation": "energy-dimension",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-energy-dimension",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION energy-dimension bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-mesh-ragged",
+      "phase": "after",
+      "mutation": "mesh-ragged",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-mesh-ragged",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-ragged bins=[0,][0,1e+22,][0,][0,] mesh=[][0,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-mesh-outer-empty",
+      "phase": "after",
+      "mutation": "mesh-outer-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-mesh-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh= parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-mesh-outer-one",
+      "phase": "after",
+      "mutation": "mesh-outer-one",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-mesh-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-mesh-outer-two",
+      "phase": "after",
+      "mutation": "mesh-outer-two",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-mesh-outer-two",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-two bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-mesh-inner-empty",
+      "phase": "after",
+      "mutation": "mesh-inner-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-mesh-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-parameters-outer-empty",
+      "phase": "after",
+      "mutation": "parameters-outer-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-parameters-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters= topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-parameters-outer-one",
+      "phase": "after",
+      "mutation": "parameters-outer-one",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-parameters-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-parameters-inner-empty",
+      "phase": "after",
+      "mutation": "parameters-inner-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-parameters-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-parameters-inner-short",
+      "phase": "after",
+      "mutation": "parameters-inner-short",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-parameters-inner-short",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-short bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-other-particle",
+      "phase": "after",
+      "mutation": "other-particle",
+      "expected_reason": "WW prepared topology must contain neutron windows only",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW prepared topology must contain neutron windows only\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-other-particle",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION other-particle bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][1,1,1,1,][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW prepared topology must contain neutron windows only"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-non-cartesian",
+      "phase": "after",
+      "mutation": "non-cartesian",
+      "expected_reason": "no fixed Cartesian WW topology",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: no fixed Cartesian WW topology\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-non-cartesian",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION non-cartesian bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=2 meshes=4",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: no fixed Cartesian WW topology"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "after-count-overflow",
+      "phase": "after",
+      "mutation": "count-overflow",
+      "expected_reason": "mesh/energy count exceeds int range",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 1,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW mesh/energy count exceeds int range\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/after-count-overflow",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION count-overflow bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=2147483647",
+        "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW mesh/energy count exceeds int range"
+      ],
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100,
+        "validate": 4,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDCalMode::RunPreparedFixedSource",
+        "operator()",
+        "main"
+      ]
+    },
+    {
+      "name": "install-outer-empty",
+      "phase": "install",
+      "mutation": "outer-empty",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-empty bins= mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-outer-one",
+      "phase": "install",
+      "mutation": "outer-one",
+      "expected_reason": "energy-bin neutron outer entry missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin neutron outer entry missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION outer-one bins=[0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin neutron outer entry missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-inner-empty",
+      "phase": "install",
+      "mutation": "inner-empty",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-empty bins=[0,][][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-inner-one",
+      "phase": "install",
+      "mutation": "inner-one",
+      "expected_reason": "energy-bin boundary count invalid",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary count invalid\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-inner-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inner-one bins=[0,][0,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary count invalid"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-duplicate",
+      "phase": "install",
+      "mutation": "duplicate",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-duplicate",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION duplicate bins=[0,][0,1,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-descending",
+      "phase": "install",
+      "mutation": "descending",
+      "expected_reason": "energy-bin boundaries must strictly increase",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundaries must strictly increase\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-descending",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION descending bins=[0,][0,2,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundaries must strictly increase"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-nan-interior",
+      "phase": "install",
+      "mutation": "nan-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-nan-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-interior bins=[0,][0,nan,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-nan-terminal",
+      "phase": "install",
+      "mutation": "nan-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-nan-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION nan-terminal bins=[0,][0,nan,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-inf-interior",
+      "phase": "install",
+      "mutation": "inf-interior",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-inf-interior",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-interior bins=[0,][0,inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-inf-terminal",
+      "phase": "install",
+      "mutation": "inf-terminal",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-inf-terminal",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION inf-terminal bins=[0,][0,inf,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-negative-inf",
+      "phase": "install",
+      "mutation": "negative-inf",
+      "expected_reason": "energy-bin boundary must be finite",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin boundary must be finite\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-negative-inf",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-inf bins=[0,][-inf,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin boundary must be finite"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-missing-sentinel",
+      "phase": "install",
+      "mutation": "missing-sentinel",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-missing-sentinel",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION missing-sentinel bins=[0,][0,30,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-negative-first",
+      "phase": "install",
+      "mutation": "negative-first",
+      "expected_reason": "energy-bin endpoints must be 0 and INFINITY_ENERGY",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-negative-first",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION negative-first bins=[0,][-1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW energy-bin endpoints must be 0 and INFINITY_ENERGY"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-energy-dimension",
+      "phase": "install",
+      "mutation": "energy-dimension",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-energy-dimension",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION energy-dimension bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-mesh-ragged",
+      "phase": "install",
+      "mutation": "mesh-ragged",
+      "expected_reason": "installed energy-bin shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed energy-bin shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-mesh-ragged",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-ragged bins=[0,][0,1e+22,][0,][0,] mesh=[][0,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed energy-bin shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-mesh-outer-empty",
+      "phase": "install",
+      "mutation": "mesh-outer-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-mesh-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh= parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-mesh-outer-one",
+      "phase": "install",
+      "mutation": "mesh-outer-one",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-mesh-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-mesh-outer-two",
+      "phase": "install",
+      "mutation": "mesh-outer-two",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-mesh-outer-two",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-outer-two bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-mesh-inner-empty",
+      "phase": "install",
+      "mutation": "mesh-inner-empty",
+      "expected_reason": "installed neutron mesh shape mismatch",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW installed neutron mesh shape mismatch\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-mesh-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION mesh-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW installed neutron mesh shape mismatch"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-parameters-outer-empty",
+      "phase": "install",
+      "mutation": "parameters-outer-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-parameters-outer-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters= topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-parameters-outer-one",
+      "phase": "install",
+      "mutation": "parameters-outer-one",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-parameters-outer-one",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-outer-one bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-parameters-inner-empty",
+      "phase": "install",
+      "mutation": "parameters-inner-empty",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-parameters-inner-empty",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-empty bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-parameters-inner-short",
+      "phase": "install",
+      "mutation": "parameters-inner-short",
+      "expected_reason": "WW parameters missing",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW parameters missing\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-parameters-inner-short",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION parameters-inner-short bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW parameters missing"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-other-particle",
+      "phase": "install",
+      "mutation": "other-particle",
+      "expected_reason": "WW prepared topology must contain neutron windows only",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW prepared topology must contain neutron windows only\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-other-particle",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION other-particle bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][1,1,1,1,][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW prepared topology must contain neutron windows only"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-non-cartesian",
+      "phase": "install",
+      "mutation": "non-cartesian",
+      "expected_reason": "no fixed Cartesian WW topology",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: no fixed Cartesian WW topology\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-non-cartesian",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION non-cartesian bins=[0,][0,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=2 meshes=4",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: no fixed Cartesian WW topology"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    },
+    {
+      "name": "install-count-overflow",
+      "phase": "install",
+      "mutation": "count-overflow",
+      "expected_reason": "mesh/energy count exceeds int range",
+      "passed": true,
+      "gdb_exit": 0,
+      "receipt_count": 0,
+      "production_throw": true,
+      "stderr": "PREPARED_FAILURE prepared: WW mesh/energy count exceeds int range\n",
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-negatives/install-count-overflow",
+      "state_and_actual_input": [
+        "WW_DEFINITION_MUTATION count-overflow bins=[0,][0,1,1e+22,][0,][0,] mesh=[][1,1,1,1,][][] parameters=[5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,][5,3,5,0,0,0,1,0,] topology=1 meshes=2147483647",
+        "REJECTED_INSTALL state_unchanged=1 reason=prepared: WW mesh/energy count exceeds int range"
+      ],
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0,
+        "validate": 1,
+        "install": 1
+      },
+      "inferior_exit": 2,
+      "guard_stack": [
+        "__cxa_throw",
+        "operator()",
+        "CDWeightWindow::ValidatePreparedNativeDefinition",
+        "CDWeightWindow::InstallPreparedNativeState",
+        "main"
+      ]
+    }
+  ]
+}

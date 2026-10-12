@@ -1,39 +1,83 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-10-12**。F11 v1 设计冻结；Stage2 P1 修复后的独立复核结论为 **NEEDS CORRECTION**：Universe fingerprint 在受限 profile 内闭合，但 WW energy-bin container shape 在索引前未完整验证。RMC 未提交（复核明确不得冻结/提交）；本轮归档已提交入库。
-> [正式设计](MLVR_Knowledge/04_F11_v1_架构与实施设计.md) ｜ [阶段2档案](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) ｜ [任务台账](MLVR_develop/INDEX.md) ｜ [Agent交接](MLVR_Knowledge/AGENT_CONTEXT.md)
+> **最后更新：2026-10-12**。F11 v1 设计冻结；Stage2 native WW energy-bin 最终独立复核结论为 **NEEDS CORRECTION**：Task02 已关闭 prepared definition container 与末界索引 P1，但 raw MG 非有限能量在转换前未受控拒绝、direct Install 未独立校验 lower 值仍为 P1。RMC 未提交；不得冻结/提交或进入 Stage3。详见 [Task03 §4](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界)。
+> 详细任务清单→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则→ [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文→ [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
-## 1. 当前进度
+## 1. 现在在哪个 Stage
 
-| 内容 | 状态 |
-|---|---|
-| F11总体 | design frozen；完整production implementation not completed |
-| 阶段0 | 限定转换结论及独立报告保留；实验、W11/W12未修改 |
-| 阶段1 | 唯一固定源核心拆分已完成，RMC基线330f091e；结论与边界见原任务§4 |
-| 阶段2 | **独立复核：NEEDS CORRECTION**；P1-01 Universe fingerprint 在确定性 CSG/rectangle/hexagon profile 内闭合，P1-02 WW energy-bin outer shape 在 neutron 索引前缺少验证；[独立结论](MLVR_develop/2026-10/20261012_01_independent-f11-stage2-p1-correction-review/Independent_F11_Stage2_P1_Correction_Review.md)；三个正式入口及各 owner 状态管理已实现，但不得冻结或进入 Stage3。 |
-| 仓库 | RMC仍在Neural_Network_WW_Iteration / 330f091e；29个批准文件为本地未提交改动（复核明确不得冻结/提交，待 P1-02 修复并复试）。先前归档已入库；本轮 P1 增量证据与文档已提交入库；未切分支或更新reference/核数据库 |
+```
+Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ 下一步 ─► Stage 5…8 ⬜
+```
 
-## 2. 下一步与授权
+| Stage | 内容 | 状态 |
+|---|---|---|
+| 0 | 工作流与知识库建立 | ✅ 完成 |
+| 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
+| 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
+| **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | 🔴 Stage2 最终复核 `NEEDS CORRECTION`：先由用户决定是否授权修复 raw MG 非有限能量和 direct Install lower 校验两个 P1；此前不得冻结/提交或进入 Stage3。 |
+| 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-Task05 的 P1 自验已完成，但独立复核发现 P1-02 尚未闭合。下一步不是 Stage3：须先由用户决定是否新开授权修复任务，补齐 WW energy-bin outer/inner shape 的 production guard 和负例，然后再次独立复核。本轮归档已提交入库；RMC 未 commit/push。
+一句话：**F11 设计已冻结但完整 production implementation 尚未完成；Stage2 的 WW container/末界修复已验证，却仍被两个精确 P1 阻断。**
 
-| 阶段 | 当前状态 |
-|---|---|
-| 0：Field体积归一 | 限定结论可供后续使用 |
-| 1：固定源核心 | 已实现；历史证据保留 |
-| 2：CLEAR/SET/REBUILD、重复运行 | 独立复核 `NEEDS CORRECTION`；完成 P1-02 容器形状修复并再次独立复核前，不得冻结/提交或进入 Stage3 |
-| 3–6：TARGET/Field/WW文件/外部调用/闭环 | 未开始；需要新阶段授权 |
+## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
-## 3. 证据与设计边界
+| # | 事项 | 需要你决定什么 | 相关档案 |
+|---|---|---|---|
+| 1 | **Stage2 两项 P1 修复授权** | 是否另立 Mode-C 定向任务：在 MG raw NaN/±Inf 转换前受控拒绝；让 enabled Install 与 Run 共用 lower/派生界/split 校验，并在完成后再次独立复核 | [Task03 最终复核](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md) |
+| 2 | **Stage3** | 在 Stage2 获正式技术验收前不得启动 | [Task03 §4](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界) |
+| 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
+| 4 | RMC push 时机 | 分支 `Neural_Network_WW_Iteration` 现有 5 个本地提交未 push（含 MPI shared offset 与 MG `WWE:N` 修复，均本地验证/复核通过）；何时 push origin 由你决定 | [MG WW 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[MPI offset](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
+| 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
+| 6 | MG WW 输入契约加固 | V2/V3 source-energy 注入错误已修正并重跑；已确认 0.4015 MeV 实际进入高群用例，但碰撞数仍是间接证据。群内 `WWE:N` 边界建议与 MG 群边界对齐；direct selected-bin oracle 尚未实现 | [修复与补测](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[独立复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
+| 7 | F06 输出接口 | F06 已完成 C — Verify（含 R1/R2 两轮独立复核，结论一致）：`Energy=-1` + `Normalize=1` 的 Type=1 Cartesian mesh tally 在 serial text 输出中可解释为 $\phi^\dagger_{i,g}$；HDF5 无能群轴，F07 统计另审 | [F06 档案](MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/README.md)、[R1 复核](MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/README.md)、[R2 复核](MLVR_develop/2026-09/20260926_03_independent-f06-adjoint-field-review-r2/README.md) |
+| 8 | **F07 RE 统计语义** | **已完成 C — Verify（限定 serial text-first Cartesian）**：source-history RE 与 WW bank-drain 归属已确认；独立复核完成一个 field bin 的 10-seed WW-on 校准（PTRAC-active，`Q=0.88769`）；zero-score `RE=0` 不是零不确定度，全部 bins 与非单位源权重等未覆盖 | [F07 档案](MLVR_develop/2026-09/20260927_01_f07-field-statistical-uncertainty/README.md)、[独立复核](MLVR_develop/2026-09/20260927_02_independent-f07-field-re-review/README.md) |
+| 9 | **F01/F05 Forward Field** | **已完成 A — Ready（限定 serial text 子域）**：200k-history standard MGACE forward neutron fixed-source 正常结束；Cartesian Type=1、`Energy=-1`、`Normalize=1` 输出 2 spatial × 30 MG rows 的 `Ave/RE`，空间差异明显 | [合并档案](MLVR_develop/2026-09/20260927_03_f01-f05-forward-field-closure/README.md) |
+| 10 | **F12 Bootstrap MC-side chain** | **已完成 A — Ready（限定首版）**：20k low-population、无 WW 的 standard MGACE forward 运行得到 2 spatial × 30 MG `phi0/Ave + RE0`；`stage=bootstrap` 与 formal iteration 分离；不含 Field Reconstruction 或 `WW_A^(1)` | [F12 档案](MLVR_develop/2026-09/20260927_04_f12-bootstrap-forward-chain/README.md) |
+| 11 | **F09 Response + FOM information** | **已完成 A — Ready（限定第一版子域）**：200k formal Forward serial run 同一 scalar target 输出 `R`、`RE_R` 与 `Time in Fixed Source Calculation`；单-run FOM 可外部计算；不含 Bootstrap/FOM controller | [F09 档案](MLVR_develop/2026-09/20260927_05_f09-response-fom-closure/README.md) |
+| 12 | **F10 Field 数据合同** | **design frozen（implementation not completed）**：三项 minor corrections 已按你批准写回设计；是否/何时另立 F10 实现任务（Adapter/parser → Reconstruction → WW Builder）由你决定；F11 按你指示未启动 | [设计](MLVR_develop/2026-09/20260927_06_f10-field-reconstruction-boundary/README.md)、[修订](MLVR_develop/2026-09/20260927_08_f10-minor-corrections-f07-sync/README.md) |
 
-Task05 `logs/p1-correction` 的 correction-era 36 配对 run、普通回归及生产 guard 负例保留；独立复核确认合法受限输入的持续/新进程等价与 ordinary 代表回归，但 `p_vEnergyBins[neutron]` 在 outer shape 证明前被访问，且 native terminal boundary equality 未安全映射，故不具备 malformed caller-visible WW 状态的安全拒绝保证。非零裂变、并行、任意权重/分布源等仍未开放；新 Field API 和正式 FOM 仍未实现。
+## 3. 最近完成
 
-04冻结正文、阶段0实验和tally体积数学公式未改。新增W13为旧能群cell SCHECK崩溃，prepared入口拒绝该组合，scorer修复需单独任务。旧HDF重复导出与本轮快照的边界见Task05和[物理说明](MLVR_Physics_Guide/04_同进程独立固定源计算.md)。
+| 日期 | 任务 | 结果 |
+|---|---|---|
+| 2026-10-12 | independent-f11-stage2-ww-energy-bin-final-review | **NEEDS CORRECTION**：Task02 已修复 prepared native WW 的容器合同和末界索引，但 MG raw 非有限能量转换前 guard、direct Install lower 独立校验仍为 P1；RMC 未修改，Stage3 不得启动。 |
+| 09-27 | f10-minor-corrections-f07-sync | 用户批准的 F10 三项小修正已写回，**design frozen；implementation not completed**；F07 WW-on 校准状态已按独立复核更新；RMC 未修改 |
+| 09-27 | f10-field-reconstruction-boundary | F10 第一版数据合同初稿完成；独立复核三项小修正已由后续 `20260927_08` 写回；没有 parser/算法/WW 实现，RMC 未修改 |
+| 09-27 | independent-f10-field-boundary-review | 独立设计复核：**ACCEPT WITH MINOR CORRECTIONS**（拒绝负 `Ave`、记录 source-normalization identity、明确 flux-density unit）；无实现/运行证据；RMC 未修改 |
+| 09-27 | f12-bootstrap-forward-chain | F12 MC-side 闭环完成：低粒子数无 WW Forward → Bootstrap `phi0[i,g]+RE0[i,g]`；分类 A — Ready（限定首版）；RMC 未修改 |
+| 09-27 | f09-response-fom-closure | F09 formal Forward response/FOM 信息闭环完成：200k serial run 输出同一 scalar target 的 `R`、`RE_R`、fixed-source time；单-run FOM 外部计算成立；分类 A — Ready（限定第一版子域）；RMC 未修改 |
+| 09-27 | f01-f05-forward-field-closure | 轻量闭环验证完成：F01/F05 均 A — Ready（限定 standard MGACE、fixed-source neutron、Cartesian Type=1、`Energy=-1`、`Normalize=1`、MPI/OMP-off serial text）；RMC 未修改 |
+| 09-27 | f07-field-statistical-uncertainty | 只读审查 F07 RE 统计：source-history RE 公式与 WW bank-drain 归属确认；该任务未做 field-bin WW-on 校准，后续独立复核 `20260927_02` 已完成受限校准；RMC 未修改 |
+| 09-27 | independent-f07-field-re-review | 独立复核（静态 E1、runtime E2/E3）：N scaling 1.975/1.993、analog Q=0.849、WW Q=0.888、Normalize RE 不变；结论 C — Verify（限定 serial）；RMC 未修改 |
+| 09-26 | f06-adjoint-spatial-energy-field | 只读审查完成：fixed-source MG neutron adjoint、Cartesian、Type=1、`Energy=-1`、`Normalize=1`、serial text 输出可恢复 2 spatial × 30 group 场；HDF5 无 energy axis；分类 C — Verify；RMC 未修改 |
+| 09-26 | independent-f06-adjoint-field-review | 独立复核：raw/normalized 体积比 49,999.24 / 150,000.0 cm³；确认 text-first 子域，HDF5 与 geometry warnings 为边界；RMC 未修改 |
+| 09-26 | independent-f06-adjoint-field-review-r2 | R2 独立 source/docs/runtime 复核（静态 E1、runtime E2、行为 E3）：修正几何后 volume ratios 与文本 2×30 结构确认；HDF5 `/Type1` 无 energy 维；C — Verify（限定 serial）；RMC 未修改 |
+| 09-23 | f04c-mg-native-ww-energy-contract | 修复 MG native `WWE:N` 坐标契约；补正 V2/V3 脚本后确认 0.2435/0.4015 MeV 均实际进入 forward/adjoint 用例。碰撞行为为间接 bin 证据；direct selected-bin oracle 仍缺。RMC commit `5cfb0f77`（未 push） |
+| 09-23 | independent-mg-ww-repair-review | 独立审查：认可 native MG group→physical centre 修复，但群内 WWE boundary 无唯一物理含义、无 direct bin-ID oracle；结论 Repair is correct with explicit limitations；RMC 未修改 |
+| 09-22 | f04b-static-ww-contract-audit | 静态契约审查（Confirmed mismatch）：MG `p_dErg` 离散群坐标直接查 literal `WWE:N`（解析/查找/文档证据链）；forward 与 adjoint 同链；RMC 未修改；修复决策待人工 |
+| 09-22 | f04b-deep-penetration-ww-benchmark | 100 cm water deep-penetration MG adjoint benchmark（5×1M paired，MPI-off/OpenMP-off）：$z=0.29571$，FOM ratio=9.24161，PTRAC 6009 split/31449 roulette；仅 native single-interval track-mesh WW；RMC 未修改 |
+| 09-22 | f04-independent-ww-verification | 独立实验验证（模式 C）：群坐标 `WWE:N` 下 WW on/off 无偏性通过（合并 $z=-1.16537$），FOM 比值 0.8522；独立确认 MG `p_dErg` 与 literal physical-MeV `WWE:N` 存在潜在失配；RMC 未修改；正式分类待人工决定 |
+| 09-20 | independent-adjoint-ww-physics-review | 独立 E1 源码/测试输入审查：报告认为 MG `p_dErg` 组号与 native WW 物理能量边界的契约未证明一致，且未找到 combined input；结论待人工决定，RMC 未修改 |
+| 09-20 | f08-mesh-ww-event-semantics | track 时序为段起点 WW→tally→移动；point 最终余段不触发；用户决定 MLVR 仅支持 native track mesh、跳过 point 修复；native mesh WW 3/3 回归通过；RMC 未修改 |
+| 09-19 | f08-heter-mesh-max-boundary | 异构 Cartesian/cylindrical 最大边界统一为 mesh 外；RMC `41cf4559`，mesh WW 3/3 与异构 tally 1/1 回归通过；未 push |
+| 09-19 | f08-mesh-ww-shape-validation | native `WWMESH` 现强制空间 mesh × 能群数等于 lower-bound 数量；RMC `5ec595e1`，MPI-off 构建成功、mesh WW 3/3 回归通过，9/11 项输入被拒绝；未 push |
+| 09-19 | f08-cell-ww-core-repair | native `WWP:N/P/E` 参数生命周期已修复；MPI-off 构建成功、cell WW 3/3 回归通过，额外 `WWP:P` 不再影响 neutron tally；未 push |
+| 09-18 | f08-weight-window-audit | 源码优先审计完成：E — Defect + D — Integration issue；未修改 RMC，Stage 3 修复候选已登记 W10 |
+| 09-18 | f08-ww-physics-guide | 完成 `MLVR_Physics_Guide/02_RMC权重窗/README.md`；明确 WW 无偏关系、代码问题、物理影响和证据边界；未修改 RMC |
+| 09-18 | workflow-simplification | 模板 10→5 节；模式 C 产物 6→3 内嵌；验证分场景；**保留 A/B/C**；新增本页 |
+| 09-18 | f03-adjoint-source-definition-audit | 拍板方案 A；外部映射动态验证通过 → C–Verify（冻结子域） |
+| 09-17 | 工作区治理 ×4 | 按月归档、多仓库卫生、遗留资产清理、工作流加固（新增两个自检脚本） |
+| 09-05 | task08a（冻结 + R2 修复） | 实验冻结 harness 与阻塞修复完成（READY ≠ RUN） |
+| 09-04 | task01–07（物理审查系列） | 网格 tally / 度量管线 / 前向-伴随互易 / WW 事件语义 / 迭代历史 / 场重构等审查归档 |
 
-## 4. 其他待办
+## 4. 下一步（Agent 建议，待你点头）
 
-W11/W12/W13、P1-02 energy-bin shape 修复及 AIMC/论文线不在本轮。Stage2 的合法输入 regression 通过不等于 complete API safety，也不等于完整 F11 Ready。
+1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 调度尚未启动。
+2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
+3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 
-## 5. 维护方式
+## 5. 维护方式（Agent 必读）
 
-每阶段单独授权；实施、自验、独立复核与最终验收分别记录。本轮已停止，不自动开始Stage3。
+- 新建任务、状态变化、Stage 推进时回写本页第 1–3 节；**归档（第 ⑤ 步）必须同步本页**。
+- 本页只放**看板信息**（阶段 / 待拍板 / 最近完成 / 下一步），细节一律写进任务档案；**保持一屏以内**。
+- 多个 Agent 可能并行工作：本页与 `INDEX.md` 是共享文件，动手前先看 `git status`，不要把别人的未提交内容一起提交。

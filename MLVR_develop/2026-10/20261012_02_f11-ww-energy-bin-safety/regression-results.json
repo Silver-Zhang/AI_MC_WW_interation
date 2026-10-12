@@ -1,0 +1,2038 @@
+{
+  "conclusion": "READY FOR INDEPENDENT REVIEW",
+  "physical_tolerance": 0,
+  "all_gate_commands": {
+    "lifecycle-command": 0,
+    "old-p1-negatives-command": 0,
+    "old-negatives-command": 0,
+    "linkage-command": 0,
+    "ctest-command": 0,
+    "lookup-command": 0,
+    "ordinary-command": 0,
+    "multi-command": 0
+  },
+  "build": {
+    "ordinary": 0,
+    "driver": 0,
+    "source_copy_matches": true,
+    "environment": {
+      "flags_before": [
+        "CXX_DEFINES = -DCATCH_ERROR -DGIT_SHA1=\"\\\"[blank git SHA]\\\"\" -DH5_BUILT_AS_DYNAMIC_LIB -DREFUELLING -DRMC_VERSION=\\\"3.5.0\\\" -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DUSE_LINUX -DUSE_SIGHANDLER -DUSE_UNIX",
+        "CXX_FLAGS =  -Wno-unused-result -O2 -g -DNDEBUG -std=gnu++14 -fPIE"
+      ],
+      "flags_after": [
+        "CXX_DEFINES = -DCATCH_ERROR -DGIT_SHA1=\"\\\"[blank git SHA]\\\"\" -DH5_BUILT_AS_DYNAMIC_LIB -DREFUELLING -DRMC_VERSION=\\\"3.5.0\\\" -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL -DUSE_LINUX -DUSE_SIGHANDLER -DUSE_UNIX",
+        "CXX_FLAGS =  -Wno-unused-result -O2 -g -DNDEBUG -std=gnu++14 -fPIE"
+      ],
+      "same_flags": true,
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "cmake": "cmake version 3.28.3\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n",
+      "python": "Python 3.12.3\n",
+      "configure": {
+        "argv": [
+          "cmake",
+          "-S",
+          "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src",
+          "-B",
+          "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-build",
+          "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+          "-Dmpi=OFF",
+          "-Dopenmp=OFF",
+          "-Dais=OFF",
+          "-Dpythonapi=OFF",
+          "-Dpersonal=OFF",
+          "-Dloadmodules=ON",
+          "-Dtest=ON",
+          "-Dmpiproc=1",
+          "-Dompthrd=1",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+        ],
+        "cwd": "/home/workspace/AI_MC_WW_interation",
+        "started_utc": "2026-10-12T04:04:49.194982+00:00",
+        "environment": {
+          "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+          "RMC_PATH": null,
+          "RMC_MPI_TEST": null,
+          "RMC_OMP_TEST": null,
+          "OMP_NUM_THREADS": null,
+          "TZ": null
+        }
+      }
+    }
+  },
+  "G0": {
+    "passed": true,
+    "common_production_translation_units": 694,
+    "ordinary_only": [
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/src/main.cpp"
+    ],
+    "harness_only": [
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/tests/prepared_fixed_source_lifecycle/driver.cpp",
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/tests/prepared_fixed_source_lifecycle/globals.cpp"
+    ],
+    "global_definitions": {
+      "RMC": {
+        "Output": 1,
+        "OMeshInfo": 1,
+        "OXSParaTableVec": 1,
+        "OWeightWindow": 1,
+        "OStatus": 1,
+        "OTimer": 1,
+        "cellVec": 1,
+        "OParticleTracker": 1,
+        "OController": 1,
+        "ORNG": 1,
+        "OCalMode": 1,
+        "RMC::IO::OLogger": 1,
+        "RMC::IO::OProcLogger": 1
+      },
+      "RMCPreparedLifecycle": {
+        "Output": 1,
+        "OMeshInfo": 1,
+        "OXSParaTableVec": 1,
+        "OWeightWindow": 1,
+        "OStatus": 1,
+        "OTimer": 1,
+        "cellVec": 1,
+        "OParticleTracker": 1,
+        "OController": 1,
+        "ORNG": 1,
+        "OCalMode": 1,
+        "RMC::IO::OLogger": 1,
+        "RMC::IO::OProcLogger": 1
+      }
+    },
+    "compile_options_identical": true
+  },
+  "CTest": {
+    "passed": 10,
+    "total": 10,
+    "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/ctest-command"
+  },
+  "ordinary_native_ww": [
+    {
+      "case": "single",
+      "passed": true,
+      "errors": [],
+      "time_exceptions": [],
+      "physical_tolerance": 0,
+      "counts": {
+        "BANK": 2099,
+        "FINALIZE_ENTRY": 1,
+        "HISTORY": 500,
+        "RNG_BEFORE_SAMPLE": 500,
+        "ROULETTE": 1781,
+        "SEGMENT": 21315,
+        "SOURCE": 500,
+        "SPLIT": 1108,
+        "TRACK": 2599,
+        "WW_QUERY": 22518
+      },
+      "energy_intervals_observed": [
+        0
+      ],
+      "independent_bounds_checked": 45036,
+      "trace_sha256": "4f863218c994f982c5dab9b6c16a55883b0d278da92cb56d2a2967a157c8d73f",
+      "output_checks": {
+        "inp": true,
+        "inp.Tally": true,
+        "inp.material": true,
+        "inp.out": true,
+        "inp.Result.h5": true,
+        "inp.Info.h5": true,
+        "inp.State.h5": true
+      },
+      "before_binary": "/tmp/20261012-f11-stage2-p1/stage2-build/bin/RMC",
+      "after_binary": "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-build/bin/RMC"
+    },
+    {
+      "case": "multi",
+      "passed": true,
+      "errors": [],
+      "time_exceptions": [],
+      "physical_tolerance": 0,
+      "counts": {
+        "BANK": 1266,
+        "FINALIZE_ENTRY": 1,
+        "HISTORY": 500,
+        "RNG_BEFORE_SAMPLE": 500,
+        "ROULETTE": 1063,
+        "SEGMENT": 17865,
+        "SOURCE": 500,
+        "SPLIT": 894,
+        "TRACK": 1766,
+        "WW_QUERY": 18450
+      },
+      "energy_intervals_observed": [
+        0,
+        1,
+        2
+      ],
+      "independent_bounds_checked": 36900,
+      "trace_sha256": "fe6f3760d1d87da5c20173cdd56f59babee7a6463c01e2708ea824a7a5c3fbaf",
+      "output_checks": {
+        "inp": true,
+        "inp.Tally": true,
+        "inp.material": true,
+        "inp.out": true,
+        "inp.Result.h5": true,
+        "inp.Info.h5": true,
+        "inp.State.h5": true
+      },
+      "before_binary": "/tmp/20261012-f11-stage2-p1/stage2-build/bin/RMC",
+      "after_binary": "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-build/bin/RMC"
+    }
+  ],
+  "prepared_sequences": [
+    {
+      "name": "ff",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": [
+          "run1/before-finalize/p_OCellTallyData/statistics/p_vLargestTime",
+          "run1/before-finalize/p_OCellTallyData/statistics/p_vTime",
+          "run1/before-finalize/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run1/before-finalize/p_OMeshTallyData/statistics/p_vTime",
+          "run1/final/p_OCellTallyData/statistics/p_vFlucFOM",
+          "run1/final/p_OCellTallyData/statistics/p_vFoMPerCycle",
+          "run1/final/p_OCellTallyData/statistics/p_vFoMTot",
+          "run1/final/p_OCellTallyData/statistics/p_vLargestTime",
+          "run1/final/p_OCellTallyData/statistics/p_vTime",
+          "run1/final/p_OMeshTallyData/statistics/p_vFlucFOM",
+          "run1/final/p_OMeshTallyData/statistics/p_vFoMBehaviourCheck",
+          "run1/final/p_OMeshTallyData/statistics/p_vFoMPerCycle",
+          "run1/final/p_OMeshTallyData/statistics/p_vFoMTot",
+          "run1/final/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run1/final/p_OMeshTallyData/statistics/p_vTime",
+          "run1/legacy/p_OCellTallyData/statistics/p_vFlucFOM",
+          "run1/legacy/p_OCellTallyData/statistics/p_vFoMPerCycle",
+          "run1/legacy/p_OCellTallyData/statistics/p_vFoMTot",
+          "run1/legacy/p_OCellTallyData/statistics/p_vLargestTime",
+          "run1/legacy/p_OCellTallyData/statistics/p_vTime",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vFlucFOM",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vFoMBehaviourCheck",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vFoMPerCycle",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vFoMTot",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run1/legacy/p_OMeshTallyData/statistics/p_vTime",
+          "run2/before-finalize/p_OCellTallyData/statistics/p_vLargestTime",
+          "run2/before-finalize/p_OCellTallyData/statistics/p_vTime",
+          "run2/before-finalize/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run2/before-finalize/p_OMeshTallyData/statistics/p_vTime",
+          "run2/final/p_OCellTallyData/statistics/p_vFlucFOM",
+          "run2/final/p_OCellTallyData/statistics/p_vFoMPerCycle",
+          "run2/final/p_OCellTallyData/statistics/p_vFoMTot",
+          "run2/final/p_OCellTallyData/statistics/p_vLargestTime",
+          "run2/final/p_OCellTallyData/statistics/p_vTime",
+          "run2/final/p_OMeshTallyData/statistics/p_vFlucFOM",
+          "run2/final/p_OMeshTallyData/statistics/p_vFoMBehaviourCheck",
+          "run2/final/p_OMeshTallyData/statistics/p_vFoMPerCycle",
+          "run2/final/p_OMeshTallyData/statistics/p_vFoMTot",
+          "run2/final/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run2/final/p_OMeshTallyData/statistics/p_vTime",
+          "run2/legacy/p_OCellTallyData/statistics/p_vFlucFOM",
+          "run2/legacy/p_OCellTallyData/statistics/p_vFoMPerCycle",
+          "run2/legacy/p_OCellTallyData/statistics/p_vFoMTot",
+          "run2/legacy/p_OCellTallyData/statistics/p_vLargestTime",
+          "run2/legacy/p_OCellTallyData/statistics/p_vTime",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vFlucFOM",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vFoMBehaviourCheck",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vFoMPerCycle",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vFoMTot",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vLargestTime",
+          "run2/legacy/p_OMeshTallyData/statistics/p_vTime"
+        ]
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 1762196527816460185,
+          "maximumHistoryDraws": 1352,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "SEGMENT": 19601,
+              "SOURCE": 1000,
+              "TRACK": 1000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "33f25a6f058a9b702d4634c20887712e0fb5853c321756f0cd32cf5a9c5dc421"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 17.113469670391865,
+              "RE": 0.017631805722897898
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0127987014939117,
+              "RE": 0.09477589499946687
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ff/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ff/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "F",
+          "completedHistories": 2000,
+          "normalizationDenominator": 2000,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 1437077580701501877,
+          "maximumHistoryDraws": 1856,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 2000,
+              "RNG_BEFORE_SAMPLE": 2000,
+              "SEGMENT": 42340,
+              "SOURCE": 2000,
+              "TRACK": 2000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "37aa4ec026f7110f91c459dd1bf658bdcef86b9bfb555e4f8579b96c7c2ab328"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 17.67554977028405,
+              "RE": 0.011870781305167156
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.136411132266805,
+              "RE": 0.06670369869474882
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ff/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ff/persistent"
+        }
+      ]
+    },
+    {
+      "name": "faf",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 1762196527816460185,
+          "maximumHistoryDraws": 1352,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "SEGMENT": 19601,
+              "SOURCE": 1000,
+              "TRACK": 1000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "1ce444d26536afa352fe5eefb9f7513fddd50289b4b787d2ff4a2986e7e95c2f"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.143635867991543,
+              "RE": 0.0649329297177476
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0127987014939117,
+              "RE": 0.09477589499946687
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "A",
+          "completedHistories": 1500,
+          "normalizationDenominator": 1500,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 2352141466314723489,
+          "maximumHistoryDraws": 80,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1500,
+              "RNG_BEFORE_SAMPLE": 1500,
+              "SEGMENT": 5510,
+              "SOURCE": 1500,
+              "TRACK": 1500
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "8e24d2e16376933ae69d80fc02e17f8b0e5f74bb9ad53e04a0dcd68cefba9931"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.588353966004289,
+              "RE": 0.022738214086866715
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.11868933092013195,
+              "RE": 0.14083918608805376
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/persistent"
+        },
+        {
+          "runId": 3,
+          "role": "F",
+          "completedHistories": 2000,
+          "normalizationDenominator": 2000,
+          "effectiveSeed": 7909072609005736465,
+          "historyOffset": 2500,
+          "finalSeed": 1597206395403748885,
+          "maximumHistoryDraws": 1893,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 2000,
+              "RNG_BEFORE_SAMPLE": 2000,
+              "SEGMENT": 41511,
+              "SOURCE": 2000,
+              "TRACK": 2000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "b49e86c54fe6fc4576fa3d73dda7d1309a2b9991c99781bb451425f13d82b1e7"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.3971929108913765,
+              "RE": 0.04548951037287967
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0840426562358616,
+              "RE": 0.06557406837083588
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/fresh-3",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf/persistent"
+        }
+      ]
+    },
+    {
+      "name": "aa",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "A",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 1762196527816460185,
+          "maximumHistoryDraws": 90,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "SEGMENT": 3737,
+              "SOURCE": 1000,
+              "TRACK": 1000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "a78524a8c599c58de7a6524a8efb327c15b681322dcc8b80a77a778069df83ec"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.661290240707867,
+              "RE": 0.02690560613573632
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.10175155086944587,
+              "RE": 0.18402639769812623
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/aa/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/aa/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "A",
+          "completedHistories": 1500,
+          "normalizationDenominator": 1500,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 2352141466314723489,
+          "maximumHistoryDraws": 80,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1500,
+              "RNG_BEFORE_SAMPLE": 1500,
+              "SEGMENT": 5510,
+              "SOURCE": 1500,
+              "TRACK": 1500
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "8e24d2e16376933ae69d80fc02e17f8b0e5f74bb9ad53e04a0dcd68cefba9931"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.588353966004289,
+              "RE": 0.022738214086866715
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.11868933092013195,
+              "RE": 0.14083918608805376
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/aa/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/aa/persistent"
+        }
+      ]
+    },
+    {
+      "name": "ww",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 1762196527816460185,
+          "maximumHistoryDraws": 1352,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "SEGMENT": 19601,
+              "SOURCE": 1000,
+              "TRACK": 1000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "1ce444d26536afa352fe5eefb9f7513fddd50289b4b787d2ff4a2986e7e95c2f"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.143635867991543,
+              "RE": 0.0649329297177476
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0127987014939117,
+              "RE": 0.09477589499946687
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 8909250076635126433,
+          "maximumHistoryDraws": 4500,
+          "WW": 1,
+          "trace": {
+            "counts": {
+              "BANK": 3975,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "ROULETTE": 3397,
+              "SEGMENT": 40352,
+              "SOURCE": 1000,
+              "SPLIT": 2072,
+              "TRACK": 4975,
+              "WW_QUERY": 42711
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "69cad6f9d228135d92e8d7f1ef439ceb49826011e80a488735da28ca7f42d6dd"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.475342717453713,
+              "RE": 0.13286189502238935
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.9898015342317417,
+              "RE": 0.12987758537724872
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/persistent"
+        },
+        {
+          "runId": 3,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 2898551591397074961,
+          "historyOffset": 2000,
+          "finalSeed": 2061357925926306089,
+          "maximumHistoryDraws": 7210,
+          "WW": 2,
+          "trace": {
+            "counts": {
+              "BANK": 7499,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "ROULETTE": 5675,
+              "SEGMENT": 73177,
+              "SOURCE": 1000,
+              "SPLIT": 3313,
+              "TRACK": 8499,
+              "WW_QUERY": 76808
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "88435fe0dd18d413b906f50a89cb135aaca51797c1315caf70ea95b743c8269c"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 2.9175069167019685,
+              "RE": 0.0881725322077111
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.9795376001193524,
+              "RE": 0.09359546267624991
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/fresh-3",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/persistent"
+        },
+        {
+          "runId": 4,
+          "role": "F",
+          "completedHistories": 1000,
+          "normalizationDenominator": 1000,
+          "effectiveSeed": 2677826766351137809,
+          "historyOffset": 3000,
+          "finalSeed": 1246505293591353277,
+          "maximumHistoryDraws": 1545,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 1000,
+              "RNG_BEFORE_SAMPLE": 1000,
+              "SEGMENT": 21428,
+              "SOURCE": 1000,
+              "TRACK": 1000
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "6912061639dd41b709131ad9f780b2830993273ae638d34d82a4bc2e5308bc69"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.519915330522179,
+              "RE": 0.064190388437103
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0228213588520416,
+              "RE": 0.09574627021486465
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/fresh-4",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/ww/persistent"
+        }
+      ]
+    },
+    {
+      "name": "faf-ww",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 8172618935326058825,
+          "maximumHistoryDraws": 5887,
+          "WW": 1,
+          "trace": {
+            "counts": {
+              "BANK": 2099,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "ROULETTE": 1781,
+              "SEGMENT": 21315,
+              "SOURCE": 500,
+              "SPLIT": 1108,
+              "TRACK": 2599,
+              "WW_QUERY": 22518
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "4f863218c994f982c5dab9b6c16a55883b0d278da92cb56d2a2967a157c8d73f"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.451565150880714,
+              "RE": 0.1535608089189775
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.2175002935110986,
+              "RE": 0.16609061155004384
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "A",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 6948616054811748881,
+          "historyOffset": 500,
+          "finalSeed": 2481953847193407493,
+          "maximumHistoryDraws": 234,
+          "WW": 2,
+          "trace": {
+            "counts": {
+              "BANK": 1429,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "ROULETTE": 1303,
+              "SEGMENT": 5097,
+              "SOURCE": 500,
+              "SPLIT": 505,
+              "TRACK": 1929,
+              "WW_QUERY": 5901
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "50061653651f6c2416b4afe1a546fc25e87bb3d0683b4dc68be0378b2209645d"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.435523531878787,
+              "RE": 0.038964277390467976
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.08574990177644323,
+              "RE": 0.3106360684064282
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/persistent"
+        },
+        {
+          "runId": 3,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 4799727897853797197,
+          "maximumHistoryDraws": 3997,
+          "WW": 1,
+          "trace": {
+            "counts": {
+              "BANK": 2030,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "ROULETTE": 1676,
+              "SEGMENT": 20824,
+              "SOURCE": 500,
+              "SPLIT": 1067,
+              "TRACK": 2530,
+              "WW_QUERY": 21959
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "741c5e92c8bc537cf0f3d0a8020a9eafa03d450337e1a17ce8edfaf116892828"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.2546313422623037,
+              "RE": 0.17423665748580466
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.9894128393276594,
+              "RE": 0.19282817560273363
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/fresh-3",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/faf-ww/persistent"
+        }
+      ]
+    },
+    {
+      "name": "reuse",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 1850522414159282073,
+          "maximumHistoryDraws": 1091,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2199,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "c74827267b2398009b6ece8e38ab92d46ead3e7c1a67444a5fb4b509e34e20ec"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.660038781013639,
+              "RE": 0.20731786903859978
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.882251001360502,
+              "RE": 0.3021401940078909
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 1399499322989601297,
+          "historyOffset": 100,
+          "finalSeed": 385271108278750797,
+          "maximumHistoryDraws": 60,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 402,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "6f711e51cd5114b51ed45126cb4e28a657d5d9d769609287e11052ac3f2371f1"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.8261110900405955,
+              "RE": 0.07882201533194089
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.03938765755184203,
+              "RE": 0.703691055106812
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 3,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 3475520122572489745,
+          "historyOffset": 200,
+          "finalSeed": 2485361845532855965,
+          "maximumHistoryDraws": 806,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 1701,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "c4250afd5ed739e98557b1ddc71ea1bd3a4a9c065c63ebfac669ac79c7a45e21"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 2.7454033996025085,
+              "RE": 0.2331833485158836
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.8109415907441806,
+              "RE": 0.3898042967546921
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-3",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 4,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 8349559869096961553,
+          "historyOffset": 300,
+          "finalSeed": 1623574137652102581,
+          "maximumHistoryDraws": 59,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 382,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "42d8249b208daabafb54b3d9779719f93235c5d831bb01150400d54bea5b614a"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 5.04825171650919,
+              "RE": 0.07797589175487143
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.11393796729626274,
+              "RE": 0.5629121127369212
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-4",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 5,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 711855678567712785,
+          "historyOffset": 400,
+          "finalSeed": 4127123687505804157,
+          "maximumHistoryDraws": 729,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 1921,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "2264e2de8711d5944eae19255630275a9a68f6ed64cad45edd8eb7b322a0e7ca"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 2.9294232111967147,
+              "RE": 0.19936051757103238
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.3052157395128632,
+              "RE": 0.2702324570727531
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-5",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 6,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 6948616054811748881,
+          "historyOffset": 500,
+          "finalSeed": 944550136821021853,
+          "maximumHistoryDraws": 90,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 380,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "b6b7516db8fc223fda105daf71abd51aaf28de26e6a062c5192a4045b15675b4"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.451213433811141,
+              "RE": 0.09092645234555645
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.0962267822742758,
+              "RE": 0.5779864331220538
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-6",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 7,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 3542780302808534033,
+          "historyOffset": 600,
+          "finalSeed": 1439585153411953613,
+          "maximumHistoryDraws": 1191,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2536,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "fcf925b260a97d3fde4eb7edbe8fbee27c32381946e15a5a2b32330a54ba61da"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 4.408288325074355,
+              "RE": 0.1828922800047941
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.4771503262681442,
+              "RE": 0.264923213861697
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-7",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 8,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 6789698939956309521,
+          "historyOffset": 700,
+          "finalSeed": 4702756773803928141,
+          "maximumHistoryDraws": 80,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 378,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "869f572afa9c219a0156179aba1cabf781d416f8a0408ec2ce6c3a765630f5d0"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 5.6856705909614895,
+              "RE": 0.07674182974944996
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.191530003335689,
+              "RE": 0.3744550355272195
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-8",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 9,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 2562969741647876113,
+          "historyOffset": 800,
+          "finalSeed": 2154258242855150069,
+          "maximumHistoryDraws": 1352,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2158,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "ac595f34ddb3ba8b5c18d7248a2e85630f755db6a81f5cec9f6fafe0fdeb8a04"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.312347916524918,
+              "RE": 0.19483516009844842
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.288129809058354,
+              "RE": 0.26841119761128834
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-9",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 10,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 2054962563653890577,
+          "historyOffset": 900,
+          "finalSeed": 1762196527816460185,
+          "maximumHistoryDraws": 61,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 349,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "4d12c9f7bc76190423468956ec387481b01911b936d1352792411b571bdc6741"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.071382283959918,
+              "RE": 0.09994736130536434
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.12489805336688434,
+              "RE": 0.576854757508411
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-10",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 11,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 6622646694644757293,
+          "maximumHistoryDraws": 713,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2079,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "fa1c33ff4bd382afc95902c1b2a2585fae5a3a86012ea1abae8af85933ed1398"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.4975901968061724,
+              "RE": 0.17164356765571315
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.2210445781825343,
+              "RE": 0.27735289965327664
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-11",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 12,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 7095246900462401041,
+          "historyOffset": 1100,
+          "finalSeed": 8925457415333950817,
+          "maximumHistoryDraws": 62,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 372,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "c1fae42111b3ac8566567cb7454edeb28f18e1c86a08008394b521b79a5b4a54"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.428550001662103,
+              "RE": 0.10096895018942224
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.250715540500559,
+              "RE": 0.38360915368608334
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-12",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 13,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 1185659112644319249,
+          "historyOffset": 1200,
+          "finalSeed": 1063637871183667797,
+          "maximumHistoryDraws": 879,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2129,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "b288704bfce24bcb2417cd6ff34d013540b7217bcb9bedd8bee269607a7e7466"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.6624798580171944,
+              "RE": 0.19391976161867663
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.636295741873717,
+              "RE": 0.2579527655648643
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-13",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 14,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 928841952567261713,
+          "historyOffset": 1300,
+          "finalSeed": 3727641141521857185,
+          "maximumHistoryDraws": 70,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 368,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "3ab6b807996a8fee4d7f15786bf134d342c3e76fd5b12f40228ffe13d5efacad"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.6687519282228,
+              "RE": 0.0854080870479507
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.08945700364142613,
+              "RE": 0.6576135502430082
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-14",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 15,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 2883735678714534929,
+          "historyOffset": 1400,
+          "finalSeed": 2005217133453572433,
+          "maximumHistoryDraws": 1169,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 1741,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "1e8e58d92206c449f047a12e2c7bc0e76244993daa4da3478c8c979710acd8c3"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 2.4476519487200137,
+              "RE": 0.2579169922113105
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.8562584488532547,
+              "RE": 0.2956855252973706
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-15",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 16,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 2020381862547963409,
+          "historyOffset": 1500,
+          "finalSeed": 2952999267929783825,
+          "maximumHistoryDraws": 80,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 373,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "649eed452c67d3e7c88591fb9ff421a6b2ae028f7d4b345ed91c5079900c181d"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 5.196522063547809,
+              "RE": 0.0911826052357445
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.21436352643855228,
+              "RE": 0.4081592208287003
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-16",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 17,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 6946065963066204177,
+          "historyOffset": 1600,
+          "finalSeed": 6529338481837483741,
+          "maximumHistoryDraws": 1126,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 1848,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "1131ebd1a6402d54fa764c831d99109b64ada962aa0c0fc98f220d5790ccba39"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.0604831244093442,
+              "RE": 0.23868010169564194
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.136565846364796,
+              "RE": 0.31419717475411907
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-17",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 18,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 5862079977929835025,
+          "historyOffset": 1700,
+          "finalSeed": 1006529285870376857,
+          "maximumHistoryDraws": 53,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 348,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "14b35668e762d9213d03bd25a338ec47af4cd9224ae76edf091c0a94ed04fc4f"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 4.410095195098561,
+              "RE": 0.09771005943787231
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.13654448531084679,
+              "RE": 0.5228419503586028
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-18",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 19,
+          "role": "F",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 3154941650265302033,
+          "historyOffset": 1800,
+          "finalSeed": 5160738194138540909,
+          "maximumHistoryDraws": 1602,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 2582,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "29d966c17de73ee73682a2512a4ad27233b75575949cc3c7ed65a473c0b2bbb3"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 4.478719784995327,
+              "RE": 0.19827423500156227
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.0529370316389624,
+              "RE": 0.2815029356952957
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-19",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        },
+        {
+          "runId": 20,
+          "role": "A",
+          "completedHistories": 100,
+          "normalizationDenominator": 100,
+          "effectiveSeed": 6718233752035640849,
+          "historyOffset": 1900,
+          "finalSeed": 2663350997654857141,
+          "maximumHistoryDraws": 52,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 100,
+              "RNG_BEFORE_SAMPLE": 100,
+              "SEGMENT": 353,
+              "SOURCE": 100,
+              "TRACK": 100
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "d9c2e6db61001e56ae2b05b84b0dbd2d6d3a8278e1b201d95ded8671fa3d4549"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 20,
+              "Ave": 5.489812351208411,
+              "RE": 0.07411695609030901
+            },
+            "p_OMeshTallyData": {
+              "index": 20,
+              "Ave": 0.13761677565141975,
+              "RE": 0.4895773966527994
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/fresh-20",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/energy-final/reuse/persistent"
+        }
+      ]
+    },
+    {
+      "name": "multi",
+      "comparison": {
+        "passed": true,
+        "physical_tolerance": 0,
+        "errors": [],
+        "time_exceptions": []
+      },
+      "runs": [
+        {
+          "runId": 1,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 17,
+          "historyOffset": 0,
+          "finalSeed": 4127123687505804157,
+          "maximumHistoryDraws": 1098,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "SEGMENT": 9666,
+              "SOURCE": 500,
+              "TRACK": 500
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "8c8899d2434b5fc8bb72909fbdaaf3131d3553d88e2d30249c28e5d5d94fcf64"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.1178156131218544,
+              "RE": 0.0940277845943005
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 0.9889169741498216,
+              "RE": 0.13590652614970367
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/fresh-1",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/persistent"
+        },
+        {
+          "runId": 2,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 6948616054811748881,
+          "historyOffset": 500,
+          "finalSeed": 5353819169983376265,
+          "maximumHistoryDraws": 7047,
+          "WW": 1,
+          "trace": {
+            "counts": {
+              "BANK": 1119,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "ROULETTE": 993,
+              "SEGMENT": 17718,
+              "SOURCE": 500,
+              "SPLIT": 815,
+              "TRACK": 1619,
+              "WW_QUERY": 18330
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "0f22be3559e50e79107ed0e585a5a687be337d1d1e3000166e987c0000a95c5d"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.8190945639929086,
+              "RE": 0.18865110371213772
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.059913600277155,
+              "RE": 0.1595778185756291
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/fresh-2",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/persistent"
+        },
+        {
+          "runId": 3,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 2131104056799056913,
+          "historyOffset": 1000,
+          "finalSeed": 1595747672342243773,
+          "maximumHistoryDraws": 6343,
+          "WW": 2,
+          "trace": {
+            "counts": {
+              "BANK": 3219,
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "ROULETTE": 2333,
+              "SEGMENT": 37806,
+              "SOURCE": 500,
+              "SPLIT": 1958,
+              "TRACK": 3719,
+              "WW_QUERY": 39348
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "f4fb1492cb2ab681539f73dcd94785ff4a6f59621da0714422ecc7a19f489876"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.6069631491330942,
+              "RE": 0.13878456246952384
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.1513639674348586,
+              "RE": 0.15211863312228932
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/fresh-3",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/persistent"
+        },
+        {
+          "runId": 4,
+          "role": "F",
+          "completedHistories": 500,
+          "normalizationDenominator": 500,
+          "effectiveSeed": 2020381862547963409,
+          "historyOffset": 1500,
+          "finalSeed": 6881110587563664457,
+          "maximumHistoryDraws": 1602,
+          "WW": 0,
+          "trace": {
+            "counts": {
+              "FINALIZE_ENTRY": 1,
+              "HISTORY": 500,
+              "RNG_BEFORE_SAMPLE": 500,
+              "SEGMENT": 10627,
+              "SOURCE": 500,
+              "TRACK": 500
+            },
+            "initcounts": {
+              "InitiateAll": 1,
+              "InitiateMatAce": 1,
+              "InitiateTally": 1,
+              "ReadAceData": 1
+            },
+            "sha256": "44ae9aecad8f3fe9205316a8c2baad9ce148943aad21c6f99a87c527e913e687"
+          },
+          "first_nonzero_tally": {
+            "p_OCellTallyData": {
+              "index": 0,
+              "Ave": 3.6118406852877007,
+              "RE": 0.09148801035588826
+            },
+            "p_OMeshTallyData": {
+              "index": 0,
+              "Ave": 1.1636601294941131,
+              "RE": 0.13080624092373064
+            }
+          },
+          "fresh_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/fresh-4",
+          "persistent_evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/multi-energy/multi/persistent"
+        }
+      ]
+    }
+  ],
+  "fresh_paired_runs": 38,
+  "lookup": {
+    "passed": 15,
+    "total": 15,
+    "kind": "production owner/lookup; no MC sentinel-energy source",
+    "actual_output": "WW_LOOKUP energy=-1 bin=0 lower=11 survival=33 upper=55\nWW_LOOKUP energy=0 bin=0 lower=11 survival=33 upper=55\nWW_LOOKUP energy=0.25 bin=0 lower=11 survival=33 upper=55\nWW_LOOKUP energy=0.49999999999999994 bin=0 lower=11 survival=33 upper=55\nWW_LOOKUP energy=0.5 bin=1 lower=22 survival=66 upper=110\nWW_LOOKUP energy=1 bin=1 lower=22 survival=66 upper=110\nWW_LOOKUP energy=1.9999999999999998 bin=1 lower=22 survival=66 upper=110\nWW_LOOKUP energy=2 bin=2 lower=33 survival=99 upper=165\nWW_LOOKUP energy=3 bin=2 lower=33 survival=99 upper=165\nWW_LOOKUP energy=9.9999999999999979e+21 bin=2 lower=33 survival=99 upper=165\nWW_LOOKUP energy=1e+22 bin=2 lower=33 survival=99 upper=165\nWW_LOOKUP energy=1.0000000000000002e+22 bin=2 lower=33 survival=99 upper=165\nWW_LOOKUP_REJECT energy=nan reason=WW lookup: nonfinite particle energy\nWW_LOOKUP_REJECT energy=inf reason=WW lookup: nonfinite particle energy\nWW_LOOKUP_REJECT energy=-inf reason=WW lookup: nonfinite particle energy\nWW_LOOKUP_SELFTEST 15/15 passed; owner-level (no MC transport)\n"
+  },
+  "existing_negatives": {
+    "old-negatives-final": {
+      "passed": 66,
+      "total": 66,
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/old-negatives-final"
+    },
+    "old-p1-final": {
+      "passed": 51,
+      "total": 51,
+      "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/old-p1-final"
+    }
+  },
+  "sanitizer": {
+    "passed": true,
+    "instrumented_translation_units": [
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/src/PrepareFixedSourceRun.cpp",
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/src/WeightWindows.cpp",
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-src/tests/prepared_fixed_source_lifecycle/driver.cpp"
+    ],
+    "flags": [
+      "-O1",
+      "-fno-omit-frame-pointer",
+      "-fsanitize=address,undefined",
+      "-D_GLIBCXX_ASSERTIONS"
+    ],
+    "ASAN_OPTIONS": "detect_leaks=0:abort_on_error=1",
+    "UBSAN_OPTIONS": "halt_on_error=1:print_stacktrace=1",
+    "coverage": "targeted only; remaining production code and libraries uninstrumented; no leak claim",
+    "passed_cases": 80,
+    "total_cases": 80,
+    "evidence": "/tmp/20261012_02_f11-ww-energy-bin-safety/evidence/logs/sanitizer/results.json"
+  },
+  "protection": {
+    "time": "2026-10-12T12:14:51.179660+08:00",
+    "root_head": "037a7cf630063b378f0aec72b6cd5e3de96163c0",
+    "root_branch": "main",
+    "rmc_head": "330f091eb0296e0d0124237ba7d9a22b81aee852",
+    "rmc_branch": "Neural_Network_WW_Iteration",
+    "rmc_ahead_behind": "0\t0",
+    "rmc_status": "M CMakeLists.txt\n M src/AceData.h\n M src/CalMode.h\n M src/CalcFixedSource.cpp\n M src/ExternalSource.cpp\n M src/ExternalSource.h\n M src/FixedSource.h\n M src/InitiateTally.cpp\n M src/InitiateTrspt.cpp\n M src/NeutronTransport.h\n M src/ParticleState.h\n M src/ParticleStateFun.cpp\n M src/RNG/RNG.h\n M src/RNG/StrideRNG.cpp\n M src/SampleNeutronSource.cpp\n M src/StatisticsFunc.cpp\n M src/StatisticsTester.h\n M src/Tally.h\n M src/TallyData.cpp\n M src/TallyData.h\n M src/TreatAdjointMaterial.cpp\n M src/Utility/Timer.h\n M src/WeightWindow.h\n M src/WeightWindows.cpp\n?? src/FixedSourceRunSpec.h\n?? src/PrepareFixedSourceRun.cpp\n?? tests/prepared_fixed_source_lifecycle/CMakeLists.txt\n?? tests/prepared_fixed_source_lifecycle/driver.cpp\n?? tests/prepared_fixed_source_lifecycle/globals.cpp",
+    "changed_this_task": [
+      "src/PrepareFixedSourceRun.cpp",
+      "tests/prepared_fixed_source_lifecycle/driver.cpp",
+      "src/WeightWindow.h",
+      "src/WeightWindows.cpp"
+    ],
+    "allowed_only": true,
+    "rmc_file_count_checked": 2106,
+    "protected_old_evidence_files_unchanged": 15196,
+    "all_current_sources_match_private_build": true,
+    "all_prefixed_sources_match_oracle_build": true,
+    "database": {
+      "/home/silver/NucXS_Library/RMC_DATA/xsdir": "970e85ad3e7f365868dcba69d348c1626d82b2c127534622af7a43fb01c9f62b",
+      "/home/silver/NucXS_Library/RMC_DATA/multigroup/mgxsnp": "1d26fac6d32bfb84539d59d5549d809b70e9d5a4f9e34c58034cb9f6cba57001"
+    },
+    "before_source_sha256": {
+      "src/PrepareFixedSourceRun.cpp": "a003a5788a83d7446008918c4e10c0d9763a9192955a4d94ea8559f75645cce8",
+      "tests/prepared_fixed_source_lifecycle/driver.cpp": "cc11a955e5575eeb25267727a86ead28a3c3b1e09a5868cabe9486d5ce8da238",
+      "src/WeightWindow.h": "4bf4a01f09dada0cc1f47474bf9bae21533a4a6a58fac5d57642c494c91f95c1",
+      "src/WeightWindows.cpp": "7114e445d69b8fb2d4b7700dcb4062daad4ed957e2ff62c7ff00dd98aff2ec3d"
+    },
+    "after_source_sha256": {
+      "src/PrepareFixedSourceRun.cpp": "80fd6fb8afe90e4dbf9a13a203c5a4ab2f68b7a09ddc07c0119a35bf994327ab",
+      "tests/prepared_fixed_source_lifecycle/driver.cpp": "fa984d4ba198d61861e6b0261f0f01183ff8903c90aaf198a2048fb6e5a5c4a1",
+      "src/WeightWindow.h": "3c7b742422892117b961fe1c19d8274ea5a28625dce2b4670d038799ca3ec798",
+      "src/WeightWindows.cpp": "ba1e6dd609eceec6608ced8bf4a9068e871341de2127872d17126b2252025faa"
+    },
+    "binaries": {
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-build/bin/RMC": "4cb67112799dc31abdb810911e064b4e41b30ae05cef965aa237d65ce7992c9c",
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/stage2-build/bin/RMCPreparedLifecycle": "a331c2421e7a06bb7ef28ac6705bc08633a43f02db9d71221a8211be91fbcb65",
+      "/tmp/20261012_02_f11-ww-energy-bin-safety/sanitizer/RMCPreparedLifecycle": "f60fbf7a1d6ecb82156259a09269d11ba2028d261d65af4ba616076dc4ba74e2",
+      "/tmp/20261012-f11-stage2-p1/stage2-build/bin/RMC": "06aaaec86a2fe87479eb555952cade38172ed0cdda330b5eafcb04173972b949"
+    },
+    "correction_sha256": "569793a3f449338d476280c90f777dfe20c77d248726ab290f4c60821238eeff",
+    "no_commit_push_reset_checkout_clean": true
+  },
+  "reuse_old_evidence": {
+    "Universe_FF_fresh_2_pairs": "Task05 logs/p1-correction/universe-01; NOT rerun here. Universe negative mutations rerun in old-p1-final.",
+    "original_123_ordinary_checks": "Task05 logs/p1-correction/ordinary-comparison-p1-01; NOT claimed as current rerun. Current ordinary WW exact comparison and 10 CTest listed above."
+  },
+  "unverified": [
+    "MPI/OMP runtime or new parallel build",
+    "ordinary malformed parser input general safety",
+    "ordinary MCNP WW-specific regression",
+    "full-program sanitizer/leak validation",
+    "physical MC source at 1e22 sentinel",
+    "Stage3 TARGET/Field/FOM"
+  ],
+  "no_reference_updates": true
+}

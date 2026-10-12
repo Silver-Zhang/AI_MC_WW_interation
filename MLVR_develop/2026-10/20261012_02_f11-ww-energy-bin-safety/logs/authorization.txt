@@ -1,0 +1,401 @@
+# F11 Stage 2 — WW Energy-Bin P1 最终缺陷修复
+
+## 一、任务目标与授权
+
+根据 F11 Stage 2 最新独立复核结论 `NEEDS CORRECTION`，修复原生网格权重窗（native mesh WW）剩余的能量边界安全问题。
+
+本次明确授权实施以下三项定向修改及必要的测试：
+
+1. `p_vEnergyBins` 外层/内层容器在 neutron 索引前的完整形状验证。
+2. 中子 WW 能量边界的数值合法性、严格递增性以及终止边界合同检查。
+3. `GetIntpltPos()` 定位结果在能量恰好等于末端边界时的合法区间映射。
+
+本次是 Stage 2 的**局部缺陷修复**，不是重新设计 F11 或修改输运物理模型。
+
+不得擅自扩大为整个 RMC 权重窗模块的通用重构。
+
+## 二、必须阅读的材料
+
+首先遵循：
+
+- `AGENTS.md`
+- `STATUS.md`
+- `MLVR_Knowledge/AGENT_CONTEXT.md`
+- `MLVR_Knowledge/04_F11_v1_架构与实施设计.md`
+
+然后阅读 Stage 2 主任务：
+
+`MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/`
+
+重点：
+
+- `README.md`
+- `lifecycle-design.md`
+- `test-plan.md`
+- `changes.diff`
+- `new-files.diff`
+- `logs/p1-correction/`
+
+阅读最新独立审核：
+
+`MLVR_develop/2026-10/20261012_01_independent-f11-stage2-p1-correction-review/`
+
+重点：
+
+- `Independent_F11_Stage2_P1_Correction_Review.md`
+- `logs/ww-validation-review.md`
+- `logs/risk-register.md`
+- `logs/negative-gate-review.md`
+
+本次以最新独立审核发现的 WW energy-bin 问题为直接修复依据。
+
+保留 Task 07 和本次独立审核的原始结论，不修改历史审核报告。
+
+## 三、保护现有工作成果
+
+此前记录的 RMC 状态：
+
+- 分支：`Neural_Network_WW_Iteration`
+- HEAD：`330f091eb0296e0d0124237ba7d9a22b81aee852`
+- Stage 2 的29文件修改尚未正式提交。
+
+开始前必须重新确认真实 HEAD、工作树、已跟踪和未跟踪文件。
+
+禁止：
+
+- reset、checkout、clean；
+- 覆盖已有 Stage 2 生产修改；
+- 删除 Task 05 的原始运行证据；
+- 更新核数据库或 reference；
+- 擅自 commit/push。
+
+保存本轮修复前关键文件的 SHA256、完整源文件快照和增量补丁。
+
+本次应按照项目最新的**归档提炼原则**管理证据：
+
+- Git 仓库只保留精炼结论、实际增量补丁、测试判定、关键输入和哈希清单；
+- 大规模轨迹、构建输出、重复 JSON 和完整运行产物保留本地；
+- 提交前统计文件数量，避免再次生成数千个入库文件；
+- 所有未入库原始证据必须能够通过本地路径和 SHA256 manifest 追溯。
+
+按照项目工作流建立一个独立的 P1 缺陷修复任务，关联 Task 05 和最新独立审核，实际编号由脚本分配，不与原 Stage 2 主任务混合覆盖。
+
+## 四、问题 P1-A：能量边界容器索引前验证
+
+### 4.1 当前问题
+
+当前 `src/PrepareFixedSourceRun.cpp:286–288` 中存在：
+
+```cpp
+const auto &bins = OWeightWindow.p_vEnergyBins[1];
+```
+
+但是访问之前没有确认：
+
+```cpp
+p_vEnergyBins.size() > CDParticleState::Neutron
+```
+
+随后再检查 `bins.size()` 已经太晚。
+
+类似的问题还存在于：
+
+`src/WeightWindows.cpp:310–312`
+
+的 `InstallPreparedNativeState()` 中。
+
+### 4.2 修复要求
+
+直接阅读以下真实源码：
+
+- `src/PrepareFixedSourceRun.cpp`
+- `src/WeightWindows.cpp`
+- `src/WeightWindow.h`
+- `src/ReadWeightWindow.cpp`
+
+确认每个使用 neutron energy-bin 的位置。
+
+设计一个统一、可复用的验证合同，至少检查：
+
+1. `p_vEnergyBins` 外层存在 neutron 对应的下标。
+2. neutron 能量边界内层至少包含两个边界。
+3. 边界数值合法，不能出现 NaN 或无效顺序。
+4. 能量边界严格递增，不接受重复或降序。
+5. 能量区间个数与已安装的 native WW 数据维度一致。
+6. `p_vWeightWindowPara` 的外层/内层形状及必要参数也在索引前验证。
+7. 不支持的 WW 拓扑必须在输运前拒绝。
+
+特别注意 `ReadWeightWindow.cpp` 会自动追加 `INFINITY_ENERGY` 作为终止边界。
+
+**先定位 `INFINITY_ENERGY` 的实际定义和存储语义，不得简单地将合法终止哨兵当成非法无穷值拒绝。**
+
+如果该常量是有限的大数，按其真实数值合同检查；如果它使用 IEEE 正无穷，则应明确规定只允许出现在末端，而不把它当作有效粒子能量。
+
+建议将验证放在原有 `CDWeightWindow` owner 内，供初始化、运行前检查和安装过程复用。
+
+不得创建第二套独立 WW 数据结构。
+
+### 4.3 调用位置要求
+
+验证必须发生在：
+
+- 初次 prepared model 绑定时；
+- 每次 `RunPreparedFixedSource()` 的 CLEAR 之前；
+- `InstallPreparedNativeState()` 实际进行中子下标访问之前。
+
+不能只依赖上一层 caller 已经检查。
+
+如果实现一个共享校验方法，应确认所有相关路径都实际调用它，不允许 Run 使用一套规则、Install 使用另一套规则。
+
+WW-OFF 且未声明 native WW 拓扑的合法运行，不应因为要求不存在的中子 WW 能量表而误拒绝。
+
+## 五、问题 P1-B：末端能量边界索引
+
+### 5.1 当前问题
+
+审查指出：
+
+`src/WeightWindows.cpp:45–66`
+
+中的 `setMeshWeightWindowBound()` 调用：
+
+`CDGlobeFun::GetIntpltPos()`
+
+进行能量区间定位。
+
+当前末端回退条件处理的是：
+
+```cpp
+erg > bins.back()
+```
+
+但当：
+
+```cpp
+erg == bins.back()
+```
+
+时，可能得到最后一个边界下标，而不是最后一个合法权窗区间下标。
+
+若边界数量为B，合法能量区间索引应为：
+
+`0 ... B-2`
+
+不允许访问 `B-1` 对应的不存在区间。
+
+### 5.2 修复要求
+
+先独立检查：
+
+- `GlobeFun.h` 中 `GetIntpltPos()` 的真实返回语义；
+- `WeightWindows.cpp` 中的末端回退逻辑；
+- native WW 能量区间的实际存储方式；
+- 原始 RMC 对低于首界、恰好等于边界、超过末界的处理约定。
+
+在不改变正常区间内部选择行为的前提下，保证最终索引始终合法。
+
+可以采用最小的区间末端夹取修复，但必须证明：
+
+1. 首界等值定位正确。
+2. 内部边界等值遵循原有语义。
+3. 末端边界等值映射到最后合法区间。
+4. 高于末端时保持既有受支持的回退语义。
+5. 无效能量（如 NaN）不会绕过合同进入非法索引。
+6. 不改变正常源历史的 RNG 消耗和 WW 物理算法。
+
+**不允许为了修复边界索引而重写 `GetIntpltPos()` 的通用搜索算法。**
+
+如果只需在 native WW 查询结果处进行受控修正，应优先选择最小改动。
+
+注意 `setMeshWeightWindowBound()` 可能被普通 RMC 使用。若修改该共享函数，必须补充普通 native WW 回归，不能仅证明 prepared 测试程序通过。
+
+## 六、实际允许修改的源码
+
+本次授权优先限定为：
+
+- `src/PrepareFixedSourceRun.cpp`
+- `src/WeightWindows.cpp`
+- `src/WeightWindow.h`（仅在需要声明共享验证接口时）
+- `tests/prepared_fixed_source_lifecycle/driver.cpp`
+
+以及本轮测试脚本、输入和独立任务证据。
+
+不修改：
+
+- `GlobeFun.h` 通用搜索算法；
+- `ReadWeightWindow.cpp` 普通 parser；
+- MC batch/history/descendant 输运核心；
+- scattering/fission/particle tracking 数学；
+- Type2 RNG；
+- tally 和 StatisticsTester 数学；
+- 其他 Stage 2 owner reset/rebuild；
+- W11/W12/W13；
+- 冻结知识库04。
+
+如发现必须修改授权范围之外的生产源码，先给出准确原因和影响，停止扩大变更，等待用户决定。
+
+## 七、必须新增的负例
+
+新增独立的 energy-bin P1 测试，至少覆盖：
+
+| 场景 | 预期 |
+|---|---|
+| 外层 energy-bin vector 为空 | 索引前受控拒绝 |
+| 外层只有一个元素 | 索引前受控拒绝 |
+| neutron 内层为空 | 受控拒绝 |
+| neutron 内层只有一个边界 | 受控拒绝 |
+| neutron 边界重复 | 受控拒绝 |
+| neutron 边界降序 | 受控拒绝 |
+| 非法 NaN / Inf 边界 | 按真实哨兵合同拒绝非法项 |
+| 有效多能群边界 | 可以成功执行 |
+| 能量等于第一个边界 | 定位正确 |
+| 能量等于内部边界 | 保持既有区间归属语义 |
+| 能量等于最后边界 | 只能得到合法末端区间 |
+| 能量高于最后边界 | 保持约定的边界处理 |
+
+对非法形状，应同时测试：
+
+**A. 绑定前**
+
+在正常 RMC 输入解析后、prepared 初始化前，利用测试 driver 对 caller-visible WW 容器构造异常状态。
+
+要求在正式生产校验中受控拒绝，而不是发生 SIGSEGV、越界或依赖普通 parser 拒绝。
+
+**B. 首轮成功后**
+
+第一次 Forward 正常完成后，修改 WW energy-bin 容器，再请求第二次运行。
+
+要求：
+
+- 在 CLEAR 前拒绝；
+- 不执行第二次 source history；
+- 不返回第二次成功 receipt；
+- 首次运行的 tally、统计分母和 RNG 不变；
+- 错误信息明确指出 energy-bin 形状或数值错误。
+
+注意测试不能只被已有 definition fingerprint 拦截。
+
+**C. 末端等值**
+
+必须实际调用生产 native WW 定位逻辑，观察其结果。
+
+如果正常 MGACE 物理源无法到达 `INFINITY_ENERGY` 哨兵值，可采用受控的 owner/lookup 级边界测试，但必须明确区分它与完整 MC 输运验证。
+
+不能在测试中复制一份区间定位算法代替验证生产函数。
+
+## 八、必要的动态回归
+
+本次修复后至少执行：
+
+### R1：编译和链接
+
+- 普通 RMC executable；
+- RMCPreparedLifecycle；
+- G0 唯一全局对象/编译参数检查；
+- 现有 fixed-source CTest。
+
+### R2：普通 native WW 回归
+
+尤其检查被修改的共享 WW 查询代码：
+
+- 普通 Forward native WW；
+- 正常多能群 WW；
+- 真实 splitting/roulette；
+- 与修复前参考结果确定性一致。
+
+允许的例外只能是已经明确归类的时间/FOM 数据。
+
+### R3：prepared 生命周期回归
+
+继续执行：
+
+- FF；
+- FAF；
+- AA；
+- WW-OFF → WW1 → WW2 → WW-OFF；
+- FAF + WW。
+
+每次 half-run 必须对应独立 fresh oracle。
+
+继续要求物理容差为零。
+
+### R4：模型与资源保护
+
+确认新检查不影响：
+
+- 一次模型初始化；
+- tally registry 保留；
+- 状态清理时序；
+- RNG 子流；
+- 上次结果保留；
+- 正常 WW ON/OFF 切换。
+
+对未受本次改动影响的大型门禁可以沿用已有证据，但必须明确注明哪些实际重跑、哪些沿用旧实验。
+
+## 九、测试证据的质量要求
+
+新负例不能仅靠进程退出非零判定通过。
+
+必须记录：
+
+- 实际触发的生产函数/guard；
+- 输入参数和容器实际内容；
+- 拒绝发生阶段；
+- 是否发生 CLEAR；
+- 是否发生 source sampling；
+- 退出码及失败信息；
+- 首次成功运行后的状态是否保持。
+
+对于非法访问风险，尽量使用适当的独立最小案例及边界检查工具验证受控拒绝。
+
+若条件允许，增加有针对性的 ASan/UBSan 小型检查；如果无法执行，明确写未覆盖，不得宣称 sanitizer 通过。
+
+不要自行扩大为整个 RMC 的大规模 sanitizer 测试工程。
+
+## 十、归档与交付
+
+按照项目最新规范，为本次 P1 建立一个小型、独立、可审查的缺陷任务。
+
+Git 仓库只需保存：
+
+1. `README.md`：目标、修改范围、结果、结论和边界。
+2. `source-audit.md`：实际源码依据及修改位置。
+3. `correction.diff`：仅本轮实际增量。
+4. `negative-results.json`：新增负例的关键判定。
+5. `regression-results.json`：必要动态回归的汇总。
+6. `evidence-manifest.json`：本地原始数据和哈希。
+7. 必要的精炼测试输入及最终结论。
+
+原始 stdout/stderr、详细 snapshots、GDB、构建中间文件和重复日志保留本地，不要将整个 `/tmp` 测试目录打包提交。
+
+GitHub 归档应尽可能控制在几十个关键文件以内。
+
+同步 STATUS/INDEX 时只记录本次结果和任务指针，不重复复制完整源码报告。
+
+保留旧 Task05/Task07/Task08 历史证据与结论。
+
+## 十一、完成判定与停止条件
+
+完成后明确回答：
+
+1. 所有 neutron energy-bin 外层/内层索引是否已经受到保护？
+2. 末端等值能量是否正确映射到合法 WW 区间？
+3. 是否兼容原生 `INFINITY_ENERGY` 终止边界？
+4. 新增非法形状测试是否真正命中生产 guard？
+5. 拒绝是否发生在 CLEAR 之前？
+6. 普通 native WW 是否保持原行为？
+7. FF、FAF、AA、WW 连续计算是否仍逐次与 fresh 一致？
+8. 是否存在新的 P0/P1 问题？
+9. 是否建议提交 Claude 独立最终复核？
+
+结论使用：
+
+- `READY FOR INDEPENDENT REVIEW`
+- `NEEDS CORRECTION`
+- `BLOCKED`
+
+不要自行将 Stage 2 标记为最终 ACCEPT。
+
+**完成定向修复后停止。不得自行 commit/push RMC，不得冻结 Stage 2，不得自动启动 Stage 3。**
+
+待 Claude 独立复核确认 P1 关闭后，再由用户决定是否正式验收和提交 Stage 2。

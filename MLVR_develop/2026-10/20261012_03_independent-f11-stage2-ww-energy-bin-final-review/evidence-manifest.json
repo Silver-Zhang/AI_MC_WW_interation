@@ -1,0 +1,36 @@
+{
+  "schema": "independent-ww-final-review-v1",
+  "review_mode": "read-only",
+  "classification": "NEEDS CORRECTION",
+  "rmc": {
+    "branch": "Neural_Network_WW_Iteration",
+    "head": "330f091eb0296e0d0124237ba7d9a22b81aee852",
+    "stage2_state": "local uncommitted working tree; not committed, pushed, reset, checked out, or cleaned by this review"
+  },
+  "reviewed_task02": {
+    "path": "../20261012_02_f11-ww-energy-bin-safety",
+    "reported": {
+      "negative_cases": "78/78",
+      "lookup_cases": "15/15",
+      "targeted_sanitizer": "80/80",
+      "persistent_fresh_pairs": 38,
+      "ctest": "10/10"
+    },
+    "classification": "artifact-verified; counts independently recomputed; not independently rerun"
+  },
+  "source_findings": [
+    "P1-WW-01: raw MG nonfinite particle energy converts before lookup finite guard",
+    "P1-WW-02: direct installer does not independently validate lower values and derived bounds",
+    "P2-WW-03: MPI shared lookup lacks serial branch shape/index checks"
+  ],
+  "review_files": [
+    "README.md",
+    "Independent_F11_Stage2_WW_Final_Review.md",
+    "logs/pre-review-criteria.md",
+    "logs/source-audit.md",
+    "logs/negative-gate-review.md",
+    "logs/regression-review.md",
+    "logs/independent-comparison.md",
+    "logs/risk-register.md"
+  ]
+}
