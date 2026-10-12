@@ -98,3 +98,4 @@ PY
 echo "已建档: $DIR"
 echo "任务模式: $MODE_LABEL"
 echo "下一步: 把原始材料（报错/数据/日志）保存到 $DIR/logs/"
+echo "提醒: 归档时只提炼结论/结果入库；过程文件默认留本地不入库（MLVR_develop/README.md §7）"
