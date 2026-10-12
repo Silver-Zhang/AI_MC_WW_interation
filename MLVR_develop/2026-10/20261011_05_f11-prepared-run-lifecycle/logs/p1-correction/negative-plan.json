@@ -1,0 +1,676 @@
+[
+  {
+    "name": "upper-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-2-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "2",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "upper-2-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "2",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN"
+  },
+  {
+    "name": "survival-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-5-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "5",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-5-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "5",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-6-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "6",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "survival-6-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "6",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "split-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-1.5-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1.5",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-1.5-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1.5",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-2147483648-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "2147483648",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "split-2147483648-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "2147483648",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN"
+  },
+  {
+    "name": "combination-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "3",
+      "--ww-survival",
+      "4",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "combination-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "3",
+      "--ww-survival",
+      "4",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN"
+  },
+  {
+    "name": "derived-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e308",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival"
+  },
+  {
+    "name": "derived-rounding",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "denorm",
+      "--ww-survival",
+      "1.0000000000000002",
+      "--ww-before-bind",
+      "yes",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival"
+  },
+  {
+    "name": "split-product-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e300",
+      "--ww-split",
+      "1000000000",
+      "--ww-before-bind",
+      "yes",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival"
+  },
+  {
+    "name": "split-ratio-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e-100",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "splitting ratio exceeds int range"
+  },
+  {
+    "name": "universe-origin",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-origin",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed"
+  },
+  {
+    "name": "universe-rotation",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-rotation",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed"
+  },
+  {
+    "name": "universe-membership",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-membership",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed"
+  },
+  {
+    "name": "universe-fill",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-fill",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed"
+  },
+  {
+    "name": "universe-random",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-random",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "unsupported Universe"
+  }
+]

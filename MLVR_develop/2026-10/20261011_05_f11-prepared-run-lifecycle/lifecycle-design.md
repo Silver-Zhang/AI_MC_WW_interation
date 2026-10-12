@@ -314,3 +314,7 @@ driver使用全局`OCalMode`，另以明确名字`runRng`持有并传递实际RN
 
 
 截止值补充核对：初次cutoffs检查发现Forward中未启用的伴随上限保留了spec的30 MeV，而普通Forward字段默认20 MeV。虽此前逐history数值已相等，仍在已批准的SetPreparedRun内明确恢复20 MeV；Adjoint继续将本次物理30 MeV定位为内部群1，回Forward恢复20而不是重复转换群1。最终全量gates-04同时严格比较这些字段，原差异记录保留在logs/cutoffs。
+
+## 7. 2026-10-12 P1入口完整性修正
+
+用户已授权的定向修复见[方案/事实](logs/p1-correction/source-audit.md)。只改PrepareFixedSourceRun.cpp与原测试driver：Universe逐字段稳定指纹覆盖membership、neighbor、fill、变换及普通lattice定义；随机/未覆盖Universe显式拒绝。WW参数于Initialize和每轮CLEAR前检查，保持固定WWP合同。采用原手册WUPN>2、1<WSURVN<WUPN、MXSPLN>1；double存储的最大分裂数必须为int可表示整数。派生三界严格递增、有限，并检查原split int转换及乘法边界。普通parser和输运公式不变。新证据单独保存于logs/p1-correction；原Task07结论保留，最终判定以本任务§4为准。

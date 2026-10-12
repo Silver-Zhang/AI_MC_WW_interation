@@ -1,0 +1,655 @@
+diff --git a/RMC/src/FixedSourceRunSpec.h b/RMC/src/FixedSourceRunSpec.h
+new file mode 100644
+index 0000000..7bf7b69
+--- /dev/null
++++ b/RMC/src/FixedSourceRunSpec.h
+@@ -0,0 +1,46 @@
++/// Restricted persistent fixed-source contract. No model ownership.
++#ifndef RMC_FIXED_SOURCE_RUN_SPEC_H
++#define RMC_FIXED_SOURCE_RUN_SPEC_H
++#include <cstdint>
++#include <string>
++#include <vector>
++enum class FixedSourceRole { Forward, Adjoint };
++struct FixedSourceSeriesSpec {
++  std::uint64_t rootSeed = 17, stride = 100000, firstHistoryOffset = 0;
++};
++struct FixedSourceWeightWindowSpec {
++  bool enabled = false;
++  FixedSourceRole appliesToTransportRole = FixedSourceRole::Forward;
++  std::string identity;
++  std::vector<double> lower;
++};
++struct FixedSourceRunSpec {
++  std::uint64_t runId = 0;
++  FixedSourceRole role = FixedSourceRole::Forward;
++  long long sourceHistories = 0;
++  double maxAdjointEnergyMeV = 30.;
++  std::string sourceIdentity;
++  FixedSourceWeightWindowSpec weightWindow;
++};
++struct FixedSourceWeightAudit {
++  long long sampledHistories = 0, nonUnitHistories = 0;
++  double initialWeightSum = 0., minimumInitialWeight = 0., maximumInitialWeight = 0.;
++};
++struct FixedSourceRunReceipt {
++  std::uint64_t runId = 0;
++  FixedSourceRole role = FixedSourceRole::Forward;
++  long long requestedHistories = 0, completedHistories = 0;
++  double normalizationDenominator = 0.;
++  FixedSourceWeightAudit sourceWeightAudit;
++  bool unitSourceWeightsVerified = false;
++  double prepareSeconds = 0., transportSeconds = 0., tallyFinalizeSeconds = 0., mcSeconds = 0.;
++  double measuredMcSeconds = 0.; // independent t3-t0 rounding check
++  std::string timingScope = "prepare+transport+finalize";
++  std::string statisticsTimingScope = "legacy_mixed_not_per_run";
++  bool statisticsFomIsRunMetric = false;
++  std::uint64_t rootSeed = 0, effectiveSeed = 0, stride = 0, historyOffset = 0, finalSeed = 0;
++  std::uint64_t maximumHistoryDraws = 0;
++  long long finalPosition = 0, finalPositionPre = 0, batches = 0, collisions = 0, missedParticles = 0;
++  std::string sourceIdentity, weightWindowIdentity;
++};
++#endif
+diff --git a/RMC/src/PrepareFixedSourceRun.cpp b/RMC/src/PrepareFixedSourceRun.cpp
+new file mode 100644
+index 0000000..7b76fdd
+--- /dev/null
++++ b/RMC/src/PrepareFixedSourceRun.cpp
+@@ -0,0 +1,308 @@
++/// Restricted persistent fixed-source lifecycle. Transport remains in the Stage 1 core.
++#include "CalMode.h"
++#include "Utility/Timer.h"
++#include <chrono>
++#include <cmath>
++#include <climits>
++#include <stdexcept>
++#include <sstream>
++#include <iomanip>
++#ifdef __linux__
++#include <fcntl.h>
++#include <unistd.h>
++#endif
++
++namespace {
++bool validPreparedFile(FILE *file) {
++#ifdef __linux__
++  return file && fcntl(fileno(file), F_GETFD) != -1;
++#else
++  return false;
++#endif
++}
++std::vector<const void *> outputHandles() {
++  return {Output.p_fpOutputFilePtr, Output.p_fpTallyFilePtr, Output.p_fpMatFilePtr,
++          Output.p_Result, Output.p_Infomation, Output.p_State};
++}
++const CDCalMode *preparedProcessOwner = nullptr; // terminal reservation, including Closed/Failed
++void requirePrepared(bool ok, const char *message) {
++  if (!ok) throw std::invalid_argument(std::string("prepared: ") + message);
++}
++template<class T> void values(std::ostream &out, const std::vector<T> &v) {
++  out << v.size() << ':';
++  for (const auto &x : v) out << x << ',';
++}
++template<class T> void values(std::ostream &out, const std::vector<std::vector<T>> &v) {
++  out << v.size() << ':';
++  for (const auto &x : v) values(out, x);
++}
++void meshDefinition(std::ostream &out, const CDMesh &m) {
++  out << m.p_nGeoType << m.p_bIsHeterMesh << m.p_bUseVol << m.p_nTotMeshNum;
++  for (int i = 0; i < 3; ++i)
++    out << '/' << m.p_nMeshScope[i] << '/' << m.p_nMeshNum[i] << '/' << m.p_dBoundMin[i]
++        << '/' << m.p_dBoundMax[i] << '/' << m.p_dMeshDelt[i];
++  values(out, m.p_vMeshNum); values(out, m.p_vMeshBound);
++}
++std::string definition(CDAceData &ace, CDMaterial &material, CDGeometry &geometry, CDTally &tally) {
++  std::ostringstream out; out << std::hexfloat;
++  out << ace.p_nNeuMltGrpNum << '/' << ace.p_nPhoMltGrpNum << '/' << ace.p_vNuclides.size();
++  values(out, ace.p_vNeuMltErgBins); values(out, ace.p_vPhoMltErgBins);
++  // Identity plus all raw arrays; role-derived arrays deliberately excluded.
++  for (size_t i = 1; i < ace.p_vNuclides.size(); ++i) {
++    const auto &n = ace.p_vNuclides[i];
++    out << &n << '/' << n.XSS.data() << '/' << n.PXSS.data();
++    values(out, n.XSS); values(out, n.PXSS); values(out, n.NXS); values(out, n.JXS); values(out, n.PNXS); values(out, n.PJXS);
++  }
++  out << geometry.p_vCell.size() << '/' << geometry.p_vUniverse.size() << '/' << geometry.p_vSurface.size();
++  for (const auto &mat : material.p_vMatSet) {
++    values(out, mat.p_vMatNucIndex); values(out, mat.p_vMatNucAtomDen);
++    out << mat.p_dMatAtomDen << '/' << mat.p_dMatGramDen;
++  }
++  for (size_t i = 1; i < geometry.p_vCell.size(); ++i) {
++    const auto &c = geometry.p_vCell[i];
++    out << c.p_nFillUnivIndex << '/' << c.p_nMatIndex << '/' << c.p_dNeuImp << '/' << c.p_dTemp << '/' << c.p_dDensRatio;
++    values(out, c.p_vBoundSurf); values(out, c.p_vBooleanSurfaces);
++    for (int j = 0; j < 3; ++j) {
++      out << c.p_dMove[j] << '/' << c.p_dFillMove[j];
++      for (int k = 0; k < 3; ++k) out << c.p_dRotation[j][k] << '/' << c.p_dFillRotation[j][k];
++    }
++  }
++  for (size_t i = 1; i < geometry.p_vSurface.size(); ++i) {
++    const auto &s = geometry.p_vSurface[i];
++    out << s.p_nType << '/' << s.p_nBoundCond << '/' << s.p_nPairSurf;
++    values(out, s.p_vParas);
++  }
++  auto base = [&](const BaseTally &t) {
++    out << t.p_nTallyID << '/' << t.tallyType->type << '/' << int(t.estimator) << '/' << t.p_nTallyParticle
++        << '/' << t.p_nDataStartPtr << '/' << t.p_nDataLen << '/' << t.p_bUseStatisticalCheck;
++  };
++  for (const auto &t : tally.p_vCellTally) { base(t); values(out, t.p_vErgBins); values(out, t.p_vCellVecListU); }
++  for (const auto &t : tally.p_vMeshTally) { base(t); values(out, t.p_vErgBins); meshDefinition(out, t.p_OTallyMesh); }
++  for (const auto *d : tally.p_pTallyDataPointer) {
++    out << d << '/' << d->p_vScore.size() << '/' << d->p_vSum1.size() << '/' << d->p_vSum3.size();
++    const auto &s = d->p_OStatisticsTester;
++    out << s.p_nBatch << '/' << s.p_nTallyToCheck << '/' << s.p_npdfBin;
++    values(out, s.p_vIndexOfTallyData);
++  }
++  meshDefinition(out, OWeightWindow.p_OWeightWindowMesh);
++  values(out, OWeightWindow.p_vEnergyBins); values(out, OWeightWindow.p_vWeightWindowPara);
++  return out.str();
++}
++void checkProfile(CDCalMode &mode, CDAceData &ace, CDFixedSource &fixed, CDGeometry &geometry,
++                  CDTally &tally, CDSampling &sampling, CDPerturbation &perturb) {
++#if defined(USE_MPI) || defined(USE_OMP) || defined(AIS) || defined(USE_PYTHON_API) || !defined(__linux__)
++  throw std::invalid_argument("prepared: requires Linux serial standard MGACE build without AIS/Python");
++#endif
++  requirePrepared(mode.p_nRmcCalcMode == CDCalMode::FixedSourceMode && mode.p_nParticleMode == CDCalMode::NeutronMode,
++                  "only neutron fixed-source mode is supported");
++  requirePrepared(!mode.p_bSkipCalculation && !mode.p_bDagmc && !geometry.p_bDagmc && !geometry.p_bPBS &&
++                  geometry.p_vCLSUniverse.empty(), "unsupported geometry/calculation option");
++  requirePrepared(ace.p_bIsMultiGroup && ace.p_bIsMultiGroupNeu && !ace.p_bTMS && !ace.p_bUseOtfDb,
++                  "only standard MGACE without TMS/OTFDB is supported");
++  requirePrepared(!sampling.p_bIsSampling && !sampling.p_bIsBurn && !perturb.p_bDiffrOprt && !perturb.p_bDiffrOprtForTMP,
++                  "sampling/perturbation unsupported");
++  requirePrepared(!Output.p_bRestart && !Output.p_bIsWriteSurfSrc && Output.p_dStopTime <= 0. &&
++                  Output.p_llOutRestartInterval == 0 && fixed.LBMethod == CDFixedSource::NONE &&
++                  !fixed.p_bFissMult && fixed.p_vFissMult.empty(), "restart/time/fission-multiplicity unsupported");
++  requirePrepared(!OParticleTracker.p_bPtracOpen, "PTRAC unsupported");
++  requirePrepared(!OWeightWindow.p_bUseMCNPweightwindow && !OWeightWindow.p_bWeightWindowGeneratorOn &&
++                  (mode.p_nVarRedMode[1] == CDCalMode::CellImportance || mode.p_nVarRedMode[1] == CDCalMode::TrackMeshWeightWindow),
++                  "only native track-mesh WW or analog supported");
++  requirePrepared(!tally.p_bCap && !tally.p_bIsWithSurfTally && !tally.p_bIsWithPointTally &&
++                  !tally.p_bIsWithCsTally && !tally.p_bIsWithFETTally && !tally.p_bIsWithDFTally && !tally.p_bIsWithMaterialTally && !tally.p_bIsWithXSCalculation,
++                  "only cell and Cartesian mesh tally supported");
++  auto base = [](const BaseTally &t) {
++    requirePrepared(t.tallyType->type == 1 && t.p_nTallyParticle == 1 &&
++        t.estimator == BaseTally::TallyEstimator::TRACKLENGTH && t.p_dAbsoluteValue == 0., "only neutron TL flux tally supported");
++  };
++  for (const auto &t : tally.p_vCellTally) {
++    base(t); requirePrepared(t.p_vCAPNucZaid.empty() && t.p_vTimeBins.empty() && t.p_vDose.empty() &&
++                            t.p_vGaussian.empty(), "special cell tally unsupported");
++    // Existing ScoreCellTally SCHECK+energy-bin normalization can access missing volume data.
++    // Keep that legacy path unchanged and reject it in this restricted entry.
++    requirePrepared(!(tally.p_bUseStatisticsCheck && t.p_bUseStatisticalCheck && !t.p_vErgBins.empty()),
++                    "energy-binned cell SCHECK unsupported; use a separate total-flux diagnostic tally");
++  }
++  for (const auto &t : tally.p_vMeshTally) {
++    base(t); requirePrepared(t.p_OTallyMesh.p_nGeoType == CDMesh::CUBOID && t.p_OTallyMesh.p_bUseVol && t.p_vDose.empty(),
++                            "Cartesian mesh Normalize=1 without dose required");
++  }
++}
++void checkBanks(CDFixedSource &fixed) {
++  for (size_t i = 0; i < fixed.p_vFixedParticleSrcBank.size(); ++i)
++    requirePrepared(fixed.p_vFixedParticleSrcBank[i].size() <= (i == 1 ? 1U : 0U), "live descendant bank remains");
++  requirePrepared(fixed.p_nFixedSrcCount == fixed.p_llCurTotParNum && fixed.p_nPhotonBankCount == 0 && fixed.p_nElectronBankCount == 0,
++                  "live legacy bank remains");
++}
++}
++
++void CDCalMode::CheckOrdinaryFixedSourceAllowed() const {
++  requirePrepared(preparedProcessOwner == nullptr, "ordinary fixed-source cannot reuse a prepared process");
++}
++
++void CDCalMode::InitializePreparedFixedSourceRuns(const FixedSourceSeriesSpec &series, CDNeutronTransport &neutron, CDPhotonTransport &photon,
++      CDElectronTransport &electron, CDAceData &ace, CDFixedSource &fixed,
++      CDMaterial &material, CDGeometry &geometry, CDParticleState &particle, CDTally &tally, CDBurnup &burnup, CDRNG &rng, CDCriticality &criticality,
++      CDSampling &sampling, CDPerturbation &perturb) {
++  requirePrepared(this == &OCalMode && preparedPhase == PreparedPhase::Uninitialized && !preparedProcessOwner,
++                  "prepared process/model already initialized or wrong CalMode owner");
++  checkProfile(*this, ace, fixed, geometry, tally, sampling, perturb);
++  requirePrepared(!burnup.p_bIsWithBurnup && tally.p_pTallyDataPointer.empty(), "requires a fresh uninitialized model");
++  requirePrepared(rng.GetRNGType() == CDRNG::rngLCG63_0, "Type2 RNG required");
++  CDRNG::ValidatePreparedType2Substream(series.rootSeed, series.firstHistoryOffset, 1, series.stride);
++  requirePrepared(neutron.p_dWgtCutOff == 0.25 && neutron.p_dStartWgt == 1., "special weight policy unsupported");
++  for (const auto &t : tally.p_vMeshTally)
++    requirePrepared(t.p_vErgBins == std::vector<double>{-1.}, "mesh ENERGY=-1 required");
++  for (const auto &surface : geometry.p_vSurface)
++    requirePrepared(!surface.p_bMove, "moving geometry unsupported");
++  preparedEnergyCutoff = neutron.p_dEg0CutOff;
++  preparedWeightCutoff = neutron.p_dWgtCutOff;
++  preparedHasWW = OWeightWindow.p_bUseMeshWeightWindow;
++  preparedProcessOwner = this;
++  preparedPhase = PreparedPhase::Preparing;
++  try {
++    // Initialize forward exactly once; the first requested role is installed by Prepare.
++    fixed.p_bIsAdjoint = false;
++    ace.p_bIsAdjoint = false;
++    InitializeFixedSourceModel(*this, neutron, photon, electron, ace, fixed, material, geometry,
++                               particle, tally, burnup, rng, sampling, perturb);
++    requirePrepared(!ace.HasNonzeroPreparedFissionProduction(material), "nonzero/nonfinite nuSigmaF unsupported");
++    preparedOwners = {&neutron, &photon, &electron, &ace, &fixed, &material, &geometry, &particle,
++                      &tally, &rng, &criticality, &sampling, &perturb, &burnup};
++    preparedRegistry = tally.p_pTallyDataPointer;
++    for (auto *d : preparedRegistry)
++      requirePrepared(d == &tally.p_OCellTallyData || d == &tally.p_OMeshTallyData, "invalid tally registry owner");
++    preparedDefinition = definition(ace, material, geometry, tally);
++    preparedOutput = Output.p_fpOutputFilePtr;
++    preparedOutputHandles = outputHandles();
++    preparedTreatFission = neutron.p_bTreatFission;
++    requirePrepared(validPreparedFile(preparedOutput), "invalid output handle");
++    preparedSeries = series; preparedNextOffset = series.firstHistoryOffset;
++    OTimer.reg(Utility::FixedSource); OTimer.reg(Utility::Tally);
++    preparedPhase = PreparedPhase::ModelReady;
++  } catch (...) { preparedPhase = PreparedPhase::Failed; throw; }
++}
++
++void CDCalMode::PrepareFixedSourceRun(const FixedSourceRunSpec &spec, const CDExternalSource &source,
++    CDExternalSource &activeSource, CDNeutronTransport &neutron, CDAceData &ace,
++    CDFixedSource &fixed, CDMaterial &material, CDGeometry &geometry,
++    CDParticleState &particle, CDTally &tally, CDRNG &rng) {
++  // All rejecting input checks occur in Run before the first CLEAR below.
++  fixed.ResetRunState(); neutron.ResetPreparedRunCounters(preparedWeightCutoff);
++  tally.ResetRunScores(spec.sourceHistories); ace.ClearPreparedDerivedData();
++  particle.ResetForFixedSourceRun(); OWeightWindow.ClearPreparedNativeState();
++  OTimer[Utility::FixedSource].ResetForPreparedRun(); OTimer[Utility::Tally].ResetForPreparedRun();
++  fixed.SetPreparedRun(spec.sourceHistories, spec.role, spec.maxAdjointEnergyMeV);
++  fixed.InitiateTrspt(neutron);
++  activeSource.ResetWorkingSourceFrom(source);
++  ace.PrepareFixedSourceMode(spec.role, p_nParticleMode);
++  fixed.RebuildPreparedRunCutoffs(ace);
++  OWeightWindow.InstallPreparedNativeState(spec.weightWindow, spec.role, geometry, *this, neutron, preparedWeightCutoff);
++  particle.RebuildForFixedSourceRun(geometry, material, ace, spec.role, preparedEnergyCutoff, neutron.p_dWgtCutOff);
++  rng.ConfigurePreparedType2Substream(preparedSeries.rootSeed, preparedNextOffset, spec.sourceHistories, preparedSeries.stride);
++}
++
++FixedSourceRunReceipt CDCalMode::RunPreparedFixedSource(const FixedSourceRunSpec &spec,
++    const CDExternalSource &source, CDNeutronTransport &neutron, CDPhotonTransport &photon,
++      CDElectronTransport &electron, CDAceData &ace, CDFixedSource &fixed,
++      CDMaterial &material, CDGeometry &geometry, CDParticleState &particle, CDTally &tally, CDRNG &rng, CDCriticality &criticality,
++      CDSampling &sampling, CDPerturbation &perturb) {
++  requirePrepared(preparedProcessOwner == this &&
++      (preparedPhase == PreparedPhase::ModelReady || preparedPhase == PreparedPhase::Finalized), "Run in invalid lifecycle state");
++  using Clock = std::chrono::steady_clock;
++  const auto t0 = Clock::now();
++  std::vector<const void *> owners = {&neutron, &photon, &electron, &ace, &fixed, &material, &geometry, &particle,
++                                     &tally, &rng, &criticality, &sampling, &perturb, preparedOwners.back()};
++  requirePrepared(owners == preparedOwners, "wrong bound owner");
++  requirePrepared(spec.role == FixedSourceRole::Forward || spec.role == FixedSourceRole::Adjoint, "invalid role");
++  requirePrepared(!preparedHasRun || spec.runId > preparedLastRunId, "runId must increase");
++  requirePrepared(spec.sourceHistories > 0 && spec.sourceHistories <= INT_MAX / 2, "population exceeds bank capacity contract");
++  requirePrepared(std::isfinite(spec.maxAdjointEnergyMeV) && spec.maxAdjointEnergyMeV > 0., "invalid adjoint physical energy");
++  requirePrepared(!spec.sourceIdentity.empty(), "source identity required");
++  requirePrepared(rng.GetRNGType() == CDRNG::rngLCG63_0, "Type2 RNG required");
++  const auto seed = CDRNG::ValidatePreparedType2Substream(preparedSeries.rootSeed, preparedNextOffset,
++                                                        spec.sourceHistories, preparedSeries.stride);
++  checkProfile(*this, ace, fixed, geometry, tally, sampling, perturb);
++  requirePrepared(tally.p_pTallyDataPointer == preparedRegistry &&
++      definition(ace, material, geometry, tally) == preparedDefinition, "model/tally/WW definition changed");
++  requirePrepared(Output.p_fpOutputFilePtr == preparedOutput && validPreparedFile(preparedOutput) &&
++                  outputHandles() == preparedOutputHandles,
++                  "output handle changed/closed");
++  requirePrepared(!OTimer[Utility::FixedSource].running && !OTimer[Utility::Tally].running, "run timer still running");
++  requirePrepared(neutron.p_dEg0CutOff == preparedEnergyCutoff && neutron.p_bTreatFission == preparedTreatFission,
++                  "neutron physics changed");
++  source.CheckPreparedSourceDefinition(geometry);
++  const auto &energies = ace.p_vNeuMltErgBins;
++  const double energy = source.p_vSource.front().p_dEnergy;
++  requirePrepared(!energies.empty() && energy >= *std::min_element(energies.begin(), energies.end()) &&
++                  energy <= *std::max_element(energies.begin(), energies.end()), "source energy outside model groups");
++  for (auto *d : preparedRegistry)
++    if (d->p_OStatisticsTester.p_nTallyToCheck)
++      requirePrepared(spec.sourceHistories >= d->p_OStatisticsTester.p_nBatch &&
++                      spec.sourceHistories % d->p_OStatisticsTester.p_nBatch == 0, "statistics requires complete batches");
++  const auto &ww = spec.weightWindow;
++  requirePrepared(ww.appliesToTransportRole == spec.role, "WW role mismatch");
++  if (ww.enabled) {
++    requirePrepared(preparedHasWW && OWeightWindow.p_OWeightWindowMesh.p_nGeoType == CDMesh::CUBOID, "no fixed Cartesian WW topology");
++    const auto &bins = OWeightWindow.p_vEnergyBins[1];
++    requirePrepared(bins.size() >= 2 && ww.lower.size() ==
++                    size_t(OWeightWindow.p_OWeightWindowMesh.GetTotMeshNum()) * (bins.size() - 1), "WW shape mismatch");
++    const auto &para = OWeightWindow.p_vWeightWindowPara[1];
++    requirePrepared(para.size() >= 8 && !ww.identity.empty(), "WW parameter/identity missing");
++    for (auto x : ww.lower)
++      requirePrepared(std::isfinite(x) && x > 0. && std::isfinite(x * para[CDWeightWindow::WUPN]) &&
++                      std::isfinite(x * para[CDWeightWindow::WSURVN]), "invalid WW lower/upper/survival");
++  } else requirePrepared(ww.lower.empty(), "disabled WW must have no lower values");
++  if (preparedHasRun) checkBanks(fixed);
++  CDExternalSource activeSource;
++  preparedPhase = PreparedPhase::Preparing;
++  try {
++    PrepareFixedSourceRun(spec, source, activeSource, neutron, ace, fixed, material, geometry, particle, tally, rng);
++    OTimer[Utility::FixedSource].start();
++    preparedPhase = PreparedPhase::Executing;
++    const auto t1 = Clock::now();
++    ExecuteFixedSourcePrepared(*this, neutron, photon, electron, ace, fixed, material, geometry, particle,
++                               tally, rng, criticality, activeSource, sampling, perturb);
++    const auto t2 = Clock::now();
++    preparedPhase = PreparedPhase::Finalizing;
++    fixed.VerifyPreparedSourceWeights(spec.sourceHistories);
++    requirePrepared(fixed.p_llCurTotParNum == spec.sourceHistories && fixed.p_dTotStartWgt == double(spec.sourceHistories),
++                    "completed histories/statistical denominator mismatch");
++    FinalizeFixedSourceRun(fixed, material, ace, tally);
++    requirePrepared(fixed.p_dTotStartWgt == double(spec.sourceHistories), "finalize changed denominator");
++    checkBanks(fixed);
++    auto maxDraws = rng.FinishPreparedType2Substream();
++    fixed.FinishPreparedSourceWeightAudit(spec.sourceHistories);
++    OTimer[Utility::FixedSource].stop();
++    const auto t3 = Clock::now();
++    FixedSourceRunReceipt receipt;
++    receipt.runId = spec.runId; receipt.role = spec.role;
++    receipt.requestedHistories = spec.sourceHistories; receipt.completedHistories = fixed.p_llCurTotParNum;
++    receipt.normalizationDenominator = fixed.p_dTotStartWgt;
++    receipt.sourceWeightAudit = fixed.GetPreparedSourceWeightAudit(); receipt.unitSourceWeightsVerified = true;
++    receipt.prepareSeconds = std::chrono::duration<double>(t1-t0).count();
++    receipt.transportSeconds = std::chrono::duration<double>(t2-t1).count();
++    receipt.tallyFinalizeSeconds = std::chrono::duration<double>(t3-t2).count();
++    receipt.mcSeconds = receipt.prepareSeconds + receipt.transportSeconds + receipt.tallyFinalizeSeconds;
++    receipt.measuredMcSeconds = std::chrono::duration<double>(t3-t0).count();
++    receipt.rootSeed = preparedSeries.rootSeed; receipt.effectiveSeed = seed; receipt.stride = preparedSeries.stride;
++    receipt.historyOffset = preparedNextOffset; receipt.finalSeed = rng.GetSeed(); receipt.maximumHistoryDraws = maxDraws;
++    receipt.finalPosition = rng.GetPosition(); receipt.finalPositionPre = rng.GetPositionPre();
++    receipt.batches = fixed.p_llCurrentBatch; receipt.collisions = fixed.p_llTotCollisionCount;
++    receipt.missedParticles = neutron.p_nMissParticleCount;
++    receipt.sourceIdentity = spec.sourceIdentity; receipt.weightWindowIdentity = ww.identity;
++    preparedNextOffset += spec.sourceHistories; preparedLastRunId = spec.runId; preparedHasRun = true;
++    preparedPhase = PreparedPhase::Finalized;
++    return receipt;
++  } catch (...) {
++    OTimer[Utility::FixedSource].stop(); OTimer[Utility::Tally].stop();
++    preparedPhase = PreparedPhase::Failed;
++    throw; // no receipt; failed series cannot resume or reclaim its RNG segment
++  }
++}
++void CDCalMode::FinishPreparedFixedSourceRuns() {
++  requirePrepared(preparedProcessOwner == this &&
++      (preparedPhase == PreparedPhase::ModelReady || preparedPhase == PreparedPhase::Finalized), "Finish in invalid lifecycle state");
++  preparedPhase = PreparedPhase::Closed;
++  // OutputEnding and process-global handles belong to the caller, exactly once.
++}
+diff --git a/RMC/tests/prepared_fixed_source_lifecycle/CMakeLists.txt b/RMC/tests/prepared_fixed_source_lifecycle/CMakeLists.txt
+new file mode 100644
+index 0000000..d1a509e
+--- /dev/null
++++ b/RMC/tests/prepared_fixed_source_lifecycle/CMakeLists.txt
+@@ -0,0 +1,25 @@
++get_target_property(prepared_sources RMC SOURCES)
++set(original_main "${PROJECT_SOURCE_DIR}/src/main.cpp")
++set(main_count 0)
++foreach(src IN LISTS prepared_sources)
++  if(src STREQUAL original_main)
++    math(EXPR main_count "${main_count}+1")
++  endif()
++endforeach()
++if(NOT main_count EQUAL 1)
++  message(FATAL_ERROR "Prepared harness expected exactly one production main.cpp")
++endif()
++list(REMOVE_ITEM prepared_sources "${original_main}")
++add_executable(RMCPreparedLifecycle ${prepared_sources} driver.cpp globals.cpp)
++target_link_libraries(RMCPreparedLifecycle ${libraries})
++foreach(prop COMPILE_DEFINITIONS COMPILE_OPTIONS INCLUDE_DIRECTORIES)
++  get_target_property(value RMC ${prop})
++  if(value)
++    set_property(TARGET RMCPreparedLifecycle PROPERTY ${prop} "${value}")
++  endif()
++endforeach()
++set_property(TARGET RMCPreparedLifecycle APPEND_STRING PROPERTY LINK_FLAGS
++             " -Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/prepared-link.map")
++file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/prepared-sources.txt"
++     CONTENT "$<JOIN:$<TARGET_PROPERTY:RMCPreparedLifecycle,SOURCES>,\n>\n")
++add_test(NAME prepared_source_weight_audit COMMAND RMCPreparedLifecycle --mode source-weight-audit-selftest)
+diff --git a/RMC/tests/prepared_fixed_source_lifecycle/driver.cpp b/RMC/tests/prepared_fixed_source_lifecycle/driver.cpp
+new file mode 100644
+index 0000000..7ab4b4e
+--- /dev/null
++++ b/RMC/tests/prepared_fixed_source_lifecycle/driver.cpp
+@@ -0,0 +1,209 @@
++// Public-API integration harness. There is no transport loop in this file.
++#include "CalMode.h"
++#include "Input.h"
++#include "Utility/Timer.h"
++#include "Utility/IO/Logger.h"
++#include "rmc/file/hdf5/HDF5.hpp"
++#include <fstream>
++#include <sstream>
++#include <iomanip>
++#include <iostream>
++#include <stdexcept>
++#include <limits>
++#include <chrono>
++#include <thread>
++#include <dirent.h>
++using RMC::IO::OLogger;
++using RMC::IO::OProcLogger;
++namespace {
++std::map<std::string,std::string> options;
++std::string option(const std::string &name, const std::string &fallback = "") {
++  auto it = options.find(name); return it == options.end() ? fallback : it->second;
++}
++void receipt(const FixedSourceRunReceipt &r, const std::string &dir) {
++  std::ofstream out(dir + "/receipt-" + std::to_string(r.runId) + ".json");
++  if (!out) throw std::runtime_error("cannot open receipt output");
++  out << std::setprecision(17) << "{\n";
++#define NUMBER(x) out << "\"" #x "\":" << r.x << ",\n"
++  NUMBER(runId); out << "\"role\":\"" << (r.role == FixedSourceRole::Forward ? "F" : "A") << "\",\n";
++  NUMBER(requestedHistories); NUMBER(completedHistories); NUMBER(normalizationDenominator);
++  NUMBER(prepareSeconds); NUMBER(transportSeconds); NUMBER(tallyFinalizeSeconds); NUMBER(mcSeconds); NUMBER(measuredMcSeconds);
++  NUMBER(rootSeed); NUMBER(effectiveSeed); NUMBER(stride); NUMBER(historyOffset); NUMBER(finalSeed);
++  NUMBER(maximumHistoryDraws); NUMBER(finalPosition); NUMBER(finalPositionPre); NUMBER(batches); NUMBER(collisions); NUMBER(missedParticles);
++#undef NUMBER
++  out << "\"sourceWeightAudit\":{\"sampledHistories\":" << r.sourceWeightAudit.sampledHistories
++      << ",\"nonUnitHistories\":" << r.sourceWeightAudit.nonUnitHistories
++      << ",\"initialWeightSum\":" << r.sourceWeightAudit.initialWeightSum
++      << ",\"minimumInitialWeight\":" << r.sourceWeightAudit.minimumInitialWeight
++      << ",\"maximumInitialWeight\":" << r.sourceWeightAudit.maximumInitialWeight << "},\n"
++      << "\"unitSourceWeightsVerified\":" << (r.unitSourceWeightsVerified ? "true" : "false") << ",\n"
++      << "\"timingScope\":\"" << r.timingScope << "\",\n"
++      << "\"statisticsTimingScope\":\"" << r.statisticsTimingScope << "\",\n"
++      << "\"statisticsFomIsRunMetric\":" << (r.statisticsFomIsRunMetric ? "true" : "false") << ",\n"
++      << "\"sourceIdentity\":\"" << r.sourceIdentity << "\",\n"
++      << "\"weightWindowIdentity\":\"" << r.weightWindowIdentity << "\"\n}\n";
++}
++void auditSelftest() {
++  int passed = 0;
++  for (double weight : {2., 0., -1., std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::infinity()}) {
++    CDFixedSource f; f.ResetRunState(); f.SetPreparedRun(1, FixedSourceRole::Forward, 30.);
++    bool rejected = false;
++    try { f.CheckAndRecordPreparedSourceWeight(weight); } catch (const std::exception &e) { rejected = true; std::cout << e.what() << '\n'; }
++    if (!rejected || f.GetPreparedSourceWeightAudit().nonUnitHistories != 1) throw std::runtime_error("weight audit failed to reject");
++    ++passed;
++  }
++  CDFixedSource f; f.ResetRunState(); f.SetPreparedRun(2, FixedSourceRole::Forward, 30.);
++  f.CheckAndRecordPreparedSourceWeight(1.);
++  bool rejected = false; try { f.VerifyPreparedSourceWeights(2); } catch (const std::exception &) { rejected = true; }
++  if (!rejected) throw std::runtime_error("short count accepted");
++  f.CheckAndRecordPreparedSourceWeight(1.); f.VerifyPreparedSourceWeights(2);
++  std::cout << "SOURCE_WEIGHT_AUDIT " << passed + 2 << "/7 passed\n";
++}
++void resources(std::ostream &out, unsigned long long id, CDTally &tally, CDAceData &ace, CDFixedSource &fixed) {
++  if (!OTimer[Utility::Total].running || OTimer[Utility::FixedSource].running || OTimer[Utility::Tally].running ||
++      fixed.IsPreparedSourceWeightGuardEnabled()) throw std::runtime_error("invalid completed run timer/audit state");
++  long rss = 0; std::ifstream stat("/proc/self/status"); std::string line;
++  while (std::getline(stat, line)) if (line.compare(0,6,"VmRSS:") == 0) rss = std::stol(line.substr(6));
++  int fd = 0; DIR *d = opendir("/proc/self/fd"); while (readdir(d)) ++fd; closedir(d);
++  out << id << '\t' << rss << '\t' << fd << '\t' << tally.p_pTallyDataPointer.size() << '\t' << ace.p_vNuclides.data();
++  for (auto *p : tally.p_pTallyDataPointer) out << '\t' << p << ':' << p->p_vSum1.size() << ':' << p->p_vSum1.capacity();
++  for (auto &bank : fixed.p_vFixedParticleSrcBank) out << '\t' << bank.size() << ':' << bank.ParticleBank.capacity();
++  out << '\n'; out.flush();
++}
++std::string runState(CDTally &tally, CDFixedSource &fixed, CDRNG &rng) {
++  std::ostringstream out; out << std::hexfloat;
++  out << fixed.p_llCurTotParNum << '/' << fixed.p_llCurrentBatch << '/' << fixed.p_dTotStartWgt
++      << '/' << rng.GetSeed() << '/' << rng.GetPosition() << '/' << rng.GetPositionPre();
++  for (auto *data : tally.p_pTallyDataPointer)
++    for (const auto *v : {&data->p_vScore, &data->p_vScoreTemp, &data->p_vSum1, &data->p_vSum2,
++                         &data->p_vSum3, &data->p_vAve, &data->p_vRe}) {
++      out << '/' << v->size(); for (double x : *v) out << ':' << x;
++    }
++  return out.str();
++}
++}
++int main(int argc, char **argv) {
++  try {
++    for (int i = 1; i < argc; i += 2) { if (i+1 == argc) throw std::invalid_argument("option without value"); options[argv[i]] = argv[i+1]; }
++    if (option("--mode") == "source-weight-audit-selftest") { auditSelftest(); return 0; }
++    CDRNG runRng; CDInput input; CDGeometry geometry; CDMaterial material; CDAceData ace;
++    CDCriticality criticality; CDBurnup burnup; CDTally tally; CDConvergence convergence;
++    CDParticleState particle; CDPlot plot; CDFixedSource fixed; CDExternalSource source;
++    CDNeutronTransport neutron; CDPhotonTransport photon; CDElectronTransport electron;
++    CDAdjoint adjoint; CDSampling sampling; CDKinetics kinetics; CDPerturbation perturb;
++    Depth_Class depth; TTA_Class tta; ME_Class me; CDHomogenization homogenization;
++    std::vector<std::string> args = {"RMCPreparedLifecycle", "-i", option("--input"), "-d", option("--data")};
++    std::vector<char *> ptr; for (auto &a : args) ptr.push_back(&a[0]);
++    input.CheckIOFile(ptr.size(), ptr.data());
++    OLogger.init_logger(Output.p_chOutputFileName);
++    OLogger.SetDefaultLogLevel(RMC::IO::LogLevel::info); OLogger.SetDefaultTarget(RMC::IO::LogTarget::ConsoleAndLogFile);
++    OProcLogger = OLogger; OProcLogger.SetAllowEveryProcLogging(true);
++    Output.OutputHeading(criticality);
++    input.ReadInputBlocks(OCalMode, neutron, photon, electron, geometry, material, ace, criticality, tally,
++        convergence, burnup, plot, fixed, runRng, adjoint, homogenization, source, sampling, kinetics, perturb);
++    if (option("--mode") == "fresh") {
++      if (!option("--histories").empty()) {
++        fixed.p_llUserInputParNum = std::stoll(option("--histories"));
++        fixed.CheckFixedSource();
++      }
++      auto seed = std::stoull(option("--effective-seed", "17"));
++      runRng.SetSeed0(seed); runRng.SetSeed(seed); runRng.SetStride(std::stoull(option("--stride", "100000")));
++      runRng.SetPosition(0); runRng.SetPositionPre(-1000);
++      OCalMode.RunCalculation(OCalMode, neutron, photon, electron, ace, geometry, depth, criticality, material,
++          particle, convergence, tally, burnup, fixed, runRng, me, tta, adjoint, source, sampling, kinetics, perturb);
++    } else if (option("--mode") == "persistent") {
++      FixedSourceSeriesSpec series;
++      series.rootSeed = std::stoull(option("--root-seed", "17")); series.stride = std::stoull(option("--stride", "100000"));
++      series.firstHistoryOffset = std::stoull(option("--offset", "0"));
++      auto initialize = [&]() { OCalMode.InitializePreparedFixedSourceRuns(series, neutron, photon, electron, ace,
++          fixed, material, geometry, particle, tally, burnup, runRng, criticality, sampling, perturb); };
++      if (option("--negative") != "uninitialized") initialize();
++      std::ifstream plan(option("--plan")); if (!plan) throw std::runtime_error("plan unreadable");
++      std::ofstream resourceLog(option("--snapshot-dir") + "/resources.tsv");
++      std::string line; size_t index = 0;
++      while (std::getline(plan,line)) {
++        if (line.empty() || line[0] == '#') continue;
++        FixedSourceRunSpec spec; char role; double x, direction; int window;
++        std::istringstream row(line); if (!(row >> spec.runId >> role >> spec.sourceHistories >> x >> direction >> window)) throw std::runtime_error("bad plan row");
++        spec.role = role == 'F' ? FixedSourceRole::Forward : FixedSourceRole::Adjoint;
++        CDExternalSource canonical;
++        if (option("--preserve-source") == "yes" && (option("--negative-after") != "yes" || index > 0)) {
++          canonical = source;
++        } else {
++          CDSource point;
++          point.p_nSourceID = 1; point.p_vPoints = {x,0.,0.}; point.p_vReferVector = {direction,0.,0.};
++          point.p_dEnergy = 2.; point.p_dDirecMiu = 1.;
++          for (auto v : {CDSource::FRACTION,CDSource::PARTICLE,CDSource::POINT,CDSource::VECTOR,CDSource::DIRECMIU,CDSource::ENERGY,CDSource::WEIGHT})
++            point.p_vVariableDefined[v] = true;
++          canonical.AddSource(point);
++          canonical.CheckSourceAndDistri(geometry);
++        }
++        spec.sourceIdentity = "point-" + std::to_string(x) + "-dir-" + std::to_string(direction);
++        spec.weightWindow.appliesToTransportRole = spec.role;
++        spec.weightWindow.enabled = window != 0;
++        spec.weightWindow.identity = "ww-" + std::to_string(window);
++        if (window) spec.weightWindow.lower = window == 1 ? std::vector<double>{.1,1.,.1,1.} : std::vector<double>{.05,.5,.05,.5};
++        const bool trigger = option("--negative-after") != "yes" || index > 0;
++        std::string negative = trigger ? option("--negative") : "";
++        if (negative == "double-initialize") initialize();
++        if (negative == "after-finish") OCalMode.FinishPreparedFixedSourceRuns();
++        if (negative == "reinitialize-after-finish") { OCalMode.FinishPreparedFixedSourceRuns(); initialize(); }
++        if (negative == "role") spec.role = static_cast<FixedSourceRole>(999);
++        if (negative == "zero-N") spec.sourceHistories = 0;
++        if (negative == "negative-N") spec.sourceHistories = -1;
++        if (negative == "ww-role") spec.weightWindow.appliesToTransportRole = FixedSourceRole::Adjoint;
++        if (negative == "ww-shape") { spec.weightWindow.enabled = true; spec.weightWindow.lower = {.1}; }
++        if (negative == "ww-negative" || negative == "ww-nan") { spec.weightWindow.enabled = true; spec.weightWindow.lower = {.1,1.,.1,1.}; spec.weightWindow.lower[0] = negative == "ww-negative" ? -1. : std::numeric_limits<double>::quiet_NaN(); }
++        if (negative == "weight-binding") canonical.p_vSource[0].p_mDistriIndexU[CDSource::WEIGHT] = 1;
++        if (negative == "empty-source") canonical.p_vSource.clear();
++        if (negative == "weight2") canonical.p_vSource[0].p_dWeight = 2.;
++        if (negative == "neutron-type") canonical.p_vSource[0].p_nParticleType = 2;
++        if (negative == "run-id" && index) spec.runId = 1;
++        const std::string before = runState(tally, fixed, runRng);
++        auto callRun = [&]() { return OCalMode.RunPreparedFixedSource(spec, canonical, neutron, photon, electron,
++            ace, fixed, material, geometry, particle, tally, runRng, criticality, sampling, perturb); };
++        FixedSourceRunReceipt r;
++        try {
++          if (negative == "wrong-owner") { CDTally wrong; OCalMode.RunPreparedFixedSource(spec, canonical, neutron, photon, electron, ace, fixed, material, geometry, particle, wrong, runRng, criticality, sampling, perturb); }
++          r = callRun();
++        } catch (const std::exception &e) {
++          std::cout << "REJECTED_RUN state_unchanged=" << (before == runState(tally, fixed, runRng))
++                    << " completed=" << fixed.p_llCurTotParNum << " reason=" << e.what() << '\n';
++          if (option("--check-failed") == "yes") {
++            bool retryRejected = false, finishRejected = false;
++            try { callRun(); } catch (const std::exception &again) {
++              retryRejected = std::string(again.what()).find("invalid lifecycle state") != std::string::npos;
++            }
++            try { OCalMode.FinishPreparedFixedSourceRuns(); } catch (const std::exception &) { finishRejected = true; }
++            std::cout << "FAILED_TERMINAL retry_rejected=" << retryRejected << " finish_rejected=" << finishRejected << '\n';
++            if (!retryRejected || !finishRejected) throw std::runtime_error("failed lifecycle was reusable");
++          }
++          throw;
++        }
++        receipt(r, option("--snapshot-dir"));
++        if (option("--legacy-output") == "yes") {
++          // Test-owned per-run export: legacy HDF tables/conditional datasets are
++          // not overwrite-complete. Keep the bound handle, replace only its prior
++          // Tally output group. This does not reset any transport or tally state.
++          if (index > 0) Output.p_Result->DeleteData("Tally");
++          tally.OutputTally(tally.Final, material);
++          tally.OutputTallyh5(tally.Final, 0, 0, 0);
++        }
++        resources(resourceLog,r.runId,tally,ace,fixed);
++        std::cout << "PREPARED_RUN_SUCCESS " << r.runId << '\n';
++        ++index;
++        if (option("--gap") == "yes") {
++          auto gapStart = std::chrono::steady_clock::now();
++          double totalBefore = OTimer[Utility::Total].record();
++          std::this_thread::sleep_for(std::chrono::milliseconds(100));
++          std::cout << std::setprecision(17) << "INTER_RUN_GAP " << r.runId << ' '
++                    << std::chrono::duration<double>(std::chrono::steady_clock::now()-gapStart).count()
++                    << ' ' << totalBefore << ' ' << OTimer[Utility::Total].record() << '\n';
++        }
++      }
++      OCalMode.FinishPreparedFixedSourceRuns();
++    } else throw std::invalid_argument("unknown driver mode");
++    Output.OutputEnding(OCalMode, adjoint, criticality, fixed);
++    return 0;
++  } catch (const std::exception &e) { std::cerr << "PREPARED_FAILURE " << e.what() << '\n'; return 2; }
++}
+diff --git a/RMC/tests/prepared_fixed_source_lifecycle/globals.cpp b/RMC/tests/prepared_fixed_source_lifecycle/globals.cpp
+new file mode 100644
+index 0000000..5c64818
+--- /dev/null
++++ b/RMC/tests/prepared_fixed_source_lifecycle/globals.cpp
+@@ -0,0 +1,37 @@
++// This executable replaces main.cpp only; other production global owners stay linked.
++#include "CalMode.h"
++#include "Input.h"
++#include "Utility/Timer.h"
++#include "Utility/IO/Logger.h"
++#include "Status.h"
++#include "Control/Control.h"
++//////////  Global classes  //////////
++CDOutput Output;
++CDMeshInfo OMeshInfo;
++CDXSParaTableVec OXSParaTableVec;
++CDWeightWindow OWeightWindow;
++CDStatus OStatus;
++Utility::RMCTimer OTimer;
++CellVector cellVec;
++CDPTRAC OParticleTracker;
++RMC::Control OController;
++CDRNG ORNG;
++CDCalMode OCalMode;
++namespace RMC {
++  namespace IO {
++    Logger OLogger; // NOLINT(cert-err58-cpp)
++    Logger OProcLogger; // NOLINT(cert-err58-cpp)
++  }
++}
++using RMC::IO::OLogger;
++using RMC::IO::OProcLogger;
++
++# ifdef USE_PYTHON_API
++# include "PythonInterface.h"
++CDPythonInterface OPythonInterface;
++# endif
++
++# ifdef USE_MPI
++CDParallel OParallel;
++# endif
++

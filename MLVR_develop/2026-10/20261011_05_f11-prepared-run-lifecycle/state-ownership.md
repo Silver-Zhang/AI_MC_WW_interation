@@ -37,3 +37,7 @@ CDFixedSource若干旧未使用字段在constructor未初始化，例如p_nFixed
 - W11/W12及tally体积计分保持；全mesh比较的是原始RMC数据和同一既有转换后的任务私有视图，不建立Field API。实施结果和物理导读按README §4及本次新增指针同步。
 
 原表是静态E1设计证据；实际动态证据见README §4及logs/gates-04，不由本表单独推导Ready。
+
+## P1修正补记（2026-10-12）
+
+Universe仍由Geometry持有；新增签名包含初始化后稳定的neighbor定义，排除逐history状态。无法完整保护的随机Universe由prepared profile拒绝。WW参数仍由global WW持有且绑定后固定；合法性验证不改变owner数据，先于CLEAR和definition比较，避免非法参数只被指纹拒绝而无法确认参数guard。实际证据见[本轮档案](logs/p1-correction/README.md)。

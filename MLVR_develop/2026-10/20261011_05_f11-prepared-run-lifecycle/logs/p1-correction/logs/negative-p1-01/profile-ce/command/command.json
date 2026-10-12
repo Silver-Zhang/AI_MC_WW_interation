@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/tmp/20261012-f11-stage2-p1/stage2-build/bin/RMCPreparedLifecycle",
+    "--mode",
+    "persistent",
+    "--input",
+    "inp",
+    "--data",
+    "/home/silver/NucXS_Library/RMC_DATA",
+    "--snapshot-dir",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/p1-correction/logs/negative-p1-01/profile-ce",
+    "--plan",
+    "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/p1-correction/inputs/negative/plan.tsv"
+  ],
+  "cwd": "/tmp/20261012-f11-stage2-p1/negative-p1-01/profile-ce",
+  "started_utc": "2026-10-11T16:51:54.381009+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

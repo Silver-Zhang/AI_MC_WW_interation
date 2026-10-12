@@ -114,6 +114,8 @@ MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/**/*-before-fin
 MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/**/*-legacy.json
 MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/**/*-final.json
 MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/**/*-derived.json
+#   P1 修复前源码快照（~49MB；可由 RMC 330f091e + correction.diff 重建；哈希见 p1-correction/delivery-manifest.json）
+MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/p1-correction/pre-fix-source.tar.gz
 !MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/negative-01/**/stdout.txt
 !MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/negative-01/**/stderr.txt
 !MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/logs/negative-02/**/stdout.txt

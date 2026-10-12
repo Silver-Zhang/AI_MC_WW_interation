@@ -1,6 +1,6 @@
 # Agent 快速上下文卡片
 
-> **新会话 / 换模型先读这一页，不要通读知识库。** 最后更新：2026-10-11。
+> **新会话 / 换模型先读这一页，不要通读知识库。** 最后更新：2026-10-12。
 > 本页只留骨架和指针；实际设计及证据以权威文档与对应任务为准。
 
 ## 接手顺序
@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0/1结论与边界见对应任务§4。RMC阶段1基线为330f091e；阶段2正式授权的29文件已实现并自验，当前为本地未提交修改。任务05 §4是实际判定、证据与限制的唯一交接入口；待独立复核，Task06旧设计审查不替代代码复核。最终身份与保护检查见任务logs/implementation/final-manifest.json。
+阶段0/1结论与边界见对应任务§4。RMC阶段1基线为330f091e；阶段2正式授权的29文件已实现并自验，当前为本地未提交修改。任务05 §4是实际判定、证据与限制的唯一交接入口；Task07修复前独立审查为NEEDS CORRECTION；2026-10-12 P1 修复后的独立复核结论为 NEEDS CORRECTION：Universe fingerprint 在受限确定性 profile 内闭合，但 WW energy-bin outer shape 在 neutron 索引前未验证。当前身份、增量补丁和保护检查见任务logs/p1-correction/final-manifest.json；旧证据保留。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-独立复核Task05实际changes.diff/new-files.diff及最终gates-04证据。三个正式public入口已实现受限同进程生命周期；总体F11闭环、TARGET/Field/正式FOM仍未实现。新发现W13旧SCHECK边界与旧HDF快照隔离见任务§4。用户决定何时提交/推送；当前任务已停止，不开始Stage3。
+独立复核档案 `20261012_01_independent-f11-stage2-p1-correction-review` 已判 NEEDS CORRECTION。下一步必须由用户决定是否单独授权修复 P1-02：在访问 neutron energy-bin 前验证 WW outer/inner container shape，并新增绑定前和首轮后的负例；完成后需再次独立复核。gates-04与Task07历史报告原样保留；总体F11闭环、TARGET/Field/正式FOM仍未实现，当前不开始Stage3。
 
 ## 工作纪律
 

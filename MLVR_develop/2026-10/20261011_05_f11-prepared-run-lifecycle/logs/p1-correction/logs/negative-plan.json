@@ -1,0 +1,698 @@
+[
+  {
+    "name": "uninitialized",
+    "extra": [
+      "--negative",
+      "uninitialized"
+    ],
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "double-initialize",
+    "extra": [
+      "--negative",
+      "double-initialize"
+    ],
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "double-initialize-after",
+    "extra": [
+      "--negative",
+      "double-initialize",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "after-finish",
+    "extra": [
+      "--negative",
+      "after-finish"
+    ],
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "after-finish-after",
+    "extra": [
+      "--negative",
+      "after-finish",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "reinitialize-after-finish",
+    "extra": [
+      "--negative",
+      "reinitialize-after-finish"
+    ],
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "reinitialize-after-finish-after",
+    "extra": [
+      "--negative",
+      "reinitialize-after-finish",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:"
+  },
+  {
+    "name": "role",
+    "extra": [
+      "--negative",
+      "role"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "role-after",
+    "extra": [
+      "--negative",
+      "role",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "zero-N",
+    "extra": [
+      "--negative",
+      "zero-N"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "zero-N-after",
+    "extra": [
+      "--negative",
+      "zero-N",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "negative-N",
+    "extra": [
+      "--negative",
+      "negative-N"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "negative-N-after",
+    "extra": [
+      "--negative",
+      "negative-N",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-role",
+    "extra": [
+      "--negative",
+      "ww-role"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-role-after",
+    "extra": [
+      "--negative",
+      "ww-role",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-shape",
+    "extra": [
+      "--negative",
+      "ww-shape"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-shape-after",
+    "extra": [
+      "--negative",
+      "ww-shape",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-negative",
+    "extra": [
+      "--negative",
+      "ww-negative"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-negative-after",
+    "extra": [
+      "--negative",
+      "ww-negative",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-nan",
+    "extra": [
+      "--negative",
+      "ww-nan"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "ww-nan-after",
+    "extra": [
+      "--negative",
+      "ww-nan",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "weight-binding",
+    "extra": [
+      "--negative",
+      "weight-binding"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "weight-binding-after",
+    "extra": [
+      "--negative",
+      "weight-binding",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "empty-source",
+    "extra": [
+      "--negative",
+      "empty-source"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "empty-source-after",
+    "extra": [
+      "--negative",
+      "empty-source",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "weight2",
+    "extra": [
+      "--negative",
+      "weight2"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "weight2-after",
+    "extra": [
+      "--negative",
+      "weight2",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "wrong-owner",
+    "extra": [
+      "--negative",
+      "wrong-owner"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "wrong-owner-after",
+    "extra": [
+      "--negative",
+      "wrong-owner",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "neutron-type",
+    "extra": [
+      "--negative",
+      "neutron-type"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "neutron-type-after",
+    "extra": [
+      "--negative",
+      "neutron-type",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "run-id-after",
+    "extra": [
+      "--negative",
+      "run-id",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:"
+  },
+  {
+    "name": "no-WW-topology",
+    "extra": [
+      "--negative",
+      "ww-shape"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "no fixed Cartesian WW topology"
+  },
+  {
+    "name": "input-weight2",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-weight2-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-unbiased-distribution",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-unbiased-distribution-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-biased-distribution",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-biased-distribution-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-dependent-distribution",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-dependent-distribution-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-multisource-equal",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-multisource-equal-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-multisource-bias",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-multisource-bias-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-cell-source",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-cell-source-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-nonpoint",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-nonpoint-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-transform",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-transform-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-fraction2",
+    "extra": [
+      "--preserve-source",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "input-fraction2-after",
+    "extra": [
+      "--preserve-source",
+      "yes",
+      "--negative-after",
+      "yes"
+    ],
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition"
+  },
+  {
+    "name": "profile-nonType2",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "profile-ce",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "profile-photon",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "profile-time-reduce",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "profile-fission",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "profile-scheck-energy",
+    "extra": [],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "seed0",
+    "extra": [
+      "--root-seed",
+      "0"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "even-seed",
+    "extra": [
+      "--root-seed",
+      "2"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "large-seed",
+    "extra": [
+      "--root-seed",
+      "9223372036854775808"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "zero-stride",
+    "extra": [
+      "--stride",
+      "0"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "overflow",
+    "extra": [
+      "--offset",
+      "18446744073709551615"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "period",
+    "extra": [
+      "--offset",
+      "23058430092136"
+    ],
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:"
+  },
+  {
+    "name": "stride-runtime",
+    "extra": [
+      "--stride",
+      "1",
+      "--check-failed",
+      "yes"
+    ],
+    "expected_receipts": 0,
+    "stage": "execution",
+    "reason": "stride"
+  }
+]

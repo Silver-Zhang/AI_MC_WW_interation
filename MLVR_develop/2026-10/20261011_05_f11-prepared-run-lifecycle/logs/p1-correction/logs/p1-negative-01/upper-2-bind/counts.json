@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "initialize": 0,
+    "prepare": 0,
+    "clear": 0,
+    "execute": 0,
+    "source": 0
+  },
+  "inferior_exit": 2
+}

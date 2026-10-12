@@ -141,3 +141,11 @@ G0附加命令：在同一私有源码另以`-Dtest=OFF`配置确认target缺席
 最终全量transport取证使用gates-04。原FinishBreakpoint在每次采样/WW返回上有巨大调试开销；gates-01/02超时/终止记录保留。最终observer在CalcFixedSource.cpp:186取得刚返回的实际源，WW查询入口记录mesh/物理能量，在紧接的DoWeightWindows入口记录真正使用的三界，逐事件不抽样、不减N。每个查询必须被一个实际WW动作消费，否则比较失败。一次尝试在Finish.stop内delete断点触发GDB本身SIGSEGV（observer-speed-01），已弃用；不是RMC输运崩溃。
 
 最终资源比较澄清：不同WW工作负载的bank capacity可按实际峰值增长；每run live bank仍须仅剩规定哨兵。原Gate6的固定负载20轮warmup后capacity/FD稳定及4MiB上限保持不变；比较器错误地对所有WW变化要求相同capacity的失败记录保留。最终生产截止状态与全部数值使用gates-04重新取证，普通回归和CTest也由最终binary重跑。
+
+## 6. 2026-10-12 P1定向验收
+
+原门禁和零容差不变，旧logs不覆盖。新增方案、输入、脚本及事前判据见[本轮README](logs/p1-correction/README.md)。Universe fixture含真实矩形lattice、非零平移、旋转、不同密度填充；U1两轮200/300逐个fresh，U2在首轮100之后分别改变origin/rotation/membership/fill，保持Universe size，必须命中definition guard；另验证random profile拒绝。未修改Stage1的三个独立物理变体用于确认变换/fill实际影响tally，不当作prepared成功门禁。
+
+WW负例涵盖0/负数/NaN/Inf/合同边界/非整数/超int/组合/派生overflow及舍入退化，参数在绑定前或一轮成功后通过public对象设定；错误文本必须命中WW参数guard。只读GDB动态计数要求绑定前InitializeModel/Prepare/CLEAR/Execute/source全零，第二轮拒绝后这些调用分别保持1/1/1/1/100，且旧runState不变、receipt仅1份。一般非法源权重owner测试与此独立。
+
+复制既有验证脚本仅调整证据/私有binary路由；ordinary WEIGHT=D1继续按已冻结baseline退出1记录，不能记为输运通过。原StatisticsTester/HDF时间例外表不扩展。最终结果入口见本任务§4及logs/p1-correction/final-verification.md。

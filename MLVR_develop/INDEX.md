@@ -8,9 +8,10 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-10-12 | [independent-f11-stage2-p1-correction-review](2026-10/20261012_01_independent-f11-stage2-p1-correction-review/README.md) | 模式C / Stage2 P1 修复后独立代码与证据复核 | 已完成（NEEDS CORRECTION） | F11 | P1-01 Universe fingerprint 在受限确定性 profile 内闭合；P1-02 在 `p_vEnergyBins[neutron]` outer shape 验证前索引，仍为 P1 blocker；不得冻结/提交或进入 Stage3 |
 | 2026-10-11 | [independent-f11-stage2-implementation-review](2026-10/20261011_07_independent-f11-stage2-implementation-review/README.md) | 模式C / 阶段2实际实现与动态证据独立审核 | 已完成（NEEDS CORRECTION） | F11 | G0/Gate1–7受限证据抽查通过；发现Universe fingerprint与WW参数验证两个P1 API完整性缺口；见报告§6 |
 | 2026-10-11 | [independent-f11-prepared-lifecycle-review](2026-10/20261011_06_independent-f11-prepared-lifecycle-review/README.md) | 模式C / 阶段2独立 source/design 审核 | 已完成（DESIGN REVIEW ONLY） | F11 | Task 05 当时仅设计；保留历史结论，不替代本次实际实现审核 |
-| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | 已完成（限定范围；独立复核见任务07：NEEDS CORRECTION） | F11 | 按正式授权实施29文件并完成G0/Gate1–7；实际判定、证据与限制见任务§4；已随根工作区提交入库（原始运行数据留本地，清单见任务logs/artifact-manifest.sha256）；未进入Stage3 |
+| 2026-10-11 | [f11-prepared-run-lifecycle](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md) | 模式C / 阶段2生命周期 | P1修复自验完成（2026-10-12）；修复复核见 20261012_01：NEEDS CORRECTION（P1-02 未闭合） | F11 | 原Stage2归档保留；本轮只改批准范围内2文件，证据见logs/p1-correction与任务§4；Task07历史结论不改；已随根工作区提交入库（原始数据留本地，清单见 p1-correction/delivery-manifest.json），未进入Stage3 |
 | 2026-10-11 | [f11-fixed-source-core-refactor](2026-10/20261011_04_f11-fixed-source-core-refactor/README.md) | 模式C / 阶段1结构重构设计 | 已完成（ACCEPT WITH LIMITATIONS；待独立复核） | F11 | 已单次提交存档推送（RMC `330f091e`）；两文件核心拆分完成；证据/边界见任务§4，阶段2新任务见05 |
 | 2026-10-11 | [independent-f11-field-volume-review](2026-10/20261011_03_independent-f11-field-volume-review/README.md) | 独立复核 / F11 阶段0 Field 体积归一 | 实施中（独立复核报告已成稿；README 未定稿） | F11 | 先立判据后读结果；独立三维修剪复算 + 全量 trace 解析；**ACCEPT WITH LIMITATIONS**（限定 serial MGACE 四配置，Stage 1 可在保留转换合同前提下启动）；未改任何共享文件 |
 | 2026-10-11 | [f11-field-volume-normalization](2026-10/20261011_02_f11-field-volume-normalization/README.md) | 模式C / 阶段0物理接口验证 | 已完成（最小数值验证；待独立复核） | F11/W11/W12 | 无提交；E3原始证据及转换表见任务§4；RMC未修改；阶段1未开始 |

@@ -1,0 +1,339 @@
+# F11 Stage 2 — P1 定向修复与最终验收收口
+
+## 一、任务目标与授权
+
+根据 F11 Stage 2 独立审查 Task 07 的结论 `NEEDS CORRECTION`，对当前已经实现的 Persistent Fixed-Source Lifecycle 进行最后一轮定向修复。
+
+**本次明确授权修复以下两个 P1 问题，并完成必要的编译、回归和动态负例验证：**
+
+1. Prepared model definition fingerprint 未完整覆盖 Universe 的输运相关内容。
+2. Native weight-window 参数 WUPN、WSURVN、MXSPLN 的合法性验证不完整。
+
+本次不重新设计 Stage 2，不重构已有生命周期，不修改 MC 输运算法。
+
+现有 G0、Gate 1–7 的通过结果和原始数据必须保留；新增验证应形成独立证据，不得覆盖既有实验记录。
+
+**目标是在当前 Stage 2 基础上关闭两个 P1 问题，使其具备最终验收条件。**
+
+## 二、首先阅读
+
+按照 AGENTS.md 和项目工作流，阅读：
+
+- STATUS.md
+- MLVR_Knowledge/AGENT_CONTEXT.md
+- MLVR_Knowledge/04_F11_v1_架构与实施设计.md
+
+继续原 Stage 2 任务：
+
+`MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/`
+
+重点阅读：
+
+- README.md
+- lifecycle-design.md
+- state-ownership.md
+- test-plan.md
+- changes.diff
+- new-files.diff
+- logs/gates-04/
+- logs/gate-results.json
+- logs/implementation/failure-ledger.md
+
+阅读独立审查 Task 07：
+
+`MLVR_develop/2026-10/20261011_07_independent-f11-stage2-implementation-review/`
+
+重点：
+
+- Independent_F11_Stage2_Implementation_Review.md
+- logs/risk-register.md
+- logs/source-diff-audit.md
+- logs/state-ownership-review.md
+
+此次审核以 Task 07 的两个 P1 发现为直接修复依据。
+
+不得修改 Task 07 的原始审查结论。
+
+## 三、开发前保护现场
+
+当前记录的 RMC 基线：
+
+- Branch：Neural_Network_WW_Iteration
+- HEAD：330f091eb0296e0d0124237ba7d9a22b81aee852
+
+Stage 2 已经在本地工作树中实现，但尚未提交。
+
+开始时检查真实分支、HEAD、工作树以及全部已跟踪和未跟踪文件。
+
+特别注意：
+
+**不要执行 reset、checkout、clean 或其他可能覆盖现有 Stage 2 成果的操作。**
+
+必须先：
+
+1. 记录当前全部 Stage 2 修改文件和 SHA256。
+2. 保存本轮修复前的实际生产源码快照及补丁。
+3. 核对 Task 05 已批准的29文件清单。
+4. 确认 `gates-04`、原始日志和测试程序不被覆盖。
+5. 在新的任务私有目录保存本轮修复与测试证据。
+
+本次原则上仅允许修改已经批准的生产文件和测试文件。
+
+如确有必要增加批准清单之外的生产文件，先说明原因并停止扩大范围，等待用户批准。
+
+## 四、P1-01：修复 Universe 模型指纹缺失
+
+### 4.1 问题
+
+当前 `src/PrepareFixedSourceRun.cpp` 中的 `definition()` 对 Geometry 进行了部分内容检查，但对：
+
+`geometry.p_vUniverse`
+
+只记录了容器大小，没有完整覆盖 Universe 内部的输运相关信息。
+
+因此，如果两次 half-run 之间，Universe 的填充关系、变换信息等发生变化，但容器大小不变，模型指纹可能无法发现。
+
+### 4.2 修复要求
+
+先读取当前真实源码：
+
+- PrepareFixedSourceRun.cpp
+- Geometry/OverviewGeometry.h
+- Universe 相关类及实现
+- Universe fill、transform、cell membership 和几何定位相关路径
+
+确认哪些 Universe 字段真正参与粒子输运。
+
+然后扩展正式 definition fingerprint，覆盖所有当前支持几何形式中会影响输运结果的 Universe 语义状态。
+
+要求：
+
+1. 不能只添加 Universe 数量或对象地址。
+2. 不能直接对整个 C++ 对象做原始内存哈希，因为其中可能包含 padding、指针和临时状态。
+3. 应逐字段序列化稳定、确定且具有物理意义的模型定义。
+4. 不能把每轮输运会改变的临时缓存加入模型指纹，否则可能造成正常重复运行被错误拒绝。
+5. 继续保留现有材料、核数据、cell、surface、tally 和 WW definition 检查。
+6. 指纹校验必须在 CLEAR 之前完成。
+7. 无法完整验证的几何形式应明确拒绝或保持原有限制，不能默默视为已经受保护。
+
+不允许通过重新加载模型或重复初始化几何来解决这一问题。
+
+### 4.3 必须新增负例
+
+构造具有实际 Universe 填充或变换关系的合法几何模型，不能只修改一个与输运无关的备用字段。
+
+测试：
+
+**U1：正常 Universe 模型**
+
+不修改几何，连续运行至少两次 Forward。
+
+要求：
+
+- 不发生误拒绝；
+- 两次运行均与 fresh oracle 一致；
+- 指纹在合法换轮过程中稳定。
+
+**U2：Universe 内容被修改**
+
+第一次 Forward 成功后，在测试 driver 中通过正常可访问的模型对象修改一个实际影响输运的 Universe 字段，保持 `p_vUniverse.size()` 不变。
+
+随后请求第二次运行。
+
+要求：
+
+- 在 CLEAR 前发现模型定义变化；
+- 不执行新的源历史；
+- 不返回成功 receipt；
+- 上一次 tally、完成历史数、分母和 RNG 状态保持不变；
+- 错误信息能定位到模型定义不一致。
+
+如有必要，再增加一个独立的 fill/transform 变化负例。
+
+测试只能修改用于构造负例的工作模型，不能改生产参考模型或使用私有测试绕过机制。
+
+## 五、P1-02：修复 Native WW 参数验证
+
+### 5.1 问题
+
+现有 `RunPreparedFixedSource()` 会检查：
+
+- WW lower 的正值和有限性；
+- lower × WUPN 是否有限；
+- lower × WSURVN 是否有限。
+
+但没有完整验证以下参数自身是否合法：
+
+- WUPN
+- WSURVN
+- MXSPLN
+
+例如，乘积有限并不能证明参数大于零。
+
+### 5.2 修复要求
+
+先检查真实代码：
+
+- ReadWeightWindow.cpp
+- WeightWindows.cpp
+- WeightWindow.h
+- PrepareFixedSourceRun.cpp
+
+明确上述参数在原生 WW 中的物理意义、数据类型、合法范围及相互约束。
+
+**应复用 RMC 原有的合法性规则，不得凭经验随意发明新的数值阈值。**
+
+正式校验至少覆盖：
+
+1. 参数为有限值。
+2. 参数满足原有正值、范围及类型要求。
+3. 参数之间的关系符合 native WW 合同。
+4. lower、survival、upper 的派生结果合法。
+5. MXSPLN 不会导致非法 splitting 行为。
+6. 任何非法参数都必须在 CLEAR 和输运之前被拒绝。
+
+如果现有 parser 的合法性检查不完整，应在本次 prepared API 边界实现独立完整校验，不改变普通 parser 和 WW 输运数学。
+
+### 5.3 必须新增负例
+
+分别测试：
+
+| 参数 | 负例 |
+|---|---|
+| WUPN | 0、负值、NaN、Inf、违反原合同的值 |
+| WSURVN | 0、负值、NaN、Inf、违反原合同的值 |
+| MXSPLN | 0、负值、非法非有限值及违反原合同的值 |
+| 参数组合 | 各参数单独合法但组合不合法，或派生三界不合法 |
+
+根据真实参数类型调整不可表示的负例，不能为凑测试而修改其生产数据类型。
+
+**特别注意测试的有效性：**
+
+如果直接在完成第一轮后修改 WW 参数，旧 definition fingerprint 可能先拒绝模型变化。这样的测试不能证明新增的参数合法性检查真正生效。
+
+因此必须增加能够直接验证参数校验的测试：例如在模型绑定前通过测试对象构造非法 WW 参数，或通过正式 owner 校验接口测试其拒绝行为。
+
+不能为了测试而向生产 API 增加私有状态注入开关。
+
+同时测试：
+
+- WW-OFF → WW-ON；
+- WW1 → WW2；
+- WW-ON → WW-OFF。
+
+确保合法参数不会被误拒绝，实际 native WW 仍然正确产生 lower、survival、upper。
+
+## 六、回归验证
+
+两个 P1 修复完成后，进行以下验证。
+
+### R1：源码与构建
+
+- 检查修改范围仍属于 Stage 2 已批准文件；
+- 普通 RMC 与 RMCPreparedLifecycle 重新编译、链接；
+- G0 相关检查继续通过；
+- 不出现新增输运循环；
+- Stage 1 的原623行执行核心保持不变。
+
+### R2：普通 RMC 回归
+
+复用当前阶段 2 已有普通固定源测试。
+
+至少执行原有固定源 CTest、Forward、Adjoint 和 native WW 代表性计算。
+
+凡是受本次修改影响的普通路径，必须进行确定性比较。
+
+### R3：重复运行回归
+
+重新验证：
+
+- F→F；
+- F→A→F；
+- A→A；
+- WW-OFF→WW1→WW2→WW-OFF；
+- 至少一组带 WW 的 F→A→F；
+- 模型复用和 definition fingerprint 的稳定性。
+
+逐轮对照 fresh-process oracle。
+
+保持已冻结的物理零容差，不扩大时间/FOM 例外范围。
+
+### R4：新增 P1 负例
+
+全部新增 Universe mutation 和非法 WW 参数负例必须通过。
+
+特别检查拒绝发生在正确阶段，而不仅仅是最终程序退出非零。
+
+正常合法运行不能因为新 guard 而误失败。
+
+### R5：证据完整性
+
+保留：
+
+- 旧 `gates-04` 的原始通过证据；
+- 新增修复补丁；
+- 新测试输入及命令；
+- 退出码、错误日志；
+- 实际比较结果；
+- 重新构建的 binary/source identity；
+- 所有修复过程中产生的失败记录。
+
+新结果另建版本化证据目录，不覆盖先前结果。
+
+## 七、禁止扩大开发范围
+
+本次不得：
+
+- 修改输运、碰撞、散射、裂变和 tally 数学公式；
+- 重新设计 State lifecycle；
+- 修改 Type2 RNG 算法；
+- 重新开发 native WW splitting/roulette；
+- 修改 W11/W12/W13；
+- 修改旧 HDF writer；
+- 修改核数据库及 reference；
+- 扩大到 MPI/OpenMP；
+- 开发完整 CalcMLVR；
+- 开始 Stage 3 TARGET / Field / WW HDF5；
+- 擅自 commit/push RMC 或根仓库。
+
+此前已经通过的物理门禁不需要为了本次修复而重新设计。
+
+## 八、交付和最终判断
+
+继续在 Task 05 归档中追加本次修复证据，不新建另一套 Stage 2 实施任务。
+
+建议新增：
+
+- `logs/p1-correction/README.md`
+- `logs/p1-correction/source-audit.md`
+- `logs/p1-correction/correction.diff`
+- `logs/p1-correction/negative-results.json`
+- `logs/p1-correction/regression-results.json`
+- `logs/p1-correction/final-verification.md`
+
+同时更新：
+
+- Task 05 README；
+- 实际 changes.diff / new-files.diff；
+- STATUS.md；
+- MLVR_develop/INDEX.md；
+- 需要同步的接口状态记录。
+
+保留 Task 07 原始独立审核及 NEEDS CORRECTION 结论，不改写历史。
+
+最终必须回答：
+
+1. Universe 相关模型定义是否得到有效保护？
+2. WW 参数是否合法性验证完整？
+3. 新增负例是否真正命中对应生产 guard？
+4. 原有 G0/Gate1–7 是否保持？
+5. FF/FAF/AA/WW 是否仍然逐轮与 fresh 等价？
+6. 普通 RMC 是否保持原有计算行为？
+7. 是否还有阻止阶段 2 验收的问题？
+8. 是否建议提交 Claude 最终复核？
+
+最终判定：
+
+`READY FOR INDEPENDENT RE-REVIEW / NEEDS CORRECTION / BLOCKED`
+
+**完成后停止，不自行 commit/push，也不自动进入 Stage 3。**

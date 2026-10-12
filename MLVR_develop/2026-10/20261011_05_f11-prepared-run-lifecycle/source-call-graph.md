@@ -123,3 +123,7 @@ driver调用原前端读输入和建立输出，只在计算分派位置选择�
 测试链接：根CMake末尾受test/Linux/serial/AIS-off/Python-off条件注册。tests/prepared_fixed_source_lifecycle/CMakeLists.txt复制RMC的SOURCES并恰好排除一份原main.cpp，driver.cpp拥有测试main，globals.cpp拥有其余13个无条件单例，原库/TU持有的extern不重复定义。G0的源集合、694个共同生产TU编译选项和nm定义计数在logs/linkage/。普通main.cpp与tests/CMakeLists.txt均未修改。
 
 fresh driver在普通ReadInputBlocks之后设置准确seed/实际N，然后调用原RunCalculation，工作副本存活期间由只读GDB取得快照；persistent调用三个正式public接口。driver只遍历run规格，没有history/batch/descendant循环。结束时由caller仅调用一次OutputEnding。
+
+## P1入口检查补记（2026-10-12）
+
+Initialize：checkProfile → checkNativeParameters（native topology存在）→ 原一次初始化 → 扩展Universe definition。Run：既有preflight → checkProfile → checkNativeParameters（绑定native topology）→ definition匹配 → source/spec/derived WW检查 → 原Prepare/CLEAR → 唯一Execute/Finalize。没有新输运循环或链接目标。[当前源码事实](logs/p1-correction/source-audit.md)。

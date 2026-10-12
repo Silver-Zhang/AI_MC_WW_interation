@@ -1,0 +1,1854 @@
+[
+  {
+    "name": "upper-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-2-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "2",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "upper-2-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "2",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WUPN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WUPN must be finite and > 2\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WUPN must be finite and > 2"
+    ]
+  },
+  {
+    "name": "survival-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-5-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "5",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-5-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "5",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-6-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "6",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "survival-6-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-survival",
+      "6",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "split-0-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "0",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-0-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "0",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split--1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "-1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split--1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "-1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-nan-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "nan",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-nan-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "nan",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-inf-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "inf",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-inf-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "inf",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-1-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-1-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-1.5-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1.5",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-1.5-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "1.5",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-2147483648-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "2147483648",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "split-2147483648-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-split",
+      "2147483648",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW MXSPLN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW MXSPLN must be a finite integer in [2, INT_MAX]"
+    ]
+  },
+  {
+    "name": "combination-bind",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "3",
+      "--ww-survival",
+      "4",
+      "--ww-before-bind",
+      "yes"
+    ],
+    "after": false,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 0,
+        "prepare": 0,
+        "clear": 0,
+        "execute": 0,
+        "source": 0
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 0,
+      "prepare": 0,
+      "clear": 0,
+      "execute": 0,
+      "source": 0
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "combination-after",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-upper",
+      "3",
+      "--ww-survival",
+      "4",
+      "--negative",
+      "ww-parameters",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "WW WSURVN",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW WSURVN must be finite and 1 < WSURVN < WUPN"
+    ]
+  },
+  {
+    "name": "derived-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e308",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "derived-rounding",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "denorm",
+      "--ww-survival",
+      "1.0000000000000002",
+      "--ww-before-bind",
+      "yes",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "split-product-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e300",
+      "--ww-split",
+      "1000000000",
+      "--ww-before-bind",
+      "yes",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "invalid WW lower/upper/survival",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "split-ratio-overflow",
+    "model": "model-ww.inp",
+    "extra": [
+      "--ww-lower",
+      "1e-100",
+      "--negative",
+      "ww-lower-value",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "splitting ratio exceeds int range",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: WW unit-source/cross-window splitting ratio exceeds int range\n",
+    "rejection": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW unit-source/cross-window splitting ratio exceeds int range"
+    ]
+  },
+  {
+    "name": "universe-origin",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-origin",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: model/tally/WW definition changed\n",
+    "rejection": [
+      "UNIVERSE_MUTATION universe-origin size=4",
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: model/tally/WW definition changed"
+    ]
+  },
+  {
+    "name": "universe-rotation",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-rotation",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: model/tally/WW definition changed\n",
+    "rejection": [
+      "UNIVERSE_MUTATION universe-rotation size=4",
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: model/tally/WW definition changed"
+    ]
+  },
+  {
+    "name": "universe-membership",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-membership",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: model/tally/WW definition changed\n",
+    "rejection": [
+      "UNIVERSE_MUTATION universe-membership size=4",
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: model/tally/WW definition changed"
+    ]
+  },
+  {
+    "name": "universe-fill",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-fill",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "model/tally/WW definition changed",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: model/tally/WW definition changed\n",
+    "rejection": [
+      "UNIVERSE_MUTATION universe-fill size=4",
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: model/tally/WW definition changed"
+    ]
+  },
+  {
+    "name": "universe-random",
+    "model": "model-universe.inp",
+    "extra": [
+      "--negative",
+      "universe-random",
+      "--negative-after",
+      "yes"
+    ],
+    "after": true,
+    "reason": "unsupported Universe",
+    "passed": true,
+    "gdb_exit": 0,
+    "observation": {
+      "counts": {
+        "initialize": 1,
+        "prepare": 1,
+        "clear": 1,
+        "execute": 1,
+        "source": 100
+      },
+      "inferior_exit": 2
+    },
+    "expected": {
+      "initialize": 1,
+      "prepare": 1,
+      "clear": 1,
+      "execute": 1,
+      "source": 100
+    },
+    "stderr": "PREPARED_FAILURE prepared: unsupported Universe geometry; prepared requires deterministic CSG/rectangle/hexagon\n",
+    "rejection": [
+      "UNIVERSE_MUTATION universe-random size=4",
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported Universe geometry; prepared requires deterministic CSG/rectangle/hexagon"
+    ]
+  }
+]

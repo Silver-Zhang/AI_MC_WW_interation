@@ -1,0 +1,14 @@
+{
+  "ordinary-cases-command": 0,
+  "ordinary-existing-command": 0,
+  "ordinary-diagnostic-command": 0,
+  "gates-command": 0,
+  "existing-negatives-command": 0,
+  "p1-negatives-command": 0,
+  "universe-persistent-command": 0,
+  "universe-fresh-command": 0,
+  "linkage-command": 0,
+  "ctest-command": 0,
+  "ordinary-compare-command": 0,
+  "universe-compare-command": 0
+}

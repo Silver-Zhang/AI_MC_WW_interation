@@ -1,0 +1,174 @@
+diff --git a/src/PrepareFixedSourceRun.cpp b/src/PrepareFixedSourceRun.cpp
+--- a/src/PrepareFixedSourceRun.cpp
++++ b/src/PrepareFixedSourceRun.cpp
+@@ -7,6 +7,7 @@
+ #include <stdexcept>
+ #include <sstream>
+ #include <iomanip>
++#include <limits>
+ #ifdef __linux__
+ #include <fcntl.h>
+ #include <unistd.h>
+@@ -42,6 +43,35 @@
+     out << '/' << m.p_nMeshScope[i] << '/' << m.p_nMeshNum[i] << '/' << m.p_dBoundMin[i]
+         << '/' << m.p_dBoundMax[i] << '/' << m.p_dMeshDelt[i];
+   values(out, m.p_vMeshNum); values(out, m.p_vMeshBound);
++}
++void universeDefinition(std::ostream &out, const CDUniverse &u) {
++  // Stable model data, including the precomputed adjacency used by transport.
++  // Per-particle location and stochastic-media caches are not model definitions.
++  out << "/universe/" << u.p_nContainCellNum << '/' << u.p_bIsMoved << '/' << u.p_bIsRotated
++      << '/' << u.p_bIsLattice << '/' << u.p_nLatType << '/';
++  values(out, u.p_vFillCellsIndexU); values(out, u.p_vFillCellsIndex);
++  out << '/' << u.p_vNeighborCells.size() << ':';
++  for (const auto &neighbors : u.p_vNeighborCells) values(out, neighbors);
++  for (int i = 0; i < 3; ++i) {
++    out << '/' << u.p_dOrigin[i] << '/' << u.p_dPitch[i] << '/' << u.p_nScope[i];
++    for (int j = 0; j < 3; ++j) out << '/' << u.p_dRotation[i][j];
++  }
++  out << '/' << u.p_dSita << '/' << u.p_dSin_sita << '/' << u.p_dCos_sita
++      << '/' << u.p_dHeight << '/' << u.p_nFilledLatNum << '/';
++  values(out, u.p_vFillLatUnivIndexU); values(out, u.p_vFillLatUnivIndex);
++}
++void checkNativeParameters() {
++  requirePrepared(OWeightWindow.p_vWeightWindowPara.size() > 1 &&
++                  OWeightWindow.p_vWeightWindowPara[1].size() >= 8, "WW parameters missing");
++  const auto &p = OWeightWindow.p_vWeightWindowPara[1];
++  const double upper = p[CDWeightWindow::WUPN], survival = p[CDWeightWindow::WSURVN], split = p[CDWeightWindow::MXSPLN];
++  // Native user manual: WUPN > 2, 1 < WSURVN < WUPN, MXSPLN > 1.
++  // The storage type is double, but native splitting assigns MXSPLN to an int.
++  requirePrepared(std::isfinite(upper) && upper > 2., "WW WUPN must be finite and > 2");
++  requirePrepared(std::isfinite(survival) && survival > 1. && survival < upper,
++                  "WW WSURVN must be finite and 1 < WSURVN < WUPN");
++  requirePrepared(std::isfinite(split) && split > 1. && split <= INT_MAX && std::floor(split) == split,
++                  "WW MXSPLN must be a finite integer in [2, INT_MAX]");
+ }
+ std::string definition(CDAceData &ace, CDMaterial &material, CDGeometry &geometry, CDTally &tally) {
+   std::ostringstream out; out << std::hexfloat;
+@@ -54,6 +84,7 @@
+     values(out, n.XSS); values(out, n.PXSS); values(out, n.NXS); values(out, n.JXS); values(out, n.PNXS); values(out, n.PJXS);
+   }
+   out << geometry.p_vCell.size() << '/' << geometry.p_vUniverse.size() << '/' << geometry.p_vSurface.size();
++  for (const auto &u : geometry.p_vUniverse) universeDefinition(out, u);
+   for (const auto &mat : material.p_vMatSet) {
+     values(out, mat.p_vMatNucIndex); values(out, mat.p_vMatNucAtomDen);
+     out << mat.p_dMatAtomDen << '/' << mat.p_dMatGramDen;
+@@ -62,6 +93,7 @@
+     const auto &c = geometry.p_vCell[i];
+     out << c.p_nFillUnivIndex << '/' << c.p_nMatIndex << '/' << c.p_dNeuImp << '/' << c.p_dTemp << '/' << c.p_dDensRatio;
+     values(out, c.p_vBoundSurf); values(out, c.p_vBooleanSurfaces);
++    out << '/' << c.p_bIsMoved << '/' << c.p_bIsRotated << '/' << c.p_bIsFillMoved << '/' << c.p_bIsFillRotated << '/';
+     for (int j = 0; j < 3; ++j) {
+       out << c.p_dMove[j] << '/' << c.p_dFillMove[j];
+       for (int k = 0; k < 3; ++k) out << c.p_dRotation[j][k] << '/' << c.p_dFillRotation[j][k];
+@@ -97,6 +129,11 @@
+                   "only neutron fixed-source mode is supported");
+   requirePrepared(!mode.p_bSkipCalculation && !mode.p_bDagmc && !geometry.p_bDagmc && !geometry.p_bPBS &&
+                   geometry.p_vCLSUniverse.empty(), "unsupported geometry/calculation option");
++  for (const auto &u : geometry.p_vUniverse)
++    requirePrepared(!u.p_bIsrandom && !u.p_bIsDisp && !u.p_bIsCLS && !u.p_bIsPBS && !u.p_bIsRSA &&
++                    !u.p_bIsODR && !u.p_bIsIterODRDEM && !u.p_bIsIterRSADEM && !u.demInput.with_dem &&
++                    (!u.p_bIsLattice || u.p_nLatType == 1 || u.p_nLatType == 2),
++                    "unsupported Universe geometry; prepared requires deterministic CSG/rectangle/hexagon");
+   requirePrepared(ace.p_bIsMultiGroup && ace.p_bIsMultiGroupNeu && !ace.p_bTMS && !ace.p_bUseOtfDb,
+                   "only standard MGACE without TMS/OTFDB is supported");
+   requirePrepared(!sampling.p_bIsSampling && !sampling.p_bIsBurn && !perturb.p_bDiffrOprt && !perturb.p_bDiffrOprtForTMP,
+@@ -147,6 +184,7 @@
+   requirePrepared(this == &OCalMode && preparedPhase == PreparedPhase::Uninitialized && !preparedProcessOwner,
+                   "prepared process/model already initialized or wrong CalMode owner");
+   checkProfile(*this, ace, fixed, geometry, tally, sampling, perturb);
++  if (OWeightWindow.p_bUseMeshWeightWindow) checkNativeParameters();
+   requirePrepared(!burnup.p_bIsWithBurnup && tally.p_pTallyDataPointer.empty(), "requires a fresh uninitialized model");
+   requirePrepared(rng.GetRNGType() == CDRNG::rngLCG63_0, "Type2 RNG required");
+   CDRNG::ValidatePreparedType2Substream(series.rootSeed, series.firstHistoryOffset, 1, series.stride);
+@@ -223,6 +261,7 @@
+   const auto seed = CDRNG::ValidatePreparedType2Substream(preparedSeries.rootSeed, preparedNextOffset,
+                                                         spec.sourceHistories, preparedSeries.stride);
+   checkProfile(*this, ace, fixed, geometry, tally, sampling, perturb);
++  if (preparedHasWW) checkNativeParameters();
+   requirePrepared(tally.p_pTallyDataPointer == preparedRegistry &&
+       definition(ace, material, geometry, tally) == preparedDefinition, "model/tally/WW definition changed");
+   requirePrepared(Output.p_fpOutputFilePtr == preparedOutput && validPreparedFile(preparedOutput) &&
+@@ -249,9 +288,17 @@
+                     size_t(OWeightWindow.p_OWeightWindowMesh.GetTotMeshNum()) * (bins.size() - 1), "WW shape mismatch");
+     const auto &para = OWeightWindow.p_vWeightWindowPara[1];
+     requirePrepared(para.size() >= 8 && !ww.identity.empty(), "WW parameter/identity missing");
+-    for (auto x : ww.lower)
+-      requirePrepared(std::isfinite(x) && x > 0. && std::isfinite(x * para[CDWeightWindow::WUPN]) &&
+-                      std::isfinite(x * para[CDWeightWindow::WSURVN]), "invalid WW lower/upper/survival");
++    double maximumWeight = 1., minimumSurvival = std::numeric_limits<double>::max();
++    for (auto x : ww.lower) {
++      const double upper = x * para[CDWeightWindow::WUPN], survival = x * para[CDWeightWindow::WSURVN];
++      requirePrepared(std::isfinite(x) && x > 0. && std::isfinite(upper) && std::isfinite(survival) &&
++                      x < survival && survival < upper && std::isfinite(x * para[CDWeightWindow::MXSPLN]),
++                      "invalid WW lower/upper/survival or splitting bound");
++      maximumWeight = std::max(maximumWeight, upper); minimumSurvival = std::min(minimumSurvival, survival);
++    }
++    // Native splitting converts the ratio before applying MXSPLN, then may add 1.
++    requirePrepared(maximumWeight / minimumSurvival <= double(INT_MAX - 1),
++                    "WW unit-source/cross-window splitting ratio exceeds int range");
+   } else requirePrepared(ww.lower.empty(), "disabled WW must have no lower values");
+   if (preparedHasRun) checkBanks(fixed);
+   CDExternalSource activeSource;
+diff --git a/tests/prepared_fixed_source_lifecycle/driver.cpp b/tests/prepared_fixed_source_lifecycle/driver.cpp
+--- a/tests/prepared_fixed_source_lifecycle/driver.cpp
++++ b/tests/prepared_fixed_source_lifecycle/driver.cpp
+@@ -19,6 +19,29 @@
+ std::map<std::string,std::string> options;
+ std::string option(const std::string &name, const std::string &fallback = "") {
+   auto it = options.find(name); return it == options.end() ? fallback : it->second;
++}
++void setTestWWParameters() {
++  for (const auto &entry : std::vector<std::pair<std::string, int>>{
++         {"--ww-upper", CDWeightWindow::WUPN}, {"--ww-survival", CDWeightWindow::WSURVN},
++         {"--ww-split", CDWeightWindow::MXSPLN}})
++    if (!option(entry.first).empty()) OWeightWindow.p_vWeightWindowPara.at(1).at(entry.second) = std::stod(option(entry.first));
++}
++void mutateTestUniverse(CDGeometry &geometry, const std::string &kind) {
++  const auto count = geometry.p_vUniverse.size();
++  if (kind == "universe-origin" || kind == "universe-rotation" || kind == "universe-membership") {
++    auto &u = geometry.p_vUniverse.at(geometry.p_OUniverseIndex.GetIndex(2));
++    if (!u.p_bIsMoved || !u.p_bIsRotated || u.p_vFillCellsIndex.empty()) throw std::runtime_error("Universe fixture lacks active transforms/membership");
++    if (kind == "universe-origin") u.p_dOrigin[0] += .25;
++    if (kind == "universe-rotation") u.p_dRotation[0][0] = -u.p_dRotation[0][0];
++    if (kind == "universe-membership") u.p_vFillCellsIndex[0] = geometry.p_OCellIndex.GetIndex(22);
++  } else if (kind == "universe-fill") {
++    auto &u = geometry.p_vUniverse.at(geometry.p_OUniverseIndex.GetIndex(1));
++    if (!u.p_bIsLattice || u.p_vFillLatUnivIndex.size() < 2) throw std::runtime_error("Universe fixture lacks lattice fill");
++    u.p_vFillLatUnivIndex[0] = geometry.p_OUniverseIndex.GetIndex(3);
++  } else if (kind == "universe-random") geometry.p_vUniverse.at(0).p_bIsrandom = true;
++  else throw std::runtime_error("unknown Universe mutation");
++  if (geometry.p_vUniverse.size() != count) throw std::runtime_error("Universe mutation changed size");
++  std::cout << "UNIVERSE_MUTATION " << kind << " size=" << count << '\n';
+ }
+ void receipt(const FixedSourceRunReceipt &r, const std::string &dir) {
+   std::ofstream out(dir + "/receipt-" + std::to_string(r.runId) + ".json");
+@@ -117,7 +140,16 @@
+       series.firstHistoryOffset = std::stoull(option("--offset", "0"));
+       auto initialize = [&]() { OCalMode.InitializePreparedFixedSourceRuns(series, neutron, photon, electron, ace,
+           fixed, material, geometry, particle, tally, burnup, runRng, criticality, sampling, perturb); };
+-      if (option("--negative") != "uninitialized") initialize();
++      if (option("--ww-before-bind") == "yes") setTestWWParameters();
++      if (option("--negative") != "uninitialized") {
++        const auto before = runState(tally, fixed, runRng);
++        try { initialize(); }
++        catch (const std::exception &e) {
++          std::cout << "REJECTED_INITIALIZE state_unchanged=" << (before == runState(tally, fixed, runRng))
++                    << " completed=" << fixed.p_llCurTotParNum << " reason=" << e.what() << '\n';
++          throw;
++        }
++      }
+       std::ifstream plan(option("--plan")); if (!plan) throw std::runtime_error("plan unreadable");
+       std::ofstream resourceLog(option("--snapshot-dir") + "/resources.tsv");
+       std::string line; size_t index = 0;
+@@ -160,6 +192,10 @@
+         if (negative == "neutron-type") canonical.p_vSource[0].p_nParticleType = 2;
+         if (negative == "run-id" && index) spec.runId = 1;
+         const std::string before = runState(tally, fixed, runRng);
++        if (negative.compare(0, 9, "universe-") == 0) mutateTestUniverse(geometry, negative);
++        if (negative == "ww-parameters") setTestWWParameters();
++        if (negative == "ww-lower-value") spec.weightWindow.lower.assign(4,
++            option("--ww-lower") == "denorm" ? std::numeric_limits<double>::denorm_min() : std::stod(option("--ww-lower")));
+         auto callRun = [&]() { return OCalMode.RunPreparedFixedSource(spec, canonical, neutron, photon, electron,
+             ace, fixed, material, geometry, particle, tally, runRng, criticality, sampling, perturb); };
+         FixedSourceRunReceipt r;

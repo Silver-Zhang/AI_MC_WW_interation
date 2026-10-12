@@ -3,7 +3,7 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-10-11；原new_task.sh自动分配05，沿用本任务 |
-| 状态 | 已完成（限定范围，自验通过；独立复核见任务07：NEEDS CORRECTION） |
+| 状态 | P1修复自验完成（2026-10-12）；修复复核见 20261012_01：NEEDS CORRECTION（P1-02 未闭合） |
 | 任务类型 / 模式 | F11 Stage2正式生命周期实现 / C |
 | 报告人 | Codex |
 | 设计基线 | 知识库04；Task06原独立设计审查保留 |
@@ -19,6 +19,8 @@
 **物理解释（模式C）**：复用的是模型，不合并各轮样本。每条源历史及其后代的得分只进入本轮；零得分历史也在N内。单位有效起始权重需要独立实测W0并核对实际D，不能从输入WEIGHT=1或代码D←N直接推出。角色切换必须重建派生算子并恢复粒子/cache/WW策略；A→A不能重复累加。
 
 ## 2. 做法与证据
+
+**2026-10-12 P1修复**：本轮仅改原批准清单中的PrepareFixedSourceRun.cpp与测试driver；新增Universe稳定定义和原生WW参数检查。当前结果与八项验收答复见[本轮最终核查](logs/p1-correction/final-verification.md)，[本轮增量补丁](logs/p1-correction/correction.diff)。下文保留10月11日首版实现证据；旧logs未覆盖。当前完整源码/binary身份以[本轮manifest](logs/p1-correction/final-manifest.json)为准。
 
 先在私有目录fresh configure/build未修改330f，完成8个普通正例、9个CTest及三组500-history诊断，**20:39:55 +0800冻结后才改生产代码**。[baseline-freeze.json](logs/baseline-freeze.json)绑定原源码、binary、编译配置和核数据库；WEIGHT=D1在原parser就失败，单列保留，不算输运通过。
 
@@ -49,6 +51,8 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 ## 3. 决策记录
 
+2026-10-12：用户明确批准Task07两个P1的定向修复与必要回归，继续模式C、沿用Task05；授权原文见[本轮授权](logs/p1-correction/user-authorization.txt)。仅在原29文件内修改，不改输运数学/冻结04/reference。修复前完整源码、补丁及旧证据SHA256已保存于logs/p1-correction。
+
 **用户已正式批准实施**，原文：[user-authorization.txt](logs/implementation/user-authorization.txt)。批准最新设计§5的29文件与G0/Gate1–7，不需重复审批；本次严格在此范围内完成。早期设计待审批记录保留在logs/design-revision及logs/implementation/design-before-archive，不能把历史待审批状态当成当前权限。
 
 **人类理解确认（模式C）**：用户授权明确限定单位有效权重、独立half-run、非零裂变/并行未开放及逐段fresh等价；本次按该合同实施。新结果仍待用户审阅和独立复核，未把Task06对旧设计的审查写成对本次代码的验收。
@@ -59,7 +63,16 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 ## 4. 结论与边界
 
-**ACCEPT WITH LIMITATIONS —— 受限Stage2实现与自验完成；独立复核见任务07（NEEDS CORRECTION，2 项 P1）。**
+**当前：READY FOR INDEPENDENT RE-REVIEW（2026-10-12）。** Task07两个P1已定向修复并完成自验，建议Claude最终复核。Task07原始`NEEDS CORRECTION`保留为修复前独立审查，尚未被新独立结论替代。
+
+- Universe membership/neighbor/fill/transform/lattice稳定定义逐字段保护；新真实Universe模型2/2 Forward等fresh，4个内容mutation在CLEAR前命中definition guard，未覆盖的随机Universe显式拒绝。
+- Native WWP采用原手册与实际整数split约束；非法参数在绑定前及首轮后直接命中WW guard，派生三界/表示边界也检查。51/51新增负例通过，旧结果不清除且无额外输运。
+- 原34/34 half-run重新通过且全事件trace与gates-04相同；加入新2轮共36/36对，每侧18000 histories。普通123/123、CTest10/10、原负例66/66、PDF/HDF通过。物理零容差和时间例外保持。
+- 20轮预热后RSS净增16KiB、FD测量19稳定。旧证据、Task07、冻结04哈希未变。本轮只改批准29文件内2文件，623行core逐字不变。
+
+[八项最终答复与证据边界](logs/p1-correction/final-verification.md)；[本轮逐run数字](logs/p1-correction/run-results.md)；[当前源码/binary身份](logs/p1-correction/final-manifest.json)。未发现剩余受限门禁失败或本轮P1阻塞，最终独立复核仍待进行。
+
+**历史首版自验（2026-10-11）：ACCEPT WITH LIMITATIONS**；其验收回答保留如下：
 
 | 验收问题 | 回答 |
 |---|---|
@@ -74,14 +87,14 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 **未解决及未覆盖边界**：
 
-- 数值结论绑定本任务H2O、固定模型/群/网格、指定源和WW参数；不外推任意材料、复杂几何或所有可选功能。一般非零裂变连续F/A仍被拒绝。
+- 数值结论绑定本任务H2O、固定模型/群/网格、指定源和WW参数，以及本轮矩形lattice/变换小模型；不外推任意材料、复杂几何或所有可选功能。一般非零裂变连续F/A仍被拒绝。
 - MPI/OMP/AIS/Python只检查了target注册条件，未开展这些配置的多轮数值验收；CE、耦合粒子、restart、复杂/加权/分布源等不属于prepared支持范围。普通已有功能的代表回归不等于prepared支持。
 - **W13未修复**：未修改baseline已复现能群cell SCHECK崩溃。新入口拒绝该组合，用独立总通量cell诊断；W11/W12及体积语义保持。
 - 旧HDF writer不是完整覆盖式per-run输出，测试只隔离自己的输出组。Field/WW HDF5、TARGET及正式FOM仍未开发。
 - 起始权重运行时负例属于owner API单测；合法严格白名单不会自然生成非法初始权重。真实Run失败传播由stride超额门禁覆盖，未用私有注入伪造输运。
 - 旧StatisticsTester FOM明确标为legacy混合时间。GDB会影响所测耗时，本轮不作性能排名或加速比结论。未做sanitizer/Windows/无限规模资源验证。
 
-**结果解释**：本次证据支持限定对象生命周期和角色切换已实现；不代表完整F11闭环完成，也不改变冻结04或阶段0转换结论。Task06原报告保持原样；本次代码尚未取得独立审查结论。
+**结果解释**：本次证据支持限定对象生命周期和角色切换已实现；不代表完整F11闭环完成，也不改变冻结04或阶段0转换结论。Task06原报告保持原样；修复前代码独立审查Task07为NEEDS CORRECTION；本轮P1修复后的代码待最终独立复核。
 
 ## 5. 过程记录
 
@@ -94,3 +107,4 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 | 实施/自验 | 保存编译错误、旧SCHECK崩溃、观察器失败、HDF快照残留和截止字段差异；逐项修正授权范围内实现或明确拒绝，见失败台账。 |
 | 最终归档 | gates-04、ordinary-comparison-final-03、negative-final-02、exports-final及最终CTest全部完成；保存补丁、身份和原始证据，同步STATUS/INDEX/知识库/物理导读；停止待独立复核，无commit/push。 |
 | 归档轮 | 用户指示整理提交；大产物（trace jsonl.gz、状态快照、stdout/stderr 等约 363MB）留本地，哈希清单 logs/artifact-manifest.sha256；档案与判定证据随根工作区提交并推送双远端；RMC 未提交。 |
+| 2026-10-12 | 按明确授权关闭Task07两个P1，36配对run/123普通比较/10CTest/51新增及66旧负例通过；新证据位于logs/p1-correction，旧证据与Task07保持；READY FOR INDEPENDENT RE-REVIEW，停止。 |

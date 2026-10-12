@@ -1,0 +1,11 @@
+{
+  "p1_files": [
+    "src/PrepareFixedSourceRun.cpp",
+    "tests/prepared_fixed_source_lifecycle/driver.cpp"
+  ],
+  "all_inside_original29": true,
+  "transport_core_unchanged": true,
+  "core_lines": 631,
+  "core_sha256": "6c08327ba1d46baa9b68019504a058115988e9807cb7b7c7c9864d98d7f08415",
+  "core_body_lines": 623
+}

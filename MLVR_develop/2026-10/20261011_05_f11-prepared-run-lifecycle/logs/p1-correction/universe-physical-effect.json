@@ -1,0 +1,17 @@
+[
+  {
+    "mutation": "origin",
+    "exit": 0,
+    "tally_differs": true
+  },
+  {
+    "mutation": "rotation",
+    "exit": 0,
+    "tally_differs": true
+  },
+  {
+    "mutation": "fill",
+    "exit": 0,
+    "tally_differs": true
+  }
+]

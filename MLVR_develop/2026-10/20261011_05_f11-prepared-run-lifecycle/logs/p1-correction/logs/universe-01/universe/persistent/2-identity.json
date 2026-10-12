@@ -1,0 +1,15 @@
+{
+  "ace": "0x7ffffffef4a0",
+  "fixed": "0x7ffffffeb940",
+  "geometry": "0x7ffffffedc00",
+  "material": "0x7ffffffec470",
+  "neutron": "0x7ffffffeb6c0",
+  "nuclides": "0x555555c84360",
+  "particle": "0x7fffffff1320",
+  "raw": [
+    "0x555555c8a180",
+    "0x555555c90b80"
+  ],
+  "rng": "0x7ffffffeb620",
+  "tally": "0x7fffffff5be0"
+}

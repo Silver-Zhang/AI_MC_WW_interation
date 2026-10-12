@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/tmp/20261012-f11-stage2-p1/stage2-build/bin/RMC",
+    "-i",
+    "inp",
+    "-d",
+    "/home/silver/NucXS_Library/RMC_DATA"
+  ],
+  "cwd": "/tmp/20261012-f11-stage2-p1/refactor-runs/np-representative",
+  "started_utc": "2026-10-11T16:51:45.208070+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

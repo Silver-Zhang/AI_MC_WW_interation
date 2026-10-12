@@ -1,0 +1,853 @@
+[
+  {
+    "name": "uninitialized",
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: Run in invalid lifecycle state",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: Run in invalid lifecycle state"
+    ]
+  },
+  {
+    "name": "double-initialize",
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: prepared process/model already initialized or wrong CalMode owner",
+    "state": []
+  },
+  {
+    "name": "double-initialize-after",
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: prepared process/model already initialized or wrong CalMode owner",
+    "state": []
+  },
+  {
+    "name": "after-finish",
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: Run in invalid lifecycle state",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: Run in invalid lifecycle state"
+    ]
+  },
+  {
+    "name": "after-finish-after",
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: Run in invalid lifecycle state",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: Run in invalid lifecycle state"
+    ]
+  },
+  {
+    "name": "reinitialize-after-finish",
+    "expected_receipts": 0,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: prepared process/model already initialized or wrong CalMode owner",
+    "state": []
+  },
+  {
+    "name": "reinitialize-after-finish-after",
+    "expected_receipts": 1,
+    "stage": "state",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: prepared process/model already initialized or wrong CalMode owner",
+    "state": []
+  },
+  {
+    "name": "role",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid role",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: invalid role"
+    ]
+  },
+  {
+    "name": "role-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid role",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid role"
+    ]
+  },
+  {
+    "name": "zero-N",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: population exceeds bank capacity contract",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: population exceeds bank capacity contract"
+    ]
+  },
+  {
+    "name": "zero-N-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: population exceeds bank capacity contract",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: population exceeds bank capacity contract"
+    ]
+  },
+  {
+    "name": "negative-N",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: population exceeds bank capacity contract",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: population exceeds bank capacity contract"
+    ]
+  },
+  {
+    "name": "negative-N-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: population exceeds bank capacity contract",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: population exceeds bank capacity contract"
+    ]
+  },
+  {
+    "name": "ww-role",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: WW role mismatch",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: WW role mismatch"
+    ]
+  },
+  {
+    "name": "ww-role-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: WW role mismatch",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW role mismatch"
+    ]
+  },
+  {
+    "name": "ww-shape",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: WW shape mismatch",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: WW shape mismatch"
+    ]
+  },
+  {
+    "name": "ww-shape-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: WW shape mismatch",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: WW shape mismatch"
+    ]
+  },
+  {
+    "name": "ww-negative",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "ww-negative-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "ww-nan",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "ww-nan-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid WW lower/upper/survival or splitting bound",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: invalid WW lower/upper/survival or splitting bound"
+    ]
+  },
+  {
+    "name": "weight-binding",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "weight-binding-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "empty-source",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "empty-source-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "weight2",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "weight2-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "wrong-owner",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: wrong bound owner",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: wrong bound owner"
+    ]
+  },
+  {
+    "name": "wrong-owner-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: wrong bound owner",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: wrong bound owner"
+    ]
+  },
+  {
+    "name": "neutron-type",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "neutron-type-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "run-id-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: runId must increase",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: runId must increase"
+    ]
+  },
+  {
+    "name": "no-WW-topology",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "no fixed Cartesian WW topology",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: no fixed Cartesian WW topology",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: no fixed Cartesian WW topology"
+    ]
+  },
+  {
+    "name": "input-weight2",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-weight2-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-unbiased-distribution",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-unbiased-distribution-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-biased-distribution",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-biased-distribution-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-dependent-distribution",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-dependent-distribution-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-multisource-equal",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-multisource-equal-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-multisource-bias",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-multisource-bias-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-cell-source",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-cell-source-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-nonpoint",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-nonpoint-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-transform",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-transform-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-fraction2",
+    "expected_receipts": 0,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=0 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "input-fraction2-after",
+    "expected_receipts": 1,
+    "stage": "preflight",
+    "reason": "unsupported source definition",
+    "exit": 2,
+    "receipts": 1,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: unsupported source definition",
+    "state": [
+      "REJECTED_RUN state_unchanged=1 completed=100 reason=prepared: unsupported source definition"
+    ]
+  },
+  {
+    "name": "profile-nonType2",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: Type2 RNG required",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: Type2 RNG required"
+    ]
+  },
+  {
+    "name": "profile-ce",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: only standard MGACE without TMS/OTFDB is supported",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: only standard MGACE without TMS/OTFDB is supported"
+    ]
+  },
+  {
+    "name": "profile-photon",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: only neutron fixed-source mode is supported",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: only neutron fixed-source mode is supported"
+    ]
+  },
+  {
+    "name": "profile-time-reduce",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: restart/time/fission-multiplicity unsupported",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: restart/time/fission-multiplicity unsupported"
+    ]
+  },
+  {
+    "name": "profile-fission",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: nonzero/nonfinite nuSigmaF unsupported",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=0 completed=0 reason=prepared: nonzero/nonfinite nuSigmaF unsupported"
+    ]
+  },
+  {
+    "name": "profile-scheck-energy",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: energy-binned cell SCHECK unsupported; use a separate total-flux diagnostic tally",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: energy-binned cell SCHECK unsupported; use a separate total-flux diagnostic tally"
+    ]
+  },
+  {
+    "name": "seed0",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "even-seed",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "large-seed",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "zero-stride",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "overflow",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "period",
+    "expected_receipts": 0,
+    "stage": "initialize",
+    "reason": "prepared:",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: invalid Type2 seed/stride/history segment or period exceeded",
+    "state": [
+      "REJECTED_INITIALIZE state_unchanged=1 completed=0 reason=prepared: invalid Type2 seed/stride/history segment or period exceeded"
+    ]
+  },
+  {
+    "name": "stride-runtime",
+    "expected_receipts": 0,
+    "stage": "execution",
+    "reason": "stride",
+    "exit": 2,
+    "receipts": 0,
+    "passed": true,
+    "failure": "PREPARED_FAILURE prepared: RNG stride exhausted at history 1",
+    "state": [
+      "REJECTED_RUN state_unchanged=0 completed=0 reason=prepared: RNG stride exhausted at history 1",
+      "FAILED_TERMINAL retry_rejected=1 finish_rejected=1"
+    ]
+  }
+]

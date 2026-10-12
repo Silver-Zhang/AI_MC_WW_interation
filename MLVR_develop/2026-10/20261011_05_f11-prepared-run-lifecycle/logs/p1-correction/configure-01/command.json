@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "cmake",
+    "-S",
+    "/tmp/20261012-f11-stage2-p1/stage2-src",
+    "-B",
+    "/tmp/20261012-f11-stage2-p1/stage2-build",
+    "-DCMAKE_BUILD_TYPE=RelWithDebInfo",
+    "-Dmpi=OFF",
+    "-Dopenmp=OFF",
+    "-Dais=OFF",
+    "-Dpythonapi=OFF",
+    "-Dpersonal=OFF",
+    "-Dloadmodules=ON",
+    "-Dtest=ON",
+    "-Dmpiproc=1",
+    "-Dompthrd=1",
+    "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+  ],
+  "cwd": "/home/workspace/AI_MC_WW_interation",
+  "started_utc": "2026-10-11T16:45:24.305237+00:00",
+  "environment": {
+    "RMC_DATA_PATH": "/home/silver/NucXS_Library/RMC_DATA",
+    "RMC_PATH": null,
+    "RMC_MPI_TEST": null,
+    "RMC_OMP_TEST": null,
+    "OMP_NUM_THREADS": null,
+    "TZ": null
+  }
+}

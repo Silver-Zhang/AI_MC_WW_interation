@@ -1,0 +1,909 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2738f197..a869fc1d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -737,4 +737,10 @@ if (catcherr)
+   endif ()
+ endif ()
+ 
++# Restricted lifecycle harness inherits the final production directory configuration.
++if(test AND CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT mpi AND NOT MPI_USE
++   AND NOT openmp AND NOT OMP_USE AND NOT ais AND NOT pythonapi AND NOT USE_PYTHON_API)
++  add_subdirectory(tests/prepared_fixed_source_lifecycle)
++endif()
++
+ cmake_policy(POP)
+diff --git a/src/AceData.h b/src/AceData.h
+index 493f8f7e..1ed0835e 100644
+--- a/src/AceData.h
++++ b/src/AceData.h
+@@ -9,6 +9,7 @@
+ #include <unordered_map>
+ #include <memory>
+ #include <unordered_map>
++#include "FixedSourceRunSpec.h"
+ # include "GlobeFun.h"
+ # include "MapClass.h"
+ # include "OTFSabAce.h"
+@@ -96,6 +97,10 @@ private:
+   static unordered_map<int, string> CreatNeuReactionName();
+ #endif
+ public:
++  void ClearPreparedDerivedData();
++  void PrepareFixedSourceMode(FixedSourceRole role, int particleMode);
++  bool HasNonzeroPreparedFissionProduction(CDMaterial &material);
++
+   CDAceData(const CDAceData &) { throw "CDAceData class can not be copied due to unique_ptr!"; }
+   CDAceData &operator = (const CDAceData &) { throw "CDAceData class can not be copied due to unique_ptr!"; }
+   CDAceData(CDAceData &&) noexcept = default;
+diff --git a/src/CalMode.h b/src/CalMode.h
+index 3f42e69d..4e1474c0 100644
+--- a/src/CalMode.h
++++ b/src/CalMode.h
+@@ -5,6 +5,7 @@
+ # ifndef __CALMODE__H__
+ # define  __CALMODE__H__
+ 
++#include "FixedSourceRunSpec.h"
+ # include "Criticality.h"
+ # include "Tally.h"
+ # include "AceData.h"
+@@ -37,6 +38,18 @@ class CDKinetics;
+  */
+ class CDCalMode {
+ public:
++  // Restricted serial MG neutron lifecycle. Bound objects must outlive Finish.
++  void InitializePreparedFixedSourceRuns(const FixedSourceSeriesSpec &series, CDNeutronTransport &neutron, CDPhotonTransport &photon,
++      CDElectronTransport &electron, CDAceData &ace, CDFixedSource &fixed,
++      CDMaterial &material, CDGeometry &geometry, CDParticleState &particle, CDTally &tally, CDBurnup &burnup, CDRNG &rng, CDCriticality &criticality,
++      CDSampling &sampling, CDPerturbation &perturb);
++  FixedSourceRunReceipt RunPreparedFixedSource(const FixedSourceRunSpec &spec,
++      const CDExternalSource &source, CDNeutronTransport &neutron, CDPhotonTransport &photon,
++      CDElectronTransport &electron, CDAceData &ace, CDFixedSource &fixed,
++      CDMaterial &material, CDGeometry &geometry, CDParticleState &particle, CDTally &tally, CDRNG &rng, CDCriticality &criticality,
++      CDSampling &sampling, CDPerturbation &perturb);
++  void FinishPreparedFixedSourceRuns();
++
+   /**
+    * @brief RMC支持的各类计算模式
+    */
+@@ -170,6 +183,24 @@ public:
+                             vector<int> vUnivIndex);
+ 
+ private:
++  enum class PreparedPhase { Uninitialized, ModelReady, Preparing, Executing, Finalizing, Finalized, Closed, Failed };
++  PreparedPhase preparedPhase = PreparedPhase::Uninitialized;
++  FixedSourceSeriesSpec preparedSeries;
++  unsigned long long preparedNextOffset = 0, preparedLastRunId = 0;
++  bool preparedHasRun = false, preparedHasWW = false;
++  std::vector<const void *> preparedOwners;
++  std::vector<CDTallyData *> preparedRegistry;
++  std::string preparedDefinition;
++  double preparedEnergyCutoff = 0., preparedWeightCutoff = 0.;
++  FILE *preparedOutput = nullptr;
++  std::vector<const void *> preparedOutputHandles;
++  bool preparedTreatFission = true;
++  void CheckOrdinaryFixedSourceAllowed() const;
++  void PrepareFixedSourceRun(const FixedSourceRunSpec &spec, const CDExternalSource &source,
++      CDExternalSource &activeSource, CDNeutronTransport &neutron, CDAceData &ace,
++      CDFixedSource &fixed, CDMaterial &material, CDGeometry &geometry,
++      CDParticleState &particle, CDTally &tally, CDRNG &rng);
++
+   /**
+    * @brief 进行临界计算
+    * @note 对于ORNG的传递问题，由于OpenMP不能够将引用变量设置为private，
+diff --git a/src/CalcFixedSource.cpp b/src/CalcFixedSource.cpp
+index 4423cba8..53f0a36c 100644
+--- a/src/CalcFixedSource.cpp
++++ b/src/CalcFixedSource.cpp
+@@ -70,6 +70,7 @@ void CDCalMode::CalcFixedSource(CDCalMode &cCalMode, CDNeutronTransport &cNeutro
+                                 CDGeometry &CGeometry, CDParticleState &CParticleState, CDTally &CTally,
+                                 CDRNG &ORNG, CDCriticality &cCriticality, CDExternalSource cExternalSource,
+                                 CDSampling &cSampling, CDPerturbation &cPerturb) {
++  CheckOrdinaryFixedSourceAllowed();
+   OTimer.reg(Utility::FixedSource);
+   OTimer.reg(Utility::Tally);
+   OTimer[Utility::FixedSource].start();
+diff --git a/src/ExternalSource.cpp b/src/ExternalSource.cpp
+index 59cb9e9b..c17f2851 100644
+--- a/src/ExternalSource.cpp
++++ b/src/ExternalSource.cpp
+@@ -545,3 +545,43 @@ double CDExternalSource::Uniform(CDRNG &ORNG) {
+ }
+ 
+ #endif
++
++
++#include <stdexcept>
++#include <cmath>
++void CDExternalSource::CheckPreparedSourceDefinition(CDGeometry &geometry) const {
++  (void)geometry;
++  auto require = [](bool ok) { if (!ok) throw std::invalid_argument("prepared: unsupported source definition"); };
++  require(p_nSourceType == OrdinarySource && p_vSource.size() == 1 && p_vSurfSrc.empty());
++  require(p_vDitributions.size() == 1 && p_vTransforms.size() == 1 && p_vFissMult.empty());
++  require(p_vFraction == std::vector<double>{1.} && p_vBiasFrac == std::vector<double>{1.});
++  require(p_nFixedInitSrcBankCount == 0 && p_nFixedInitPhoSrcBankCount == 0 &&
++          p_vFixedInitSrcBank.empty() && p_vFixedInitPhoSrcBank.empty());
++  const auto &s = p_vSource.front();
++  require(s.p_eSourceType == CDSource::Point && !s.isCellSource && !s.p_bIsWithCellCut && !s.p_bIsRotated);
++  require(s.p_nParticleType == 1 && s.p_dWeight == 1. && s.p_dFraction == 1. &&
++          (s.p_dBiasFrac == 0. || s.p_dBiasFrac == 1.));
++  require(s.p_nCell == 0 && s.p_nTransformIndexU == -1 && s.p_dTime == 0. && s.p_nNorm == 1 && s.p_dSpontaFissNu == 0.);
++  require(s.p_mDistriIndexU.empty() && s.p_vVarisNamesWithDistri.empty() && s.p_vVarisIndexWithDistri.empty());
++  for (auto i : s.p_vDistriIndex) require(i == 0);
++  for (const auto &layer : s.p_vLayerVarIndexDistri) require(layer.empty());
++  for (size_t i = 0; i < s.p_vVariableDefined.size(); ++i)
++    if (s.p_vVariableDefined[i]) require(i == CDSource::FRACTION || i == CDSource::BIASFRAC ||
++        i == CDSource::PARTICLE || i == CDSource::POINT || i == CDSource::VECTOR ||
++        i == CDSource::DIRECMIU || i == CDSource::ENERGY || i == CDSource::WEIGHT);
++  require(s.p_vVariableDefined[CDSource::POINT] && s.p_vVariableDefined[CDSource::VECTOR] &&
++          s.p_vVariableDefined[CDSource::ENERGY]);
++  require(s.p_vPoints.size() == 3 && s.p_vReferVector.size() == 3 && s.p_dDirecMiu == 1. &&
++          std::isfinite(s.p_dEnergy) && s.p_dEnergy > 0.);
++  double norm = 0.;
++  for (double x : s.p_vPoints) require(std::isfinite(x));
++  for (double x : s.p_vReferVector) { require(std::isfinite(x)); norm += x*x; }
++  require(std::isfinite(norm) && norm > 0.);
++}
++void CDExternalSource::ResetWorkingSourceFrom(const CDExternalSource &definition) {
++  *this = definition; // owned run-local copy; do not normalize a second time
++  p_vFixedInitSrcBank.clear(); p_vFixedInitPhoSrcBank.clear();
++  p_nFixedInitSrcBankCount = p_nFixedInitPhoSrcBankCount = 0;
++  std::fill(p_vSpontaFissNeuMul.begin(), p_vSpontaFissNeuMul.end(), 0);
++  std::fill(p_vSpontaFissPhoMul.begin(), p_vSpontaFissPhoMul.end(), 0);
++}
+diff --git a/src/ExternalSource.h b/src/ExternalSource.h
+index 2976c12c..d5a731ac 100644
+--- a/src/ExternalSource.h
++++ b/src/ExternalSource.h
+@@ -38,6 +38,9 @@ class CDParticleBank : public CDParticleState {};
+  */
+ class CDExternalSource {
+ public:
++  void CheckPreparedSourceDefinition(CDGeometry &geometry) const;
++  void ResetWorkingSourceFrom(const CDExternalSource &definition);
++
+   /**
+    * @brief 构造函数
+    */
+diff --git a/src/FixedSource.h b/src/FixedSource.h
+index da242f00..0031bcbc 100644
+--- a/src/FixedSource.h
++++ b/src/FixedSource.h
+@@ -4,6 +4,7 @@
+ # ifndef __FixedSource_class__H__
+ # define  __FixedSource_class__H__
+ 
++#include "FixedSourceRunSpec.h"
+ # include "CommonHead.h"
+ # include "AceData.h"
+ # include "Geometry.h"
+@@ -186,6 +187,19 @@ public:
+  */
+ class CDFixedSource {
+ public:
++  void ResetRunState();
++  void SetPreparedRun(long long histories, FixedSourceRole role, double maxAdjointEnergyMeV);
++  void RebuildPreparedRunCutoffs(CDAceData &ace);
++  void CheckAndRecordPreparedSourceWeight(double weight);
++  void VerifyPreparedSourceWeights(long long histories) const;
++  void FinishPreparedSourceWeightAudit(long long histories);
++  const FixedSourceWeightAudit &GetPreparedSourceWeightAudit() const { return preparedWeightAudit; }
++  bool IsPreparedSourceWeightGuardEnabled() const { return preparedWeightGuard; }
++private:
++  bool preparedWeightGuard = false;
++  FixedSourceWeightAudit preparedWeightAudit;
++public:
++
+   /**
+    * @brief 构造函数
+    */
+diff --git a/src/InitiateTally.cpp b/src/InitiateTally.cpp
+index 28aebcd6..1c1955fb 100644
+--- a/src/InitiateTally.cpp
++++ b/src/InitiateTally.cpp
+@@ -258,3 +258,8 @@ void CDTally::FilterCellTallyInDomain(CDGeometry &cGeometry) {
+   }
+ # endif
+ }
++
++void CDTally::ResetRunScores(long long histories) {
++  for (auto *data : p_pTallyDataPointer) data->ResetForRun(histories);
++  p_bIsPerHstry = true; p_bIsPerCyc = false; p_bIsTallyFlag = false;
++}
+diff --git a/src/InitiateTrspt.cpp b/src/InitiateTrspt.cpp
+index 6d688e68..4c48c8d6 100644
+--- a/src/InitiateTrspt.cpp
++++ b/src/InitiateTrspt.cpp
+@@ -99,3 +99,75 @@ void CDFixedSource::InitiateTrspt(CDNeutronTransport &cNeutronTransport) {
+ 
+   return;
+ }
++
++
++#include <stdexcept>
++#include <cmath>
++#include <climits>
++void CDFixedSource::ResetRunState() {
++  preparedWeightGuard = false;
++  preparedWeightAudit = FixedSourceWeightAudit{};
++  p_nFinishCalculate = -1;
++  p_llCurrentPARTICLE = p_llCurrentBatch = p_llCurParNumEachPro = p_llCurTotParNum = 0;
++  p_llParNumRestart = p_llParticlePosEachPro = 0;
++  p_llTimeParInterval = p_llParNumToInputInterval = p_llParIntervalEachPro = 0;
++  p_nFixedSrcBankCount = p_nFixedSrcCount = p_nPhotonBankCount = p_nElectronBankCount = 0;
++  p_llTotCollisionCount = p_llTotGammaColliCount = p_llTotElectronColliCount = 0;
++  p_dTotInducedGammaCount = 0;
++  p_nMissParCount = 0;
++  p_dTotStartWgt = p_dTotStartWgtOrigin = 0.;
++  p_sNextParticle = {0, 0, 0};
++  p_vFixedSrc.clear(); p_vFixedSrcBank.clear();
++  p_vPhotonBank.clear(); p_vElectronBank.clear();
++  for (auto &bank : p_vFixedParticleSrcBank) bank.ParticleBank.clear();
++  std::fill(p_vSpontaFissNeuMul.begin(), p_vSpontaFissNeuMul.end(), 0);
++  std::fill(p_vInduceFissNeuMul.begin(), p_vInduceFissNeuMul.end(), 0);
++  std::fill(p_vSpontaFissPhoMul.begin(), p_vSpontaFissPhoMul.end(), 0);
++  std::fill(p_vInduceFissPhoMul.begin(), p_vInduceFissPhoMul.end(), 0);
++}
++void CDFixedSource::SetPreparedRun(long long histories, FixedSourceRole role, double maxAdjointEnergyMeV) {
++  if (histories <= 0 || histories > INT_MAX / 2 ||
++      (role != FixedSourceRole::Forward && role != FixedSourceRole::Adjoint) ||
++      !std::isfinite(maxAdjointEnergyMeV) || maxAdjointEnergyMeV <= 0.)
++    throw std::invalid_argument("prepared: invalid population/role/adjoint energy");
++  p_llUserInputParNum = histories;
++  p_llParIntervalEachPro = histories;
++  CheckFixedSource();
++  p_bIsAdjoint = role == FixedSourceRole::Adjoint;
++  p_dMaxAdjointNeutronEnergy = p_bIsAdjoint ? maxAdjointEnergyMeV : 20.;
++  p_dMaxAdjointPhotonEnergy = 20.;
++  preparedWeightGuard = true;
++}
++void CDFixedSource::RebuildPreparedRunCutoffs(CDAceData &ace) {
++  if (p_bIsAdjoint)
++    p_dMaxAdjointNeutronEnergy = ace.LocateMgErgGrp(p_dMaxAdjointNeutronEnergy, CDParticleState::Neutron);
++}
++void CDFixedSource::CheckAndRecordPreparedSourceWeight(double weight) {
++  if (!preparedWeightGuard) throw std::logic_error("prepared: source audit is not armed");
++  auto &a = preparedWeightAudit;
++  ++a.sampledHistories;
++  a.initialWeightSum += weight;
++  if (a.sampledHistories == 1) a.minimumInitialWeight = a.maximumInitialWeight = weight;
++  else { a.minimumInitialWeight = std::min(a.minimumInitialWeight, weight);
++         a.maximumInitialWeight = std::max(a.maximumInitialWeight, weight); }
++  if (!std::isfinite(weight) || weight != 1.) {
++    ++a.nonUnitHistories;
++    throw std::runtime_error("prepared: non-unit initial source weight at history " +
++                             std::to_string(a.sampledHistories) + ": " + std::to_string(weight));
++  }
++}
++void CDFixedSource::VerifyPreparedSourceWeights(long long histories) const {
++  const auto &a = preparedWeightAudit;
++  if (!preparedWeightGuard || a.sampledHistories != histories || a.nonUnitHistories != 0 ||
++      a.initialWeightSum != double(histories) || a.minimumInitialWeight != 1. || a.maximumInitialWeight != 1.)
++    throw std::runtime_error("prepared: initial source weight audit failed");
++}
++void CDNeutronTransport::ResetPreparedRunCounters(double defaultWeightCutoff) {
++  p_nMissParticleCount = p_nMissNeutronCount = 0;
++  p_dWgtCutOff = defaultWeightCutoff;
++}
++
++void CDFixedSource::FinishPreparedSourceWeightAudit(long long histories) {
++  VerifyPreparedSourceWeights(histories);
++  preparedWeightGuard = false;
++}
+diff --git a/src/NeutronTransport.h b/src/NeutronTransport.h
+index 5fc11c34..9c7a59f7 100644
+--- a/src/NeutronTransport.h
++++ b/src/NeutronTransport.h
+@@ -24,6 +24,8 @@ class vState;
+  */
+ class CDNeutronTransport {
+ public:
++  void ResetPreparedRunCounters(double defaultWeightCutoff);
++
+   /**
+    * @brief 构造函数
+    */
+diff --git a/src/ParticleState.h b/src/ParticleState.h
+index c2558c16..40ca8044 100644
+--- a/src/ParticleState.h
++++ b/src/ParticleState.h
+@@ -4,6 +4,7 @@
+ # ifndef __PARTICLESTATE__H__
+ # define  __PARTICLESTATE__H__
+ 
++#include "FixedSourceRunSpec.h"
+ # include "CommonHead.h"
+ # include <set>
+ # include "SeFmNpm.h"
+@@ -12,6 +13,9 @@
+ # include "PoissonBoxSampling.h"
+ 
+ class CDCalMode;
++class CDGeometry;
++class CDMaterial;
++class CDAceData;
+ 
+ class CDFixedSource;
+ 
+@@ -369,6 +373,10 @@ using Position = std::array<double, 3>;
+  */
+ class CDParticleState {
+ public:
++  void ResetForFixedSourceRun();
++  void RebuildForFixedSourceRun(CDGeometry &geometry, CDMaterial &material, CDAceData &ace,
++                               FixedSourceRole role, double energyCutoffMeV, double weightCutoff);
++
+ 
+   class SecondParticle {
+   public:
+diff --git a/src/ParticleStateFun.cpp b/src/ParticleStateFun.cpp
+index ef0d2b57..20379953 100644
+--- a/src/ParticleStateFun.cpp
++++ b/src/ParticleStateFun.cpp
+@@ -311,3 +311,197 @@ double CDParticleState::CalcDistToDeadLine(double dDeadLine) {
+ 
+   return dDistToDeadLine;
+ }
++
++
++void CDParticleState::ResetForFixedSourceRun() {
++  // Fresh defaults by field group. Model-owned definitions are never assigned.
++  p_bIsKilled = false;
++  p_dTime = 0;
++  p_dTimeBound = 0;
++  p_dSimulateTime = 0;
++  p_bReachDeadLine = false;
++  p_dVel = 0;
++  p_nSourceId = 0;
++  p_dWgt = 0;
++  p_dPreWgt = 0.0;
++  std::fill(std::begin(p_dPos), std::end(p_dPos), 0.);
++  std::fill(std::begin(p_dPhantomPos), std::end(p_dPhantomPos), 0.);
++  std::fill(std::begin(p_dPreDir), std::end(p_dPreDir), 0.);
++  std::fill(std::begin(p_dDir), std::end(p_dDir), 0.);
++  std::fill(std::begin(p_dExitDir), std::end(p_dExitDir), 0.);
++  p_dPreErg = 0;
++  p_dErg = 0;
++  p_dExitErg = 0;
++  std::fill(std::begin(p_dLocPos), std::end(p_dLocPos), 0.);
++  std::fill(std::begin(p_dLocDir), std::end(p_dLocDir), 0.);
++  std::fill(std::begin(p_dLocExitDir), std::end(p_dLocExitDir), 0.);
++  p_dWgtCutOff = 0.25;
++  p_nUfsParticleBankCount = 0;
++  p_bIsAdjointParticle = false;
++  p_dTempAdjointxSection = 0;
++  p_dCalRange = 0;
++  p_dCondensedWalkRange = 0;
++  p_dCondensedWalkScatterAngle = 0;
++  p_nPreHighErgIndex = 0;
++  p_nHighErgIndex = 0;
++  p_nErgIndex = 0;
++  p_nRestSubstep = 0;
++  p_dCosine = 0;
++  unChangedLevel = 0;
++  p_nCELL = 0;
++  p_nBoundLEVEL = 0;
++  p_nBoundSURF = 0;
++  p_nBoundINDEX = 0;
++  p_nLatBoundSURF = 0;
++  p_dSourceNeuWeight = 0;
++  p_dSourceCellNeuImp = 1.;
++  p_dSourceCellGmaImp = 1.;
++  p_dSourceCellElecImp = 1.;
++  p_dLocNeuImp = 0;
++  p_dLocGmaImp = 0;
++  p_dLocElecImp = 0;
++  p_dPhotonWeightThreshold = 0;
++  p_nNUC = 0;
++#ifdef AIS
++  p_nNucTMP = 0;
++#endif
++#ifdef AIS
++  p_nSabNucTMP = 0;
++#endif
++  p_nMatNUC = 0;
++  p_nSabNUC = 0;
++  p_nColType = 0;
++  p_nMulti = 0;
++  p_nPhoReactType = 0;
++  NTYN = 0;
++  p_nLoc = 0;
++#ifdef AIS
++  p_bIsDelayedNeutron = false;
++#endif
++#ifdef AIS
++  p_bHasAngDistr = false;
++#endif
++#ifdef AIS
++  p_nProductionIndex = 0;
++#endif
++#ifdef AIS
++  p_nLawIndex = 0;
++#endif
++#ifdef AIS
++  p_ulAngErgDistrPos = 0;
++#endif
++#ifdef AIS
++  p_ulMuDistrPos = 0;
++#endif
++#ifdef AIS
++  p_nSabErgPos = 0;
++#endif
++#ifdef AIS
++  p_nSabErgOutPos = 0;
++#endif
++  p_nLawType = 0;
++  p_nSabType = 0;
++  p_dExitErgCm = 0;
++  p_dKalbachR = 0;
++  p_dKalbachA = 0;
++  LDAT = 0;
++  p_dRelSpeed = 0;
++  p_dSabIntplFrac = 0;
++  p_nSabIntplPos = 0;
++  p_nColliCount = 0;
++  p_nInterpN0 = 0;
++  p_dInterpK0 = 0;
++  p_nInterpN = 0;
++  p_dInterpK = 0;
++  p_dMacroTotCs = 0;
++  p_dMacroNuFissCs = 0;
++  p_dMacFissQFissCs = 0;
++  p_dTrackLength = 0;
++  p_nIndex = 0;
++  p_nIndexDB = 0;
++  p_nLower = 0;
++  p_nUpper = 0;
++  p_dCellTmp = 0;
++  p_nMAT = 0;
++  p_dDensRatio = 1.0;
++  p_bIsCellChanged = true;
++  p_bIsMatChanged = true;
++  p_bIsCellTmpChanged = true;
++  p_bDensIsChanged = true;
++  p_bIsInitsource = false;
++  dTransportMFP = -1.0;
++  p_bIsParticleFuelExist = false;
++  p_bIsPoissonBoxExist = false;
++  p_dRad = 0;
++  p_nUni_particle = 0;
++  StochasticUni = -1;
++  p_bIsSabCol = false;
++  p_bIsFreeGasCol = false;
++  p_dErg_Rel = 0;
++  std::fill(std::begin(p_dDir_Rel), std::end(p_dDir_Rel), 0.);
++  std::fill(std::begin(p_dTgtVel), std::end(p_dTgtVel), 0.);
++  p_bIsDBRCCol = false;
++  p_bTMSReject = false;
++  p_dMatMajXSForDiffTmp = 0;
++  p_nSabTempInterpPos = 0;
++  p_dSabTempInterpFrac = 0;
++  p_bMGAdjFisMatrix = false;
++  p_nMultiGrpNumber = 0;
++  p_vCells.clear();
++  p_vLocUnivs.clear();
++  p_vLocCells.clear();
++  p_vLocCellsU.clear();
++  p_sCellPassed.clear();
++  p_sSurfaceCrossed.clear();
++  p_vUfsParticleBank.clear();
++  p_vPseudoSrc.clear();
++  p_vProgenitorInformation.clear();
++  p_vPseudoBank.clear();
++  p_vMGAdjFisMatrix.clear();
++  p_vBornIndex.clear();
++  secondaryEnergy.clear();
++  secondaryParticles.clear();
++  p_vDBXS.clear();
++  p_vDBXSInfo.clear();
++  p_vDBXSDerivToTMP_1.clear();
++  p_vDBXSDerivToTMP_2.clear();
++  p_vNucMajXSForDiffTmp.clear();
++  p_vNucErgRel.clear();
++  p_vNucMUt.clear();
++  p_vNucBetaVt.clear();
++  p_vNucGn.clear();
++  p_vMatNucFrc.clear();
++  p_vMatNucID.clear();
++  std::fill(CrossSurfIds.begin(), CrossSurfIds.end(), 0);
++  std::fill(CrossSurfLocIds.begin(), CrossSurfLocIds.end(), 0);
++  p_eParticleType = Neutron;
++#ifdef AIS
++  p_eColType = NeutronReactionType::REACTION_NONE;
++#endif
++#ifdef AIS
++  p_eCoordinateType = Coordinate::None;
++#endif
++#ifdef AIS
++  p_eLawIndex = LawType::None; p_eLawType = LawType::None;
++#endif
++#ifdef AIS
++  p_eMuType = MuType::None; p_eSabMuType = SabMuType::None;
++#endif
++  p_OColNucCs = CDNucCs{};
++  for (auto &xs : p_vONucCs) xs = CDTempXs{};
++  p_dDisplace = {{0., 0., 0., 0.}};
++  p_ParticlePosHistory = {{0., 0., 0., 0.}};
++  _energy_cutoff = {0., 0., 1.E-3, 0., 0.};
++}
++void CDParticleState::RebuildForFixedSourceRun(CDGeometry &geometry, CDMaterial &material, CDAceData &ace,
++    FixedSourceRole role, double energyCutoffMeV, double weightCutoff) {
++  p_vONucCs.resize(ace.p_vNuclides.size());
++  p_vIsNucLocCellTmpChanged.assign(ace.p_vNuclides.size(), true);
++  p_vNearestParticleID.assign(geometry.p_vUniverse.size(), 0);
++  p_vNearestPoissonBoxID.assign(geometry.p_vUniverse.size(), 0);
++  p_dRealDisplace.assign(geometry.p_vUniverse.size() + 1, std::vector<double>(3, 0.));
++  material.SetupMatNucFrc(*this);
++  p_bIsAdjointParticle = role == FixedSourceRole::Adjoint;
++  energyCutoff(Neutron) = energyCutoffMeV;
++  p_dWgtCutOff = weightCutoff;
++}
+diff --git a/src/RNG/RNG.h b/src/RNG/RNG.h
+index 27fa6b79..01e57a17 100644
+--- a/src/RNG/RNG.h
++++ b/src/RNG/RNG.h
+@@ -94,6 +94,7 @@ public:
+    * @return unsigned long long
+    */
+   inline unsigned long long SetSeed0(unsigned long long seed) {
++    strideCacheValid = false;
+     RN_SEED0 = seed;
+     return RN_SEED0;
+   }
+@@ -134,6 +135,7 @@ public:
+    * @return unsigned long long
+    */
+   inline unsigned long long SetSeed(unsigned long long seed) {
++    strideCacheValid = false;
+     RN_SEED = seed;
+     return RN_SEED;
+   }
+@@ -174,6 +176,7 @@ public:
+    * @return unsigned long long
+    */
+   inline unsigned long long SetStride(unsigned long long stride) {
++    strideCacheValid = false;
+     RN_STRIDE = stride;
+     return RN_STRIDE;
+   }
+@@ -194,6 +197,7 @@ public:
+    * @return long long
+    */
+   inline long long SetPosition(long long pos) {
++    strideCacheValid = false;
+     RN_POSITION = pos;
+     return RN_POSITION;
+   }
+@@ -214,6 +218,7 @@ public:
+    * @return long long
+    */
+   inline long long SetPositionPre(long long pos) {
++    strideCacheValid = false;
+     RN_POSITION_PRE = pos;
+     return RN_POSITION_PRE;
+   }
+@@ -231,6 +236,11 @@ public:
+   // string to_input_block();
+ 
+ protected:
++  // Per-generator cache; never shared between independent streams.
++  bool strideCacheValid = false;
++  unsigned long long ullRN_GK = 0, ullRN_CK = 0, ullRN_ISEED = 0;
++  bool preparedGuard = false;
++  unsigned long long preparedHistories = 0, preparedStarted = 0, preparedDraws = 0, preparedMaxDraws = 0;
+   /**
+    * @brief multiplier
+    */
+@@ -611,6 +621,13 @@ public:
+    * @return string
+    */
+   string to_input_block();
++  RNGType GetRNGType() const { return type; }
++  static unsigned long long ValidatePreparedType2Substream(unsigned long long root,
++      unsigned long long offset, long long histories, unsigned long long stride);
++  void ConfigurePreparedType2Substream(unsigned long long root, unsigned long long offset,
++                                      long long histories, unsigned long long stride);
++  unsigned long long FinishPreparedType2Substream();
++
+ 
+ private:
+   shared_ptr<BasicRNG> generator;
+diff --git a/src/RNG/StrideRNG.cpp b/src/RNG/StrideRNG.cpp
+index 258eb412..e93f17f5 100644
+--- a/src/RNG/StrideRNG.cpp
++++ b/src/RNG/StrideRNG.cpp
+@@ -2,6 +2,8 @@
+ /// @copyright Copyright (c) 2000-2026 REAL Tsinghua University. All Rights Reserved.
+ #include "RNG.h"
+ #include <sstream>
++#include <stdexcept>
++#include <limits>
+ 
+ /**
+  * @brief 等号运算符重构函数
+@@ -74,6 +76,12 @@ string CDRNG::to_input_block() {
+  * @return
+  */
+ double LCG63_0::Rand() {
++  if (preparedGuard) {
++    if (!preparedStarted || preparedDraws >= RN_STRIDE)
++      throw std::runtime_error("prepared: RNG stride exhausted at history " + std::to_string(preparedStarted));
++    ++preparedDraws;
++    preparedMaxDraws = std::max(preparedMaxDraws, preparedDraws);
++  }
+   double dRand = double(RN_SEED) * RN_NORM;
+   RN_SEED = (((RN_MULT * RN_SEED) & RN_MASK) + RN_ADD) & RN_MASK;
+   return dRand;
+@@ -83,11 +91,13 @@ double LCG63_0::Rand() {
+  * 根据每个核不同的RN_POSITION，得到每个核起始的随机数种子
+  */
+ void LCG63_0::GetRandSeed() {
+-  static unsigned long long ullRN_GK;
+-  static unsigned long long ullRN_CK;
+-  static unsigned long long ullRN_ISEED;
+-
+-  if (RN_POSITION_PRE != (RN_POSITION - 1)) { //// only execute at the very beginning
++  if (preparedGuard) {
++    if (preparedStarted >= preparedHistories)
++      throw std::runtime_error("prepared: too many RNG history starts");
++    ++preparedStarted;
++    preparedDraws = 0;
++  }
++  if (!strideCacheValid || RN_POSITION_PRE != (RN_POSITION - 1)) { //// only execute at the very beginning
+     GetSkipPara(RN_STRIDE, ullRN_GK, ullRN_CK);
+     unsigned long long ullGK_temp, ullCK_temp;
+     GetSkipPara(RN_STRIDE * RN_POSITION, ullGK_temp, ullCK_temp);
+@@ -95,6 +105,7 @@ void LCG63_0::GetRandSeed() {
+   } else {
+     ullRN_ISEED = (((ullRN_GK * ullRN_ISEED) & RN_MASK) + ullRN_CK) & RN_MASK; ////
+   }
++  strideCacheValid = true;
+   RN_SEED = ullRN_ISEED;
+   RN_POSITION_PRE = RN_POSITION;
+   RN_POSITION += 1;
+@@ -252,3 +263,36 @@ void CDRNG::ResetRNGType(CDRNG::RNGType _type) {
+     throw std::invalid_argument("Type No. " + std::to_string(type) + " is not valid.");
+   }
+ }
++
++unsigned long long CDRNG::ValidatePreparedType2Substream(unsigned long long root,
++    unsigned long long offset, long long histories, unsigned long long stride) {
++  const unsigned long long period = 1ULL << 61, mask = (1ULL << 63) - 1;
++  if (!root || root > mask || !(root & 1) || !stride || histories <= 0 ||
++      stride > period || offset > period / stride ||
++      static_cast<unsigned long long>(histories) > period / stride - offset)
++    throw std::invalid_argument("prepared: invalid Type2 seed/stride/history segment or period exceeded");
++  unsigned long long exponent = offset * stride, multiplier = 3512401965023503517ULL, power = 1;
++  while (exponent) {
++    if (exponent & 1) power = (power * multiplier) & mask;
++    multiplier = (multiplier * multiplier) & mask;
++    exponent >>= 1;
++  }
++  return (root * power) & mask;
++}
++void CDRNG::ConfigurePreparedType2Substream(unsigned long long root, unsigned long long offset,
++                                         long long histories, unsigned long long stride) {
++  if (type != rngLCG63_0 || generator->preparedGuard)
++    throw std::logic_error("prepared: requires idle Type2 RNG");
++  const auto seed = ValidatePreparedType2Substream(root, offset, histories, stride);
++  SetSeed0(seed); SetSeed(seed); SetStride(stride); SetPosition(0); SetPositionPre(-1000);
++  generator->preparedHistories = histories;
++  generator->preparedStarted = generator->preparedDraws = generator->preparedMaxDraws = 0;
++  generator->preparedGuard = true;
++}
++unsigned long long CDRNG::FinishPreparedType2Substream() {
++  if (!generator->preparedGuard || generator->preparedStarted != generator->preparedHistories ||
++      GetPosition() != static_cast<long long>(generator->preparedHistories))
++    throw std::runtime_error("prepared: RNG history count mismatch");
++  generator->preparedGuard = false;
++  return generator->preparedMaxDraws;
++}
+diff --git a/src/SampleNeutronSource.cpp b/src/SampleNeutronSource.cpp
+index 5d79a2ca..4c91713d 100644
+--- a/src/SampleNeutronSource.cpp
++++ b/src/SampleNeutronSource.cpp
+@@ -201,6 +201,8 @@ void CDFixedSource::SampleFixSource(CDCalMode &OCalMode, CDNeutronTransport &cNe
+ #else
+     cExternalSource.SampleSourceParticle(cParticleState, cGeometry, cAceData, ORNG, p_vFissMult);
+ # endif
++    if (IsPreparedSourceWeightGuardEnabled())
++      CheckAndRecordPreparedSourceWeight(cParticleState.p_dWgt);
+     cParticleState.p_sCellPassed.clear();
+     cParticleState.p_sSurfaceCrossed.clear();
+   }
+diff --git a/src/StatisticsFunc.cpp b/src/StatisticsFunc.cpp
+index 25e8aea0..9814b5f5 100644
+--- a/src/StatisticsFunc.cpp
++++ b/src/StatisticsFunc.cpp
+@@ -615,3 +615,11 @@ double CDStatisticsTester::CalcPareto(double a, double k) {
+   }
+   return y;
+ }
++
++void CDStatisticsTester::ResetForRun(long long histories) {
++  // The legacy diagnostic spool is run-owned too, including when no HDF export was requested.
++  for (int i = 0; i < p_nTallyToCheck; ++i) RemoveTempFile("", i, 1);
++  p_nCyc = 1;
++  p_vGatherScores.clear();
++  if (p_nTallyToCheck > 0) ReSize(histories);
++}
+diff --git a/src/StatisticsTester.h b/src/StatisticsTester.h
+index dfc15c0a..d69cab7a 100644
+--- a/src/StatisticsTester.h
++++ b/src/StatisticsTester.h
+@@ -16,6 +16,8 @@
+  */
+ class CDStatisticsTester {
+ public:
++  void ResetForRun(long long histories);
++
+   /**
+    * @brief 对应的计数器类型
+    */
+diff --git a/src/Tally.h b/src/Tally.h
+index f04bc998..3aff0af1 100644
+--- a/src/Tally.h
++++ b/src/Tally.h
+@@ -28,6 +28,8 @@ using namespace std;
+ 
+ class CDTally {
+ public:
++  void ResetRunScores(long long histories);
++
+ 
+   /**
+    * @brief 初始化计数器对象
+diff --git a/src/TallyData.cpp b/src/TallyData.cpp
+index 314d4051..2f025b25 100644
+--- a/src/TallyData.cpp
++++ b/src/TallyData.cpp
+@@ -108,3 +108,10 @@ void CDTallyData::SetSize(int nSetSize) { // set size of tally data
+   p_vAve.resize(nSetSize);
+   p_vRe.resize(nSetSize);
+ }
++
++void CDTallyData::ResetForRun(long long histories) {
++  SetZero();
++  CDGlobeFun::SetVecZero(p_vSum3);
++  p_setScoreIndex.clear(); p_vScoreIndex2.clear(); p_vScoreStride.clear();
++  p_OStatisticsTester.ResetForRun(histories);
++}
+diff --git a/src/TallyData.h b/src/TallyData.h
+index 5db0d836..009d949c 100644
+--- a/src/TallyData.h
++++ b/src/TallyData.h
+@@ -31,6 +31,8 @@ class CDTallyData {
+   3. Tally average and relative error are calculated per history
+   */
+ public:
++  void ResetForRun(long long histories);
++
+   /**
+    * @brief 临时计数结果（固定源模式下单个粒子或临界模式下每代）
+    */
+diff --git a/src/TreatAdjointMaterial.cpp b/src/TreatAdjointMaterial.cpp
+index 802cb34c..86d8b5e4 100644
+--- a/src/TreatAdjointMaterial.cpp
++++ b/src/TreatAdjointMaterial.cpp
+@@ -104,3 +104,36 @@ void CDAceData::treatAdjointMaterial(int nParticleMode) { //处理伴随截面;
+     }
+   }
+ }
++
++
++#include <stdexcept>
++#include <cmath>
++void CDAceData::ClearPreparedDerivedData() {
++  for (auto &nuclide : p_vNuclides) {
++    nuclide.p_vAdjointCrossSection.clear();
++    nuclide.p_vAdjointFissionCrossSection.clear();
++  }
++  p_bIsAdjoint = false;
++}
++void CDAceData::PrepareFixedSourceMode(FixedSourceRole role, int particleMode) {
++  ClearPreparedDerivedData();
++  if (role != FixedSourceRole::Forward && role != FixedSourceRole::Adjoint)
++    throw std::invalid_argument("prepared: invalid ACE role");
++  p_bIsAdjoint = role == FixedSourceRole::Adjoint;
++  if (p_bIsAdjoint) treatAdjointMaterial(particleMode);
++}
++bool CDAceData::HasNonzeroPreparedFissionProduction(CDMaterial &material) {
++  // All loaded physical nuclides: conservative superset of used materials.
++  // A nonfinite value is unsupported, never silently treated as zero production.
++  (void)material;
++  for (size_t i = 1; i < p_vNuclides.size(); ++i) {
++    int nu = GetMgNeuLNU(i), fis = GetMgNeuLFIS(i);
++    if (!nu) continue;
++    if (!fis) return true;
++    for (int g = 0; g < p_nNeuMltGrpNum; ++g) {
++      double n = p_vNuclides[i].XSS.at(nu + g), f = p_vNuclides[i].XSS.at(fis + g);
++      if (!std::isfinite(n) || !std::isfinite(f) || n * f != 0.) return true;
++    }
++  }
++  return false;
++}
+diff --git a/src/Utility/Timer.h b/src/Utility/Timer.h
+index 9f8fb46c..59460957 100644
+--- a/src/Utility/Timer.h
++++ b/src/Utility/Timer.h
+@@ -5,6 +5,7 @@
+ 
+ #include <chrono>
+ #include <map>
++#include <stdexcept>
+ 
+ namespace Utility {
+   /**
+@@ -93,6 +94,13 @@ namespace Utility {
+     /**
+      * @brief 重置计时器，将累计时间置零
+      */
++    void ResetForPreparedRun() {
++      if (running) throw std::logic_error("prepared: reset of running timer");
++      runTime = recordTime = 0.;
++      startTime = clock::time_point{};
++      running = false;
++    }
++
+     void reset() {
+       runTime = 0.0;
+       running = false;
+diff --git a/src/WeightWindow.h b/src/WeightWindow.h
+index db1c5ba9..7a2d21e6 100644
+--- a/src/WeightWindow.h
++++ b/src/WeightWindow.h
+@@ -10,6 +10,7 @@
+ #include "ParticleState.h"
+ #include <unordered_set>
+ #include  "ParallelClass.h"
++#include "FixedSourceRunSpec.h"
+ # include "Sampling.h"
+ class CDGeometry;
+ class CDParticleState;
+@@ -60,6 +61,11 @@ public:
+  */
+ class CDWeightWindow {
+ public:
++  void ClearPreparedNativeState();
++  void InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
++                                  CDGeometry &geometry, CDCalMode &mode,
++                                  CDNeutronTransport &neutron, double defaultWeightCutoff);
++
+ #ifdef USE_MPI
+   bool p_bUseSharedMPIWeightWindow = false;
+ #endif
+diff --git a/src/WeightWindows.cpp b/src/WeightWindows.cpp
+index 6236ab79..5fe8a40d 100644
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -289,3 +289,29 @@ void CDWeightWindow::InitiateWeightWindow(CDCalMode &cCalMode, CDGeometry &cGeom
+   cCalMode.p_nChangeNeuCutWgt = 2;
+   p_OWeightWindowMesh.p_bIsHeterMesh = true;
+ }
++
++
++#include "CalMode.h"
++#include <stdexcept>
++void CDWeightWindow::ClearPreparedNativeState() {
++  p_bUseMeshWeightWindow = false;
++  for (auto &particle : p_vMeshInformation)
++    for (auto &mesh : particle)
++      for (auto &bin : mesh) bin = CDWeightWindowParameter{};
++}
++void CDWeightWindow::InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
++    CDGeometry &geometry, CDCalMode &mode, CDNeutronTransport &neutron, double defaultWeightCutoff) {
++  if (spec.appliesToTransportRole != role) throw std::invalid_argument("prepared: WW role mismatch");
++  mode.p_nVarRedMode[CDParticleState::Neutron] = CDCalMode::CellImportance;
++  mode.p_nChangeNeuCutWgt = 0;
++  neutron.p_dWgtCutOff = defaultWeightCutoff;
++  if (!spec.enabled) return;
++  auto lower = spec.lower;
++  auto &para = p_vWeightWindowPara[CDParticleState::Neutron];
++  ProcessWeightWindow(geometry, CDParticleState::Neutron, p_vEnergyBins[CDParticleState::Neutron], lower,
++                      para[WUPN], para[WSURVN]);
++  p_bUseMeshWeightWindow = true;
++  mode.p_nVarRedMode[CDParticleState::Neutron] = CDCalMode::TrackMeshWeightWindow;
++  mode.p_nChangeNeuCutWgt = 2;
++  neutron.p_dWgtCutOff = 1.e-8;
++}
