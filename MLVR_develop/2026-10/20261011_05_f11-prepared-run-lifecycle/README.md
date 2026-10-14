@@ -3,7 +3,7 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-10-11；原new_task.sh自动分配05，沿用本任务 |
-| 状态 | 已完成（Stage 2受限冻结，ACCEPT WITH LIMITATIONS；两个WW P1 CLOSED；RMC已提交4810694b，GitLab推送受认证阻塞，见§4） |
+| 状态 | 已完成（Stage 2受限冻结，ACCEPT WITH LIMITATIONS；两个WW P1 CLOSED；RMC 4810694b已推送GitLab并读回确认，见§4） |
 | 任务类型 / 模式 | F11 Stage2正式生命周期实现 / C |
 | 报告人 | Codex |
 | 设计基线 | 知识库04；Task06原独立设计审查保留 |
@@ -51,7 +51,7 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 ## 3. 决策记录
 
-2026-10-14 最终提交授权：用户原文“按照你的计划完成推送”。据此仅清除已指出的测试globals.cpp末尾空行，核对并提交批准的29文件到RMC现有分支，推送既有远端；同步本次冻结/提交文档，不进入Stage 3。此授权覆盖前次提交准备中的待提交状态。
+2026-10-14 最终提交授权：用户原文“按照你的计划完成推送”。据此仅清除已指出的测试globals.cpp末尾空行，核对并提交批准的29文件到RMC现有分支，推送既有远端；同步本次冻结/提交文档，不进入Stage 3。此授权覆盖前次提交准备中的待提交状态。用户随后提供SSH地址 `ssh://git@gitlab.reallab.org.cn:8922/zhangjunxiao/RMC.git`；按此端口完成主机身份核验及推送，并将两仓库GitLab远端改为对应SSH地址，保留文档GitHub镜像。
 
 2026-10-12：用户明确批准Task07两个P1的定向修复与必要回归，继续模式C、沿用Task05；授权原文见[本轮授权](logs/p1-correction/user-authorization.txt)。仅在原29文件内修改，不改输运数学/冻结04/reference。修复前完整源码、补丁及旧证据SHA256已保存于logs/p1-correction。
 
@@ -65,7 +65,7 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 ## 4. 结论与边界
 
-**当前：ACCEPT WITH LIMITATIONS（2026-10-14 Codex 独立最终技术审核；用户已确认进入最终冻结与提交准备）。P1-WW-01 / P1-WW-02：CLOSED。** Stage 2 按下述范围冻结；RMC已提交 `4810694b7a99dfc3ad7d27f7d443814f511f4829`，GitLab推送因认证缺失受阻；Stage 3 未启动。
+**当前：ACCEPT WITH LIMITATIONS（2026-10-14 Codex 独立最终技术审核；用户已确认进入最终冻结与提交准备）。P1-WW-01 / P1-WW-02：CLOSED。** Stage 2 按下述范围冻结；RMC已提交 `4810694b7a99dfc3ad7d27f7d443814f511f4829`，已推送GitLab分支 `Neural_Network_WW_Iteration` 并读回确认；Stage 3 未启动。
 
 **独立审核摘要**：审核对象是 [20261014_01 最新四文件修复](../20261014_01_f11-stage2-final-ww-p1-fix/README.md)，不是从 Stage 1 起的全部差异。Task02 后快照加最新 correction.diff 在仓库外重建，与当前四文件逐字节一致；[最新源码 SHA256](../20261014_01_f11-stage2-final-ww-p1-fix/source-sha256.txt)与实际源码匹配。历史 NEEDS CORRECTION 报告原文保留，不再代表当前版本。
 
@@ -84,7 +84,9 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 **提交执行（2026-10-14，用户已授权）**：仅删除测试 `globals.cpp` 文件末尾多余的一个换行；相对独立审核版，其余2,152个已记录RMC文件SHA256全部一致，生产计算逻辑不变。[本轮格式补丁](logs/final-freeze/changes.diff)与[最终29文件SHA256/提交身份](logs/final-freeze/commit-manifest.json)已归档；历史审核清单保持原样。显式暂存批准29文件，`git -C RMC diff --cached --check`退出0、无输出，提交内容逐文件与检查后的工作树哈希一致。RMC本地提交 `4810694b7a99dfc3ad7d27f7d443814f511f4829`，29 files changed、1473 insertions、11 deletions，提交后工作树干净；未重跑测试矩阵，Stage 3未启动。
 
-**推送阻塞**：`git -C RMC push origin HEAD:refs/heads/Neural_Network_WW_Iteration`退出128，HTTPS报告缺少GitLab Username/认证；SSH备用只读探测遇到主机密钥变化，未删除known_hosts记录或绕过校验。需要在本机恢复经验证的GitLab认证后继续已授权推送，无须重新审批同一提交。原始命令/输出保留 `/tmp/f11-stage2-publish-20261014-g06zlyam/`。文档仓库沿用既有GitLab/GitHub双远端，GitHub可访问，GitLab同受认证阻塞。
+**推送完成（2026-10-14）**：用户提供GitLab SSH端口8922。通过TLS验证的[GitLab实例配置](https://gitlab.reallab.org.cn/help/instance_configuration)公布的ED25519指纹与8922端口及本机既有known_hosts记录一致：`SHA256:lhyrJICiuMuUPsL4oL25rI1cjexxTr1UxyhoIzfSDLY`。保持严格主机校验，未修改known_hosts或绕过检查；本机已有认证密钥正常登录。RMC origin已改为用户提供的SSH URL；文档origin改为同端口对应仓库地址，保留GitHub push URL。
+
+`git -C RMC push origin HEAD:refs/heads/Neural_Network_WW_Iteration`退出0：`330f091e..4810694b`；`git -C RMC ls-remote origin refs/heads/Neural_Network_WW_Iteration`退出0并返回 `4810694b7a99dfc3ad7d27f7d443814f511f4829`。认证阻塞已解除；生产源码没有新增变化。核验/推送日志保留 `/tmp/f11-stage2-push-8922-fwm9m5k7/`，最终状态与主机核验依据写入[提交清单](logs/final-freeze/commit-manifest.json)。前次HTTPS缺少认证及误用22端口的失败记录保留在原本地目录和历史文档提交中。
 本次RMC实际 commit message：
 
 ```text

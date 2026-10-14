@@ -44,13 +44,30 @@
   "staged_diff_check_exitcode": 0,
   "staged_patch_sha256": "25bf0c7ef6a080430f949b8805ca33daa9fd87e164eba6d1dfc7dbcad6be91d1",
   "local_log_directory": "/tmp/f11-stage2-publish-20261014-g06zlyam",
-  "push_status": "blocked_gitlab_https_authentication",
+  "push_status": "pushed_and_remote_verified",
   "review_verdict": "ACCEPT WITH LIMITATIONS",
   "issues": {
     "P1-WW-01": "CLOSED",
     "P1-WW-02": "CLOSED"
   },
   "stage3_started": false,
-  "push_exitcode": 128,
-  "push_stderr": "fatal: could not read Username for 'https://gitlab.reallab.org.cn': terminal prompts disabled\n"
+  "push_exitcode": 0,
+  "previous_push_failure": {
+    "status": "blocked_gitlab_https_authentication",
+    "exitcode": 128,
+    "stderr": "fatal: could not read Username for 'https://gitlab.reallab.org.cn': terminal prompts disabled\n",
+    "local_log_directory": "/tmp/f11-stage2-publish-20261014-g06zlyam"
+  },
+  "push_url": "ssh://git@gitlab.reallab.org.cn:8922/zhangjunxiao/RMC.git",
+  "remote_ref": "refs/heads/Neural_Network_WW_Iteration",
+  "remote_commit": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+  "ssh_host_verification": {
+    "https_source": "https://gitlab.reallab.org.cn/help/instance_configuration",
+    "ssh_host": "gitlab.reallab.org.cn",
+    "ssh_port": 8922,
+    "algorithm": "ssh-ed25519",
+    "fingerprint": "SHA256:lhyrJICiuMuUPsL4oL25rI1cjexxTr1UxyhoIzfSDLY",
+    "matched_https_published_fingerprint": true
+  },
+  "push_log_directory": "/tmp/f11-stage2-push-8922-fwm9m5k7"
 }

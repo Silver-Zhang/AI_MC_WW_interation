@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0/1结论与边界见原任务§4。RMC阶段1基线330f091e，Stage 2的29文件已按用户授权提交为RMC `4810694b`，GitLab推送受认证阻塞。当前交接入口为[Task05最终结论与提交准备§4](../MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)：Claude最新修复已通过Codex独立审核，Stage 2为 **ACCEPT WITH LIMITATIONS**，P1-WW-01/02 **CLOSED**，用户已确认受限冻结。历史NEEDS CORRECTION报告原文保留，不再代表当前源码。
+阶段0/1结论与边界见原任务§4。RMC阶段1基线330f091e，Stage 2的29文件已按用户授权提交为RMC `4810694b`，已推送GitLab并读回确认。当前交接入口为[Task05最终结论与提交准备§4](../MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)：Claude最新修复已通过Codex独立审核，Stage 2为 **ACCEPT WITH LIMITATIONS**，P1-WW-01/02 **CLOSED**，用户已确认受限冻结。历史NEEDS CORRECTION报告原文保留，不再代表当前源码。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-RMC提交/推送已获用户授权；29文件核对完成，仅清除已指出的测试文件末尾空行，完整格式检查通过，RMC工作树干净。GitLab HTTPS缺少认证、SSH主机密钥核验失败；在本机恢复经验证的连接后继续推送既有提交，无须重新申请同一授权。最终SHA256、提交、证据与未验证项目见Task05 §4。Stage 3未启动且需另行授权；总体F11闭环、TARGET/Field/正式FOM仍未实现。
+RMC提交/推送已获用户授权；29文件核对完成，仅清除已指出的测试文件末尾空行，完整格式检查通过，RMC工作树干净。GitLab实际SSH端口为8922，主机指纹经HTTPS实例信息核验一致；两仓库GitLab远端已改为对应SSH地址，文档保留GitHub镜像，推送阻塞已解除。最终SHA256、提交、证据与未验证项目见Task05 §4。Stage 3未启动且需另行授权；总体F11闭环、TARGET/Field/正式FOM仍未实现。
 
 ## 工作纪律
 

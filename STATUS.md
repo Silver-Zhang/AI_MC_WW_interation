@@ -1,6 +1,6 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-10-14**。F11 Stage 2：**ACCEPT WITH LIMITATIONS**，两个 WW P1 **CLOSED**，用户确认受限版本冻结。独立审核与提交准备见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)；RMC已提交 `4810694b`，GitLab推送受认证阻塞，Stage 3 未启动。
+> **最后更新：2026-10-14**。F11 Stage 2：**ACCEPT WITH LIMITATIONS**，两个 WW P1 **CLOSED**，用户确认受限版本冻结。独立审核与提交准备见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)；RMC `4810694b`已推送GitLab并读回确认，Stage 3 未启动。
 > 详细任务清单→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则→ [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文→ [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
@@ -17,16 +17,16 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | Stage 2 已受限冻结，独立审核 ACCEPT WITH LIMITATIONS；提交准备及边界见 Task05 §4，Stage 3 未启动。 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F11 Stage 2 生命周期已受限冻结；完整 F11 闭环仍未实现。RMC已按用户授权提交，GitLab推送待恢复认证；Stage 3 未启动。**
+一句话：**F11 Stage 2 生命周期已受限冻结；完整 F11 闭环仍未实现。RMC已按用户授权提交并推送GitLab；Stage 3 未启动。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
-| 1 | **Stage 2 GitLab 推送** | 用户已授权；RMC提交 `4810694b`、29文件、工作树干净。HTTPS缺少认证，SSH主机密钥核验失败；待本机恢复认证后继续推送 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+| 1 | **Stage 2 冻结（已完成）** | RMC `4810694b`已推送GitLab并读回确认，29文件、工作树干净；本项无待拍板事项 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 2 | **Stage 3** | 未启动；需用户另行授权，本轮不进入 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
-| 4 | 仓库同步 | RMC及文档GitLab推送受认证阻塞；文档GitHub连接可用，按本次授权同步；不绕过SSH主机密钥检查 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+| 4 | 仓库同步 | GitLab SSH端口8922及主机指纹已核验，认证阻塞解除；两仓库远端已更新，文档保留GitHub镜像 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
 | 6 | MG WW 输入契约加固 | V2/V3 source-energy 注入错误已修正并重跑；已确认 0.4015 MeV 实际进入高群用例，但碰撞数仍是间接证据。群内 `WWE:N` 边界建议与 MG 群边界对齐；direct selected-bin oracle 尚未实现 | [修复与补测](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[独立复核](MLVR_develop/2026-09/20260923_02_independent-mg-ww-repair-review/README.md) |
 | 7 | F06 输出接口 | F06 已完成 C — Verify（含 R1/R2 两轮独立复核，结论一致）：`Energy=-1` + `Normalize=1` 的 Type=1 Cartesian mesh tally 在 serial text 输出中可解释为 $\phi^\dagger_{i,g}$；HDF5 无能群轴，F07 统计另审 | [F06 档案](MLVR_develop/2026-09/20260926_01_f06-adjoint-spatial-energy-field/README.md)、[R1 复核](MLVR_develop/2026-09/20260926_02_independent-f06-adjoint-field-review/README.md)、[R2 复核](MLVR_develop/2026-09/20260926_03_independent-f06-adjoint-field-review-r2/README.md) |
@@ -40,7 +40,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 2026-10-14 | Stage 2 最终冻结与提交 | ACCEPT WITH LIMITATIONS；P1-WW-01/02 CLOSED；末尾空行已清、完整格式检查通过；RMC提交 `4810694b`，GitLab推送受认证阻塞，见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+| 2026-10-14 | Stage 2 最终冻结与提交 | ACCEPT WITH LIMITATIONS；P1-WW-01/02 CLOSED；完整格式检查通过；RMC `4810694b`已推送GitLab并读回确认，见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 2026-10-12 | independent-f11-stage2-ww-energy-bin-final-review | **NEEDS CORRECTION**：Task02 已修复 prepared native WW 的容器合同和末界索引，但 MG raw 非有限能量转换前 guard、direct Install lower 独立校验仍为 P1；RMC 未修改，Stage3 不得启动。 |
 | 09-27 | f10-minor-corrections-f07-sync | 用户批准的 F10 三项小修正已写回，**design frozen；implementation not completed**；F07 WW-on 校准状态已按独立复核更新；RMC 未修改 |
 | 09-27 | f10-field-reconstruction-boundary | F10 第一版数据合同初稿完成；独立复核三项小修正已由后续 `20260927_08` 写回；没有 parser/算法/WW 实现，RMC 未修改 |
