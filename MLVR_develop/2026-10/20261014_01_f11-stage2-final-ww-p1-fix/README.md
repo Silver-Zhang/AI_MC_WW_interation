@@ -3,7 +3,7 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-10-14 |
-| 状态 | 已完成（**READY FOR INDEPENDENT REVIEW**） |
+| 状态 | 已完成（独立审核：**ACCEPT WITH LIMITATIONS**，两项 P1 CLOSED；见 [Task05 §4](../20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)） |
 | 任务类型 | 定向缺陷修复 / 验证 |
 | 任务模式 | C — 深度物理研究与学习 |
 | 关联知识库条目 | F11-lifecycle |

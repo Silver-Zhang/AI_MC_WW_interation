@@ -1,7 +1,7 @@
 {
   "README.md": {
-    "bytes": 14737,
-    "sha256": "14832e19d66157dc133a0be8a9625841fac97a49d826fdc1efced08b36dec471"
+    "bytes": 21348,
+    "sha256": "feec9517dd1906a8712a2ad28a92410c17af777162e36c7a5224c9606fc52665"
   },
   "changes.diff": {
     "bytes": 33556,
@@ -2034,6 +2034,14 @@
   "logs/exports-final/ff/persistent/resources.tsv": {
     "bytes": 176,
     "sha256": "f611eee9f72e4bc61da85f926c4a90b05b22a0bf664aa62be4a75fae6ee4565e"
+  },
+  "logs/final-freeze/changes.diff": {
+    "bytes": 181,
+    "sha256": "f90f9e7a8ca4f924c3393673c8dfb555b98f5b30ae5aa02a35a88ecc000bef69"
+  },
+  "logs/final-freeze/commit-manifest.json": {
+    "bytes": 4927,
+    "sha256": "c105fa83d2874ab12224bda427cd937bc7f8745a052b0bdd24d46b6e05bd9337"
   },
   "logs/frozen04-start.sha256": {
     "bytes": 65,
