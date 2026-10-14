@@ -1,0 +1,7 @@
+--- a/tests/prepared_fixed_source_lifecycle/globals.cpp
++++ b/tests/prepared_fixed_source_lifecycle/globals.cpp
+@@ -34,4 +34,3 @@
+ # ifdef USE_MPI
+ CDParallel OParallel;
+ # endif
+-

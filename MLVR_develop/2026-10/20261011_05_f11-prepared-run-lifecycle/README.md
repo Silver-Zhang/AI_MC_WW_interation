@@ -3,12 +3,12 @@
 | 项 | 内容 |
 |---|---|
 | 立项日期 | 2026-10-11；原new_task.sh自动分配05，沿用本任务 |
-| 状态 | P1修复自验完成（2026-10-12）；修复复核见 20261012_01：NEEDS CORRECTION（P1-02 未闭合） |
+| 状态 | 已完成（Stage 2受限冻结，ACCEPT WITH LIMITATIONS；两个WW P1 CLOSED；RMC已提交4810694b，GitLab推送受认证阻塞，见§4） |
 | 任务类型 / 模式 | F11 Stage2正式生命周期实现 / C |
 | 报告人 | Codex |
 | 设计基线 | 知识库04；Task06原独立设计审查保留 |
 | 修改范围 | 批准的29文件：24个已跟踪修改、5个新增；[清单](logs/implementation/actual-files.json) |
-| 仓库身份 | 根main / 7171b29e；RMC Neural_Network_WW_Iteration / 330f091e；开始时无已有冲突改动、无未推送提交；本次未提交/推送/切分支 |
+| 仓库身份 | 根main / 7171b29e；RMC Neural_Network_WW_Iteration / 330f091e；实施开始时无已有冲突改动、无未推送提交；最终提交与推送状态见§4 |
 
 ## 1. 目标与范围
 
@@ -51,6 +51,8 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 ## 3. 决策记录
 
+2026-10-14 最终提交授权：用户原文“按照你的计划完成推送”。据此仅清除已指出的测试globals.cpp末尾空行，核对并提交批准的29文件到RMC现有分支，推送既有远端；同步本次冻结/提交文档，不进入Stage 3。此授权覆盖前次提交准备中的待提交状态。
+
 2026-10-12：用户明确批准Task07两个P1的定向修复与必要回归，继续模式C、沿用Task05；授权原文见[本轮授权](logs/p1-correction/user-authorization.txt)。仅在原29文件内修改，不改输运数学/冻结04/reference。修复前完整源码、补丁及旧证据SHA256已保存于logs/p1-correction。
 
 **用户已正式批准实施**，原文：[user-authorization.txt](logs/implementation/user-authorization.txt)。批准最新设计§5的29文件与G0/Gate1–7，不需重复审批；本次严格在此范围内完成。早期设计待审批记录保留在logs/design-revision及logs/implementation/design-before-archive，不能把历史待审批状态当成当前权限。
@@ -59,11 +61,46 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 
 实施中对旧能群cell SCHECK崩溃采取受限入口拒绝，未触及清单外scorer。测试driver仅清自己的上一张HDF Tally输出组来隔离快照，保持同一输出句柄；没有更改生产writer、数学公式或F11总体设计。
 
-回滚应以330f和manifest为依据，逐文件保留当前结果后只撤销本任务增量；新增5文件与补丁需一起处理，不用reset/checkout覆盖工作区。何时提交/推送仍由用户决定，本轮没有执行。
+回滚应以330f和manifest为依据，逐文件保留当前结果后只撤销本任务增量；新增5文件与补丁需一起处理，不用reset/checkout覆盖工作区。实施轮没有提交/推送；2026-10-14最终提交授权与执行结果见本节及§4。
 
 ## 4. 结论与边界
 
-**当前：READY FOR INDEPENDENT RE-REVIEW（2026-10-12）。** Task07两个P1已定向修复并完成自验，建议Claude最终复核。Task07原始`NEEDS CORRECTION`保留为修复前独立审查，尚未被新独立结论替代。
+**当前：ACCEPT WITH LIMITATIONS（2026-10-14 Codex 独立最终技术审核；用户已确认进入最终冻结与提交准备）。P1-WW-01 / P1-WW-02：CLOSED。** Stage 2 按下述范围冻结；RMC已提交 `4810694b7a99dfc3ad7d27f7d443814f511f4829`，GitLab推送因认证缺失受阻；Stage 3 未启动。
+
+**独立审核摘要**：审核对象是 [20261014_01 最新四文件修复](../20261014_01_f11-stage2-final-ww-p1-fix/README.md)，不是从 Stage 1 起的全部差异。Task02 后快照加最新 correction.diff 在仓库外重建，与当前四文件逐字节一致；[最新源码 SHA256](../20261014_01_f11-stage2-final-ww-p1-fix/source-sha256.txt)与实际源码匹配。历史 NEEDS CORRECTION 报告原文保留，不再代表当前版本。
+
+| 证据类别 | 独立审核结果 |
+|---|---|
+| SOURCE VERIFIED | P1-WW-01：WeightWindows.cpp:85 的 guard 位于真实 point/track 调用链、GetErgValue 转换之前；实际群号 1…G。P1-WW-02：:358 的纯 lower 校验被 Run 与 enabled Install 共用，:380 起的 Install 在首次状态写入前完成验证。 |
+| INDEPENDENTLY EXECUTED | 125 项定向检查：24 个真实 track 异常拒绝、72 个合法群映射、两类初态共26个非法安装状态检查，以及合法安装/Run等价/OFF三项；普通、GDB、sanitizer 均退出0，观察器 errors=[]。7对多能窗与FAF+WW persistent/fresh，物理容差0、errors=[]。 |
+| INDEPENDENTLY EXECUTED | 普通RMC修复前后500历史：18,450次查窗、894次分裂、1,063次轮盘，事件/RNG/tally精确一致；Tally/材料及三份HDF5完整转储一致，文本仅既定时间/构建身份例外。 |
+| ARTIFACT VERIFIED | 最新14项证据清单哈希一致；重新比较Claude原始7对snapshot/trace通过；确认实际GetMgCs.cpp生产对象含float-cast-overflow插桩。历史38对、20轮复用和完整普通矩阵未在最终审核中全量重跑。 |
+
+**范围与未验证项**：Linux serial、standard MGACE、中子固定源、Type2 RNG、受限单位有效权重点源、固定模型/群/网格/WWP、Cartesian native track-mesh WW；非零裂变产生项仍拒绝。MPI/OMP/AIS/Python、CE、耦合粒子、复杂源、Windows与全程序/泄漏sanitizer未由本轮验收；独立sanitizer只重编插桩四个相关生产单元，其他对象复用已核对源码的构建产物，leak检查关闭。MPI shared lookup残余问题在当前serial范围外。TARGET/Field/HDF5交换、正式FOM与完整F11循环尚未实现；W11/W12/W13原边界不变。
+
+**原始证据保留本地**：`/tmp/f11-stage2-independent-final-20261014-zk5zeaqk/`；`review-results.json`为独立结果，`artifact-verification.json`为历史链核验，`review-manifest.json`为摘要/脚本/关键日志哈希清单。其SHA256为 `cf5590d69cd350be2b19b3ab3e28872f3a2814c9bf6aba3ad0cedb70f43af028`。本轮将结论与证据摘要写入本节，不搬运逐run日志，不重跑测试矩阵。
+
+**最终提交准备（2026-10-14）**：根仓库main/30e172b41970cb120d7db01b784dffb228f8bb1c；RMC Neural_Network_WW_Iteration/330f091eb0296e0d0124237ba7d9a22b81aee852。整理前两仓库全部已记录文件哈希及工作树状态与独立审核一致；RMC仍24 tracked修改+5 untracked文件，index为空，local upstream ahead/behind为0/0。逐项与最新批准设计§5核对，[完整29文件提交清单](logs/implementation/actual-files.json)无遗漏/额外文件；新增项均为源码/CMake，无构建产物、日志或临时文件。29文件排序SHA256清单摘要：`9224b49ef60ad80058ffbb3409f7bfa0af888e409d6844cbb954ea4fbe93078b`。
+
+**提交执行（2026-10-14，用户已授权）**：仅删除测试 `globals.cpp` 文件末尾多余的一个换行；相对独立审核版，其余2,152个已记录RMC文件SHA256全部一致，生产计算逻辑不变。[本轮格式补丁](logs/final-freeze/changes.diff)与[最终29文件SHA256/提交身份](logs/final-freeze/commit-manifest.json)已归档；历史审核清单保持原样。显式暂存批准29文件，`git -C RMC diff --cached --check`退出0、无输出，提交内容逐文件与检查后的工作树哈希一致。RMC本地提交 `4810694b7a99dfc3ad7d27f7d443814f511f4829`，29 files changed、1473 insertions、11 deletions，提交后工作树干净；未重跑测试矩阵，Stage 3未启动。
+
+**推送阻塞**：`git -C RMC push origin HEAD:refs/heads/Neural_Network_WW_Iteration`退出128，HTTPS报告缺少GitLab Username/认证；SSH备用只读探测遇到主机密钥变化，未删除known_hosts记录或绕过校验。需要在本机恢复经验证的GitLab认证后继续已授权推送，无须重新审批同一提交。原始命令/输出保留 `/tmp/f11-stage2-publish-20261014-g06zlyam/`。文档仓库沿用既有GitLab/GitHub双远端，GitHub可访问，GitLab同受认证阻塞。
+本次RMC实际 commit message：
+
+```text
+feat(fixed-source): 实现受限同进程 Forward/Adjoint 生命周期
+
+复用模型与唯一输运核心，按轮清理、设置和重建运行状态。
+增加 Type2 子流、单位源权重核查、独立计时及生命周期测试入口。
+补齐 native WW 能量容器/末界、MG 转换前 guard 和独立安装校验。
+
+独立审核：ACCEPT WITH LIMITATIONS；P1-WW-01/02 CLOSED。
+范围：serial standard MGACE、中子固定源、受限单位权重点源；Stage 3 未启动。
+任务：MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle
+最终修复：MLVR_develop/2026-10/20261014_01_f11-stage2-final-ww-p1-fix
+```
+
+**历史2026-10-12自验：READY FOR INDEPENDENT RE-REVIEW。** 以下保留当时证据与后续审查前的判断；当前最终结论以上文为准。
 
 - Universe membership/neighbor/fill/transform/lattice稳定定义逐字段保护；新真实Universe模型2/2 Forward等fresh，4个内容mutation在CLEAR前命中definition guard，未覆盖的随机Universe显式拒绝。
 - Native WWP采用原手册与实际整数split约束；非法参数在绑定前及首轮后直接命中WW guard，派生三界/表示边界也检查。51/51新增负例通过，旧结果不清除且无额外输运。
@@ -94,7 +131,7 @@ FF启用一个总通量cell及124个mesh诊断bin；两轮所有实际输出PDF�
 - 起始权重运行时负例属于owner API单测；合法严格白名单不会自然生成非法初始权重。真实Run失败传播由stride超额门禁覆盖，未用私有注入伪造输运。
 - 旧StatisticsTester FOM明确标为legacy混合时间。GDB会影响所测耗时，本轮不作性能排名或加速比结论。未做sanitizer/Windows/无限规模资源验证。
 
-**结果解释**：本次证据支持限定对象生命周期和角色切换已实现；不代表完整F11闭环完成，也不改变冻结04或阶段0转换结论。Task06原报告保持原样；修复前代码独立审查Task07为NEEDS CORRECTION；本轮P1修复后的代码待最终独立复核。
+**结果解释**：证据支持限定对象生命周期和角色切换已实现；不代表完整F11闭环完成，也不改变冻结04或阶段0转换结论。历史独立审查原文保持；当前最终审核与提交准备结论见本节开头。
 
 ## 5. 过程记录
 

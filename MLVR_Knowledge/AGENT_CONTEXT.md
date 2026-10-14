@@ -1,6 +1,6 @@
 # Agent 快速上下文卡片
 
-> **新会话 / 换模型先读这一页，不要通读知识库。** 最后更新：2026-10-12。
+> **新会话 / 换模型先读这一页，不要通读知识库。** 最后更新：2026-10-14。
 > 本页只留骨架和指针；实际设计及证据以权威文档与对应任务为准。
 
 ## 接手顺序
@@ -15,7 +15,7 @@ F11 v1 已由网页讨论形成统一方案并于 2026-10-11 入库：**design f
 
 RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩展，固定源 history/batch 核心只保留一份；RMC 内部从简单 TARGET 构造伴随源。外部程序仅负责 Field→重构场→WW lower，经 HDF5 文件交换；不在 RMC 绑定高级机器学习模型。
 
-阶段0/1结论与边界见原任务§4。RMC阶段1基线330f091e，阶段2原29文件为本地未提交成果。最新交接入口为[WW energy-bin最终独立复核§4](../MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界)：Task02 已关闭 prepared native definition container 和末界索引缺口，但 raw MG 非有限能量在转换前未受控拒绝、direct Install 未独立验证 lower 值，结论为 NEEDS CORRECTION。Task05及Task07、20261012_01历史独立审查原文保留。
+阶段0/1结论与边界见原任务§4。RMC阶段1基线330f091e，Stage 2的29文件已按用户授权提交为RMC `4810694b`，GitLab推送受认证阻塞。当前交接入口为[Task05最终结论与提交准备§4](../MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)：Claude最新修复已通过Codex独立审核，Stage 2为 **ACCEPT WITH LIMITATIONS**，P1-WW-01/02 **CLOSED**，用户已确认受限冻结。历史NEEDS CORRECTION报告原文保留，不再代表当前源码。
 
 ## 权威顺序
 
@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-Task02 的定向修复与自验已完成，但 Task03 最终独立复核判定 `NEEDS CORRECTION`，详见[Task03](../MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md)：须由用户另行决定是否授权两项最小 P1 修复（MG raw 非有限能量的转换前 guard，以及 Install 独立 lower/derived/split 校验），完成后再次独立复核；不得验收、提交或进入 Stage3。总体F11闭环、TARGET/Field/正式FOM仍未实现。
+RMC提交/推送已获用户授权；29文件核对完成，仅清除已指出的测试文件末尾空行，完整格式检查通过，RMC工作树干净。GitLab HTTPS缺少认证、SSH主机密钥核验失败；在本机恢复经验证的连接后继续推送既有提交，无须重新申请同一授权。最终SHA256、提交、证据与未验证项目见Task05 §4。Stage 3未启动且需另行授权；总体F11闭环、TARGET/Field/正式FOM仍未实现。
 
 ## 工作纪律
 
