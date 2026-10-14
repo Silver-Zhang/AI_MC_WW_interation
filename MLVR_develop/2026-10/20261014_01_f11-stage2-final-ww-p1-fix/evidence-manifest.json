@@ -1,0 +1,19 @@
+{
+  "local_root": "/tmp/20261014_01_f11-stage2-final-ww-p1-fix",
+  "artifacts": {
+    "logs/mg-energy.out": "ccd14563994ca8fe1614bb0ef748e4f513df20556c42f80035118c7f5993e2e6",
+    "logs/install-valid.out": "61c5bd925120b4cdc1ce4f2c5aecfead1a51755f77a9d79faa85ff54685bc44f",
+    "logs/install-after-valid-nan.out": "5fd793a8470436aeee3925ddebddfb944794780a0105fb6376b4e20a15e5a0e0",
+    "logs/sanitizer-mg-energy.out": "24d1310ad0de2b1b3a424423aa2bf4e5c523b97255a11e703a675481120ba2de",
+    "logs/multi-compare.out": "c0cd98966c44b7e4693be81e68b066b76e1969a35ed0eddeeeb5c2b37e9b260f",
+    "logs/faf-ww-compare.out": "c0cd98966c44b7e4693be81e68b066b76e1969a35ed0eddeeeb5c2b37e9b260f",
+    "logs/install-nan.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install-inf.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install--inf.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install-0.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install--1.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install-denorm.out": "d27d312f342d7daef7098e7b8f49ccb4a0f242d220981ac7fbf9dac37a7ede6e",
+    "logs/install-1e308.out": "5ca9408671df9029631801e4b3f7b25240bbb450bccd23fe3e89c7b28cf15ca2",
+    "logs/install-ratio.out": "d27d312f342d7daef7098e7b8f49ccb4a0f242d220981ac7fbf9dac37a7ede6e"
+  }
+}

@@ -1,0 +1,193 @@
+--- a/src/WeightWindow.h
++++ b/src/WeightWindow.h
+@@ -64,6 +64,7 @@
+   // Validate the fixed native neutron topology before binding, CLEAR or installation.
+   // Returns the mesh-major lower-bound count; does not mutate owner state.
+   size_t ValidatePreparedNativeDefinition() const;
++  void ValidatePreparedNativeLowerBounds(const vector<double> &lower, size_t expectedCount) const;
+   void ClearPreparedNativeState();
+   void InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
+                                   CDGeometry &geometry, CDCalMode &mode,
+--- a/src/WeightWindows.cpp
++++ b/src/WeightWindows.cpp
+@@ -4,6 +4,7 @@
+ # include "PhotonTransport.h"
+ #include <climits>
+ #include <cmath>
++#include <limits>
+ #include <stdexcept>
+ 
+ //==============================================================================
+@@ -86,7 +87,16 @@
+   if (p_bUseMCNPweightwindow) {
+     return cParticleState.p_dErg;
+   }
+-  return cAceData.GetErgValue(cParticleState.p_dErg, cParticleState.p_eParticleType);
++  const double rawEnergy = cParticleState.p_dErg;
++  const int particleType = cParticleState.p_eParticleType;
++  if (cAceData.p_bIsMultiGroup &&
++      (particleType == CDParticleState::Neutron || particleType == CDParticleState::Photon)) {
++    const int groups = particleType == CDParticleState::Neutron ?
++        cAceData.p_nNeuMltGrpNum : cAceData.p_nPhoMltGrpNum;
++    if (!std::isfinite(rawEnergy) || rawEnergy < .5 || rawEnergy >= double(groups) + .5)
++      throw std::invalid_argument("WW lookup: invalid multigroup particle energy");
++  }
++  return cAceData.GetErgValue(rawEnergy, particleType);
+ }
+ void CDWeightWindow::ProcessWeightWindow(CDGeometry &cGeometry, const int particleType, vector<double> &ErgBins,
+     vector<double> &WeightWindowParameter, double WUPN, double WSURVN) {
+@@ -345,6 +355,22 @@
+     require(mesh.size() == intervals, "WW installed energy-bin shape mismatch");
+   return meshCount * intervals;
+ }
++void CDWeightWindow::ValidatePreparedNativeLowerBounds(const vector<double> &lower, size_t expectedCount) const {
++  if (lower.size() != expectedCount)
++    throw std::invalid_argument("prepared: WW shape mismatch");
++  const auto &para = p_vWeightWindowPara[CDParticleState::Neutron];
++  double maximumWeight = 1., minimumSurvival = std::numeric_limits<double>::max();
++  for (double x : lower) {
++    const double upper = x * para[WUPN], survival = x * para[WSURVN];
++    if (!(std::isfinite(x) && x > 0. && std::isfinite(upper) && std::isfinite(survival) &&
++          x < survival && survival < upper && std::isfinite(x * para[MXSPLN])))
++      throw std::invalid_argument("prepared: invalid WW lower/upper/survival or splitting bound");
++    maximumWeight = std::max(maximumWeight, upper);
++    minimumSurvival = std::min(minimumSurvival, survival);
++  }
++  if (!(maximumWeight / minimumSurvival <= double(INT_MAX - 1)))
++    throw std::invalid_argument("prepared: WW unit-source/cross-window splitting ratio exceeds int range");
++}
+ void CDWeightWindow::ClearPreparedNativeState() {
+   p_bUseMeshWeightWindow = false;
+   for (auto &particle : p_vMeshInformation)
+@@ -354,8 +380,12 @@
+ void CDWeightWindow::InstallPreparedNativeState(const FixedSourceWeightWindowSpec &spec, FixedSourceRole role,
+     CDGeometry &geometry, CDCalMode &mode, CDNeutronTransport &neutron, double defaultWeightCutoff) {
+   if (spec.appliesToTransportRole != role) throw std::invalid_argument("prepared: WW role mismatch");
+-  if (spec.enabled && spec.lower.size() != ValidatePreparedNativeDefinition())
+-    throw std::invalid_argument("prepared: WW shape mismatch");
++  if (spec.enabled) {
++    const size_t lowerCount = ValidatePreparedNativeDefinition();
++    ValidatePreparedNativeLowerBounds(spec.lower, lowerCount);
++  } else if (!spec.lower.empty()) {
++    throw std::invalid_argument("prepared: disabled WW must have no lower values");
++  }
+   mode.p_nVarRedMode[CDParticleState::Neutron] = CDCalMode::CellImportance;
+   mode.p_nChangeNeuCutWgt = 0;
+   neutron.p_dWgtCutOff = defaultWeightCutoff;
+--- a/src/PrepareFixedSourceRun.cpp
++++ b/src/PrepareFixedSourceRun.cpp
+@@ -271,19 +271,8 @@
+   if (ww.enabled) {
+     requirePrepared(preparedHasWW && OWeightWindow.p_OWeightWindowMesh.p_nGeoType == CDMesh::CUBOID, "no fixed Cartesian WW topology");
+     requirePrepared(ww.lower.size() == wwLowerCount, "WW shape mismatch");
+-    const auto &para = OWeightWindow.p_vWeightWindowPara[1];
+-    requirePrepared(para.size() >= 8 && !ww.identity.empty(), "WW parameter/identity missing");
+-    double maximumWeight = 1., minimumSurvival = std::numeric_limits<double>::max();
+-    for (auto x : ww.lower) {
+-      const double upper = x * para[CDWeightWindow::WUPN], survival = x * para[CDWeightWindow::WSURVN];
+-      requirePrepared(std::isfinite(x) && x > 0. && std::isfinite(upper) && std::isfinite(survival) &&
+-                      x < survival && survival < upper && std::isfinite(x * para[CDWeightWindow::MXSPLN]),
+-                      "invalid WW lower/upper/survival or splitting bound");
+-      maximumWeight = std::max(maximumWeight, upper); minimumSurvival = std::min(minimumSurvival, survival);
+-    }
+-    // Native splitting converts the ratio before applying MXSPLN, then may add 1.
+-    requirePrepared(maximumWeight / minimumSurvival <= double(INT_MAX - 1),
+-                    "WW unit-source/cross-window splitting ratio exceeds int range");
++    requirePrepared(!ww.identity.empty(), "WW parameter/identity missing");
++    OWeightWindow.ValidatePreparedNativeLowerBounds(ww.lower, wwLowerCount);
+   } else requirePrepared(ww.lower.empty(), "disabled WW must have no lower values");
+   if (preparedHasRun) checkBanks(fixed);
+   CDExternalSource activeSource;
+--- a/tests/prepared_fixed_source_lifecycle/driver.cpp
++++ b/tests/prepared_fixed_source_lifecycle/driver.cpp
+@@ -68,6 +68,31 @@
+   for (const auto &v : w.p_vWeightWindowPara) { std::cout << '['; for (double x : v) std::cout << x << ','; std::cout << ']'; }
+   std::cout << " topology=" << w.p_OWeightWindowMesh.p_nGeoType << " meshes=" << w.p_OWeightWindowMesh.p_nTotMeshNum << '\n';
+ }
++void wwMgEnergySelftest(CDAceData &ace, CDFixedSource &fixed, CDRNG &rng) {
++  auto &w = OWeightWindow;
++  w.p_bUseMCNPweightwindow = false;
++  CDParticleState particle;
++  particle.p_eParticleType = CDParticleState::Neutron;
++  particle.p_dWgt = 1.;
++  particle.p_dPos[0] = .5;
++  int passed = 0;
++  const int groups = ace.p_nNeuMltGrpNum;
++  for (double energy : {std::numeric_limits<double>::quiet_NaN(),
++                        std::numeric_limits<double>::infinity(),
++                        -std::numeric_limits<double>::infinity(),
++                        0., double(groups) + 1.}) {
++    particle.p_dErg = energy;
++    bool rejected = false;
++    try { w.DoPointMeshWeightWindow(ace, particle, fixed, rng); }
++    catch (const std::invalid_argument &e) {
++      rejected = std::string(e.what()) == "WW lookup: invalid multigroup particle energy";
++      std::cout << "WW_MG_ENERGY_REJECT energy=" << energy << " reason=" << e.what() << '\n';
++    }
++    if (!rejected) throw std::runtime_error("invalid raw MG WW energy accepted");
++    ++passed;
++  }
++  std::cout << "WW_MG_ENERGY_SELFTEST " << passed << "/5 passed; production conversion entry guard\n";
++}
+ void wwLookupSelftest() {
+   auto &w = OWeightWindow;
+   w.p_vEnergyBins.at(1) = {0., .5, 2., INFINITY_ENERGY};
+@@ -179,6 +204,16 @@
+   for (auto &bank : fixed.p_vFixedParticleSrcBank) out << '\t' << bank.size() << ':' << bank.ParticleBank.capacity();
+   out << '\n'; out.flush();
+ }
++std::string wwState(const CDWeightWindow &weightWindow, const CDCalMode &mode, const CDNeutronTransport &neutron) {
++  std::ostringstream out; out << std::hexfloat << weightWindow.p_bUseMeshWeightWindow << '/'
++                              << mode.p_nVarRedMode[CDParticleState::Neutron] << '/'
++                              << mode.p_nChangeNeuCutWgt << '/' << neutron.p_dWgtCutOff;
++  for (const auto &particle : weightWindow.p_vMeshInformation)
++    for (const auto &mesh : particle)
++      for (const auto &bin : mesh)
++        out << '/' << bin.p_dLowerWeightBound << ':' << bin.p_dSurvivalWeight << ':' << bin.p_dUpperWeightBound;
++  return out.str();
++}
+ std::string runState(CDTally &tally, CDFixedSource &fixed, CDRNG &rng) {
+   std::ostringstream out; out << std::hexfloat;
+   out << fixed.p_llCurTotParNum << '/' << fixed.p_llCurrentBatch << '/' << fixed.p_dTotStartWgt
+@@ -211,23 +246,33 @@
+     Output.OutputHeading(criticality);
+     input.ReadInputBlocks(OCalMode, neutron, photon, electron, geometry, material, ace, criticality, tally,
+         convergence, burnup, plot, fixed, runRng, adjoint, homogenization, source, sampling, kinetics, perturb);
++    if (option("--mode") == "ww-mg-energy-selftest") { wwMgEnergySelftest(ace, fixed, runRng); return 0; }
+     if (option("--mode") == "ww-energy-install") {
+-      mutateTestWWDefinition(option("--ww-mutation"));
++      if (!option("--ww-mutation").empty()) mutateTestWWDefinition(option("--ww-mutation"));
+       FixedSourceWeightWindowSpec spec; spec.enabled = true; spec.lower = {.1,1.,.1,1.};
+       spec.appliesToTransportRole = FixedSourceRole::Forward;
++      if (option("--install-after-valid") == "yes")
++        OWeightWindow.InstallPreparedNativeState(spec,FixedSourceRole::Forward,geometry,OCalMode,neutron,.25);
++      if (!option("--ww-lower").empty()) {
++        const double nan = std::numeric_limits<double>::quiet_NaN();
++        const double inf = std::numeric_limits<double>::infinity();
++        const std::string lower = option("--ww-lower");
++        double value = lower == "nan" ? nan : lower == "inf" ? inf : lower == "-inf" ? -inf :
++            lower == "denorm" ? std::numeric_limits<double>::denorm_min() :
++            lower == "ratio" ? 1. : std::stod(lower);
++        spec.lower.assign(4, value);
++        if (lower == "ratio") spec.lower = {1.e-200, 1.e200, 1.e-200, 1.e200};
++      }
+       const auto before = runState(tally,fixed,runRng);
+-      const int reduction = OCalMode.p_nVarRedMode[1], cutoffMode = OCalMode.p_nChangeNeuCutWgt;
+-      const double cutoff = neutron.p_dWgtCutOff;
+-      const bool active = OWeightWindow.p_bUseMeshWeightWindow;
++      const auto wwBefore = wwState(OWeightWindow, OCalMode, neutron);
+       try { OWeightWindow.InstallPreparedNativeState(spec,FixedSourceRole::Forward,geometry,OCalMode,neutron,.25); }
+       catch (const std::exception &e) {
+         std::cout << "REJECTED_INSTALL state_unchanged=" << (before == runState(tally,fixed,runRng) &&
+-            reduction == OCalMode.p_nVarRedMode[1] && cutoffMode == OCalMode.p_nChangeNeuCutWgt &&
+-            cutoff == neutron.p_dWgtCutOff && active == OWeightWindow.p_bUseMeshWeightWindow)
+-                  << " reason=" << e.what() << '\n';
++            wwBefore == wwState(OWeightWindow,OCalMode,neutron)) << " reason=" << e.what() << '\n';
+         throw;
+       }
+-      throw std::runtime_error("invalid WW definition installed");
++      if (!option("--ww-lower").empty()) throw std::runtime_error("invalid WW lower installed");
++      std::cout << "INSTALL_SUCCESS bounds=" << wwState(OWeightWindow,OCalMode,neutron) << '\n';
+     } else if (option("--mode") == "fresh") {
+       if (!option("--histories").empty()) {
+         fixed.p_llUserInputParNum = std::stoll(option("--histories"));

@@ -1,6 +1,6 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-10-12**。F11 v1 设计冻结；Stage2 native WW energy-bin 最终独立复核结论为 **NEEDS CORRECTION**：Task02 已关闭 prepared definition container 与末界索引 P1，但 raw MG 非有限能量在转换前未受控拒绝、direct Install 未独立校验 lower 值仍为 P1。RMC 未提交；不得冻结/提交或进入 Stage3。详见 [Task03 §4](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界)。
+> **最后更新：2026-10-14**。Stage2：Task03 复核的两项 P1（raw MG 非有限能量 guard、direct Install lower 校验）已由 [Task 20261014_01](MLVR_develop/2026-10/20261014_01_f11-stage2-final-ww-p1-fix/README.md#4-结论与边界) 定向修复并完成自验（P1-WW-01/02 CLOSED，自验范围）——**待独立复核**；复核确认前 RMC 不得冻结/提交或进入 Stage3。
 > 详细任务清单→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则→ [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文→ [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
@@ -14,16 +14,16 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | 🔴 Stage2 最终复核 `NEEDS CORRECTION`：先由用户决定是否授权修复 raw MG 非有限能量和 direct Install lower 校验两个 P1；此前不得冻结/提交或进入 Stage3。 |
+| **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | � 两项 P1（raw MG guard、direct Install lower）已由 Task 20261014_01 修复并自验（READY FOR INDEPENDENT REVIEW）；**待独立复核**，确认前不得冻结/提交或进入 Stage3。 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F11 设计已冻结但完整 production implementation 尚未完成；Stage2 的 WW container/末界修复已验证，却仍被两个精确 P1 阻断。**
+一句话：**F11 设计已冻结但完整 production implementation 尚未完成；Stage2 的 WW 三项修复（container/末界 + raw MG guard + direct Install lower）均已完成实现与自验，待独立复核收口。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
-| 1 | **Stage2 两项 P1 修复授权** | 是否另立 Mode-C 定向任务：在 MG raw NaN/±Inf 转换前受控拒绝；让 enabled Install 与 Run 共用 lower/派生界/split 校验，并在完成后再次独立复核 | [Task03 最终复核](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md) |
+| 1 | **Stage2 独立复核（最后一步）** | Task 20261014_01 已修复自验（P1-WW-01/02 CLOSED）；是否现在安排独立复核（Claude）确认 source/dynamic evidence，复核通过后由你做 Stage2 技术验收 | [Task01 §4](MLVR_develop/2026-10/20261014_01_f11-stage2-final-ww-p1-fix/README.md#4-结论与边界) |
 | 2 | **Stage3** | 在 Stage2 获正式技术验收前不得启动 | [Task03 §4](MLVR_develop/2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md#4-结论与边界) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | RMC push 时机 | 分支 `Neural_Network_WW_Iteration` 现有 5 个本地提交未 push（含 MPI shared offset 与 MG `WWE:N` 修复，均本地验证/复核通过）；何时 push origin 由你决定 | [MG WW 修复](MLVR_develop/2026-09/20260923_01_f04c-mg-native-ww-energy-contract/README.md)、[MPI offset](MLVR_develop/2026-09/20260920_02_f08-mesh-ww-mpi-offset/README.md) |
@@ -40,6 +40,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 2026-10-14 | f11-stage2-final-ww-p1-fix | 两项 P1（raw MG guard、direct Install lower）已实施并定向自验：**P1-WW-01/02 CLOSED（自验范围）**；READY FOR INDEPENDENT REVIEW；RMC 未提交 |
 | 2026-10-12 | independent-f11-stage2-ww-energy-bin-final-review | **NEEDS CORRECTION**：Task02 已修复 prepared native WW 的容器合同和末界索引，但 MG raw 非有限能量转换前 guard、direct Install lower 独立校验仍为 P1；RMC 未修改，Stage3 不得启动。 |
 | 09-27 | f10-minor-corrections-f07-sync | 用户批准的 F10 三项小修正已写回，**design frozen；implementation not completed**；F07 WW-on 校准状态已按独立复核更新；RMC 未修改 |
 | 09-27 | f10-field-reconstruction-boundary | F10 第一版数据合同初稿完成；独立复核三项小修正已由后续 `20260927_08` 写回；没有 parser/算法/WW 实现，RMC 未修改 |
