@@ -97,5 +97,9 @@ PY
 
 echo "已建档: $DIR"
 echo "任务模式: $MODE_LABEL"
+if [ "$MODE" = "C" ]; then
+  echo "C 模式对话关口（每关必须停下对话,回复原文入档）: G1 问题定式 → G2 因果链 → G3 验伪设计 → G4 结果解释"
+  echo "  实施/验证阶段至少 1 次中期快报；细则见 MLVR_develop/README.md §5"
+fi
 echo "下一步: 把原始材料（报错/数据/日志）保存到 $DIR/logs/"
 echo "提醒: 归档时只提炼结论/结果入库；过程文件默认留本地不入库（MLVR_develop/README.md §7）"

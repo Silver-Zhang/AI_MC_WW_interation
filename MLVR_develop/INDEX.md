@@ -8,6 +8,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-10-14 | [f11-stage2-final-ww-p1-fix](2026-10/20261014_01_f11-stage2-final-ww-p1-fix/README.md) |  | 待设计 | F11 | |
 | 2026-10-12 | [independent-f11-stage2-ww-energy-bin-final-review](2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md) | 模式C / Stage2 native WW energy-bin 最终独立复核 | 已完成（NEEDS CORRECTION） | F11 | Task02 的 prepared container/末界修复成立，但 raw MG 非有限能量转换前 guard 与 direct Install lower 独立校验仍为P1；不得冻结/提交或进入Stage3；RMC未修改 |
 | 2026-10-12 | [f11-ww-energy-bin-safety](2026-10/20261012_02_f11-ww-energy-bin-safety/README.md) | 模式C / WW能量表与末界安全修复 | 已完成（READY FOR INDEPENDENT REVIEW；待独立复核） | F11 | 四文件增量；本轮证据/边界见任务§4；历史审查不改，未提交或进入Stage3 |
 | 2026-10-12 | [independent-f11-stage2-p1-correction-review](2026-10/20261012_01_independent-f11-stage2-p1-correction-review/README.md) | 模式C / Stage2 P1 修复后独立代码与证据复核 | 已完成（NEEDS CORRECTION） | F11 | P1-01 Universe fingerprint 在受限确定性 profile 内闭合；P1-02 在 `p_vEnergyBins[neutron]` outer shape 验证前索引，仍为 P1 blocker；不得冻结/提交或进入 Stage3 |
