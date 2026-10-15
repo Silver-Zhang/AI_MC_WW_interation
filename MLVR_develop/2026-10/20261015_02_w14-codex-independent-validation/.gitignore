@@ -1,0 +1,2 @@
+# Original run evidence is preserved locally and excluded from Git.
+/logs/local-evidence/

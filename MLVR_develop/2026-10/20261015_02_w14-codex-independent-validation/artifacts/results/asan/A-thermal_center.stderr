@@ -1,0 +1,68 @@
+=================================================================
+==1434348==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x5110000044b0 at pc 0x0000007beade bp 0x7ffe672b4270 sp 0x7ffe672b4260
+READ of size 8 at 0x5110000044b0 thread T0
+    #0 0x7beadd in CDGlobeFun::GetNeuVelMg(double, int, std::vector<double, std::allocator<double> >) /tmp/w14-codex-review/src/src/GlobeFun.h:544
+    #1 0x9d8107 in CDSource::SampleParticle(CDParticleState&, CDGeometry&, CDAceData&, CDRNG&, CDIndex&, std::vector<CDSourceDistribution, std::allocator<CDSourceDistribution> >&) /tmp/w14-codex-review/src/src/SampleParticle.cpp:82
+    #2 0x669554 in CDExternalSource::SampleSourceParticle(CDParticleState&, CDGeometry&, CDAceData&, CDRNG&, std::vector<CDFissMult, std::allocator<CDFissMult> > const&) /tmp/w14-codex-review/src/src/ExternalSource.cpp:347
+    #3 0x9a3af1 in CDFixedSource::SampleFixSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDGeometry&, CDParticleState&, CDExternalSource&, CDAceData&, CDMaterial&, CDSampling&, CDRNG&, long long) /tmp/w14-codex-review/src/src/SampleNeutronSource.cpp:202
+    #4 0x53c630 in CDCalMode::ExecuteFixedSourcePrepared(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource&, CDSampling&, CDPerturbation&) /tmp/w14-codex-review/src/src/CalcFixedSource.cpp:182
+    #5 0x53bf0e in CDCalMode::CalcFixedSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource, CDSampling&, CDPerturbation&) /tmp/w14-codex-review/src/src/CalcFixedSource.cpp:81
+    #6 0x980d31 in CDCalMode::RunCalculation(CDCalMode&, CDNeutronTransport, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDGeometry, Depth_Class&, CDCriticality, CDMaterial, CDParticleState, CDConvergence, CDTally, CDBurnup, CDFixedSource&, CDRNG&, ME_Class&, TTA_Class&, CDAdjoint&, CDExternalSource&, CDSampling, CDKinetics&, CDPerturbation&) /tmp/w14-codex-review/src/src/RunCalculation.cpp:86
+    #7 0xa89f62 in main /tmp/w14-codex-review/src/src/main.cpp:155
+    #8 0x77729e02a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #9 0x77729e02a28a in __libc_start_main_impl ../csu/libc-start.c:360
+    #10 0x4100c4 in _start (/tmp/w14-codex-review/sanitized/RMC+0x4100c4) (BuildId: 89d9e317adbc47c4bbfb41676bfb76fdc4a89329)
+
+0x5110000044b0 is located 0 bytes after 240-byte region [0x5110000043c0,0x5110000044b0)
+allocated by thread T0 here:
+    #0 0x77729fafe548 in operator new(unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:95
+    #1 0x41d027 in std::__new_allocator<double>::allocate(unsigned long, void const*) /usr/include/c++/13/bits/new_allocator.h:151
+    #2 0x41a022 in std::allocator_traits<std::allocator<double> >::allocate(std::allocator<double>&, unsigned long) /usr/include/c++/13/bits/alloc_traits.h:482
+    #3 0x41a022 in std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned long) /usr/include/c++/13/bits/stl_vector.h:381
+    #4 0x419f82 in std::_Vector_base<double, std::allocator<double> >::_M_create_storage(unsigned long) /usr/include/c++/13/bits/stl_vector.h:398
+    #5 0x417b30 in std::_Vector_base<double, std::allocator<double> >::_Vector_base(unsigned long, std::allocator<double> const&) /usr/include/c++/13/bits/stl_vector.h:335
+    #6 0x4151b0 in std::vector<double, std::allocator<double> >::vector(std::vector<double, std::allocator<double> > const&) /usr/include/c++/13/bits/stl_vector.h:603
+    #7 0x9d7fb2 in CDSource::SampleParticle(CDParticleState&, CDGeometry&, CDAceData&, CDRNG&, CDIndex&, std::vector<CDSourceDistribution, std::allocator<CDSourceDistribution> >&) /tmp/w14-codex-review/src/src/SampleParticle.cpp:82
+    #8 0x669554 in CDExternalSource::SampleSourceParticle(CDParticleState&, CDGeometry&, CDAceData&, CDRNG&, std::vector<CDFissMult, std::allocator<CDFissMult> > const&) /tmp/w14-codex-review/src/src/ExternalSource.cpp:347
+    #9 0x9a3af1 in CDFixedSource::SampleFixSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDGeometry&, CDParticleState&, CDExternalSource&, CDAceData&, CDMaterial&, CDSampling&, CDRNG&, long long) /tmp/w14-codex-review/src/src/SampleNeutronSource.cpp:202
+    #10 0x53c630 in CDCalMode::ExecuteFixedSourcePrepared(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource&, CDSampling&, CDPerturbation&) /tmp/w14-codex-review/src/src/CalcFixedSource.cpp:182
+    #11 0x53bf0e in CDCalMode::CalcFixedSource(CDCalMode&, CDNeutronTransport&, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDFixedSource&, CDMaterial&, CDGeometry&, CDParticleState&, CDTally&, CDRNG&, CDCriticality&, CDExternalSource, CDSampling&, CDPerturbation&) /tmp/w14-codex-review/src/src/CalcFixedSource.cpp:81
+    #12 0x980d31 in CDCalMode::RunCalculation(CDCalMode&, CDNeutronTransport, CDPhotonTransport&, CDElectronTransport&, CDAceData&, CDGeometry, Depth_Class&, CDCriticality, CDMaterial, CDParticleState, CDConvergence, CDTally, CDBurnup, CDFixedSource&, CDRNG&, ME_Class&, TTA_Class&, CDAdjoint&, CDExternalSource&, CDSampling, CDKinetics&, CDPerturbation&) /tmp/w14-codex-review/src/src/RunCalculation.cpp:86
+    #13 0xa89f62 in main /tmp/w14-codex-review/src/src/main.cpp:155
+    #14 0x77729e02a1c9 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #15 0x77729e02a28a in __libc_start_main_impl ../csu/libc-start.c:360
+    #16 0x4100c4 in _start (/tmp/w14-codex-review/sanitized/RMC+0x4100c4) (BuildId: 89d9e317adbc47c4bbfb41676bfb76fdc4a89329)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/w14-codex-review/src/src/GlobeFun.h:544 in CDGlobeFun::GetNeuVelMg(double, int, std::vector<double, std::allocator<double> >)
+Shadow bytes around the buggy address:
+  0x511000004200: 00 00 00 00 00 00 fa fa fa fa fa fa fa fa fa fa
+  0x511000004280: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x511000004300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x511000004380: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
+  0x511000004400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x511000004480: 00 00 00 00 00 00[fa]fa fa fa fa fa fa fa fa fa
+  0x511000004500: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x511000004580: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x511000004600: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x511000004680: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x511000004700: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1434348==ABORTING

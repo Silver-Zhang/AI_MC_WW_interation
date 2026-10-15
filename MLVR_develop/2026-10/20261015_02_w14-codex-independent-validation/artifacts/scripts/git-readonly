@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ "$1" = submodule ]; then
+  printf '%s\n' 'W14: dependency sources already copied; git submodule mutation suppressed.' >&2
+  exit 0
+fi
+exec /usr/bin/git "$@"

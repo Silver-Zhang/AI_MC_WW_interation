@@ -1,0 +1,141 @@
+[
+  {
+    "name": "F-thermal_center",
+    "role": "F",
+    "physical_E": "7.606950000000E-8",
+    "correct_group": 30,
+    "correct_index": 0,
+    "correct_center": "7.606950000000E-8",
+    "v_ref": "0.0038148500266634079194124252494578565848618563845996",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "A-thermal_center",
+    "role": "A",
+    "physical_E": "7.606950000000E-8",
+    "correct_group": 30,
+    "correct_index": 0,
+    "correct_center": "7.606950000000E-8",
+    "v_ref": "0.0038148500266634079194124252494578565848618563845996",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "F-middle_center",
+    "role": "F",
+    "physical_E": "0.1258000000000",
+    "correct_group": 16,
+    "correct_index": 14,
+    "correct_center": "0.1258000000000",
+    "v_ref": "4.9053375868571193039804796076401731750390422909519",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "A-middle_center",
+    "role": "A",
+    "physical_E": "0.1258000000000",
+    "correct_group": 16,
+    "correct_index": 14,
+    "correct_center": "0.1258000000000",
+    "v_ref": "4.9053375868571193039804796076401731750390422909519",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "F-inbounds_wrong",
+    "role": "F",
+    "physical_E": "0.6615000000000",
+    "correct_group": 13,
+    "correct_index": 17,
+    "correct_center": "0.6615000000000",
+    "v_ref": "11.243664633572110878138438223678432979775054360946",
+    "predicted_wrong_index": 29,
+    "histories": 101
+  },
+  {
+    "name": "A-inbounds_wrong",
+    "role": "A",
+    "physical_E": "0.6615000000000",
+    "correct_group": 13,
+    "correct_index": 17,
+    "correct_center": "0.6615000000000",
+    "v_ref": "11.243664633572110878138438223678432979775054360946",
+    "predicted_wrong_index": 29,
+    "histories": 101
+  },
+  {
+    "name": "F-high_center",
+    "role": "F",
+    "physical_E": "16",
+    "correct_group": 1,
+    "correct_index": 29,
+    "correct_center": "16",
+    "v_ref": "54.631090366101886317713822391972534872377546491204",
+    "predicted_wrong_index": 14,
+    "histories": 101
+  },
+  {
+    "name": "A-high_center",
+    "role": "A",
+    "physical_E": "16",
+    "correct_group": 1,
+    "correct_index": 29,
+    "correct_center": "16",
+    "v_ref": "54.631090366101886317713822391972534872377546491204",
+    "predicted_wrong_index": 14,
+    "histories": 101
+  },
+  {
+    "name": "F-lower_inside",
+    "role": "F",
+    "physical_E": "1.3900010000E-10",
+    "correct_group": 30,
+    "correct_index": 0,
+    "correct_center": "7.606950000000E-8",
+    "v_ref": "0.0038148500266634079194124252494578565848618563845996",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "A-lower_inside",
+    "role": "A",
+    "physical_E": "1.3900010000E-10",
+    "correct_group": 30,
+    "correct_index": 0,
+    "correct_center": "7.606950000000E-8",
+    "v_ref": "0.0038148500266634079194124252494578565848618563845996",
+    "predicted_wrong_index": 30,
+    "histories": 101
+  },
+  {
+    "name": "F-upper_boundary",
+    "role": "F",
+    "physical_E": "17",
+    "correct_group": 1,
+    "correct_index": 29,
+    "correct_center": "16",
+    "v_ref": "54.631090366101886317713822391972534872377546491204",
+    "predicted_wrong_index": 13,
+    "histories": 101
+  },
+  {
+    "name": "A-upper_boundary",
+    "role": "A",
+    "physical_E": "17",
+    "correct_group": 1,
+    "correct_index": 29,
+    "correct_center": "16",
+    "v_ref": "54.631090366101886317713822391972534872377546491204",
+    "predicted_wrong_index": 13,
+    "histories": 101
+  },
+  {
+    "name": "F-WW-descendants",
+    "role": "F",
+    "physical_E": "2",
+    "histories": 101,
+    "purpose": "secondary bank velocity; no claim of full WW regression"
+  }
+]

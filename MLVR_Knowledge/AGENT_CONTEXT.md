@@ -34,7 +34,7 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 ## 下一步
 
-Stage 2 最终提交、推送、SHA256 与边界见 Task05 §4。[Stage 3 设计任务](../MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md)已完成Claude独立审查，结论NEEDS REVISION（两项P1、一项P2）；待设计修订及用户批准生产修改。审查未实施、未运行；总体F11闭环、TARGET/Field/正式FOM仍未实现。
+Stage 2 最终提交、推送、SHA256 与边界见 Task05 §4。[Stage 3 设计任务](../MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md)已完成Claude独立审查，结论NEEDS REVISION（两项P1、一项P2）；待设计修订及用户批准生产修改。另有 W14 普通 MG fixed-source neutron 源速度混用MeV/群号，Claude独立验证CONFIRMED/P1，未修复；报告见[W14档案](../MLVR_develop/2026-10/20261015_03_claude-w14-independent-review/README.md)。审查未实施Stage3；总体F11闭环、TARGET/Field/正式FOM仍未实现。
 
 ## 工作纪律
 

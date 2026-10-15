@@ -1,0 +1,106 @@
+
+/tmp/w14-codex-review/sanitized/RMC:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .plt.got:
+
+Disassembly of section .plt.sec:
+
+Disassembly of section .text:
+
+00000000007be9ed <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE>:
+  7be9ed:	f3 0f 1e fa          	endbr64
+  7be9f1:	55                   	push   %rbp
+  7be9f2:	48 89 e5             	mov    %rsp,%rbp
+  7be9f5:	53                   	push   %rbx
+  7be9f6:	48 83 ec 38          	sub    $0x38,%rsp
+  7be9fa:	f2 0f 11 45 d8       	movsd  %xmm0,-0x28(%rbp)
+  7be9ff:	89 7d d4             	mov    %edi,-0x2c(%rbp)
+  7bea02:	48 89 75 c8          	mov    %rsi,-0x38(%rbp)
+  7bea06:	66 0f ef c0          	pxor   %xmm0,%xmm0
+  7bea0a:	f2 0f 11 45 e8       	movsd  %xmm0,-0x18(%rbp)
+  7bea0f:	f2 0f 10 4d d8       	movsd  -0x28(%rbp),%xmm1
+  7bea14:	f2 0f 10 05 ec 6d 42 	movsd  0x426dec(%rip),%xmm0        # be5808 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x9345e>
+  7bea1b:	00 
+  7bea1c:	f2 0f 58 c1          	addsd  %xmm1,%xmm0
+  7bea20:	66 0f 2e 05 48 7d 42 	ucomisd 0x427d48(%rip),%xmm0        # be6770 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x943c6>
+  7bea27:	00 
+  7bea28:	0f 96 c2             	setbe  %dl
+  7bea2b:	f2 0f 10 0d 45 7d 42 	movsd  0x427d45(%rip),%xmm1        # be6778 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x943ce>
+  7bea32:	00 
+  7bea33:	66 0f 2e c8          	ucomisd %xmm0,%xmm1
+  7bea37:	0f 96 c0             	setbe  %al
+  7bea3a:	09 d0                	or     %edx,%eax
+  7bea3c:	84 c0                	test   %al,%al
+  7bea3e:	74 1c                	je     7bea5c <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE+0x6f>
+  7bea40:	66 48 0f 7e c3       	movq   %xmm0,%rbx
+  7bea45:	e8 96 02 c5 ff       	call   40ece0 <__asan_handle_no_return@plt>
+  7bea4a:	48 89 de             	mov    %rbx,%rsi
+  7bea4d:	48 8d 05 2c 9b 6e 00 	lea    0x6e9b2c(%rip),%rax        # ea8580 <_ZL6FissMt+0xa870>
+  7bea54:	48 89 c7             	mov    %rax,%rdi
+  7bea57:	e8 d4 0f c5 ff       	call   40fa30 <__ubsan_handle_float_cast_overflow_abort@plt>
+  7bea5c:	f2 0f 2c c0          	cvttsd2si %xmm0,%eax
+  7bea60:	8b 55 d4             	mov    -0x2c(%rbp),%edx
+  7bea63:	29 c2                	sub    %eax,%edx
+  7bea65:	71 1a                	jno    7bea81 <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE+0x94>
+  7bea67:	48 63 d0             	movslq %eax,%rdx
+  7bea6a:	8b 45 d4             	mov    -0x2c(%rbp),%eax
+  7bea6d:	48 98                	cltq
+  7bea6f:	48 89 c6             	mov    %rax,%rsi
+  7bea72:	48 8d 05 87 9b 6e 00 	lea    0x6e9b87(%rip),%rax        # ea8600 <_ZL6FissMt+0xa8f0>
+  7bea79:	48 89 c7             	mov    %rax,%rdi
+  7bea7c:	e8 7f 13 c5 ff       	call   40fe00 <__ubsan_handle_sub_overflow_abort@plt>
+  7bea81:	89 55 e4             	mov    %edx,-0x1c(%rbp)
+  7bea84:	8b 45 e4             	mov    -0x1c(%rbp),%eax
+  7bea87:	48 63 d0             	movslq %eax,%rdx
+  7bea8a:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+  7bea8e:	48 89 d6             	mov    %rdx,%rsi
+  7bea91:	48 89 c7             	mov    %rax,%rdi
+  7bea94:	e8 a1 21 c5 ff       	call   410c3a <_ZNSt6vectorIdSaIdEEixEm>
+  7bea99:	48 89 c2             	mov    %rax,%rdx
+  7bea9c:	48 85 c0             	test   %rax,%rax
+  7bea9f:	74 0b                	je     7beaac <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE+0xbf>
+  7beaa1:	48 89 d1             	mov    %rdx,%rcx
+  7beaa4:	83 e1 07             	and    $0x7,%ecx
+  7beaa7:	48 85 c9             	test   %rcx,%rcx
+  7beaaa:	74 12                	je     7beabe <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE+0xd1>
+  7beaac:	48 89 d6             	mov    %rdx,%rsi
+  7beaaf:	48 8d 05 0a 9b 6e 00 	lea    0x6e9b0a(%rip),%rax        # ea85c0 <_ZL6FissMt+0xa8b0>
+  7beab6:	48 89 c7             	mov    %rax,%rdi
+  7beab9:	e8 42 0b c5 ff       	call   40f600 <__ubsan_handle_type_mismatch_v1_abort@plt>
+  7beabe:	48 89 c2             	mov    %rax,%rdx
+  7beac1:	48 89 d1             	mov    %rdx,%rcx
+  7beac4:	48 c1 e9 03          	shr    $0x3,%rcx
+  7beac8:	48 81 c1 00 80 ff 7f 	add    $0x7fff8000,%rcx
+  7beacf:	0f b6 09             	movzbl (%rcx),%ecx
+  7bead2:	84 c9                	test   %cl,%cl
+  7bead4:	74 08                	je     7beade <_ZN10CDGlobeFun11GetNeuVelMgEdiSt6vectorIdSaIdEE+0xf1>
+  7bead6:	48 89 d7             	mov    %rdx,%rdi
+  7bead9:	e8 52 08 c5 ff       	call   40f330 <__asan_report_load8@plt>
+  7beade:	f2 0f 10 00          	movsd  (%rax),%xmm0
+  7beae2:	f2 0f 11 45 e8       	movsd  %xmm0,-0x18(%rbp)
+  7beae7:	f2 0f 10 4d e8       	movsd  -0x18(%rbp),%xmm1
+  7beaec:	f2 0f 10 05 54 77 42 	movsd  0x427754(%rip),%xmm0        # be6248 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x93e9e>
+  7beaf3:	00 
+  7beaf4:	f2 0f 58 c1          	addsd  %xmm1,%xmm0
+  7beaf8:	f2 0f 59 45 e8       	mulsd  -0x18(%rbp),%xmm0
+  7beafd:	66 48 0f 7e c0       	movq   %xmm0,%rax
+  7beb02:	66 48 0f 6e c0       	movq   %rax,%xmm0
+  7beb07:	e8 34 03 c5 ff       	call   40ee40 <sqrt@plt>
+  7beb0c:	f2 0f 10 0d 3c 77 42 	movsd  0x42773c(%rip),%xmm1        # be6250 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x93ea6>
+  7beb13:	00 
+  7beb14:	f2 0f 59 c1          	mulsd  %xmm1,%xmm0
+  7beb18:	f2 0f 10 55 e8       	movsd  -0x18(%rbp),%xmm2
+  7beb1d:	f2 0f 10 0d 33 77 42 	movsd  0x427733(%rip),%xmm1        # be6258 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x93eae>
+  7beb24:	00 
+  7beb25:	f2 0f 58 ca          	addsd  %xmm2,%xmm1
+  7beb29:	f2 0f 5e c1          	divsd  %xmm1,%xmm0
+  7beb2d:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+  7beb31:	c9                   	leave
+  7beb32:	c3                   	ret
+
+Disassembly of section .fini:

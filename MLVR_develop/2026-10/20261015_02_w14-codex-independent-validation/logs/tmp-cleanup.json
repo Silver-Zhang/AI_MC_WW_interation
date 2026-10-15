@@ -1,0 +1,129 @@
+{
+  "authorization": "可以把关键计算文件和结果文件保存到记录中，并且清理tmp文件",
+  "recorded_at": "2026-10-15T23:31:16.653726",
+  "cleanup_target": "/tmp/w14-codex-review",
+  "before_allocated_bytes": 4768845824,
+  "cleanup_preview": {
+    "README.md": {
+      "kind": "file",
+      "allocated_bytes": 4096
+    },
+    "REPORT.md": {
+      "kind": "file",
+      "allocated_bytes": 16384
+    },
+    "archive-location.txt": {
+      "kind": "file",
+      "allocated_bytes": 4096
+    },
+    "archive-results.py": {
+      "kind": "file",
+      "allocated_bytes": 12288
+    },
+    "archive-staging-4ur0x9n3": {
+      "kind": "directory",
+      "allocated_bytes": 73728
+    },
+    "build": {
+      "kind": "directory",
+      "allocated_bytes": 3670724608
+    },
+    "cases.json": {
+      "kind": "file",
+      "allocated_bytes": 4096
+    },
+    "evidence-sha256.txt": {
+      "kind": "file",
+      "allocated_bytes": 61440
+    },
+    "inputs": {
+      "kind": "directory",
+      "allocated_bytes": 110592
+    },
+    "logs": {
+      "kind": "directory",
+      "allocated_bytes": 561152
+    },
+    "results-table.md": {
+      "kind": "file",
+      "allocated_bytes": 4096
+    },
+    "results.json": {
+      "kind": "file",
+      "allocated_bytes": 12288
+    },
+    "runs": {
+      "kind": "directory",
+      "allocated_bytes": 8364032
+    },
+    "sanitized": {
+      "kind": "directory",
+      "allocated_bytes": 781996032
+    },
+    "scripts": {
+      "kind": "directory",
+      "allocated_bytes": 36864
+    },
+    "source.tar": {
+      "kind": "file",
+      "allocated_bytes": 135888896
+    },
+    "src": {
+      "kind": "directory",
+      "allocated_bytes": 170967040
+    }
+  },
+  "original_evidence_entries_verified_in_both_locations": 556,
+  "prior_archive_files_verified": 563,
+  "additional_metadata_preserved": [
+    "build/CMakeCache.txt",
+    "build/compile_commands.json",
+    "build/CMakeFiles/RMC.dir/flags.make",
+    "build/CMakeFiles/RMC.dir/link.txt",
+    "sanitized/binary-sha256",
+    "sanitized/mapping.json",
+    "archive-results.py"
+  ],
+  "curated_byte_identical_files": 24,
+  "offline_result_recheck": {
+    "exitcode": 0,
+    "input_source": "persistent logs/local-evidence; no reads of original temporary experiment directory",
+    "path_rebinding_only": true,
+    "matched_original_outputs_byte_for_byte": {
+      "results.json": true,
+      "results-table.md": true
+    },
+    "source_history_cases": 13,
+    "transport_or_build_rerun": false
+  },
+  "protected_shared_files_sha256": {
+    "STATUS.md": "8a236332d2154e54602f1377182a8a924e506e7e3f22ef39699d2607002ee7ef",
+    "MLVR_develop/INDEX.md": "fcf51515758a20451a78bf5cb6998d7c64120cd0b18362c77ec9c9c47d513279",
+    "MLVR_Knowledge/AGENT_CONTEXT.md": "45b5e5b513a78b1fe3e4e6834589d5abd71dfbcaf9bf00becd0a72d6fb4a71c8",
+    "MLVR_Knowledge/06_已知问题与改进建议.md": "c144efbc6f01428bd82380e2f64710062f02023ef25af9a1cd4d3bd3207c7f4f",
+    "MLVR_Knowledge/04_F11_v1_架构与实施设计.md": "aeed2760f84427bdd8d139182d7bb3f4193c0c63f67decec1d42c7aad7a676b0"
+  },
+  "RMC_HEAD_before": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+  "RMC_status_before": "",
+  "status": "completed",
+  "active_process_cwd_or_executable_users": [],
+  "predelete_all_original_hashes_verified_again": true,
+  "predelete_key_artifact_hashes_verified_again": true,
+  "deleted_at": "2026-10-15T23:33:11.540423",
+  "target_absent_after_cleanup": true,
+  "post_cleanup_recheck": {
+    "command": [
+      "python3",
+      "artifacts/recheck-results.py"
+    ],
+    "cwd": "/home/workspace/AI_MC_WW_interation/MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation",
+    "exitcode": 0,
+    "stdout": "results.json: byte-identical\nresults-table.md: byte-identical\n13 cases rechecked from persistent evidence; no RMC execution\n"
+  },
+  "RMC_HEAD_after": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+  "RMC_status_after": "",
+  "shared_protected_files_unchanged_after_cleanup": true,
+  "git_visible_archive_file_count": 34,
+  "git_visible_archive_bytes": 289373,
+  "finished_at": "2026-10-15T23:34:22.800016"
+}

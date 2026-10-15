@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-15T23:21:35.502813",
+  "task": "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation",
+  "original_evidence_manifest_sha256": "e4b2d96912e788538637307453cded124aa365473f16f3efcd3263632646b3e7",
+  "original_evidence_entries_verified": 556,
+  "all_original_entries_copied_and_verified": true,
+  "new_task_script_sha256": "cfcf180385067829250f035177a3a6d91983f12bcd75e2c0df40224864512a0d",
+  "script_executed_unmodified": true,
+  "allocator_mode": "private mirror of current-date task names, INDEX and template; no shared INDEX writes",
+  "allocator_exitcode": 0,
+  "allocator_stdout": "已建档: /tmp/w14-codex-review/archive-staging-4ur0x9n3/2026-10/20261015_02_w14-codex-independent-validation\n任务模式: C — 深度物理研究与学习\nC 模式对话关口（每关必须停下对话,回复原文入档）: G1 问题定式 → G2 因果链 → G3 验伪设计 → G4 结果解释\n  实施/验证阶段至少 1 次中期快报；细则见 MLVR_develop/README.md §5\n下一步: 把原始材料（报错/数据/日志）保存到 /tmp/w14-codex-review/archive-staging-4ur0x9n3/2026-10/20261015_02_w14-codex-independent-validation/logs/\n提醒: 归档时只提炼结论/结果入库；过程文件默认留本地不入库（MLVR_develop/README.md §7）\n",
+  "shared_protected_files_before_and_after_sha256": {
+    "STATUS.md": "8a236332d2154e54602f1377182a8a924e506e7e3f22ef39699d2607002ee7ef",
+    "MLVR_develop/INDEX.md": "fcf51515758a20451a78bf5cb6998d7c64120cd0b18362c77ec9c9c47d513279",
+    "MLVR_Knowledge/AGENT_CONTEXT.md": "45b5e5b513a78b1fe3e4e6834589d5abd71dfbcaf9bf00becd0a72d6fb4a71c8",
+    "MLVR_Knowledge/06_已知问题与改进建议.md": "c144efbc6f01428bd82380e2f64710062f02023ef25af9a1cd4d3bd3207c7f4f",
+    "MLVR_Knowledge/04_F11_v1_架构与实施设计.md": "aeed2760f84427bdd8d139182d7bb3f4193c0c63f67decec1d42c7aad7a676b0"
+  },
+  "RMC_HEAD": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+  "RMC_status": "clean",
+  "transport_rerun": false,
+  "shared_index_sync": "deferred under explicit user restriction",
+  "hash_check_before_record_update": {
+    "exitcode": 0,
+    "entries": 563
+  },
+  "git_visible_archive_files": [
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/.gitignore",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/README.md",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/REPORT.md",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/evidence-sha256.txt",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/logs/archive-verification.json",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/results-table.md"
+  ],
+  "five_section_structure_verified": true,
+  "original_report_byte_identical": true
+}
