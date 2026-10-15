@@ -4,7 +4,8 @@
       "Bash(git -C /home/workspace/AI_MC_WW_interation/RMC status --short)",
       "Bash(git -C /home/workspace/AI_MC_WW_interation/RMC branch --show-current)",
       "Bash(git -C /home/workspace/AI_MC_WW_interation/RMC rev-parse HEAD)",
-      "Bash(git -C /home/workspace/AI_MC_WW_interation status --short)"
+      "Bash(git -C /home/workspace/AI_MC_WW_interation status --short)",
+      "Read(//home/silver/.claude/**)"
     ]
   }
 }

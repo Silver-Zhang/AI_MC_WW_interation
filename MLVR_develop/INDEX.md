@@ -8,6 +8,7 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-10-15 | [f11-stage3-target-source-response-design](2026-10/20261015_01_f11-stage3-target-source-response-design/README.md) | 模式C / Stage3 技术设计 | 设计完成；Claude独立审查完成（**NEEDS REVISION**）；待修订设计及用户批准生产修改 | 04 | Claude独立审查见[报告](2026-10/20261015_01_f11-stage3-target-source-response-design/Independent_F11_Stage3_Design_Review.md)：MPI scalar归约、T4 raw-segment oracle为P1，bin sampler micro-oracle为P2；未修改RMC/KB04、未运行；实施未启动 |
 | 2026-10-14 | [f11-stage2-final-ww-p1-fix](2026-10/20261014_01_f11-stage2-final-ww-p1-fix/README.md) | 模式C / Stage2 最后两个 WW P1 定向修复 | 已完成 | F11 | 后续Codex独立审核ACCEPT WITH LIMITATIONS、两项P1 CLOSED；当前提交/推送状态与边界见[Task05 §4](2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 2026-10-12 | [independent-f11-stage2-ww-energy-bin-final-review](2026-10/20261012_03_independent-f11-stage2-ww-energy-bin-final-review/README.md) | 模式C / Stage2 native WW energy-bin 最终独立复核 | 已完成（NEEDS CORRECTION） | F11 | Task02 的 prepared container/末界修复成立，但 raw MG 非有限能量转换前 guard 与 direct Install lower 独立校验仍为P1；不得冻结/提交或进入Stage3；RMC未修改 |
 | 2026-10-12 | [f11-ww-energy-bin-safety](2026-10/20261012_02_f11-ww-energy-bin-safety/README.md) | 模式C / WW能量表与末界安全修复 | 已完成（READY FOR INDEPENDENT REVIEW；待独立复核） | F11 | 四文件增量；本轮证据/边界见任务§4；历史审查不改，未提交或进入Stage3 |

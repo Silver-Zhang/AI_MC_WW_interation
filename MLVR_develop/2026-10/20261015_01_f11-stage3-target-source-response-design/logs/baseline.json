@@ -1,0 +1,67 @@
+{
+  "root": {
+    "branch": "main",
+    "HEAD": "af46e64ad46afc02c19670c6736cb917a448c854",
+    "status": "",
+    "upstream_ahead_behind": "0\t0"
+  },
+  "RMC": {
+    "branch": "Neural_Network_WW_Iteration",
+    "HEAD": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+    "status": "",
+    "upstream_ahead_behind": "0\t0"
+  },
+  "rmc_manifest_29_match": true,
+  "frozen_04_sha256": "aeed2760f84427bdd8d139182d7bb3f4193c0c63f67decec1d42c7aad7a676b0",
+  "local_client_date": "2026-10-15",
+  "timezone": "Asia/Shanghai",
+  "referenced_source_sha256": {
+    "src/CalcFixedSource.cpp": "38b62145befa9e98a2bdcb98ab1cdcf3114864c4c5307168dc4b182c3326cb21",
+    "src/CheckInpBlock.cpp": "312c89039133f07a17cc5b218258ac399b84e0553e8e02044847b9287bd7b957",
+    "src/CheckSourceAndDistri.cpp": "8f9b09f37bb9a9dac8c501567588b281052f088f7739c3d36ddf34445adf5ea8",
+    "src/CheckTransport.cpp": "cf5f50716e7e48d0525161ef85f6ee0b37e8e16c7ee6897f9685cea5117ab94e",
+    "src/ExternalSource.cpp": "2e4f03a7aed4d97d75730816de91bb5bb9a458daa114c09ed8e72dd8736e53d6",
+    "src/InitialBatchSource.cpp": "d73db506a31878fc31d4a68c932bc575765c20037ef345ae0394a45d337eed2b",
+    "src/InitiateAll.cpp": "a30ae49db04e44479eae76fb6b962d45cac8ae4cc240a608f6d486111fb02ebe",
+    "src/InitiateTally.cpp": "33642656e20f43bac0534437e01f217b9daef656d24fb830ee98b3bb947f05da",
+    "src/MeshFun.cpp": "31dd2f326a3502fb331e36cdc3c5a11e7ee2e0e94fb5375cc929a22bd79ca24d",
+    "src/PrepareFixedSourceRun.cpp": "c2c021b8837648c2d4eb2ecce3ddd682676704c667bd02ac845b0fd624791ae2",
+    "src/ProcessTally.cpp": "d81dcf649f45a51a18d0265ea35e53f54cac77780551c82a5f878c720815895e",
+    "src/ReadExternalSourceBlock.cpp": "bf7f14f18691ce2fde7eff28dab0b55c4a5bf2f9c0c8b4f8ea554382938f3f23",
+    "src/ReadFixedSourceBlock.cpp": "891e0019972458537f4c6a7f2220b97fb1fda489e4bfafc75b209522ac143df9",
+    "src/ReadInputBlocks.cpp": "04d2af661b6f9a15ac61d5624c80a492f37b484fd41935a1f0577fe7fd9c6c69",
+    "src/ReadMeshTallyCard.cpp": "d565b78cb2ae4bad889ceed34e0fbb67c5b9461141472dd7f8c3e7a060e48a59",
+    "src/ReadWeightWindow.cpp": "d01b89a68dc4962fa025911cf8bb17e8d1a779ab1d122670dd88f18f6d88ba05",
+    "src/RunCalculation.cpp": "d58824e541164b65ca2f1e2c18b87e494aac3790174efb5b1261194509035431",
+    "src/SampleNeutronSource.cpp": "4fdc597fb43d7196102bcdb5686a81ee5a720d2e28bc33d900738d4fb67f5f7f",
+    "src/SampleParticle.cpp": "a13321b5f5d8f2dd32589024d7d5f9d1e35746cac2b86db60b606fa2d57a2699",
+    "src/SampleValue.cpp": "32929ffbb8f1ab953ed6dbcf420795fc968584ef548a5b0d82296580ba22793f",
+    "src/ScoreMeshTally.cpp": "b15116cf2a73b97fff3956a8b3fbeed4e708df9af31b6de29069f4e7aa052a4e",
+    "src/SingleTally.cpp": "90c214e00d0ac4155dc2f697cd5d4d94e1c664675d59f87241d24f6f69483ff8",
+    "src/SumUpTally.cpp": "37e43960a7cae38e9a51ef042eb673711edfc2e57c6f49f6124709b78bcff9a5",
+    "src/TallyData.cpp": "bbd4d11b110a6f99c08e583a98c1f1cf4ddc249bde7bc7e0054c1a2bcd9e788c",
+    "src/main.cpp": "a344ec48347ad51944266f9537dbdc53a4c6cf0f7f3fbe4935086585c40d27a8"
+  },
+  "final_protection_check": {
+    "rmc_HEAD": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+    "rmc_worktree_status": "",
+    "source_manifest_29_match": true,
+    "frozen_04_sha256": "aeed2760f84427bdd8d139182d7bb3f4193c0c63f67decec1d42c7aad7a676b0",
+    "root_HEAD": "af46e64ad46afc02c19670c6736cb917a448c854"
+  },
+  "documentation_checks": {
+    "git_diff_check_exitcode": 0,
+    "planned_production_build_files": 21,
+    "duplicate_paths": 0,
+    "task_markdown_errors": [],
+    "archive_checker_exitcode": 0,
+    "archive_checker_task_mentions": [],
+    "dynamic_tests_run": false
+  },
+  "design_artifact_sha256": {
+    "README.md": "b32d0f416140a42992b6b0940421457903e197ff5bc94a219a84b3b9cdd5f9a6",
+    "stage3-design.md": "9e6ee413b235735406fe50c67840d9b3348f5fb8f03c87185a1058e104bf193c",
+    "test-plan.md": "750b3039139b24cfa4f9f99e82c866490ad293e501f2a9ae2b0a0e84908015f0",
+    "logs/request-excerpt.md": "6a71006beed1dec546b25c33495a5b4b31fc8ec8c9cf7d7cd707ed278918e0b4"
+  }
+}

@@ -1,6 +1,6 @@
 # 项目状态（人只看这一页）
 
-> **最后更新：2026-10-14**。F11 Stage 2：**ACCEPT WITH LIMITATIONS**，两个 WW P1 **CLOSED**，用户确认受限版本冻结。独立审核与提交准备见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)；RMC `4810694b`已推送GitLab并读回确认，Stage 3 未启动。
+> **最后更新：2026-10-15**。F11 Stage 2：**ACCEPT WITH LIMITATIONS**，两个 WW P1 **CLOSED**，用户确认受限版本冻结。独立审核与提交准备见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)；RMC `4810694b`已推送GitLab并读回确认。Stage 3 设计独立审查结论 **NEEDS REVISION**；实施未启动、未授权。
 > 详细任务清单→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则→ [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文→ [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
 
 ## 1. 现在在哪个 Stage
@@ -14,17 +14,17 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | 0 | 工作流与知识库建立 | ✅ 完成 |
 | 1 | 双向迭代框架功能需求定义 | ✅ 第一版基线已冻结 |
 | 2 | RMC 现有功能审查 | 🟡 **F02** 多群伴随输运 → 有界 A–Ready；**F03** 伴随源定义 → C–Verify（冻结子域，方案 A）；**F08** WW → E — Defect + D — Integration issue（源码审计） |
-| **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | Stage 2 已受限冻结，独立审核 ACCEPT WITH LIMITATIONS；提交准备及边界见 Task05 §4，Stage 3 未启动。 |
+| **3 → 4** | **F11 prepared lifecycle / 后续接口设计** | Stage 2 已受限冻结，边界见 Task05 §4；[Stage 3 设计任务](MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md) 的 Claude 独立审查为 **NEEDS REVISION**（两项P1、一项P2）；待修订设计及用户批准生产修改，实施未启动。 |
 | 5 → 8 | 分模块实现 → 双向迭代 WW 框架 → 场重构 → 高级 ML 方法 | ⬜ 未开始 |
 
-一句话：**F11 Stage 2 生命周期已受限冻结；完整 F11 闭环仍未实现。RMC已按用户授权提交并推送GitLab；Stage 3 未启动。**
+一句话：**F11 Stage 2 生命周期已受限冻结；Stage 3 设计独立审查为 NEEDS REVISION，待设计修订和用户审批。完整 F11 闭环仍未实现。**
 
 ## 2. ⛔ 等你拍板（不拍板 Agent 不动）
 
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
 | 1 | **Stage 2 冻结（已完成）** | RMC `4810694b`已推送GitLab并读回确认，29文件、工作树干净；本项无待拍板事项 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
-| 2 | **Stage 3** | 未启动；需用户另行授权，本轮不进入 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+| 2 | **Stage 3 设计** | Claude独立审查已完成，结论NEEDS REVISION；先处理MPI归约/T4 oracle设计缺口，再由用户批准生产修改；本轮未授权实施 | [Stage 3 任务 §4](MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md#4-结论与边界) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | 仓库同步 | GitLab SSH端口8922及主机指纹已核验，认证阻塞解除；两仓库远端已更新，文档保留GitHub镜像 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
@@ -40,7 +40,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
-| 2026-10-14 | Stage 2 最终冻结与提交 | ACCEPT WITH LIMITATIONS；P1-WW-01/02 CLOSED；完整格式检查通过；RMC `4810694b`已推送GitLab并读回确认，见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
+| 2026-10-15 | F11 Stage 3 设计独立审查 | **NEEDS REVISION**：发现MPI TARGET scalar归约与T4 raw-segment/history oracle两项P1设计缺口，type-4 bin sampler需P2 micro-oracle；只读静态审查，无构建/输运。报告见[归档](MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/Independent_F11_Stage3_Design_Review.md)；Stage 3未实施、未授权 |
 | 2026-10-12 | independent-f11-stage2-ww-energy-bin-final-review | **NEEDS CORRECTION**：Task02 已修复 prepared native WW 的容器合同和末界索引，但 MG raw 非有限能量转换前 guard、direct Install lower 独立校验仍为 P1；RMC 未修改，Stage3 不得启动。 |
 | 09-27 | f10-minor-corrections-f07-sync | 用户批准的 F10 三项小修正已写回，**design frozen；implementation not completed**；F07 WW-on 校准状态已按独立复核更新；RMC 未修改 |
 | 09-27 | f10-field-reconstruction-boundary | F10 第一版数据合同初稿完成；独立复核三项小修正已由后续 `20260927_08` 写回；没有 parser/算法/WW 实现，RMC 未修改 |
@@ -73,7 +73,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 ## 4. 下一步（Agent 建议，待你点头）
 
-1. **后续 Stage 3/4 框架工作**：F10 数据边界已有首版设计合同，但尚无实现；F03 外部 response→source、F04 伴随+native WWMESH、F06 serial text-first 场输出与 F08 native WW 主路径为后续接口工作的已知边界。F11 调度尚未启动。
+1. **Stage 3 技术设计**：独立审查已判定NEEDS REVISION；修订MPI标量合同与T4独立oracle后，再由用户决定是否批准实施。本轮无RMC修改，不进入Stage 4–6。
 2. **F04 按需扩展**：仅当首版实际问题需要 MPI/OpenMP、耦合粒子或非单 mesh 时，另立任务扩展验证；不做无限矩阵。
 3. **收尾治理**：关闭台账遗留项 `20260824_05`；知识库 W10 与变更记录已同步。
 
