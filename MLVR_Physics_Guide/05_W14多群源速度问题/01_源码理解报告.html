@@ -1,0 +1,1125 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="RMC W14只读源码理解：原始版本、首次修复、Watt源与完整修复目标的时序和源码定位"><title>W14 多群源速度 · 源码理解报告</title><style>
+:root{--ink:#183246;--muted:#5b6e7d;--line:#dce4ea;--blue:#1b628f;--paper:#fff;--wash:#f4f7f9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;color:var(--ink);background:var(--wash);font:16px/1.85 system-ui,-apple-system,'Noto Sans CJK SC','Microsoft YaHei',sans-serif}a{color:var(--blue);text-underline-offset:3px;overflow-wrap:anywhere}a:hover{color:#12334c}aside{position:fixed;left:0;top:0;bottom:0;width:250px;background:#12334c;color:#d3e2eb;padding:30px 22px;overflow-y:auto}aside .eyebrow{font-size:12px;letter-spacing:2px;color:#9cc4d7}aside .title{font-size:27px;color:white;font-weight:750;margin:12px 0 8px}aside p{font-size:13px;color:#b4cbd8}aside a{display:block;color:#d8e8f0;text-decoration:none;padding:10px 8px;border-radius:7px;font-size:14px;line-height:1.6}aside a:hover{background:#24485e;color:#fff}.nav-actions{border-top:1px solid #466074;margin-top:22px;padding-top:16px}.nav-actions button{display:block;margin:8px 0;width:100%;border:1px solid #527287;background:transparent;color:white}.shell{margin-left:250px}.topbar{position:sticky;z-index:3;top:0;padding:13px 36px;background:#f4f7f9ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:10px}.read-only{font-weight:700;color:#71501c}main{max-width:1470px;margin:auto;padding:36px 42px 100px;background:white}h1{font-size:34px;line-height:1.4;letter-spacing:-.5px;margin-top:0}h2{font-size:27px;line-height:1.5;margin:64px 0 25px;padding:20px 0 14px;border-top:3px solid #163f59}h3{font-size:21px;line-height:1.6;margin-top:38px}h4{font-size:18px;margin-top:30px}p{margin:16px 0}p,li{overflow-wrap:anywhere}blockquote{margin:24px 0;padding:6px 22px;background:#f0f5f8;border-left:4px solid #397191;color:#385266}code{font-family:'DejaVu Sans Mono','Consolas',monospace;font-size:.88em;background:#eff3f6;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{margin:0;overflow:auto;background:#112b3d;color:#e5f0f7;padding:20px;font-size:13px;line-height:1.75;tab-size:2}pre code{padding:0;background:none;font-size:inherit;overflow-wrap:normal;white-space:pre}details{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:16px 0;background:#f8fafb}summary{cursor:pointer;padding:11px 16px;font-size:14px;font-weight:600}details[open] summary{border-bottom:1px solid var(--line)}.table-scroll{overflow:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:14px;min-width:650px}th{background:#eaf1f5;text-align:left;color:#12334c;font-weight:700}th,td{padding:13px 15px;border-bottom:1px solid var(--line);vertical-align:top}tbody tr:nth-child(even){background:#fafcfd}td code{word-break:break-word}table a{word-break:break-word}.tag{font-size:12px;font-weight:700;padding:3px 7px;border-radius:5px;white-space:nowrap}.verified{background:#e6f2ed;color:#216447}.inferred{background:#fff1d7;color:#835a13}.unverified{background:#f9e8e5;color:#a53e33}.sequence{margin:25px 0;border:1px solid #cddae4;border-radius:10px;overflow:hidden;background:#fff}.figure-toolbar{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;background:#edf3f7;font-size:14px}.svg-scroll{overflow:auto}.sequence svg{width:100%;height:auto;display:block;min-width:820px}.sequence details{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}button{font:inherit;border:1px solid #9ab1c1;background:#fff;border-radius:6px;padding:6px 11px;cursor:pointer;color:#234a65}button:hover{background:#e9f1f6}dialog{border:0;border-radius:10px;padding:0;max-width:97vw;width:97vw;max-height:96vh;box-shadow:0 20px 70px #0005}dialog::backdrop{background:#092137bb}dialog .dialog-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;padding:12px 20px;background:#edf3f7}#zoom-body{overflow:auto;max-height:83vh;padding:10px}#zoom-body svg{width:1540px;height:auto;display:block}.footer{margin-top:50px;color:#5b6e7d;font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+@media(max-width:1000px){aside{display:none}.shell{margin-left:0}main{padding:24px 20px}.topbar{padding:12px 20px}h1{font-size:28px}h2{font-size:24px}}@media print{aside,.topbar,button,.mermaid-source{display:none!important}.shell{margin:0}main{max-width:none;padding:0}body{background:white;font-size:11pt}h2{break-before:page}.sequence svg{min-width:0}details:not([open])>pre{display:block}summary{display:none}.table-scroll{overflow:visible}table{min-width:0;font-size:9pt}pre{white-space:pre-wrap;overflow:visible;background:#f1f4f6;color:#162d3c}}
+</style></head><body><aside><div class="eyebrow">RMC · 源码阅读</div><div class="title">W14</div><p>从 MeV 到群号，再到速度。<br>沿四张时序图回到实际源码。</p><nav><a href="#section-0">阅读导航与版本约定</a><a href="#section-1">A. 先把变量和物理量分开</a><a href="#section-2">B. 原始版本时序图：普通源第一次飞行之前发生了什么</a><a href="#section-3">C. 第一次修复：普通源修对了哪里，Watt 又在哪儿脱节</a><a href="#section-4">D. 完整正确修复目标：沿现有函数把每个最终能量走完</a><a href="#section-5">E. 代码定位表</a><a href="#section-6">F. 三个版本的差异对照</a><a href="#section-7">G. 用直白的话收束这条因果链</a><a href="#section-8">附录：身份、证据与人工复查入口</a></nav><div class="nav-actions"><button id="expand-code">展开全部源码</button><button id="collapse-code">收起全部源码</button><button id="print">打印 / 保存 PDF</button></div><p>2026-10-17<br>原始基线 4810694b<br>首次修复 8 文件工作树</p></aside><div class="shell"><div class="topbar"><span>MLVR Physics Guide / 05</span><span class="read-only">只读报告 · 目标方案尚未实施</span></div><main><h1>W14 多群源速度问题：顺着源码读懂三种时序</h1>
+<blockquote>
+<p>只读源码理解报告 · 2026-10-17。面向人工对照源码阅读；本轮没有修改 RMC、编译、运行输运或提交。正文中的“目标”均为待实现的修复逻辑。</p>
+<p>配套 <a href="01_%E6%BA%90%E7%A0%81%E7%90%86%E8%A7%A3%E6%8A%A5%E5%91%8A.html">HTML 阅读版</a> 提供目录跳转、内嵌 SVG 离线时序图和折叠代码；图与本 Markdown 的 Mermaid 步骤一致，HTML 不依赖联网加载 Mermaid。</p>
+</blockquote>
+<p>这份报告围绕三个具体断点展开：<strong>普通源过早把 MeV 送入群号函数；Watt 谱在速度算完以后再次换能量；自发裂变额外中子的 MeV 又未经转换进入了按群号恢复的输运库。</strong> 按图中的步骤编号往下读，每一步都能回到实际函数。</p>
+<h2 id="section-0">阅读导航与版本约定</h2>
+<ul>
+<li><a href="#a-variables">A. 变量、群号和两种 Bank</a></li>
+<li><a href="#b-original">B. 原始普通源与 WW 后代时序</a></li>
+<li><a href="#c-first-fix">C. 第一次修复，以及 Watt 分支为什么失败</a></li>
+<li><a href="#d-target">D. 完整正确修复的目标时序</a></li>
+<li><a href="#e-locator">E. 源码定位表</a></li>
+<li><a href="#f-compare">F. 三个版本的差异对照</a></li>
+<li><a href="#g-summary">G. 用直白的话收束这条因果链</a></li>
+<li><a href="#appendix">附录：版本身份与证据</a></li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>本文实际使用的版本</th>
+<th>定位方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始版本</td>
+<td>RMC 冻结提交 <code>4810694b7a99dfc3ad7d27f7d443814f511f4829</code></td>
+<td>用 <code>git show</code> 读取；没有 checkout</td>
+</tr>
+<tr>
+<td>第一次修复版本</td>
+<td>相同 HEAD 上现有的 8 文件未提交修改</td>
+<td>当前 <code>RMC/src/</code>；8 文件 SHA256 全部等于首次修复档案，完整 diff 也逐字节相同</td>
+</tr>
+<tr>
+<td>完整正确修复目标</td>
+<td><strong>尚未实现</strong>的状态流约束</td>
+<td>D 节标明现有插入位置，示意代码不构成已应用补丁</td>
+</tr>
+</tbody></table></div>
+<p>原始源码行号明确标注“原始”；其余行号属于本轮核对的当前工作树。未改文件（如 <code>ExternalSource.cpp</code>）两版行号一致。查看原始行号的安全命令，例如：</p>
+<details class="source-code"><summary>只读定位命令 · 2 行</summary><pre><code class="language-bash">git -C RMC show 4810694b:src/SampleParticle.cpp | nl -ba | sed -n &#39;76,93p&#39;
+nl -ba RMC/src/SampleParticle.cpp | sed -n &#39;76,96p&#39;
+</code></pre></details>
+<p>源码链接旁的行号是定位依据；浏览器未必支持源码文件的 <code>#L</code> 行锚点，可在编辑器按行号跳转，或用上面的只读命令查看。</p>
+<p>证据标签：<strong class="tag verified">SOURCE VERIFIED</strong> 表示本轮从指定版本源码逐句核对；<strong class="tag inferred">INFERRED</strong> 表示由源码推导的后果或目标方案；<strong class="tag unverified">UNVERIFIED</strong> 表示没有覆盖的运行/物理输出。引用既有动态观察时另写“既有动态证据”，不伪称本轮重跑。</p>
+<p><a id="a-variables"></a></p>
+<h2 id="section-1">A. 先把变量和物理量分开</h2>
+<h3>A.1 同一个 <code>double</code>，前后可能装的是两种东西</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>对象</th>
+<th>应该怎样理解</th>
+<th>什么时候改变</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>CDSource::p_dEnergy</code></td>
+<td>源抽样得到的<strong>物理动能，MeV</strong>。固定能量直接给值；能谱分布会改写它</td>
+<td><code>SampleVariableFromDistri()</code> 抽 ENERGY 分布后</td>
+</tr>
+<tr>
+<td><code>CDParticleState::p_dErg</code></td>
+<td>一个复用的存储槽。普通源刚抽完时装 MeV；MG 中子开始输运时应装内部群号 <code>g</code>，虽然类型仍是 <code>double</code></td>
+<td><code>SampleParticle()</code> 写入 MeV；Watt 会再写一次 MeV；<code>SampleFixSource()</code> 才覆盖为群号</td>
+</tr>
+<tr>
+<td>内部多群群号 <code>g</code></td>
+<td>无量纲整数 <code>1…G</code>，<strong>1 为最高能群，G 为最低能群</strong></td>
+<td>由 MeV 查群边界得到；碰撞后可抽得新的出射群</td>
+</tr>
+<tr>
+<td><code>p_vNeuMltCentErg[k]</code></td>
+<td>第 <code>k</code> 个群中心的物理能量，MeV；此向量按<strong>低能到高能</strong>存放</td>
+<td>核数据初始化时填充；<code>k=G-g</code>，合法下标 <code>0…G-1</code></td>
+</tr>
+<tr>
+<td><code>p_dVel</code></td>
+<td>与当前输运能量对应的速度，单位 <strong>cm/shake</strong>，<code>1 shake=10^-8 s</code></td>
+<td>必须在最终能量确定或改变后显式赋值；改 <code>p_dErg</code> 不会自动更新它</td>
+</tr>
+<tr>
+<td><code>p_nMultiGrpNumber</code></td>
+<td>另一个整数群号缓存，不是 MeV，也不是速度</td>
+<td>普通源转换和 <code>UpdateNeuStateMg()</code> 会更新；当前 Bank 恢复未更新，见 C.7 的独立限制</td>
+</tr>
+<tr>
+<td><code>p_dExitErg</code></td>
+<td>碰撞过程的出射能量槽；MG 标准裂变分支放出射群号，CE 放 MeV</td>
+<td><code>GetMgFisErgDir()</code> 或 CE 反应抽样；随后被复制至粒子或 Bank</td>
+</tr>
+</tbody></table></div>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：变量定义见 <a href="../../RMC/src/ParticleState.h#L452">ParticleState.h:452</a>、<a href="../../RMC/src/ParticleState.h#L468">468</a>、<a href="../../RMC/src/ParticleState.h#L509">509</a>、<a href="../../RMC/src/ParticleState.h#L1183">1183</a>。源 ENERGY 分布赋值见 <a href="../../RMC/src/SampleVariableFromDistri.cpp#L101">SampleVariableFromDistri.cpp:101–104</a> 与 <a href="../../RMC/src/SampleVariableFromDistri.cpp#L220">220–223</a>。群中心/下界反向存储见 <a href="../../RMC/src/CheckMgAceBlock.cpp#L38">CheckMgAceBlock.cpp:38–49</a>。</p>
+<p>特别容易误读的是这个名字：<code>ErgGrp()</code> <strong>不是物理能量查群函数</strong>，它只取整已经存好的群号：</p>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ParticleState.h#L1353">RMC/src/ParticleState.h:1353–1359</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 7 行</summary><pre><code class="language-cpp">  /**
+   * @brief converte Erg to ErgGrp in case of multigroup
+   * @return ErgGrp in case of multigroup
+   */
+  int ErgGrp() {
+    return int(p_dErg + 0.5);
+  }
+</code></pre></details>
+<p>如果此处收到 <code>1.0694489 MeV</code>，它会返回 <code>1</code>，不会按 MGACE 边界找到真正的群。这与 <code>LocateMgErgGrp(E_MeV, particleType)</code> 完全不同。</p>
+<h3>A.2 两个速度函数的输入合同相反</h3>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/GlobeFun.h#L526">RMC/src/GlobeFun.h:526–551</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 26 行</summary><pre><code class="language-cpp">  /**
+   * @brief 在相对论条件下，已知中子能量，计算中子速度
+   * @param dNeuErg 中子能量（以MeV为单位
+   * @return 中子速度，单位：1.0E8 cm/s = 1.0 cm/shake
+   */
+  static double GetNeuVel(double dNeuErg) {
+    // 相对论公式：Ek + E0 = E0 /sqrt(1 - v**2/c**2)
+    // v = c * sqrt(Ek**2 + 2*E0*EK) / (E0 + Ek)
+    // 其中E0为中子的质量能量，Ek为中子的动能，v为中子的速度，c为光速\n
+    return LIGHT_SPEED * sqrt(dNeuErg * (dNeuErg + 2 * NEUTRON_MASS_MEV))
+           / (dNeuErg + NEUTRON_MASS_MEV);
+  }
+
+  // dGroup is an internal integer group (1 = highest energy), not MeV.
+  static double GetNeuVelMg(double dGroup, int nMltGrpNum, const vector&lt;double&gt; &amp;vMltCentErg) {
+    // Validate before converting to int or indexing the low-to-high centers.
+    if (nMltGrpNum &lt;= 0 || vMltCentErg.size() != size_t(nMltGrpNum) ||
+        !std::isfinite(dGroup) || dGroup &lt; 1. || dGroup &gt; nMltGrpNum ||
+        std::floor(dGroup) != dGroup)
+      throw std::invalid_argument(&quot;MG neutron velocity: invalid internal group or center array&quot;);
+    const int k = nMltGrpNum - int(dGroup);
+    const double dErg = vMltCentErg[k];
+    if (!std::isfinite(dErg) || dErg &lt;= 0.)
+      throw std::invalid_argument(&quot;MG neutron velocity: invalid group center energy&quot;);
+    return GetNeuVel(dErg); // cm/shake
+  }
+</code></pre></details>
+<ul>
+<li><code>GetNeuVel(E)</code>：输入是 <strong>MeV</strong>，直接用相对论公式算速度。</li>
+<li><code>GetNeuVelMg(g,G,centers)</code>：输入是 <strong>群号</strong>，先用 <code>G-g</code> 选出群中心，再把中心 MeV 交给 <code>GetNeuVel()</code>。</li>
+<li>两个函数只返回一个数，<strong>不会修改传入粒子的 <code>p_dErg</code></strong>。</li>
+</ul>
+<p>公式为 <code>v(E)=c·sqrt(E(E+2m))/(E+m)</code>。<code>c=299.792458 cm/shake</code>，<code>m=939.56542052 MeV</code>，见 <a href="../../RMC/src/Constants.h#L128">Constants.h:128–132</a>。MG 的目标速度是 <code>v(E_center[g])</code>，不是把群号当作 MeV，也不是直接采用群内某个抽样 MeV 的 CE 速度。</p>
+<p>例如 30 群数据中，<code>E=0.6615 MeV → g=13 → k=17 → E_center=0.6615 MeV → v=11.243664633572111 cm/shake</code>。而 <code>GetNeuVel(13)</code> 算的是 <strong>13 MeV</strong> 的速度，物理对象已变。</p>
+<h3>A.3 不能把所有 Bank 混叫成一个“粒子库”</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>库</th>
+<th>定义/生产者</th>
+<th>本文所追踪路径当前实际存的能量</th>
+<th>是否保存可供出库直接复用的速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>CDExternalSource::p_vFixedInitSrcBank</code></td>
+<td><a href="../../RMC/src/ExternalSource.h#L168">ExternalSource.h:34,168</a>，<code>vector&lt;CDParticleBank&gt;</code>；Watt 在 <code>ExternalSource.cpp:527</code> 写入</td>
+<td>Watt 抽到的 <strong>MeV</strong></td>
+<td>类型继承粒子状态，形式上有 <code>p_dVel</code>，但此入库代码没有给它赋值；转库也不读取它</td>
+</tr>
+<tr>
+<td><code>CDFixedSource::p_vFixedParticleSrcBank[Neutron]</code></td>
+<td>临时输运栈；元素 <code>CDFixBank</code>，见 <a href="../../RMC/src/FixedSource.h#L38">FixedSource.h:38–85</a></td>
+<td>WW/标准 MG 诱发裂变写群号；Watt 经现有转库却写入 MeV，<strong>同一库混装</strong></td>
+<td><code>CDFixBank</code> 没有 <code>p_dVel</code> 字段；出库必须从能量重建速度</td>
+</tr>
+</tbody></table></div>
+<p>因此，第一次修复在出库处写的注释“Bank energy is already an internal group in MG”只是<strong>期望的合同</strong>。对 WW 成立，对尚未转换的 Watt 条目不成立。</p>
+<p><a id="b-original"></a></p>
+<h2 id="section-2">B. 原始版本时序图：普通源第一次飞行之前发生了什么</h2>
+<p>以下为普通固定源、中子 MG 路径。图中 B1–B7 分别对应后面的代码解释。</p>
+<figure class="sequence" id="graph-1"><div class="figure-toolbar"><strong>时序图 1</strong><button type="button" data-zoom="graph-1">放大阅读</button></div><div class="svg-scroll"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="W14源码时序图1" viewBox="0 0 1540 1445" width="1540" height="1445" style="font-family:system-ui,'Noto Sans CJK SC',sans-serif"><defs><marker id="arrow1b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#244d78"/></marker><marker id="arrow1r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#a83c35"/></marker></defs><rect width="1540" height="1445" fill="white"/><line x1="120" x2="120" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="380" x2="380" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="640" x2="640" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="900" x2="900" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1160" x2="1160" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1420" x2="1420" y1="74" y2="1420" stroke="#c1ccd7" stroke-dasharray="5 6"/><rect x="12" y="99" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="250" y="122" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B1 SampleFixSource()</text><path d="M 120 134 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><text x="510" y="190" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B1 SampleSourceParticle → Sa</text><text x="510" y="213" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">mpleParticle</text><path d="M 380 225 H 640" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><rect x="12" y="258" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="766" y="281" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B2 p_dErg = E_MeV</text><path d="M 640 293 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><text x="770" y="349" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B3 GetNeuVelMg(E_MeV)【输入</text><text x="770" y="372" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">含义错误】</text><path d="M 640 384 H 900" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow1r)"/><rect x="12" y="417" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="770" y="440" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B3 p_dVel = 错群中心速度，或</text><text x="770" y="463" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">越界</text><path d="M 900 475 H 640" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1r)"/><text x="510" y="531" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">返回 p_dErg仍是MeV</text><path d="M 640 543 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1b)"/><rect x="12" y="576" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="640" y="599" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B4 LocateMgErgGrp(E_MeV)</text><path d="M 380 611 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><text x="640" y="667" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B4 p_dErg = g，速度未改</text><path d="M 900 679 H 380" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1r)"/><rect x="12" y="712" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="250" y="735" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">返回源粒子</text><path d="M 380 747 H 120" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1b)"/><text x="640" y="803" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B5 TrackHistory → RayTracking → FlyByLength</text><path d="M 120 815 H 1160" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><rect x="12" y="848" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="1286" y="871" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B5 时间增加 L / 旧p_dVel</text><path d="M 1160 883 h 38 v 16 h -38" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow1r)"/><text x="1286" y="939" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B6 存活碰撞后 UpdateNeuStat</text><text x="1286" y="962" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">eMg，才重算速度</text><path d="M 1160 974 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><rect x="12" y="1007" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="1290" y="1030" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B7 WW split保存 p_dErg = g</text><path d="M 1160 1042 H 1420" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><text x="250" y="1098" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B7 SampleFromParticleBank → </text><text x="250" y="1121" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">PopParticleOutofStack</text><path d="M 120 1133 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><rect x="12" y="1166" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="900" y="1189" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B7 恢复 p_dErg = g</text><path d="M 1420 1201 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1b)"/><text x="640" y="1257" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">B7 GetNeuVel(g)【把群号当MeV】</text><path d="M 380 1269 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow1b)"/><rect x="12" y="1302" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="250" y="1325" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">后代带错误速度继续输运</text><path d="M 380 1337 H 120" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow1r)"/><rect x="9" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="120" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">CalMode执行核心</text><rect x="269" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="380" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">FixedSource</text><rect x="529" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="640" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">ExternalSource与Source</text><rect x="789" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="900" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">AceData与速度函数</text><rect x="1049" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1160" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">输运与ParticleState</text><rect x="1309" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1420" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">输运Bank</text></svg></div><details class="mermaid-source"><summary>查看对应 Mermaid 源码</summary><pre><code>sequenceDiagram
+    participant C as CalMode执行核心
+    participant F as FixedSource
+    participant S as ExternalSource与Source
+    participant A as AceData与速度函数
+    participant T as 输运与ParticleState
+    participant K as 输运Bank
+    C-&gt;&gt;F: B1 SampleFixSource()
+    F-&gt;&gt;S: B1 SampleSourceParticle → SampleParticle
+    S-&gt;&gt;S: B2 p_dErg = E_MeV
+    S-&gt;&gt;A: B3 GetNeuVelMg(E_MeV)【输入含义错误】
+    A--&gt;&gt;S: B3 p_dVel = 错群中心速度，或越界
+    S--&gt;&gt;F: 返回 p_dErg仍是MeV
+    F-&gt;&gt;A: B4 LocateMgErgGrp(E_MeV)
+    A--&gt;&gt;F: B4 p_dErg = g，速度未改
+    F--&gt;&gt;C: 返回源粒子
+    C-&gt;&gt;T: B5 TrackHistory → RayTracking → FlyByLength
+    T-&gt;&gt;T: B5 时间增加 L / 旧p_dVel
+    T-&gt;&gt;T: B6 存活碰撞后 UpdateNeuStateMg，才重算速度
+    T-&gt;&gt;K: B7 WW split保存 p_dErg = g
+    C-&gt;&gt;F: B7 SampleFromParticleBank → PopParticleOutofStack
+    K--&gt;&gt;F: B7 恢复 p_dErg = g
+    F-&gt;&gt;A: B7 GetNeuVel(g)【把群号当MeV】
+    F--&gt;&gt;C: 后代带错误速度继续输运
+</code></pre></details></figure>
+<p>B6 与 B7 表示两种可遇到的后续事件；WW 可以在首次碰撞之前发生，图中排在后面是为展开说明，<strong>不表示 WW 必须等碰撞之后</strong>。B3 若触发未定义行为或中止，后续步骤也不保证发生。</p>
+<h3>B1. 普通入口一直调用到源抽样；这里还没有群转换</h3>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：外层调用链为：</p>
+<details class="source-code" open><summary>调用链 / 目标逻辑 · 7 行</summary><pre><code class="language-text">CDCalMode::RunCalculation              RunCalculation.cpp:86
+  → CDCalMode::CalcFixedSource          CalcFixedSource.cpp:67,78–84
+    → InitializeFixedSourceModel       一次性初始化
+    → ExecuteFixedSourcePrepared       唯一执行循环；普通模式也调用它
+      → CDFixedSource::SampleFixSource  CalcFixedSource.cpp:182–183
+        → CDExternalSource::SampleSourceParticle  SampleNeutronSource.cpp:202
+          → CDSource::SampleParticle   ExternalSource.cpp:347
+</code></pre></details>
+<p><code>ExecuteFixedSourcePrepared</code> 的名字并不表示这个例子走了 Stage 2 的受限 API。它也是普通 <code>CalcFixedSource()</code> 使用的底层循环。普通入口的 <code>cExternalSource</code> 按值传入，见 <a href="../../RMC/src/CalcFixedSource.cpp#L67">CalcFixedSource.cpp:67–83</a>；本文不改变该对象生命周期。</p>
+<h3>B2. 源能谱抽样后，写入的是 MeV</h3>
+<p><code>SampleParticle()</code> 先在 <a href="../../RMC/src/SampleParticle.cpp#L27">SampleParticle.cpp:27</a> 调 <code>SampleVariableFromDistri()</code>，再在 76 行写 <code>p_dErg=p_dEnergy</code>。固定能量和离散能谱都经过这个赋值。</p>
+<p><strong>原始版本</strong> <code>RMC/src/SampleParticle.cpp:76–86</code>（<code>4810694b</code>）：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 11 行</summary><pre><code class="language-cpp">    cParticleState.p_dErg = p_dEnergy;
+    // todo: 电子和正电子没有进行处理\n
+    ///对粒子的速度进行初始化\n
+    switch (cParticleState.p_eParticleType) {
+    case CDParticleState::Neutron: {
+      if (cAceData.p_bIsMultiGroup) {
+        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(cParticleState.p_dErg, cAceData.p_nNeuMltGrpNum,
+                                cAceData.p_vNeuMltCentErg);
+      } else {
+        cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+      }
+</code></pre></details>
+<p><strong>进入</strong>：<code>p_dEnergy</code> 是本次抽样的物理能量。<strong>退出本段</strong>：<code>p_dErg</code> 仍是这个 MeV 数值。源码没有在 76 与 82 行之间查群。</p>
+<h3>B3. 错误发生在“速度函数已经要求群号，调用者却仍给 MeV”</h3>
+<p><strong>原始版本</strong> <code>RMC/src/GlobeFun.h:538–547</code>（<code>4810694b</code>）：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 10 行</summary><pre><code class="language-cpp">  static double GetNeuVelMg(double p_dErg, int nMltGrpNum, vector&lt;double&gt; vMltCentErg) {
+    // 相对论公式：Ek + E0 = E0 /sqrt(1 - v**2/c**2)
+    // v = c * sqrt(Ek**2 + 2*E0*EK) / (E0 + Ek)
+    // 其中E0为中子的质量能量，Ek为中子的动能，v为中子的速度，c为光速
+    double dErg = 0.;
+    int  k = nMltGrpNum - int(p_dErg + 0.5);
+    dErg = vMltCentErg[k];
+    return LIGHT_SPEED * sqrt(dErg * (dErg + 2 * NEUTRON_MASS_MEV)) / (dErg +
+           NEUTRON_MASS_MEV); // 单位：1.0E8 cm/s=cm/shake
+  }
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：函数用 <code>G-int(p_dErg+0.5)</code> 作数组下标，这已经规定输入必须表达群号。函数参数名仍叫 <code>p_dErg</code>、类型是 <code>double</code>，编译器无法识别单位混用。</p>
+<p>例如 <code>G=30</code>：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>输入物理能量</th>
+<th>旧函数实际操作</th>
+<th>应有操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>0.6615 MeV</code></td>
+<td>四舍五入成“群号1”，取 <code>centers[29]=16 MeV</code></td>
+<td>查边界得群13，取 <code>centers[17]=0.6615 MeV</code></td>
+</tr>
+<tr>
+<td>合法且 <code>&lt;0.5 MeV</code></td>
+<td>四舍五入成0，取 <code>centers[30]</code>，越过30元素数组</td>
+<td>按真实群边界得到合法 <code>1…30</code></td>
+</tr>
+<tr>
+<td><code>16 MeV</code></td>
+<td>当成群16，取 <code>centers[14]=0.1258 MeV</code></td>
+<td>最高能群1，取16 MeV中心</td>
+</tr>
+</tbody></table></div>
+<p><strong class="tag inferred">INFERRED</strong>：越界读取的结果不能保证是0或某个固定值；此前看到零速度/无穷时间只是特定运行表现。原始 ASan 越界证据见附录的 Codex W14 验证报告。</p>
+<h3>B4. 正确群转换来得更晚，而且没有同步速度</h3>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/SampleNeutronSource.cpp#L269">RMC/src/SampleNeutronSource.cpp:269–280</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 12 行</summary><pre><code class="language-cpp">  if (cAceData.p_bIsMultiGroup) {
+    cParticleState.p_dErg = cAceData.LocateMgErgGrp(cParticleState.p_dErg, cParticleState.p_eParticleType);
+  }
+
+  cParticleState.p_nMAT = cGeometry.GetCellMat(cParticleState.p_vLocCellsU);
+  cParticleState.p_dSourceCellNeuImp = cGeometry.p_vCell[cParticleState.p_nCELL].p_dNeuImp;
+  cParticleState.p_dSourceCellGmaImp = cGeometry.p_vCell[cParticleState.p_nCELL].p_dGmaImp;
+  cParticleState.p_dSourceCellElecImp = cGeometry.p_vCell[cParticleState.p_nCELL].p_dElecImp;
+  if (cAceData.p_bIsMultiGroup) {
+    cParticleState.p_nMultiGrpNumber = int(cParticleState.p_dErg +
+                                           0.5);  //是按照处理能群信息中的方法进行处理
+  }
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：此段在原始版与第一次修复版相同。<code>LocateMgErgGrp()</code> 的输入为物理 MeV；返回值覆盖 <code>p_dErg</code>，接着缓存群号。整段没有 <code>p_dVel=...</code>。</p>
+<p>查群核心在原始 <a href="../../RMC/src/GetMgCs.cpp#L263">GetMgCs.cpp 的 <code>LocateMgErgGrp</code>（原始263–298）</a>，当前见263–305：先用低到高的下界数组查出零基位置，再 <code>nErgGrp=G-nErgGrp</code>。当前关键行是271、283。它不是 <code>GetNeuVelMg()</code> 内部的取整。</p>
+<p><strong>进入</strong>：<code>p_dErg=E_MeV</code>，<code>p_dVel=v_wrong</code>。<strong>退出</strong>：<code>p_dErg=g_correct</code>，<code>p_nMultiGrpNumber=g_correct</code>，但 <code>p_dVel=v_wrong</code>。这就是“群已经正确了，速度仍旧错”的状态。</p>
+<h3>B5. 首次实际飞行直接使用现成的 <code>p_dVel</code></h3>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：</p>
+<details class="source-code" open><summary>调用链 / 目标逻辑 · 7 行</summary><pre><code class="language-text">TrackHistory                    TrackHistory.cpp:163,215
+  → RayTracking                 RayTracking.cpp:250,257
+    → GetNextTrackCalFlyDistance GetNextTrack.cpp:127
+      → SampleFreeFlyDist       SampleFreeFlyDist.cpp:47–52
+    → TransportParticleAndDoMeshWeightWindow  TrackWithWeightWindow.cpp:9
+      → TallyByTL               无WW分支第34行
+      → FlyByLength             无WW分支第37行
+</code></pre></details>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ParticleStateFun.cpp#L143">RMC/src/ParticleStateFun.cpp:143–155</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 13 行</summary><pre><code class="language-cpp">void CDParticleState::FlyByLength(double dLength) {
+  //dLength = dLength + 1.0E-8;
+
+  p_dPos[0] = p_dPos[0] + p_dDir[0] * dLength;
+  p_dPos[1] = p_dPos[1] + p_dDir[1] * dLength;
+  p_dPos[2] = p_dPos[2] + p_dDir[2] * dLength;
+
+  p_dLocPos[0] = p_dLocPos[0] + p_dLocDir[0] * dLength;
+  p_dLocPos[1] = p_dLocPos[1] + p_dLocDir[1] * dLength;
+  p_dLocPos[2] = p_dLocPos[2] + p_dLocDir[2] * dLength;
+
+  p_dTime += dLength / p_dVel; // 单位 shake = 1.0E-8s
+}
+</code></pre></details>
+<p><code>FlyByLength()</code> 不查群，也不修速度。位置按 <code>方向×长度</code> 更新，时间用 <code>长度/速度</code> 更新。普通 steady-state MG 的自由程先由截面抽取（<code>-log(RNG)/Σ</code>），不是用速度乘时间抽取；MG 截面入口读取 <code>ErgGrp()</code>，见 <a href="../../RMC/src/SampleFreeFlyDist.cpp#L64">SampleFreeFlyDist.cpp:64–79</a>。</p>
+<p><strong class="tag inferred">INFERRED</strong>：对于已经有正确群号的普通源，这解释了为什么速度/时间错误可以与所测空间 Tally 不变同时出现。<strong class="tag unverified">UNVERIFIED</strong>：不能据此替所有时间分箱、动力学、速度相关估计器作保证，也不能把这个解释套到能量表示已经混乱的 Watt 后代。</p>
+<h3>B6. 存活碰撞之后会更新速度，但不能追回首次飞行时间</h3>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ParticleStateFun.cpp#L130">RMC/src/ParticleStateFun.cpp:130–139</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 10 行</summary><pre><code class="language-cpp">void CDParticleState::UpdateNeuStateMg(int nMltGrpNum, vector&lt;double&gt; vMltCentErg) {
+  p_dErg = p_dExitErg;
+
+  for (int k = 0; k &lt; 3; k++) {
+    p_dDir[k] = p_dExitDir[k];
+  }
+
+  CDGlobeFun::Normalize3Array(p_dDir);
+  p_dVel = CDGlobeFun::GetNeuVelMg(p_dErg, nMltGrpNum, vMltCentErg);
+  p_nMultiGrpNumber = int(p_dErg + 0.5);
+</code></pre></details>
+<p>调用位置是 <a href="../../RMC/src/TrackHistory.cpp#L275">TrackHistory.cpp:275–292</a>：先抽碰撞出射状态，若粒子仍存活才执行更新。此时 <code>p_dExitErg</code> 应是 MG 出射群号，复制给 <code>p_dErg</code> 后重新算群中心速度。</p>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：发生泄漏、吸收或其他终止时可能不走到这里；穿越多个几何面也不等于发生碰撞。即使后来重算正确，先前累积的错误 <code>p_dTime</code> 不会自动撤销。</p>
+<h3>B7. WW 后代的错误方向相反：群号被当成 MeV</h3>
+<p>实际调用链：<code>DoWeightWindows()</code> → <code>pushSplitParticlesWithPTRAC()</code> → <code>pushSplitParticles()</code> → 输运栈 → <code>SampleFromParticleBank()</code> → <code>PopParticleOutofStack()</code>。</p>
+<p>定位：<a href="../../RMC/src/WeightWindows.cpp#L179">WeightWindows.cpp:179–182</a>、<a href="../../RMC/src/SaveSplitParticles.cpp#L16">SaveSplitParticles.cpp:16–45</a>、原始 <code>SampleNeutronSource.cpp:287–335</code>。</p>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/SaveSplitParticles.cpp#L33">RMC/src/SaveSplitParticles.cpp:33–39</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 7 行</summary><pre><code class="language-cpp">  tempParticle.p_dErg = cParticleState.p_dErg;
+  tempParticle.p_dWgt = dSurvivalWeight;
+  tempParticle.p_dTime = cParticleState.p_dTime;
+  //WARNING不能和产生不同粒子的函数混用
+  tempParticle.p_sCell = cParticleState.p_sCellPassed;
+  tempParticle.p_sSurface = cParticleState.p_sSurfaceCrossed;
+  tempParticle.calculateTime = splitNum - 1;
+</code></pre></details>
+<p><strong>原始版本</strong> <code>RMC/src/SampleNeutronSource.cpp:309–320</code>（<code>4810694b</code>）：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 12 行</summary><pre><code class="language-cpp">    cParticleState.p_eParticleType = particleType;
+    cParticleState.p_dErg = particleStackTop.p_dErg;
+    cParticleState.p_dWgt = particleStackTop.p_dWgt;
+    //更新粒子信息
+    cParticleState.attr() = particleStackTop.particleAttr;
+    cParticleState.p_dTime = particleStackTop.p_dTime;
+    // 更新中子的飞行速度,后续扩展粒子类型时需要修改\n
+    if (cParticleState.p_eParticleType == CDParticleState::Neutron) {
+      cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+    } else if (cParticleState.p_eParticleType == CDParticleState::Photon) {
+      cParticleState.p_dVel = LIGHT_SPEED;
+    }
+</code></pre></details>
+<p><strong>进入 Bank</strong>：WW 复制已输运粒子的 <code>p_dErg=g</code>，没有重新抽能量。<strong>出 Bank</strong>：仍是 <code>g</code>，旧代码却调用接受 MeV 的 <code>GetNeuVel(g)</code>。这与 B3 正好相反：一个把 MeV 当群号，一个把群号当 MeV。</p>
+<p><a id="c-first-fix"></a></p>
+<h2 id="section-3">C. 第一次修复：普通源修对了哪里，Watt 又在哪儿脱节</h2>
+<h3>C.1 修复后的普通源与 WW 时序</h3>
+<figure class="sequence" id="graph-2"><div class="figure-toolbar"><strong>时序图 2</strong><button type="button" data-zoom="graph-2">放大阅读</button></div><div class="svg-scroll"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="W14源码时序图2" viewBox="0 0 1540 1354" width="1540" height="1354" style="font-family:system-ui,'Noto Sans CJK SC',sans-serif"><defs><marker id="arrow2b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#244d78"/></marker><marker id="arrow2r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#a83c35"/></marker></defs><rect width="1540" height="1354" fill="white"/><line x1="120" x2="120" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="380" x2="380" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="640" x2="640" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="900" x2="900" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1160" x2="1160" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1420" x2="1420" y1="74" y2="1329" stroke="#c1ccd7" stroke-dasharray="5 6"/><rect x="12" y="99" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="250" y="122" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C1 SampleFixSource → 外源抽</text><text x="250" y="145" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">样</text><path d="M 120 157 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="510" y="213" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C1 SampleParticle，抽得 E_Me</text><text x="510" y="236" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">V</text><path d="M 380 248 H 640" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><rect x="12" y="281" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="770" y="304" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C2 LocateMgErgGrp(E_MeV, fal</text><text x="770" y="327" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">se)</text><path d="M 640 339 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="770" y="395" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">临时局部群号 g</text><path d="M 900 407 H 640" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><rect x="12" y="440" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="770" y="463" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C2 GetNeuVelMg(g)</text><path d="M 640 475 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="770" y="531" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">p_dVel = v_center(g)</text><path d="M 900 543 H 640" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><rect x="12" y="576" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="510" y="599" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">p_dErg仍为MeV，速度已经正确</text><path d="M 640 611 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><text x="640" y="667" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C3 原有LocateMgErgGrp，再正式转换</text><path d="M 380 679 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><rect x="12" y="712" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="640" y="735" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">p_dErg = g，缓存 = g</text><path d="M 900 747 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><text x="250" y="803" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">返回源粒子</text><path d="M 380 815 H 120" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><rect x="12" y="848" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="640" y="871" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C4 首次飞行使用 v_center(g)</text><path d="M 120 883 H 1160" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="1290" y="939" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C5 WW split仍保存群号g</text><path d="M 1160 951 H 1420" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><rect x="12" y="984" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="250" y="1007" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C6 SampleFromParticleBank，</text><text x="250" y="1030" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">现传入AceData</text><path d="M 120 1042 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="900" y="1098" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C6 Pop恢复群号g</text><path d="M 1420 1110 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><rect x="12" y="1143" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="640" y="1166" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">C6 MG用GetNeuVelMg(g)，CE用GetNeuVel(E)</text><path d="M 380 1178 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow2b)"/><text x="640" y="1234" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">返回与Bank能量一致的速度</text><path d="M 900 1246 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow2b)"/><rect x="9" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="120" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">CalMode执行核心</text><rect x="269" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="380" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">FixedSource</text><rect x="529" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="640" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">Source</text><rect x="789" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="900" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">AceData与速度函数</text><rect x="1049" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1160" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">输运与ParticleState</text><rect x="1309" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1420" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">输运Bank</text></svg></div><details class="mermaid-source"><summary>查看对应 Mermaid 源码</summary><pre><code>sequenceDiagram
+    participant C as CalMode执行核心
+    participant F as FixedSource
+    participant S as Source
+    participant A as AceData与速度函数
+    participant T as 输运与ParticleState
+    participant K as 输运Bank
+    C-&gt;&gt;F: C1 SampleFixSource → 外源抽样
+    F-&gt;&gt;S: C1 SampleParticle，抽得 E_MeV
+    S-&gt;&gt;A: C2 LocateMgErgGrp(E_MeV, false)
+    A--&gt;&gt;S: 临时局部群号 g
+    S-&gt;&gt;A: C2 GetNeuVelMg(g)
+    A--&gt;&gt;S: p_dVel = v_center(g)
+    S--&gt;&gt;F: p_dErg仍为MeV，速度已经正确
+    F-&gt;&gt;A: C3 原有LocateMgErgGrp，再正式转换
+    A--&gt;&gt;F: p_dErg = g，缓存 = g
+    F--&gt;&gt;C: 返回源粒子
+    C-&gt;&gt;T: C4 首次飞行使用 v_center(g)
+    T-&gt;&gt;K: C5 WW split仍保存群号g
+    C-&gt;&gt;F: C6 SampleFromParticleBank，现传入AceData
+    K--&gt;&gt;F: C6 Pop恢复群号g
+    F-&gt;&gt;A: C6 MG用GetNeuVelMg(g)，CE用GetNeuVel(E)
+    A--&gt;&gt;F: 返回与Bank能量一致的速度
+</code></pre></details></figure>
+<h3>C.2 C1–C3：先“借群号算速度”，保留原来的 MeV 转换时机</h3>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/SampleParticle.cpp#L76">RMC/src/SampleParticle.cpp:76–88</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 13 行</summary><pre><code class="language-cpp">    cParticleState.p_dErg = p_dEnergy;
+    // todo: 电子和正电子没有进行处理\n
+    ///对粒子的速度进行初始化\n
+    switch (cParticleState.p_eParticleType) {
+    case CDParticleState::Neutron: {
+      if (cAceData.p_bIsMultiGroup) {
+        // Keep the sampled MeV for SampleFixSource&#39;s normal energy conversion.
+        const int nGroup = cAceData.LocateMgErgGrp(cParticleState.p_dErg, cParticleState.p_eParticleType, false);
+        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(nGroup, cAceData.p_nNeuMltGrpNum,
+                                cAceData.p_vNeuMltCentErg);
+      } else {
+        cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+      }
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：第一次修复只新增局部 <code>nGroup</code>，没有提前把 <code>p_dErg</code> 改成群号。因此 <code>SampleFixSource()</code> 原来的270行仍能正常接收 MeV，而不会把已转换的群号再查一次边界。</p>
+<ul>
+<li>C1：ENERGY 分布与原来一样抽样；不增减 RNG。</li>
+<li>C2：先定位局部群号，再计算群中心速度。传 <code>false</code> 只关闭这次预定位的边界警告。</li>
+<li>C3：下游仍执行原来的正式转换，默认 <code>bWarn=true</code>，保留原有警告时机；普通源从 C2 到 C3 没有再改能量，故两次定位相同。</li>
+</ul>
+<p>实际相关修改是 <a href="../../RMC/src/AceData.h#L1866">AceData.h:1866</a> 与 <a href="../../RMC/src/GetMgCs.cpp#L263">GetMgCs.cpp:263–305</a> 的 <code>bWarn</code> 参数和有限值/数组检查。查群算法没有换，原最低群警告条件也没有在这次修复中改动。Python 源的同类预定位见 <a href="../../RMC/src/PythonInterface/PythonInterface.cpp#L140">PythonInterface.cpp:140–155</a>；其完整运行仍为 <strong class="tag unverified">UNVERIFIED</strong>。</p>
+<h3>C.3 C4–C6：首飞速度正确；Bank 出库依据 MG/CE 选择函数</h3>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/SampleNeutronSource.cpp#L315">RMC/src/SampleNeutronSource.cpp:315–324</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 10 行</summary><pre><code class="language-cpp">    // 更新中子的飞行速度,后续扩展粒子类型时需要修改\n
+    if (cParticleState.p_eParticleType == CDParticleState::Neutron) {
+      // Bank energy is already an internal group in MG, and remains MeV in CE.
+      cParticleState.p_dVel = cAceData.p_bIsMultiGroup
+          ? CDGlobeFun::GetNeuVelMg(cParticleState.p_dErg, cAceData.p_nNeuMltGrpNum,
+                                   cAceData.p_vNeuMltCentErg)
+          : CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+    } else if (cParticleState.p_eParticleType == CDParticleState::Photon) {
+      cParticleState.p_dVel = LIGHT_SPEED;
+    }
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：<code>SampleFromParticleBank()</code>、<code>PopParticleOutofStack()</code> 加入 <code>const CDAceData&amp;</code>，从而可以查看 <code>p_bIsMultiGroup</code> 和群中心。7处已有调用点传入它：<code>CalcFixedSource.cpp:232,320,454,457,631,743,746</code>。输运循环、分裂次数、权重、时间起点和 RNG 没有因此改写。</p>
+<p>对 <strong>WW 已经保存合法群号</strong> 的条目，MG 分支现在正好使用正确输入。第一次修复既有自验观察到 Forward 285 次、Adjoint 54 次 WW 出库速度正确；首个 Forward 例 <code>g14 → center 0.4015 MeV → v=8.761446414522672 cm/shake</code>。固定能量与离散谱所测例也通过，见首次修复 README §4。这里的“基本修好”限定于这些源形式和已测 Bank 生产者。</p>
+<h3>C.4 Watt 完整调用链：它会在普通源返回后重新写能量</h3>
+<p>下图单独展示 Watt，避免把它误认为上一图的普通 ENERGY 分布。前七步在原始版和第一次修复版的 <strong>ExternalSource/转库代码中相同</strong>；差别发生在普通源速度计算和最后的出库速度函数。</p>
+<figure class="sequence" id="graph-3"><div class="figure-toolbar"><strong>时序图 3</strong><button type="button" data-zoom="graph-3">放大阅读</button></div><div class="svg-scroll"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="W14源码时序图3" viewBox="0 0 1540 1949" width="1540" height="1949" style="font-family:system-ui,'Noto Sans CJK SC',sans-serif"><defs><marker id="arrow3b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#244d78"/></marker><marker id="arrow3r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#a83c35"/></marker></defs><rect width="1540" height="1949" fill="white"/><line x1="120" x2="120" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="380" x2="380" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="640" x2="640" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="900" x2="900" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1160" x2="1160" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1420" x2="1420" y1="74" y2="1924" stroke="#c1ccd7" stroke-dasharray="5 6"/><rect x="12" y="99" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="250" y="122" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W1 SampleSourceParticle，PAR</text><text x="250" y="145" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">TICLE=5</text><path d="M 120 157 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><text x="510" y="213" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W2 GetSpontaFissNucID先调用S</text><text x="510" y="236" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">ampleParticle</text><path d="M 380 248 H 640" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><rect x="12" y="281" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="510" y="304" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">初步位置和能量，用于选核素</text><path d="M 640 316 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3b)"/><text x="506" y="372" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W3 SampleSimpleSpontaFissP</text><text x="506" y="395" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">article，抽多重数n</text><path d="M 380 407 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><rect x="12" y="440" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="510" y="463" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W4 再调SampleParticle，得到E</text><text x="510" y="486" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">0和v0</text><path d="M 380 498 H 640" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><text x="510" y="554" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">原版v0可能错误；首次修复v0对</text><text x="510" y="577" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">应E0所在群</text><path d="M 640 589 H 380" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3r)"/><rect x="12" y="622" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="506" y="645" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W5 Watt抽得E1，覆盖p_dErg；</text><text x="506" y="668" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">没有改v0</text><path d="M 380 680 h 38 v 16 h -38" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow3r)"/><text x="510" y="736" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W6 每个额外中子又调用SampleP</text><text x="510" y="759" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">article</text><path d="M 380 771 H 640" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><rect x="12" y="804" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="510" y="827" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">提供方向和权重；临时速度不入</text><text x="510" y="850" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">库</text><path d="M 640 862 H 380" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3b)"/><text x="640" y="918" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W6 重新抽Watt E_j，保存MeV</text><path d="M 380 930 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><rect x="12" y="963" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="250" y="986" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">返回主中子E1和旧v0</text><path d="M 380 998 H 120" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3r)"/><text x="246" y="1054" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W7 主中子E1转群号，速度仍旧</text><path d="M 120 1066 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><rect x="12" y="1099" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="640" y="1122" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W8 初始Bank的E_j原样push，没有查群</text><path d="M 120 1134 H 1160" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow3r)"/><text x="246" y="1190" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W9 主中子先TrackHistory，首</text><text x="246" y="1213" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">飞用旧v0</text><path d="M 120 1225 h 38 v 16 h -38" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow3r)"/><rect x="12" y="1258" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="770" y="1281" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W10 SampleFromParticleBank → Pop</text><path d="M 120 1293 H 1420" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><text x="1290" y="1349" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">W10 取出E_j，实际仍为MeV</text><path d="M 1160 1361 H 1420" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3b)"/><rect x="12" y="1399" width="1516" height="38" rx="6" fill="#eaf0f6"/><text x="28" y="1424" font-size="16" font-weight="700" fill="#334155">alt · 原始版本</text><rect x="12" y="1448" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="1416" y="1471" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">GetNeuVel(E_j)，没有发现表</text><text x="1416" y="1494" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">示混乱</text><path d="M 1420 1506 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow3b)"/><text x="770" y="1562" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">MeV继续被MG输运当群号使用</text><path d="M 1420 1574 H 120" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3b)"/><rect x="12" y="1612" width="1516" height="38" rx="6" fill="#eaf0f6"/><text x="28" y="1637" font-size="16" font-weight="700" fill="#334155">else · 第一次修复版本</text><rect x="12" y="1661" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="1416" y="1684" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">GetNeuVelMg(E_j)，非整数触</text><text x="1416" y="1707" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">发检查</text><path d="M 1420 1719 h 38 v 16 h -38" fill="none" stroke="#a83c35" stroke-width="1.8"  marker-end="url(#arrow3r)"/><text x="770" y="1775" text-anchor="middle" fill="#a83c35" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">invalid_argument，既有例异常退出134</text><path d="M 1420 1787 H 120" fill="none" stroke="#a83c35" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow3r)"/><rect x="12" y="1825" width="1516" height="38" rx="6" fill="#eaf0f6"/><text x="28" y="1850" font-size="16" font-weight="700" fill="#334155">分支结束</text><rect x="9" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="120" y="37" text-anchor="middle" fill="white" font-size="16" font-weight="600">执行核心与</text><text x="120" y="58" text-anchor="middle" fill="white" font-size="16" font-weight="600">SampleFixSource</text><rect x="269" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="380" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">ExternalSource</text><rect x="529" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="640" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">Source普通抽样</text><rect x="789" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="900" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">源初始Bank</text><rect x="1049" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1160" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">输运Bank</text><rect x="1309" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1420" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">出库与速度函数</text></svg></div><details class="mermaid-source"><summary>查看对应 Mermaid 源码</summary><pre><code>sequenceDiagram
+    participant C as 执行核心与SampleFixSource
+    participant X as ExternalSource
+    participant S as Source普通抽样
+    participant I as 源初始Bank
+    participant K as 输运Bank
+    participant V as 出库与速度函数
+    C-&gt;&gt;X: W1 SampleSourceParticle，PARTICLE=5
+    X-&gt;&gt;S: W2 GetSpontaFissNucID先调用SampleParticle
+    S--&gt;&gt;X: 初步位置和能量，用于选核素
+    X-&gt;&gt;X: W3 SampleSimpleSpontaFissParticle，抽多重数n
+    X-&gt;&gt;S: W4 再调SampleParticle，得到E0和v0
+    S--&gt;&gt;X: 原版v0可能错误；首次修复v0对应E0所在群
+    X-&gt;&gt;X: W5 Watt抽得E1，覆盖p_dErg；没有改v0
+    X-&gt;&gt;S: W6 每个额外中子又调用SampleParticle
+    S--&gt;&gt;X: 提供方向和权重；临时速度不入库
+    X-&gt;&gt;I: W6 重新抽Watt E_j，保存MeV
+    X--&gt;&gt;C: 返回主中子E1和旧v0
+    C-&gt;&gt;C: W7 主中子E1转群号，速度仍旧
+    C-&gt;&gt;K: W8 初始Bank的E_j原样push，没有查群
+    C-&gt;&gt;C: W9 主中子先TrackHistory，首飞用旧v0
+    C-&gt;&gt;V: W10 SampleFromParticleBank → Pop
+    K--&gt;&gt;V: W10 取出E_j，实际仍为MeV
+    alt 原始版本
+        V-&gt;&gt;V: GetNeuVel(E_j)，没有发现表示混乱
+        V--&gt;&gt;C: MeV继续被MG输运当群号使用
+    else 第一次修复版本
+        V-&gt;&gt;V: GetNeuVelMg(E_j)，非整数触发检查
+        V--&gt;&gt;C: invalid_argument，既有例异常退出134
+    end
+</code></pre></details></figure>
+<h4>W1–W2：进入 Watt 之前，选核素函数已经抽过一次普通源</h4>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：<code>SampleFixSource()</code> 的普通外源分支调用 <code>SampleSourceParticle()</code>；后者在 <a href="../../RMC/src/ExternalSource.cpp#L58">ExternalSource.cpp:58–59</a> 检测源卡 <code>PARTICLE=5</code>，先调用 <code>GetSpontaFissNucID()</code>。</p>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ExternalSource.cpp#L374">RMC/src/ExternalSource.cpp:374–378</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 5 行</summary><pre><code class="language-cpp">  p_vSource[sourceindex].SampleParticle(cParticleState, cGeometry, cAceData, ORNG, p_ODistriIndex, p_vDitributions);
+  cParticleState.p_nCELL = cGeometry.LocateParticle(cParticleState, 0, cParticleState.p_dPos,
+                           cParticleState.p_dDir, ORNG, false);
+  cParticleState.p_nMAT = cGeometry.GetCellMat(cParticleState.p_vLocCellsU);
+  cParticleState.ClearLevel();
+</code></pre></details>
+<p>这次抽样用于得到位置、定位材料、选出具有自发裂变数据的核素。函数后续按材料核素和 <code>fmultd</code> 数据选择核素，439–445行设置 <code>p_nNUC</code> 并返回数据索引 <code>jj</code>。因此，完整链不是仅有一次 <code>SampleParticle()</code>。</p>
+<p><code>PARTICLE=5</code> 是<strong>源类型的约定</strong>，不是输运时第五种粒子。<code>SampleParticle.cpp:40–44</code> 已把它置为 <code>CDParticleState::Neutron</code>，所以它照样进入中子速度初始化分支。</p>
+<p>不启用 <code>_CGMF/_FISSION</code> 的路径在 <a href="../../RMC/src/ExternalSource.cpp#L342">ExternalSource.cpp:342–343</a> 直接调用 <code>SampleSimpleSpontaFissParticle()</code> 后返回；启用相关模型时也有若干 fallback 调到同一函数。模型专有分支的完整运行为 <strong class="tag unverified">UNVERIFIED</strong>，不能拿 simple-Watt 证据代替。</p>
+<h4>W3：先确定这次自发裂变有几个中子</h4>
+<p><code>SampleSimpleSpontaFissParticle()</code> 位于 <a href="../../RMC/src/ExternalSource.cpp#L450">ExternalSource.cpp:450–539</a>。其457–476行按累计多重性数据、<code>SampleFissMultNeuNum()</code> 或 <code>SampleFissNeuNum()</code> 得到 <code>nSpontaFissNum</code>。479行记多重性计数；<code>n&gt;0</code> 才进入后面的主中子/额外中子抽样。<code>n=0</code> 时535–536行杀死粒子，<code>SampleNeutronSource.cpp:226–228</code>随即返回，不应对无效源状态强行作能量同步。</p>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ExternalSource.cpp#L457">RMC/src/ExternalSource.cpp:457–479</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 23 行</summary><pre><code class="language-cpp">  if (!cAceData.fmultd.empty()) {
+    ///多功能的multiplicity distribution.如果累积裂变概率存在，则优先使用．
+    if (cAceData.fmultd[jj][15] &gt; 0) {
+//      double t3 = ORNG.Rand();
+      double t2 = ORNG.Rand() * cAceData.fmultd[jj][15];
+      for (nSpontaFissNum = 0; nSpontaFissNum &lt;= 8; nSpontaFissNum++) {
+        if (t2 &lt; cAceData.fmultd[jj][6 + nSpontaFissNum]) {
+          break;
+        }
+      }
+
+    } else {
+      ///如果累积裂变概率不存在，则使用多重性分布
+      double sfnu = cAceData.fmultd[jj][5];
+      nSpontaFissNum = cAceData.SampleFissMultNeuNum(cParticleState, sfnu, ORNG);
+    }
+
+  } else if (p_vSource[i].p_dSpontaFissNu &gt; 0) {
+    ///原先简单的gaussion sampling
+    nSpontaFissNum = cAceData.SampleFissNeuNum(p_vSource[i].p_dSpontaFissNu, ORNG);
+  }
+  ///初始自发多重性分布
+  p_vSpontaFissNeuMul[nSpontaFissNum] += 1;
+</code></pre></details>
+<p>这个多重数决定 <strong>一个 source history 内有几个初始中子</strong>。修复能量表示不应改变该历史归属或调用 RNG 的先后。</p>
+<h4>W4–W5：第一次速度已经算完，Watt 又覆盖能量</h4>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ExternalSource.cpp#L481">RMC/src/ExternalSource.cpp:481–499</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 19 行</summary><pre><code class="language-cpp">  if (nSpontaFissNum &gt; 0) {
+    //抽样自发裂变源中子
+    p_vSource[i].SampleParticle(cParticleState, cGeometry, cAceData, ORNG, p_ODistriIndex, p_vDitributions);
+
+    //        sample from watt spontaneous fission spectrum.
+    // erg=WattA * (((1 + 0.125 * (WattA * WattB)))) + sqrt((1 + 0.125 * (WattA * WattB)))) * (1 + 0.125 * (WattA * WattB)))) - 1) - 1)) + 1)*(1 + 0.125 * (WattA * WattB)))
+    double WattA = cAceData.fmultd[jj][2];
+    double WattB = cAceData.fmultd[jj][3];
+    double t2 = WattA * WattB;
+    double t1 = 1 + 0.125 * t2;
+    double q5 = t1 + sqrt(t1 * t1 - 1) - 1;
+    double q6 = WattA * (q5 + 1);
+    for (;;) {
+      t1 = -log(ORNG.Rand());
+      if (pow(-log(ORNG.Rand()) - q5 * (1 + t1), 2) &lt;= WattB * q6 * t1) {
+        break;
+      }
+    }
+    cParticleState.p_dErg = q6 * t1;
+</code></pre></details>
+<p>按变量值读这一段：</p>
+<ol>
+<li>483行返回时：<code>p_dErg=E0</code>（源卡/普通分布的 MeV）。第一次修复此时已有 <code>p_dVel=v(center(group(E0)))</code>。</li>
+<li>487–498行：使用 Watt 参数和 RNG 抽另一个物理能量 <code>E1=q6*t1</code>。</li>
+<li>499行之后：<code>p_dErg=E1</code>，但 <code>p_dVel</code> 仍是 <strong>E0</strong> 的速度。代码中没有相应速度赋值。</li>
+</ol>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：Watt 的赋值不是“把 E0 转换成群号”，而是<strong>抽了一个新物理能量覆盖 E0</strong>。第一次修复完全没有改 <code>ExternalSource.cpp</code>，所以其提前算好的速度也会变旧。原始版则可能先错算 E0 的速度，再留下这个旧值。</p>
+<h4>W6：额外中子单独抽 Watt；临时状态的速度并不跟着入库</h4>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ExternalSource.cpp#L501">RMC/src/ExternalSource.cpp:501–515</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 15 行</summary><pre><code class="language-cpp">    //为了获得其他自发裂变中子的方向，能量，权重\n
+    CDParticleState OtempState;
+    OtempState.p_dWgt = 1;
+    for (int SFNum = 1; SFNum &lt; nSpontaFissNum; ++SFNum) {
+      ////自发裂变之后，这些裂变中子位置一样，但是能量、飞行方向等状态不一样\n
+      p_vSource[i].SampleParticle(OtempState, cGeometry, cAceData, ORNG, p_ODistriIndex, p_vDitributions);
+
+      if (p_nFixedInitSrcBankCount &gt;= p_vFixedInitSrcBank.size()) {
+        p_vFixedInitSrcBank.resize(int(1.2 * p_nFixedInitSrcBankCount) + 1);
+      }
+
+      for (int j = 0; j &lt; 3; j++) {
+        p_vFixedInitSrcBank[p_nFixedInitSrcBankCount].p_dPos[j] =  cParticleState.p_dPos[j];
+        p_vFixedInitSrcBank[p_nFixedInitSrcBankCount].p_dDir[j] = OtempState.p_dDir[j];
+      }
+</code></pre></details>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/ExternalSource.cpp#L517">RMC/src/ExternalSource.cpp:517–530</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 14 行</summary><pre><code class="language-cpp">      //        sample from watt spontaneous fission spectrum.
+      t1 = 1 + 0.125 * t2;
+      q5 = t1 + sqrt(t1 * t1 - 1) - 1;
+      q6 = WattA * (q5 + 1);
+      for (;;) {
+        t1 = -log(ORNG.Rand());
+        if (pow(-log(ORNG.Rand()) - q5 * (1 + t1), 2) &lt;= WattB * q6 * t1) {
+          break;
+        }
+      }
+      p_vFixedInitSrcBank[p_nFixedInitSrcBankCount].p_dErg = q6 * t1;
+      p_vFixedInitSrcBank[p_nFixedInitSrcBankCount].p_dWgt = OtempState.p_dWgt;
+      p_vFixedInitSrcBank[p_nFixedInitSrcBankCount].p_dTime = 0;
+      p_nFixedInitSrcBankCount = p_nFixedInitSrcBankCount + 1;
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：506行抽出的 <code>OtempState</code> 提供方向、权重等信息。真正入库的能量是527行再次抽得的 <code>q6*t1</code>，不是 <code>OtempState.p_dErg</code>；它仍是 <strong>MeV</strong>。入库只写位置、方向、能量、权重、时间，没有写有效 <code>p_dVel</code>。</p>
+<p>因此，在506行把 <code>OtempState</code> 的速度算得再正确，也不会修好527行保存的新 Watt 能量。对 <code>n&gt;1</code> 的每个额外中子都要追踪到它自己最终的 <code>E_j</code>。</p>
+<h4>W7–W8：只有主中子正常查群；额外中子的转库没有查群</h4>
+<p>主中子返回 <code>SampleFixSource()</code> 后走 B4：<code>p_dErg=LocateMgErgGrp(E1)</code>，速度不改。额外中子的转库却发生在<strong>该函数返回以后</strong>：</p>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/CalcFixedSource.cpp#L185">RMC/src/CalcFixedSource.cpp:185–198</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 14 行</summary><pre><code class="language-cpp">        //如果自发裂变产生了多个粒子，则将粒子从初始库转移到输运过程的临时中子库中
+        if (cExternalSource.p_nFixedInitSrcBankCount &gt; 0) {
+          //自发裂变多重性
+          for (int i = 0; i &lt; cExternalSource.p_nFixedInitSrcBankCount; ++i) {
+            //这里不使用pushinducedparticle函数的原因是没有对应的粒子事件输出;
+            cFixedSource.pushInducedParticles(cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron], 1,
+                                              cExternalSource.p_vFixedInitSrcBank[i].p_dPos,
+                                              cExternalSource.p_vFixedInitSrcBank[i].p_dDir,
+                                              cExternalSource.p_vFixedInitSrcBank[i].p_dErg,
+                                              cExternalSource.p_vFixedInitSrcBank[i].p_dTime,
+                                              cExternalSource.p_vFixedInitSrcBank[i].p_dWgt);
+          }
+          cExternalSource.p_nFixedInitSrcBankCount = 0;
+          cExternalSource.p_vFixedInitSrcBank.clear();
+</code></pre></details>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/SaveSplitParticles.cpp#L51">RMC/src/SaveSplitParticles.cpp:51–66</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 16 行</summary><pre><code class="language-cpp">void CDFixedSource::pushInducedParticles(ParticleStack &amp;pParticleBank, int InducedNum,
+    const double *dPos, const double *dDir, const double dErg, const double Time,
+    const double dWeight) {
+  //todo 这部分的omp需要进行优化
+  CDFixBank tempParticle;
+  for (int j = 0; j &lt; 3; j++) {
+    tempParticle.p_dPos[j] = dPos[j];
+    tempParticle.p_dDir[j] = dDir[j];
+  }
+
+  tempParticle.p_dErg = dErg;
+  tempParticle.p_dWgt = dWeight;
+  tempParticle.p_dTime = Time;
+  tempParticle.calculateTime = InducedNum;
+  //todo 尤其是这里
+  pParticleBank.push(tempParticle);
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：<code>pushInducedParticles()</code> 的名字容易误导：这里既给碰撞诱发粒子用，也给初始自发裂变粒子搬库用。它只是复制 <code>dErg</code>，没有任何 MeV→群号转换。<code>SampleFixSource()</code> 对主粒子的赋值也不会遍历并修改这个向量。</p>
+<p>纯中子模式转库位置是 <code>CalcFixedSource.cpp:186–198</code>；neutron/photon 耦合模式另有同形中子转库 <a href="../../RMC/src/CalcFixedSource.cpp#L364">364–376</a>。这两处都必须被纳入能量表示合同；不能只看232行的出库。</p>
+<h4>W9–W10：先错用主中子速度，再在额外中子出库时触发群号检查</h4>
+<p>主中子先在220行 <code>TrackHistory()</code>。之后232行 <code>SampleFromParticleBank()</code> → 当前 <code>SampleNeutronSource.cpp:334</code> 的 <code>PopParticleOutofStack()</code> → 310行读 Bank 能量 → 319行 <code>GetNeuVelMg()</code>。</p>
+<p><strong>既有动态证据</strong>，来自独立修复审查 §3.3，本轮核对了其源码链和现存 GDB 日志，没有重新运行：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>能量槽</th>
+<th>速度/结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通源抽样后</td>
+<td><code>0.6615 MeV</code></td>
+<td><code>11.243664633572111 cm/shake</code>，对应群13</td>
+</tr>
+<tr>
+<td>Watt 函数返回后</td>
+<td><code>1.1358207724356031 MeV</code></td>
+<td>仍为 <code>11.243664633572111</code></td>
+</tr>
+<tr>
+<td>主中子首次 <code>FlyByLength</code></td>
+<td>内部群 <code>12</code></td>
+<td>仍为上述旧速度；<code>L=19.5 cm</code>，所用 <code>L/v=1.7343099990527602 shake</code></td>
+</tr>
+<tr>
+<td>后续某个 Watt 条目出库</td>
+<td><code>1.0694489269608258 MeV</code></td>
+<td>被传作 <code>dGroup</code>，<code>G=30</code>；严格群号检查抛异常</td>
+</tr>
+<tr>
+<td>同一输入的普通运行</td>
+<td>基线 exit <code>0</code>；首次修复 exit <code>134</code></td>
+<td>修复候选新增了可观察的中止</td>
+</tr>
+</tbody></table></div>
+<p>群12的中心为 <code>1.088 MeV</code>，正确群中心速度约 <code>14.414836198230065 cm/shake</code>，不是普通源 E0 的速度。这里的群12来自主中子正常映射；不能拿 GDB 在赋值行<strong>执行前</strong>打印的 MeV 当作映射已完成的值。本文采用 Watt 函数返回后观察、首次飞行观察和异常栈的实际参数。</p>
+<p>异常链的实际证据为：</p>
+<details class="source-code" open><summary>调用链 / 目标逻辑 · 5 行</summary><pre><code class="language-text">GetNeuVelMg(dGroup=1.0694489269608258, G=30)  GlobeFun.h:545
+  ← PopParticleOutofStack                   SampleNeutronSource.cpp:319
+  ← SampleFromParticleBank                 SampleNeutronSource.cpp:334
+  ← ExecuteFixedSourcePrepared             CalcFixedSource.cpp:232
+  ← CalcFixedSource                        CalcFixedSource.cpp:81
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：检查因 <code>floor(dGroup)!=dGroup</code> 而拒绝这个值，尚未用它索引数组。<strong class="tag inferred">INFERRED</strong>：不是所有误放的 MeV 都一定被抓住；若某个 MeV 恰好是 <code>1…G</code> 内整数，单靠数值检查无法区分它和群号。不能以“这次没抛异常”证明合同成立，更不能用取整或 clamp 去消除这次异常。</p>
+<h3>C.5 原始代码为什么能跑，却不能据此认为 Watt 正确</h3>
+<p>旧 <code>PopParticleOutofStack()</code> 一律调用 <code>GetNeuVel(p_dErg)</code>。对于误放入库的 Watt MeV，这个函数可以算出一个有限的 <strong>CE 速度</strong>，不会做“必须是整数群号”的检查，所以这个输入没有在此处失败。</p>
+<p>但它没有把 <code>p_dErg</code> 转成 MG 群号：</p>
+<ul>
+<li><strong class="tag verified">SOURCE VERIFIED</strong>：原始出库及 <code>SampleFromParticleBank()</code> 无 <code>LocateMgErgGrp()</code>；接着进入 <code>TrackHistory()</code>。MG 截面通过 <code>ErgGrp()</code> 取群。</li>
+<li><strong class="tag inferred">INFERRED</strong>：若 <code>1.0694489 MeV</code> 到达这一步，<code>ErgGrp()</code> 会取1，而此能量按该30群边界应属于群12。于是风险已经不止速度，还可能用错 MG 截面/能群统计。</li>
+<li><strong class="tag unverified">UNVERIFIED</strong>：本文没有重跑并量化旧 Watt 算例的稳态通量/反应率偏差，不能给出其输出错了多少，或断言所有历史都经过该错误读取。</li>
+</ul>
+<p>原始程序“完成运行”只说明没有在这个用例中停止；第一次修复的检查把之前隐藏的<strong>入库合同错误</strong>显露出来，同时主中子的陈旧速度仍未修复。</p>
+<h3>C.6 为什么此前“裂变后代通过”没有覆盖 Watt</h3>
+<p><strong>碰撞诱发裂变</strong>的入口不是 <code>SampleSimpleSpontaFissParticle()</code>，而是：</p>
+<details class="source-code" open><summary>调用链 / 目标逻辑 · 5 行</summary><pre><code class="language-text">CDFixedSource::TreatFission                 TreatFission.cpp:206–211
+  → CDFixedSource::GetFissionNeuState       GetFissionNeuState.cpp:550
+    → CDAceData::GetMgFisErgDir             GetMgExitErgMu.cpp:325,352–368
+    → pushInducedParticles                 GetFissionNeuState.cpp:735–736
+  → 同一个SampleFromParticleBank / PopParticleOutofStack
+</code></pre></details>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/GetMgExitErgMu.cpp#L355">RMC/src/GetMgExitErgMu.cpp:355–368</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 14 行</summary><pre><code class="language-cpp">  // Sample fission neutron energy group
+  int nExitGrp ;
+  for (nExitGrp = 1 ; nExitGrp &lt;= nGrpNum ; ++nExitGrp) {
+    dSum = dSum + p_vNuclides[nNuc].XSS[nLoc + nExitGrp - 1];
+    if (dSum &gt;= r) {
+      break;
+    }
+  }
+
+  if (nExitGrp &gt; nGrpNum) {
+    nExitGrp = nGrpNum ;
+  }
+
+  dExitErg = double(nExitGrp);
+</code></pre></details>
+<p><strong>当前第一次修复版本</strong> <a href="../../RMC/src/GetFissionNeuState.cpp#L721">RMC/src/GetFissionNeuState.cpp:721–736</a>：</p>
+<details class="source-code"><summary>C++ 源码摘录 · 16 行</summary><pre><code class="language-cpp">    ///////////////////////////////// Get fission neutron state //////////////////////////////////////////
+    else {
+      if (cAceData.p_bIsMultiGroup) {//这里如果是伴随粒子情形，伴随裂变的粒子能量已经在前面处理过了，进入GetFissionNeuState函数是为了将裂变产生的粒子信息保存在裂变粒子库存里，GetMgFisErgDir函数抽样裂变伴随粒子的飞行角度;
+        double p_dPrevErg = cParticleState.p_dExitErg; //记录粒子能量
+        cAceData.GetMgFisErgDir(nNuc, cParticleState.p_dExitErg, cParticleState.p_dExitDir, ORNG);
+        if (cParticleState.p_bIsAdjointParticle) {
+          cParticleState.p_dExitErg = p_dPrevErg;
+        } //将伴随裂变粒子能量改回去
+      } else {
+        cNeutronTransport.GetCeExitState(cAceData, cParticleState, nNuc, nFisMT, dErg, cParticleState.p_dDir,
+                                         false, cParticleState.p_dExitErg, cParticleState.p_dExitDir,
+                                         ORNG);
+      }
+    }
+    pushInducedParticles(p_vFixedParticleSrcBank[CDParticleState::Neutron], 1, cParticleState.p_dPos,
+                         cParticleState.p_dExitDir, cParticleState.p_dExitErg, dBornTime, cParticleState.p_dWgt);
+</code></pre></details>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：standard MG 分支直接抽出群号并写入 <code>p_dExitErg</code>；伴随分支保留此前已处理的出射群。这个 Bank 生产者提供的就是出库函数要求的群号，和 Watt 的物理 MeV 不同。第一次修复小例的3次普通 Forward <strong>诱发裂变</strong>出库通过，不能推导外部 <strong>自发裂变 Watt</strong> 源通过。</p>
+<p>其它恢复入口也要分开：<code>CDKinetics::SampleNeuSource()</code> 的两重载在 <a href="../../RMC/src/SampleNeutronSource.cpp#L603">SampleNeutronSource.cpp:603/684</a>，<code>SampleTempNeuSource()</code> 在764行，分别在619/700/780行调用 MG 速度函数。<code>SampleSpontaSource()</code> 的860–861行还消费同一个外源初始 Bank。<strong class="tag verified">SOURCE VERIFIED</strong>：这些入口存在且不是固定源的 <code>PopParticleOutofStack()</code>；<strong class="tag unverified">UNVERIFIED</strong>：本报告没有把其完整输入/出库动态矩阵认定为已通过。</p>
+<h3>C.7 与本次因果链相邻，但不能混为同一个修复的缓存问题</h3>
+<p>当前 <code>PopParticleOutofStack()</code> 恢复 <code>p_dErg</code> 后没有同步 <code>p_nMultiGrpNumber</code>。<code>ErgGrp()</code> 与速度函数读取的是 <code>p_dErg</code>；<a href="../../RMC/src/Filter.cpp#L75">Filter.cpp:75</a> 和 <a href="../../RMC/src/ParticleTrack.cpp#L343">ParticleTrack.cpp:343/363</a> 另读缓存。</p>
+<p><strong class="tag verified">SOURCE VERIFIED</strong>：这个缓存不同步能在合法整数群 Bank 条目上独立发生。<strong class="tag inferred">INFERRED</strong>：修缓存不能替代 Watt 的 MeV→群号转换，也不会解决陈旧速度。完整状态审查应记录其一致性，但不能冒充本轮已实施或已验证的 W14 修复；受影响过滤/PTRAC 输出仍为 <strong class="tag unverified">UNVERIFIED</strong>。</p>
+<p><a id="d-target"></a></p>
+<h2 id="section-4">D. 完整正确修复目标：沿现有函数把每个最终能量走完</h2>
+<p>本节是 <strong>INFERRED：基于现有代码的修复目标</strong>，不是已存在的实现。目标是让主中子和额外中子都从各自<strong>最终抽到的物理能量</strong>出发，经过明确边界后进入 MG 输运。</p>
+<p>为避免改变所有共享调用者，本文采用一套明确的表示合同：</p>
+<ul>
+<li>普通源抽样和外源初始 Bank 保留 MeV。</li>
+<li><code>SampleParticle()</code> 可像第一次修复那样用局部群号算速度；<strong>Watt 再换能量时必须重新同步主中子速度，仍保留 MeV</strong>。</li>
+<li>主中子在现有 <code>SampleFixSource()</code> 边界转换；外源初始 Bank 条目在转入固定源输运 Bank 的边界转换。</li>
+<li><strong>MG 输运 Bank 内统一只存群号</strong>，CE 输运 Bank 内仍存 MeV。WW 和标准 MG 诱发裂变已经给群号，不得再按 MeV 转换。</li>
+</ul>
+<p>允许源初始库装 MeV 不等于继续混装：每个库的表示固定，跨边界时显式转换，禁止靠数值大小或是否为整数来猜来源。</p>
+<figure class="sequence" id="graph-4"><div class="figure-toolbar"><strong>时序图 4</strong><button type="button" data-zoom="graph-4">放大阅读</button></div><div class="svg-scroll"><svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="W14源码时序图4" viewBox="0 0 1540 1423" width="1540" height="1423" style="font-family:system-ui,'Noto Sans CJK SC',sans-serif"><defs><marker id="arrow4b" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#244d78"/></marker><marker id="arrow4r" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#a83c35"/></marker></defs><rect width="1540" height="1423" fill="white"/><line x1="120" x2="120" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="380" x2="380" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="640" x2="640" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="900" x2="900" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1160" x2="1160" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><line x1="1420" x2="1420" y1="74" y2="1398" stroke="#c1ccd7" stroke-dasharray="5 6"/><rect x="12" y="99" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="246" y="122" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T1 按原顺序抽普通E0，必要时</text><text x="246" y="145" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Watt覆盖为最终E1</text><path d="M 120 157 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><text x="250" y="213" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T2 最终E1查局部群号，按群中心</text><text x="250" y="236" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">刷新主中子速度</text><path d="M 120 248 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="12" y="281" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="250" y="304" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">保持p_dErg为MeV，p_dVel已对</text><text x="250" y="327" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">应最终能量</text><path d="M 380 339 H 120" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><text x="510" y="395" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T3 每个额外中子保存自己最终的Watt MeV</text><path d="M 120 407 H 900" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="12" y="440" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="380" y="463" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">主中子MeV与一致的速度</text><path d="M 120 475 H 640" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><text x="510" y="531" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T4 原有边界将主中子MeV转群号g</text><path d="M 640 543 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="12" y="576" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="510" y="599" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">p_dErg=g，群缓存=g；核对速度</text><text x="510" y="622" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">一致</text><path d="M 380 634 H 640" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><text x="1030" y="690" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T5 初始Bank条目E_j（MeV）</text><path d="M 900 702 H 1160" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><rect x="12" y="735" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="770" y="758" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T5 只在转库边界将E_j转换为g_j</text><path d="M 1160 770 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><text x="770" y="826" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T5 pushInducedParticles保存g_j</text><path d="M 380 838 H 1160" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><rect x="12" y="871" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="1030" y="894" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T6 主中子首次飞行，时间为L/v_center(g)</text><path d="M 640 906 H 1420" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><text x="1290" y="962" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T7 WW或MG诱发裂变直接保存已有</text><text x="1290" y="985" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">群号</text><path d="M 1420 997 H 1160" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="12" y="1030" width="1516" height="91" rx="7" fill="#f4f7fa"/><text x="1290" y="1053" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T8 Pop恢复g_j，绝不再次把它当</text><text x="1290" y="1076" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">MeV查群</text><path d="M 1160 1088 H 1420" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><text x="900" y="1144" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T8 MG用GetNeuVelMg(g_j)，CE用GetNeuVel(E_j)</text><path d="M 1420 1156 H 380" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="12" y="1189" width="1516" height="68" rx="7" fill="#f4f7fa"/><text x="900" y="1212" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">正确恢复速度，随后允许首飞</text><path d="M 380 1224 H 1420" fill="none" stroke="#244d78" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrow4b)"/><text x="1416" y="1280" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">T9 存活碰撞后UpdateNeuState</text><text x="1416" y="1303" text-anchor="middle" fill="#244d78" font-size="16" font-weight="500" paint-order="stroke" stroke="#fff" stroke-width="4" stroke-linejoin="round">Mg同步出射群与速度</text><path d="M 1420 1315 h 38 v 16 h -38" fill="none" stroke="#244d78" stroke-width="1.8"  marker-end="url(#arrow4b)"/><rect x="9" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="120" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">Source与ExternalSource</text><rect x="269" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="380" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">AceData与速度函数</text><rect x="529" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="640" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">SampleFixSource</text><rect x="789" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="900" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">外源初始Bank</text><rect x="1049" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1160" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">执行核心与输运Bank</text><rect x="1309" y="16" width="222" height="55" rx="9" fill="#12334c"/><text x="1420" y="49" text-anchor="middle" fill="white" font-size="16" font-weight="600">恢复与ParticleState</text></svg></div><details class="mermaid-source"><summary>查看对应 Mermaid 源码</summary><pre><code>sequenceDiagram
+    participant S as Source与ExternalSource
+    participant A as AceData与速度函数
+    participant F as SampleFixSource
+    participant I as 外源初始Bank
+    participant K as 执行核心与输运Bank
+    participant P as 恢复与ParticleState
+    S-&gt;&gt;S: T1 按原顺序抽普通E0，必要时Watt覆盖为最终E1
+    S-&gt;&gt;A: T2 最终E1查局部群号，按群中心刷新主中子速度
+    A--&gt;&gt;S: 保持p_dErg为MeV，p_dVel已对应最终能量
+    S-&gt;&gt;I: T3 每个额外中子保存自己最终的Watt MeV
+    S--&gt;&gt;F: 主中子MeV与一致的速度
+    F-&gt;&gt;A: T4 原有边界将主中子MeV转群号g
+    A--&gt;&gt;F: p_dErg=g，群缓存=g；核对速度一致
+    I--&gt;&gt;K: T5 初始Bank条目E_j（MeV）
+    K-&gt;&gt;A: T5 只在转库边界将E_j转换为g_j
+    A--&gt;&gt;K: T5 pushInducedParticles保存g_j
+    F-&gt;&gt;P: T6 主中子首次飞行，时间为L/v_center(g)
+    P-&gt;&gt;K: T7 WW或MG诱发裂变直接保存已有群号
+    K-&gt;&gt;P: T8 Pop恢复g_j，绝不再次把它当MeV查群
+    P-&gt;&gt;A: T8 MG用GetNeuVelMg(g_j)，CE用GetNeuVel(E_j)
+    A--&gt;&gt;P: 正确恢复速度，随后允许首飞
+    P-&gt;&gt;P: T9 存活碰撞后UpdateNeuStateMg同步出射群与速度
+</code></pre></details></figure>
+<h3>D.1 T1–T3：只要最终能量又换了一次，依赖它的速度就失效</h3>
+<p><strong>现有位置</strong>：<code>SampleParticle.cpp:76–88</code>（已正确局部定位）；<code>ExternalSource.cpp:499</code>（主中子最终 Watt 能量）；527行（额外中子最终 Watt 能量）。</p>
+<p>主中子在499行后的目标逻辑如下。它是<strong>未应用的示意</strong>，<code>E_final</code> 表示此刻 <code>p_dErg</code> 中的最终 MeV：</p>
+<details class="source-code" open><summary>调用链 / 目标逻辑 · 6 行</summary><pre><code class="language-text">普通抽样、Watt抽样及拒绝重抽的RNG顺序保持原样
+E_final = 主中子最终的物理MeV
+若MG：g_local = LocateMgErgGrp(E_final, Neutron, false)
+       p_dVel = GetNeuVelMg(g_local, G, centers)
+若CE：p_dVel = GetNeuVel(E_final)
+p_dErg 仍保留 E_final，供原有调用者后续转换
+</code></pre></details>
+<p><strong>进入</strong>：最终 MeV 已决定，旧速度可能对应 E0。<strong>退出</strong>：MeV 保留，速度对应最终能量所在群（CE则对应最终MeV）。这不会额外调用 RNG；局部查群静默，正式边界仍负责原有警告。普通固定能量/离散源没有 Watt 覆盖，第一次修复的路径可继续保留。</p>
+<p>额外中子在527行保存自己的最终 MeV；其初始 Bank 的速度字段不应被当成有效状态，后续转库/出库按能量重建。单纯修506行 <code>OtempState.p_dVel</code> 不够。</p>
+<p>相关 <code>_CGMF/_FISSION</code> 分支也存在覆写能量的赋值，例如 <code>ExternalSource.cpp:97/119</code>、<code>265/287</code>。它们需要遵守同一“最后写能量后同步”的原则；模型库完整语义与运行 <strong class="tag unverified">UNVERIFIED</strong>。本报告没有用 simple-Watt 的目标替这些可选模型宣告完成。</p>
+<h3>D.2 T4–T6：主中子与额外中子必须各自经过一次正式表示转换</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>当前函数/插入位置</th>
+<th>进入</th>
+<th>目标退出与理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T4 主中子</td>
+<td><code>SampleFixSource()</code>，<code>SampleNeutronSource.cpp:269–280</code></td>
+<td>最终 MeV、与其一致的速度</td>
+<td>正式写 <code>p_dErg=g</code>、缓存=g；速度必须对应同一个g。普通转换时机保留；可在此审计/同步，不能假定所有上游永不换能量</td>
+</tr>
+<tr>
+<td>T5 初始库→输运库</td>
+<td><code>ExecuteFixedSourcePrepared()</code> 的 <code>CalcFixedSource.cpp:186–198</code> 和364–376</td>
+<td>初始库条目 <code>E_j</code>，已明确为MeV</td>
+<td>MG先对该条目查群，再把群号交给 <code>pushInducedParticles()</code>；CE原值透传。无需修改源初始库中其他消费者的表示</td>
+</tr>
+<tr>
+<td>T6 主中子首飞</td>
+<td><code>TrackHistory()</code> → <code>FlyByLength()</code></td>
+<td>群号、速度已一致</td>
+<td><code>Δt=L/v_center(g)</code>；不应靠输运内部碰巧更新来补初始化</td>
+</tr>
+</tbody></table></div>
+<p>转库的最小逻辑应落在<strong>知道输入来自外源初始库的调用边界</strong>，而不能塞进通用 <code>pushInducedParticles()</code> 或所有 <code>PopParticleOutofStack()</code> 调用：后两者也接收 WW/碰撞已生成的群号。如果在那里一律 <code>LocateMgErgGrp(p_dErg)</code>，就会把合法群号再次当 MeV 转换，制造新的错误。</p>
+<h3>D.3 T7–T9：输运内部始终按“已有群号”恢复</h3>
+<ul>
+<li><strong>T7</strong>：<a href="../../RMC/src/SaveSplitParticles.cpp#L33">SaveSplitParticles.cpp:33</a> 复制已有群；<a href="../../RMC/src/GetFissionNeuState.cpp#L735">GetFissionNeuState.cpp:735–736</a> 保存已抽到的 MG 出射群。这些生产者不需要物理能量重新查群。</li>
+<li><strong>T8</strong>：保留当前 <a href="../../RMC/src/SampleNeutronSource.cpp#L316">SampleNeutronSource.cpp:316–323</a> 的 MG/CE 分流，以及 <a href="../../RMC/src/GlobeFun.h#L542">GlobeFun.h:542–549</a> 的有限整数/范围/数组/中心检查。入库合同修好后，合法 Watt 后代也能满足检查。若仍违规，应在其进入输运前明确失败，不能继续传坏状态。</li>
+<li><strong>T9</strong>：现有 <a href="../../RMC/src/ParticleStateFun.cpp#L130">UpdateNeuStateMg()</a> 在存活碰撞后按新出射群更新速度，仍可复用。它负责碰撞后的状态，不负责修复已经发生的首飞时间。</li>
+</ul>
+<p>理想的每个 MG 输运起点都应满足 <code>p_dErg=g</code>、<code>p_dVel=v(centers[G-g])</code>；有缓存消费者时还要求 <code>p_nMultiGrpNumber=g</code>。缓存问题须明确单列处理/验证，不能以这个目标句子假装现有代码已经同步。</p>
+<h3>D.4 如何人工判断这条目标链有没有闭合</h3>
+<p><strong>INFERRED：审查判据，未在本轮执行。</strong> 对每个最终能源写入点只问四件具体事：</p>
+<ol>
+<li>刚写下来的数是 MeV，还是内部群号？哪段代码保证？</li>
+<li>从此到首次读取速度，中间是否还会改能量？若会，谁负责重算？</li>
+<li>入哪个 Bank、该 Bank 约定存什么、跨库时谁转换？出库是否仍满足该约定？</li>
+<li>首次 <code>FlyByLength()</code> 的群号、中心速度和 <code>L/v</code> 是否对应同一个最终源能量？</li>
+</ol>
+<p>普通/离散源、Watt主中子、每个Watt额外中子、WW后代、MG诱发裂变后代分别走通这四问，才覆盖本文讨论的链。F/A 的普通源和固定源 Bank 共用这些函数；type5 的完整伴随物理用法及动力学等其它入口不因此自动验证。Stage2 的 <code>CheckPreparedSourceDefinition()</code> 在 <code>ExternalSource.cpp:562</code> 要求 <code>PARTICLE=1</code>，其 FF/FAF 回归通过也不能覆盖 type5。</p>
+<p><a id="e-locator"></a></p>
+<h2 id="section-5">E. 代码定位表</h2>
+<p>下表行号均为当前第一次修复版本；带“原始”者另注明。前面已经给出关键实际代码，表格用于查找。</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>文件</th>
+<th>函数</th>
+<th>关键变量</th>
+<th>作用</th>
+<th>是否有问题</th>
+<th>问题说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通固定源入口</td>
+<td><a href="../../RMC/src/RunCalculation.cpp#L86">RunCalculation.cpp:86</a>、<a href="../../RMC/src/CalcFixedSource.cpp#L67">CalcFixedSource.cpp:67–84</a></td>
+<td><code>RunCalculation / CalcFixedSource</code></td>
+<td><code>cExternalSource</code></td>
+<td>初始化、执行、收尾</td>
+<td>本链未发现</td>
+<td>普通入口也复用 prepared 执行核心</td>
+</tr>
+<tr>
+<td>普通/离散源取能量</td>
+<td><a href="../../RMC/src/SampleVariableFromDistri.cpp#L101">SampleVariableFromDistri.cpp:101</a>、<a href="../../RMC/src/SampleParticle.cpp#L76">SampleParticle.cpp:27,76</a></td>
+<td><code>SampleVariableFromDistri / SampleParticle</code></td>
+<td><code>p_dEnergy→p_dErg</code></td>
+<td>写物理MeV</td>
+<td>赋值本身正确</td>
+<td>后续函数必须承认此时仍是MeV</td>
+</tr>
+<tr>
+<td>普通源初始化速度</td>
+<td><a href="../../RMC/src/SampleParticle.cpp#L81">SampleParticle.cpp:81–88</a></td>
+<td><code>SampleParticle</code></td>
+<td><code>nGroup,p_dVel</code></td>
+<td>局部查群并算速度</td>
+<td>原始错；首次修复对</td>
+<td>原始82行直接把MeV送入群号函数</td>
+</tr>
+<tr>
+<td>Python源</td>
+<td><a href="../../RMC/src/PythonInterface/PythonInterface.cpp#L140">PythonInterface.cpp:140–155</a></td>
+<td><code>SampleParticleFromSubroutine</code></td>
+<td><code>p_dErg,nGroup</code></td>
+<td>同类MeV入口</td>
+<td>首次修复同形修改</td>
+<td>SOURCE VERIFIED；完整运行UNVERIFIED</td>
+</tr>
+<tr>
+<td>物理MeV查群</td>
+<td><a href="../../RMC/src/GetMgCs.cpp#L263">GetMgCs.cpp:263–305</a>；<a href="../../RMC/src/AceData.h#L1866">AceData.h:1866</a></td>
+<td><code>LocateMgErgGrp</code></td>
+<td><code>dErg,nErgGrp,bWarn</code></td>
+<td>下界查找、返回内部群号</td>
+<td>不是速度函数</td>
+<td>当前有限值/尺寸检查；警告合同见C.2</td>
+</tr>
+<tr>
+<td>群中心存储</td>
+<td><a href="../../RMC/src/CheckMgAceBlock.cpp#L38">CheckMgAceBlock.cpp:38–49</a></td>
+<td><code>CheckMgAceBlock</code></td>
+<td><code>centers,bins,G</code></td>
+<td>低到高存储中心与下界</td>
+<td>本链未发现</td>
+<td>内部群号方向相反，索引G-g</td>
+</tr>
+<tr>
+<td>MeV算速度</td>
+<td><a href="../../RMC/src/GlobeFun.h#L531">GlobeFun.h:531–536</a></td>
+<td><code>GetNeuVel</code></td>
+<td><code>dNeuErg</code></td>
+<td>相对论速度公式</td>
+<td>函数本身不是群转换</td>
+<td>旧WW出库把群号传给它</td>
+</tr>
+<tr>
+<td>群号算速度</td>
+<td><a href="../../RMC/src/GlobeFun.h#L540">GlobeFun.h:540–550</a></td>
+<td><code>GetNeuVelMg</code></td>
+<td><code>dGroup,k,center</code></td>
+<td>查中心、调用MeV公式</td>
+<td>原始无边界保护</td>
+<td>当前严格检查正确，但不能辨认恰为整数的MeV</td>
+</tr>
+<tr>
+<td>主源正式转换</td>
+<td><a href="../../RMC/src/SampleNeutronSource.cpp#L269">SampleNeutronSource.cpp:269–280</a></td>
+<td><code>SampleFixSource</code></td>
+<td><code>p_dErg,群缓存</code></td>
+<td>MeV覆盖为g</td>
+<td>没有重算速度</td>
+<td>Watt上游换能量后，陈旧速度保留</td>
+</tr>
+<tr>
+<td>type5分发/选核素</td>
+<td><a href="../../RMC/src/ExternalSource.cpp#L364">ExternalSource.cpp:58,342,364–445</a></td>
+<td><code>SampleSourceParticle / GetSpontaFissNucID</code></td>
+<td><code>PARTICLE=5,jj,p_nNUC</code></td>
+<td>先普通抽样定位，再选核素</td>
+<td>不能漏画此调用</td>
+<td>374行已有一次SampleParticle</td>
+</tr>
+<tr>
+<td>Watt主中子</td>
+<td><a href="../../RMC/src/ExternalSource.cpp#L481">ExternalSource.cpp:481–499</a></td>
+<td><code>SampleSimpleSpontaFissParticle</code></td>
+<td><code>E0→E1,p_dVel</code></td>
+<td>再抽Watt并覆盖MeV</td>
+<td>两版均遗漏同步</td>
+<td>新E1与旧速度脱节</td>
+</tr>
+<tr>
+<td>Watt额外中子入初始库</td>
+<td><a href="../../RMC/src/ExternalSource.cpp#L504">ExternalSource.cpp:504–530</a></td>
+<td>同上</td>
+<td><code>OtempState,E_j,p_vFixedInitSrcBank</code></td>
+<td>保存独立Watt MeV</td>
+<td>写入MeV本身可成立</td>
+<td>后续必须承认并转换，不能假称已是群号</td>
+</tr>
+<tr>
+<td>初始库转输运库</td>
+<td><a href="../../RMC/src/CalcFixedSource.cpp#L186">CalcFixedSource.cpp:186–198,364–376</a></td>
+<td><code>ExecuteFixedSourcePrepared</code></td>
+<td>初始库条目<code>p_dErg</code></td>
+<td>原样传给push</td>
+<td>两版均缺MG转换</td>
+<td>是混装MeV/群号的明确跨库位置</td>
+</tr>
+<tr>
+<td>通用诱发粒子入库</td>
+<td><a href="../../RMC/src/SaveSplitParticles.cpp#L51">SaveSplitParticles.cpp:51–66</a></td>
+<td><code>pushInducedParticles</code></td>
+<td><code>dErg</code></td>
+<td>原值复制</td>
+<td>不自动识别单位</td>
+<td>调用者必须保证目标库合同</td>
+</tr>
+<tr>
+<td>WW后代入库</td>
+<td><a href="../../RMC/src/WeightWindows.cpp#L179">WeightWindows.cpp:179</a>、<a href="../../RMC/src/SaveSplitParticles.cpp#L25">SaveSplitParticles.cpp:25–45</a></td>
+<td><code>DoWeightWindows / pushSplitParticles</code></td>
+<td>当前g、权重、时间</td>
+<td>复制当前粒子</td>
+<td>能量表示已正确</td>
+<td>不保存速度，出库必须重建</td>
+</tr>
+<tr>
+<td>碰撞诱发裂变入库</td>
+<td><a href="../../RMC/src/GetFissionNeuState.cpp#L721">GetFissionNeuState.cpp:721–736</a>、<a href="../../RMC/src/GetMgExitErgMu.cpp#L368">GetMgExitErgMu.cpp:368</a></td>
+<td><code>GetFissionNeuState / GetMgFisErgDir</code></td>
+<td><code>p_dExitErg=g_out</code></td>
+<td>MG直接抽群再入库</td>
+<td>已测限定路径正确</td>
+<td>不等同Watt自发源</td>
+</tr>
+<tr>
+<td>固定源统一出库</td>
+<td><a href="../../RMC/src/SampleNeutronSource.cpp#L287">SampleNeutronSource.cpp:287–369</a></td>
+<td><code>PopParticleOutofStack / SampleFromParticleBank</code></td>
+<td><code>p_dErg,p_dVel</code></td>
+<td>恢复并定位</td>
+<td>原始WW错；当前Watt失败</td>
+<td>当前假设MG条目全为群号，但生产者未全部满足</td>
+</tr>
+<tr>
+<td>首次实际飞行</td>
+<td><a href="../../RMC/src/TrackHistory.cpp#L215">TrackHistory.cpp:215</a>、<a href="../../RMC/src/RayTracking.cpp#L250">RayTracking.cpp:250–259</a>、<a href="../../RMC/src/TrackWithWeightWindow.cpp#L37">TrackWithWeightWindow.cpp:37</a>、<a href="../../RMC/src/ParticleStateFun.cpp#L143">ParticleStateFun.cpp:143–154</a></td>
+<td><code>TrackHistory / RayTracking / FlyByLength</code></td>
+<td><code>L,p_dVel,p_dTime</code></td>
+<td>空间迁移及L/v</td>
+<td>直接使用当前速度</td>
+<td>不负责修复初始化，先前时间也不回滚</td>
+</tr>
+<tr>
+<td>碰撞后速度更新</td>
+<td><a href="../../RMC/src/TrackHistory.cpp#L275">TrackHistory.cpp:275–292</a>、<a href="../../RMC/src/ParticleStateFun.cpp#L130">ParticleStateFun.cpp:130–139</a></td>
+<td><code>UpdateNeuStateMg</code></td>
+<td><code>p_dExitErg→p_dErg,p_dVel</code></td>
+<td>同步新群和速度</td>
+<td>此更新顺序正确</td>
+<td>仅存活碰撞后执行</td>
+</tr>
+<tr>
+<td>群号读取/缓存</td>
+<td><a href="../../RMC/src/ParticleState.h#L1357">ParticleState.h:1357</a>、<a href="../../RMC/src/Filter.cpp#L75">Filter.cpp:75</a></td>
+<td><code>ErgGrp</code>、过滤器</td>
+<td><code>p_dErg / p_nMultiGrpNumber</code></td>
+<td>两种群信息读取</td>
+<td>缓存为独立遗留</td>
+<td>取整不是查群，缓存也不是速度来源</td>
+</tr>
+<tr>
+<td>动力学库恢复</td>
+<td><a href="../../RMC/src/SampleNeutronSource.cpp#L603">SampleNeutronSource.cpp:603,684,764,846</a></td>
+<td><code>SampleNeuSource / SampleTempNeuSource / SampleSpontaSource</code></td>
+<td>动力学Bank能量</td>
+<td>另一路共享速度函数</td>
+<td>UNVERIFIED</td>
+<td>不能用固定源Pop测试替代此族验证</td>
+</tr>
+</tbody></table></div>
+<p><a id="f-compare"></a></p>
+<h2 id="section-6">F. 三个版本的差异对照</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>版本</th>
+<th>普通源</th>
+<th>WW后代</th>
+<th>Watt裂变谱</th>
+<th>Bank 能量表示</th>
+<th>速度是否一致</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始 <code>4810694b</code></td>
+<td>MeV误传群号函数；稍后才查群</td>
+<td>群号误传MeV函数</td>
+<td>主中子换能量不换速度；额外中子MeV原样转库</td>
+<td>MG输运库混有群号和Watt MeV</td>
+<td>否；部分低能普通源还会越界；Watt能跑不代表正确</td>
+</tr>
+<tr>
+<td>第一次修复，当前8文件diff</td>
+<td>局部查群算速度，保留MeV合同；所测固定/离散谱正确</td>
+<td>MG/CE分流，所测WW及普通MG诱发裂变正确</td>
+<td>主中子速度仍旧；额外中子在严格群号检查处失败</td>
+<td>混装问题未改</td>
+<td>普通/WW限定路径一致；Watt不一致且已有exit134</td>
+</tr>
+<tr>
+<td>本文完整目标，未实施</td>
+<td>保留正确局部定位</td>
+<td>保留正确按群恢复</td>
+<td>主中子最终Watt能量后刷新速度；额外中子在跨库处转换</td>
+<td>外源初始库明确MeV；MG输运库统一群号；CE仍MeV</td>
+<td>目标一致；须逐路径验证，当前不得写成通过</td>
+</tr>
+</tbody></table></div>
+<p><a id="g-summary"></a></p>
+<h2 id="section-7">G. 用直白的话收束这条因果链</h2>
+<p><strong>原始 bug</strong>：一个名叫“能量”的 <code>double</code>，有时装 MeV，有时装群号。调用速度函数时没有确认它此刻装什么。普通源和 WW 后代分别在两个相反方向上用错了单位。</p>
+<p><strong>第一次修复做对的部分</strong>：普通源先查出局部群号再算速度，而且没有破坏下游仍需 MeV 的合同；WW 出库也开始按 MG 群中心恢复速度。这些实际修复和已测结果应保留。</p>
+<p><strong>还没有补上的部分</strong>：Watt 是“普通源抽完以后，又换了一次能量”。这使先前算好的速度过期；额外中子还绕过了主中子的群转换，把 MeV 放进了期望群号的输运 Bank。严格检查把这个隐藏错误暴露成了异常。</p>
+<p><strong>完整修复要闭合的关系</strong>：每个中子最终抽到什么 MeV，进入哪个群，使用哪个群中心速度，入库时存什么，出库时按什么解释，必须前后一致。只换一个速度函数、只重算主中子速度，或者只删掉检查，都不能把这条链闭合。</p>
+<p>本文是源码阅读材料，不是验收放行。当前修复状态仍见既有独立审查：<strong>NEEDS CORRECTION · P1 / OPEN</strong>。本轮到报告结束，不继续修改代码。</p>
+<p><a id="appendix"></a></p>
+<h2 id="section-8">附录：身份、证据与人工复查入口</h2>
+<h3>1. 本轮只读核对的身份</h3>
+<ul>
+<li>文档仓库：<code>main @ 93505ea9f0a060d7836543921bb86e6694722178</code>，开始时干净。</li>
+<li>RMC：<code>Neural_Network_WW_Iteration @ 4810694b7a99dfc3ad7d27f7d443814f511f4829</code>，8个已有tracked修改，无新增untracked代码。</li>
+<li>当前8文件的 SHA256 全部等于首次修复 <code>evidence-manifest.json</code> 的 <code>tested_worktree_sha256</code>；原始8文件全部等于 <code>baseline_sha256</code>；当前 <code>git diff</code> 与首次修复 <code>changes.diff</code> 逐字节一致。</li>
+<li><code>ExternalSource.cpp</code>、<code>SaveSplitParticles.cpp</code>、<code>ParticleStateFun.cpp</code> 等本文关键未改文件直接读当前源码；<code>ExternalSource.cpp</code> 相对原始提交没有diff。</li>
+</ul>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>当前修改文件</th>
+<th>SHA256（本轮读取）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>src/AceData.h</code></td>
+<td><code>f089fecdfc68c31468ac96bc9eb9a24969ae2f01b896c55635e93fc0df1c965a</code></td>
+</tr>
+<tr>
+<td><code>src/CalcFixedSource.cpp</code></td>
+<td><code>65affe379853ac66c725f344011c3b2e8601a4399191d5d070bf866d5e306a83</code></td>
+</tr>
+<tr>
+<td><code>src/FixedSource.h</code></td>
+<td><code>7b3d06d3333a10764e7390e3127511e68dcbd92ab354e08e1ed76b3d9884856a</code></td>
+</tr>
+<tr>
+<td><code>src/GetMgCs.cpp</code></td>
+<td><code>70f02de6bb9ec43dcf2d6e60bbfd01aba7e38ab3dac3d8bb88a951022e06998a</code></td>
+</tr>
+<tr>
+<td><code>src/GlobeFun.h</code></td>
+<td><code>89f28b5b83e5e5105f5b4efeb5ede614ff9df69719ed91153ba9831acad099db</code></td>
+</tr>
+<tr>
+<td><code>src/PythonInterface/PythonInterface.cpp</code></td>
+<td><code>4ea7952b82c6e16796838649195fe34694b09e105316647202e6430dadf9793a</code></td>
+</tr>
+<tr>
+<td><code>src/SampleNeutronSource.cpp</code></td>
+<td><code>2727a32c82bd257de2bc09cb346f5e020aa52b259a0250673518e90c0455a138</code></td>
+</tr>
+<tr>
+<td><code>src/SampleParticle.cpp</code></td>
+<td><code>63217ed9a6d37f9b8d52f0bb0fde95a00247aeb871844033aa52fa0823e62248</code></td>
+</tr>
+</tbody></table></div>
+<h3>2. 既有档案</h3>
+<ol>
+<li><a href="../../MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/REPORT.md">Codex 原始 W14 独立验证</a>：原始普通源速度/越界、Bank反向误用及物理影响边界。</li>
+<li><a href="../../MLVR_develop/2026-10/20261015_03_claude-w14-independent-review/Independent_W14_RMC_MG_Source_Velocity_Review.md">Claude 原始 W14 独立审查</a>。</li>
+<li><a href="../../MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/README.md#4-%E7%BB%93%E8%AE%BA%E4%B8%8E%E8%BE%B9%E7%95%8C">第一次修复 README §4</a>、<a href="../../MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/changes.diff">实际补丁</a>、<a href="../../MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/evidence-manifest.json">身份清单</a>、<a href="../../MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/velocity-results.json">速度结果</a>。</li>
+<li><a href="../../MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md#33-type-5-spontaneous-fission%E6%BA%90%E5%80%99%E9%80%89%E5%A4%B1%E8%B4%A5p1">修复后的独立审查 §3.3</a>、<a href="../../MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/result-summary.md">结果摘要</a>：Watt主中子陈旧速度、额外中子出库异常、baseline/candidate退出码。</li>
+</ol>
+<h3>3. 本轮读过的现存 Watt 动态记录</h3>
+<p>目录 <code>/tmp/w14-claude-review/independent-runs/spontaneous-mg/</code>，这里只读、没有更改或复制整个运行目录：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>本文采用的事实</th>
+<th>SHA256</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>spont-source-after.stdout</code></td>
+<td>Watt函数返回后的MeV和旧速度</td>
+<td><code>3878010224a26a27b911c4bd7422553f5a54b442a044680657f0a5386b28407f</code></td>
+</tr>
+<tr>
+<td><code>spontaneous-observation.txt</code></td>
+<td>首次飞行的群12、旧速度、L与L/v</td>
+<td><code>ac6eef43c872ba35924bfbeb010bb72e4e23d105b442dcf96bc3969b094f4730</code></td>
+</tr>
+<tr>
+<td><code>throw-detail.stdout</code></td>
+<td>出库异常的真实MeV参数、完整调用栈与群中心</td>
+<td><code>906afb2cfc738b4918b839bd621324e1ccee9c6557c8be2c339d8befe4ac3d09</code></td>
+</tr>
+</tbody></table></div>
+<p><code>spontaneous-observation.txt</code> 的中间事件标签不能当作赋值已执行的证明：GDB停在源码赋值行时通常尚未执行该行。本文的Watt返回值还用 <code>spont-source-after.stdout</code> 中函数 <code>finish</code> 后打印的 <code>E/V</code> 交叉核对；转换完成后的群号使用 <code>first_flight</code> 记录，异常原因使用 <code>throw-detail.stdout</code> 的实参。某些早期入口断点日志出现无效 <code>this/particleType</code>，没有用这些数值作结论。</p>
+<p>上述原始日志位置可能随临时目录清理失效；关键值和异常链已在 C.4 原样提炼，长期结论入口是正式独立审查档案。本文没有重新验收全部历史日志哈希、编译或运行任何RMC用例。</p>
+<div class="footer">独立 HTML 阅读副本。正文与同名 Markdown 一致；时序图按其中 Mermaid 步骤绘制为内嵌 SVG，不需联网。外部源码与档案链接需要本地仓库目录仍在。</div></main></div><dialog id="zoom"><div class="dialog-head"><strong>时序图 · 横向滚动查看完整步骤</strong><button id="close-zoom">关闭</button></div><div id="zoom-body"></div></dialog><script>document.querySelectorAll('[data-zoom]').forEach(b=>b.addEventListener('click',()=>{const svg=document.querySelector('#'+b.dataset.zoom+' svg');document.querySelector('#zoom-body').replaceChildren(svg.cloneNode(true));document.querySelector('#zoom').showModal();}));document.querySelector('#close-zoom').onclick=()=>document.querySelector('#zoom').close();document.querySelector('#expand-code').onclick=()=>document.querySelectorAll('details.source-code').forEach(d=>d.open=true);document.querySelector('#collapse-code').onclick=()=>document.querySelectorAll('details.source-code').forEach(d=>d.open=false);document.querySelector('#print').onclick=()=>{document.querySelectorAll('details.source-code').forEach(d=>d.open=true);window.print()};</script></body></html>
