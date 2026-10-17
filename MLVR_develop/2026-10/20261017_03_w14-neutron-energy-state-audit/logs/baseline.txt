@@ -1,0 +1,34 @@
+$ git -C /home/workspace/AI_MC_WW_interation branch --show-current
+main
+
+$ git -C /home/workspace/AI_MC_WW_interation rev-parse HEAD
+4987ba488c555b253055b4783c5b36753eb9f7b2
+
+$ git -C /home/workspace/AI_MC_WW_interation status --short
+ M MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/README.md
+ M MLVR_develop/INDEX.md
+?? MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/
+
+$ git -C /home/workspace/AI_MC_WW_interation/RMC branch --show-current
+Neural_Network_WW_Iteration
+
+$ git -C /home/workspace/AI_MC_WW_interation/RMC rev-parse HEAD
+b6f49808153c73d8744ac8cfd7d5728f926dc194
+
+$ git -C /home/workspace/AI_MC_WW_interation/RMC status --short
+
+$ git -C /home/workspace/AI_MC_WW_interation/RMC log -3 --format=%H %s
+b6f49808153c73d8744ac8cfd7d5728f926dc194 fix(fixed-source): W14 MG 源速度初始化修复（首次实施，待修正）(20261017_01)
+4810694b7a99dfc3ad7d27f7d443814f511f4829 feat(fixed-source): 实现受限同进程 Forward/Adjoint 生命周期
+330f091eb0296e0d0124237ba7d9a22b81aee852 refactor(f11): extract fixed-source execution core as Initialize/ExecutePrepared/Finalize (20261011_04)
+
+$ git -C /home/workspace/AI_MC_WW_interation/RMC diff --stat 4810694b7a99dfc3ad7d27f7d443814f511f4829 HEAD
+ src/AceData.h                           |  3 ++-
+ src/CalcFixedSource.cpp                 | 14 +++++++-------
+ src/FixedSource.h                       |  4 ++--
+ src/GetMgCs.cpp                         | 18 +++++++++++++-----
+ src/GlobeFun.h                          | 22 +++++++++++++---------
+ src/PythonInterface/PythonInterface.cpp |  4 +++-
+ src/SampleNeutronSource.cpp             | 12 ++++++++----
+ src/SampleParticle.cpp                  |  4 +++-
+ 8 files changed, 51 insertions(+), 30 deletions(-)

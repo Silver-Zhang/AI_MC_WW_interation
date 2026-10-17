@@ -21,6 +21,8 @@ Stage 2 依据本矩阵逐项进行只读审查。审查不直接修复代码。
 
 ## 当前状态
 
+> **W14适用边界补充（2026-10-17）**：全路径审查已获G4确认并归档，缺陷仍OPEN。普通谱、type-5/Bank、光子与电子、MG临界的证据和未验证项见[任务§4](../MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/README.md#4-结论与边界)。下列既有稳态分类不替这些新增路径作担保，也不因本次专项发现而整体重判。
+
 | ID | 功能需求 | 当前状态 | 审查重点 | 任务 |
 |---|---|---|---|---|
 | F01 | Forward fixed-source MC | A — Ready（限定第一版子域） | standard MGACE、fixed-source neutron、MPI/OpenMP-off serial：200k histories 正常结束，source/transport/tally 非零 | `20260927_03_f01-f05-forward-field-closure` |

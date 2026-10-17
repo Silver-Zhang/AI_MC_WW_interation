@@ -36,6 +36,8 @@ RMC 内部控制 Bootstrap 和固定 K 轮 Adjoint→Forward；现有 RMC 类扩
 
 Stage 2 最终提交、推送、SHA256 与边界见 Task05 §4。[Stage 3 设计任务](../MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md)已完成Claude独立审查，结论NEEDS REVISION（两项P1、一项P2）；待设计修订及用户批准生产修改。W14修复后独立审核为**NEEDS CORRECTION · P1 / OPEN**：type-5 spontaneous-fission Watt源路径候选版异常退出；ordinary/WW限定路径通过。证据与边界见[独立审核](../MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md)，不自动提交或进入Stage3。总体F11闭环、TARGET/Field/正式FOM仍未实现。
 
+最新[W14全路径审查§4](../MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/README.md#4-结论与边界)已完成并获G4确认；审查基线为第一次修复提交`b6f49808`，工作树干净。W14仍OPEN，具体缺陷、适用边界和拟修范围以该档案为准；归档确认不构成生产修改授权。
+
 ## 工作纪律
 
 沿用根目录 AGENTS/CLAUDE 与 [工作流](../MLVR_develop/README.md)：选 A/B/C 模式，立项→设计→人拍板→实施自验→归档。未经授权不得改 RMC、切其分支或 commit/push，不更新参考结果。每次接手记录实际本地 branch/HEAD/worktree；本页历史源码 SHA 不是当前源码已核验的替代。

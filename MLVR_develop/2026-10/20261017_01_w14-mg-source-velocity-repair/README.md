@@ -7,7 +7,7 @@
 | 任务类型 / 模式 | RMC 通用缺陷修复 / C |
 | 报告人 | Codex |
 | 关联知识库条目 | W14（未自行 CLOSED） |
-| RMC 分支 / HEAD | `Neural_Network_WW_Iteration` / `4810694b7a99dfc3ad7d27f7d443814f511f4829`；本轮8个生产文件未提交修改 |
+| RMC 分支 / HEAD | `Neural_Network_WW_Iteration` / 提交前 `4810694b7a99dfc3ad7d27f7d443814f511f4829`；本轮8个生产文件已本地提交 `b6f49808`（未 push，待修正复审） |
 | 文档仓库分支 / HEAD | `main` / `50d9e0eada8016b3f7d71a08f1a2ff195f481559` |
 
 ## 1. 目标与范围
@@ -71,7 +71,7 @@ C·G1 问题定式已向用户解释：纠正两种能量表示混用带来的�
 
 **未验证**：MPI/OMP/AIS、全Python源运行、MG photon/coupled、任意材料/模型/源形式、临界/动力学源的完整动态矩阵、所有时间分箱/velocity estimator输出、全程序/泄漏sanitizer及Windows。Python改动只通过启用宏TU编译；非零裂变只验证该普通Forward小模型的3次出库，不外推任意裂变谱与连续F/A。
 
-原始证据保存在本任务 `logs/local-evidence/`（ignored，不入Git），约113 MiB；新构建及binary保留 `/tmp/w14-repair-20261017/`。没有清理用户文件。根仓库和RMC均未commit/push，RMC HEAD/分支保持不变，Stage3未实施。
+原始证据保存在本任务 `logs/local-evidence/`（ignored，不入Git），约113 MiB；新构建及binary保留 `/tmp/w14-repair-20261017/`。没有清理用户文件。根仓库未 commit；RMC 已本地提交 `b6f49808`（未 push），后续修正在同一分支继续，Stage3未实施。
 
 ## 5. 过程
 

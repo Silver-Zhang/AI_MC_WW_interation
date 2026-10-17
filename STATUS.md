@@ -2,6 +2,7 @@
 
 > **最后更新：2026-10-17**。F11 Stage 2：**ACCEPT WITH LIMITATIONS**，两个 WW P1 **CLOSED**，用户确认受限版本冻结。独立审核与提交准备见 [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界)；RMC `4810694b`已推送GitLab并读回确认。Stage 3 设计审查 **NEEDS REVISION**；W14 通用修复已实施，但Claude独立审核发现P1路径：普通MG固定源中的type-5 spontaneous-fission Watt源覆盖能量后速度未更新，候选版还会在MG bank恢复异常退出；W14 **NEEDS CORRECTION / OPEN**，见[独立审核](MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md)及[修复任务§4](MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/README.md#4-结论与边界)。
 > 详细任务清单→ [`MLVR_develop/INDEX.md`](MLVR_develop/INDEX.md) ｜ 工作流规则→ [`MLVR_develop/README.md`](MLVR_develop/README.md) ｜ 一屏上下文→ [`MLVR_Knowledge/AGENT_CONTEXT.md`](MLVR_Knowledge/AGENT_CONTEXT.md)
+> **W14 全路径审查**：C·G4已确认，审查归档完成；实际RMC HEAD `b6f49808`且工作树仍干净。结果、证据与未覆盖项见[任务档案§4](MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/README.md#4-结论与边界)；W14仍OPEN，修复范围须另行批准，本轮未修代码。
 
 ## 1. 现在在哪个 Stage
 
@@ -24,7 +25,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 | # | 事项 | 需要你决定什么 | 相关档案 |
 |---|---|---|---|
 | 1 | **Stage 2 冻结（已完成）** | RMC `4810694b`已推送GitLab并读回确认，29文件、工作树干净；本项无待拍板事项 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
-| 2 | **Stage 3 / W14** | Stage3设计待修订；W14独立审核为**NEEDS CORRECTION · P1 / OPEN**，type-5 Watt spontaneous-fission路径在候选版异常退出。须另行获批处理该缺陷并重新独立审核；不自动提交或开始Stage3 | [Stage 3设计档案](MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md#4-结论与边界)、[W14审核报告](MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md) |
+| 2 | **Stage 3 / W14** | W14全路径审查已确认归档，缺陷仍OPEN；下一轮具体修复范围及验证门禁须另行批准，不自动开始Stage3 | [最新审查§4](MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/README.md#4-结论与边界)、[Stage 3设计档案](MLVR_develop/2026-10/20261015_01_f11-stage3-target-source-response-design/README.md#4-结论与边界) |
 | 3 | AIMC 正式实验 | Task 08B 正式矩阵（30 iterations × 400M histories）已就绪但**未运行**，需单独授权才能开跑 | [task08a 冻结](MLVR_develop/2026-09/20260905_03_task08a-experiment-freeze-harness/README.md) |
 | 4 | 仓库同步 | GitLab SSH端口8922及主机指纹已核验，认证阻塞解除；两仓库远端已更新，文档保留GitHub镜像 | [Task05 §4](MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md#4-结论与边界) |
 | 5 | 台账遗留 | `20260824_05`（F02-B 物理验证）台账仍标「待决策」；其 W5/W6 缺陷已修复并复现——确认后可直接关闭 | [档案](MLVR_develop/2026-08/20260824_05_f02-adjoint-physics-verification/README.md) |
@@ -40,6 +41,7 @@ Stage 0 ✅ ─► Stage 1 ✅ ─► Stage 2 🟡 收尾 ─► Stage 3/4 ⏭ �
 
 | 日期 | 任务 | 结果 |
 |---|---|---|
+| 2026-10-17 | W14能量状态全路径审查 | **审查完成，G4已确认；W14仍OPEN**。结论、证据与未验证边界见[任务§4](MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/README.md#4-结论与边界)；仅归档，未修代码 |
 | 2026-10-17 | W14修复实施及独立审核 | **NEEDS CORRECTION · P1 / OPEN**：ordinary固定能源F/A、native WW bank与普通诱发裂变例通过；type-5 Watt spontaneous-fission路径候选版相较baseline异常退出，详见[独立审核](MLVR_develop/2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md)；RMC未改、未提交推送 |
 | 2026-10-15 | Claude 独立审核 W14 多群源速度初始化 | **CONFIRMED · P1 · E3**：普通 MG fixed-source neutron Forward/Adjoint 源速度将物理MeV当内部群号；低能 heap OOB由ASan确认，高能源错速由GDB确认；累计时间路径受影响，稳态flux/response偏差未证明。未修复、RMC未改。见[报告](MLVR_develop/2026-10/20261015_03_claude-w14-independent-review/Independent_W14_RMC_MG_Source_Velocity_Review.md) |
 | 2026-10-15 | Codex 独立验证 W14 多群源能量与速度 | **CONFIRMED / P1 / E3**（与 Claude 报告并列，不相互替代）：报告与本地证据见[任务 §4](MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/README.md#4-结论与边界)；未修复 |

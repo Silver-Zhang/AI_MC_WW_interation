@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-10-17T21:15:00.498998+08:00",
+  "root": {
+    "branch": "main",
+    "HEAD": "4987ba488c555b253055b4783c5b36753eb9f7b2",
+    "status_after_task_creation": " M MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/README.md\n M MLVR_develop/INDEX.md\n?? MLVR_develop/2026-10/20261017_03_w14-neutron-energy-state-audit/\n"
+  },
+  "RMC": {
+    "branch": "Neural_Network_WW_Iteration",
+    "HEAD": "b6f49808153c73d8744ac8cfd7d5728f926dc194",
+    "status": "",
+    "comparison_base": "4810694b7a99dfc3ad7d27f7d443814f511f4829",
+    "committed_diff_sha256": "301518715cad59bd862cd6b1007d2cd02179ab8aa58dc6158517046cd81e5111",
+    "matches_archived_first_repair_diff": true,
+    "files": {
+      "src/AceData.h": {
+        "actual_sha256": "f089fecdfc68c31468ac96bc9eb9a24969ae2f01b896c55635e93fc0df1c965a",
+        "first_repair_sha256": "f089fecdfc68c31468ac96bc9eb9a24969ae2f01b896c55635e93fc0df1c965a",
+        "match": true
+      },
+      "src/CalcFixedSource.cpp": {
+        "actual_sha256": "65affe379853ac66c725f344011c3b2e8601a4399191d5d070bf866d5e306a83",
+        "first_repair_sha256": "65affe379853ac66c725f344011c3b2e8601a4399191d5d070bf866d5e306a83",
+        "match": true
+      },
+      "src/FixedSource.h": {
+        "actual_sha256": "7b3d06d3333a10764e7390e3127511e68dcbd92ab354e08e1ed76b3d9884856a",
+        "first_repair_sha256": "7b3d06d3333a10764e7390e3127511e68dcbd92ab354e08e1ed76b3d9884856a",
+        "match": true
+      },
+      "src/GetMgCs.cpp": {
+        "actual_sha256": "70f02de6bb9ec43dcf2d6e60bbfd01aba7e38ab3dac3d8bb88a951022e06998a",
+        "first_repair_sha256": "70f02de6bb9ec43dcf2d6e60bbfd01aba7e38ab3dac3d8bb88a951022e06998a",
+        "match": true
+      },
+      "src/GlobeFun.h": {
+        "actual_sha256": "89f28b5b83e5e5105f5b4efeb5ede614ff9df69719ed91153ba9831acad099db",
+        "first_repair_sha256": "89f28b5b83e5e5105f5b4efeb5ede614ff9df69719ed91153ba9831acad099db",
+        "match": true
+      },
+      "src/PythonInterface/PythonInterface.cpp": {
+        "actual_sha256": "4ea7952b82c6e16796838649195fe34694b09e105316647202e6430dadf9793a",
+        "first_repair_sha256": "4ea7952b82c6e16796838649195fe34694b09e105316647202e6430dadf9793a",
+        "match": true
+      },
+      "src/SampleNeutronSource.cpp": {
+        "actual_sha256": "2727a32c82bd257de2bc09cb346f5e020aa52b259a0250673518e90c0455a138",
+        "first_repair_sha256": "2727a32c82bd257de2bc09cb346f5e020aa52b259a0250673518e90c0455a138",
+        "match": true
+      },
+      "src/SampleParticle.cpp": {
+        "actual_sha256": "63217ed9a6d37f9b8d52f0bb0fde95a00247aeb871844033aa52fa0823e62248",
+        "first_repair_sha256": "63217ed9a6d37f9b8d52f0bb0fde95a00247aeb871844033aa52fa0823e62248",
+        "match": true
+      }
+    }
+  }
+}

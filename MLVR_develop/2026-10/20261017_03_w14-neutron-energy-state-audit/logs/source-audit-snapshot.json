@@ -1,0 +1,288 @@
+{
+  "date": "2026-10-17",
+  "purpose": "Static audit source positions; not dynamic validation",
+  "head": "b6f49808153c73d8744ac8cfd7d5728f926dc194",
+  "rmc_status": "",
+  "files": [
+    {
+      "path": "RMC/src/AdProcessPseudoPar.cpp",
+      "sha256": "343c0847d32c078c3578aad4ac696e330bc50fc1668545f7acd1435f2cf46bbd",
+      "lines": 79
+    },
+    {
+      "path": "RMC/src/BankNeuSource.cpp",
+      "sha256": "d9fbe412c020fd32fe2ca1db10aa610cc24e8401552b21ce825b316a1023d7a9",
+      "lines": 179
+    },
+    {
+      "path": "RMC/src/BankSecondaryElectron.cpp",
+      "sha256": "04f2fe6de00e7d997cfb4021e2fc78637419cde62d90bde67322aebf7d0d0eed",
+      "lines": 78
+    },
+    {
+      "path": "RMC/src/CalcCriticality.cpp",
+      "sha256": "a106860aa1a965395bfb9ab6be8c503172a786e60b79f50d2f271398cc10d086",
+      "lines": 321
+    },
+    {
+      "path": "RMC/src/CalcFixedSource.cpp",
+      "sha256": "65affe379853ac66c725f344011c3b2e8601a4399191d5d070bf866d5e306a83",
+      "lines": 776
+    },
+    {
+      "path": "RMC/src/CalcMultiplier.cpp",
+      "sha256": "6c899aa85968251cd9b1dad4a8f113f72d329a36680cadb8e45aff5f984afdc1",
+      "lines": 99
+    },
+    {
+      "path": "RMC/src/CalcNeuVel.cpp",
+      "sha256": "d4bd27f8ed411b4061f5d5acc66935f7fb380d1c90158f6a96a16b0ee9bbf26a",
+      "lines": 28
+    },
+    {
+      "path": "RMC/src/DomainDecomposition.cpp",
+      "sha256": "170beb09c99c58933bd86a6672bf30b349dc53fcb418318fa7df83456f1f562f",
+      "lines": 423
+    },
+    {
+      "path": "RMC/src/ExternalSource.cpp",
+      "sha256": "2e4f03a7aed4d97d75730816de91bb5bb9a458daa114c09ed8e72dd8736e53d6",
+      "lines": 587
+    },
+    {
+      "path": "RMC/src/ExternalSource.h",
+      "sha256": "a5d8c16f35ae901b601fe329b292e0e22be8f884f2e4f23089f32d3ea5d50164",
+      "lines": 221
+    },
+    {
+      "path": "RMC/src/Filter.cpp",
+      "sha256": "701289b17c6da307217eab4a7b51bda554d6896ec8e0903d63b585c3389316ca",
+      "lines": 240
+    },
+    {
+      "path": "RMC/src/GPT_AnalogProcess.cpp",
+      "sha256": "1bb73191c6a1c8fa4d18aee214839e4cd3e11691389c23325998969674946f07",
+      "lines": 231
+    },
+    {
+      "path": "RMC/src/GetExitState.cpp",
+      "sha256": "f9b34f21bfc7f0bf01f6d0c029202a9c349622ee93559aab7e5c1cb167e286f5",
+      "lines": 436
+    },
+    {
+      "path": "RMC/src/GetFissionNeuState.cpp",
+      "sha256": "adcfa91d34debe2890b57243fb9f1661296f70a70d1e28132d4be9bd5328bd5e",
+      "lines": 950
+    },
+    {
+      "path": "RMC/src/GetMgCs.cpp",
+      "sha256": "70f02de6bb9ec43dcf2d6e60bbfd01aba7e38ab3dac3d8bb88a951022e06998a",
+      "lines": 306
+    },
+    {
+      "path": "RMC/src/GetMgExitErgMu.cpp",
+      "sha256": "0389a58bd638a37b32a3319fd470a97c00e6cebefa874a884cbb9612400fe6f4",
+      "lines": 613
+    },
+    {
+      "path": "RMC/src/GetPhotonAtomCs.cpp",
+      "sha256": "1b11e4118bdba28ad0f1f3d3d02a2bda44e3f66223011c3ca46fe401ad612bb4",
+      "lines": 199
+    },
+    {
+      "path": "RMC/src/GetSurfTrcs.cpp",
+      "sha256": "3435f45a2e8fd3cf8d407d99da4f3a625a58a6de1e10984a5e0affb7f0e189a5",
+      "lines": 641
+    },
+    {
+      "path": "RMC/src/GetTotNu.cpp",
+      "sha256": "4e5a0253860df3efeb724a1cbb226093deb081aebd06d70783351c83d8fca359",
+      "lines": 131
+    },
+    {
+      "path": "RMC/src/GlobeFun.h",
+      "sha256": "89f28b5b83e5e5105f5b4efeb5ede614ff9df69719ed91153ba9831acad099db",
+      "lines": 648
+    },
+    {
+      "path": "RMC/src/InitialSource.cpp",
+      "sha256": "5ab4b3f66771f5aeedfd618c7d6e49aa680e71af6b445e3c1a3e2c3221c313f1",
+      "lines": 413
+    },
+    {
+      "path": "RMC/src/ParticleState.h",
+      "sha256": "64fd45ff057923869764ccc497b1bddf9b602fa2db8a0b430bcce34b3782ac7b",
+      "lines": 1386
+    },
+    {
+      "path": "RMC/src/ParticleStateFun.cpp",
+      "sha256": "78570d287c4925dde51a4786d7f29642ea15e01dd52562c77cd5c8ae36b55cc6",
+      "lines": 507
+    },
+    {
+      "path": "RMC/src/ParticleTrack.cpp",
+      "sha256": "6eb4a3381a36667dda55e290be485d85d50d1f7aa8ffdace6b1c580936bc6ae9",
+      "lines": 798
+    },
+    {
+      "path": "RMC/src/PhotonProduceElect.cpp",
+      "sha256": "812946484c833d246cb955ff3acbe01f54760fe308d000986d75159a074e4694",
+      "lines": 212
+    },
+    {
+      "path": "RMC/src/ProcessComptSact.cpp",
+      "sha256": "d88d1d0e882382d4aaf67c65f4e8723f160e27d77be6054490a6554c987b5e6b",
+      "lines": 142
+    },
+    {
+      "path": "RMC/src/ProcessMgPhotonCollision.cpp",
+      "sha256": "2a2f1f39c546d15c21c3e3bd3fb5e6a417607c6f77054aacf3b58f35bc26a1f4",
+      "lines": 71
+    },
+    {
+      "path": "RMC/src/ProcessNeuGma.cpp",
+      "sha256": "4412ccbbbc05b401debcc39eb90f8ac2cb0c095082b5ac9ae79029d4ad7fb1b0",
+      "lines": 214
+    },
+    {
+      "path": "RMC/src/ProcessPhotonuclear.cpp",
+      "sha256": "0589b710f2a1393b4a09bc3fd7d4e2e31eb12dc6a719e8e6cdf3d049678c71d1",
+      "lines": 195
+    },
+    {
+      "path": "RMC/src/PythonInterface/PythonInterface.cpp",
+      "sha256": "4ea7952b82c6e16796838649195fe34694b09e105316647202e6430dadf9793a",
+      "lines": 195
+    },
+    {
+      "path": "RMC/src/RayTracking.cpp",
+      "sha256": "95cd04a9284bf65bfc9cdae0c45e768f007ab9636deb741f935094e06b81be14",
+      "lines": 409
+    },
+    {
+      "path": "RMC/src/ReactByLaws.cpp",
+      "sha256": "46502d6c37f4fdc9fb15376fcb4e85efb949833e088910c69b68920db063168c",
+      "lines": 1258
+    },
+    {
+      "path": "RMC/src/ReadPhysicsBlock.cpp",
+      "sha256": "aea44e8ad0169e4d9ee8be015d3e2117e05f23cadf85d42b82d1a0e161f91448",
+      "lines": 489
+    },
+    {
+      "path": "RMC/src/RunHistory.cpp",
+      "sha256": "ec72b33d71b99fe20a35d1104d37fd21ae69a5e80e5286b8a783997c916f43cb",
+      "lines": 118
+    },
+    {
+      "path": "RMC/src/SampleEnergySpectrum.cpp",
+      "sha256": "13acf24d315fd938376f352257d7c56929dbf36d14633bde28619bc4a1172b95",
+      "lines": 67
+    },
+    {
+      "path": "RMC/src/SampleFreeFlyDist.cpp",
+      "sha256": "8bc3dc14fa3f67944035adf8f969945098834ae78d67d4281a54c8a6ad641551",
+      "lines": 371
+    },
+    {
+      "path": "RMC/src/SampleGmaFreeFlyDist.cpp",
+      "sha256": "71844e110eb8621c609653e8963a126d0c7cdf76367f29d0a9d7692cee5cb40a",
+      "lines": 87
+    },
+    {
+      "path": "RMC/src/SampleNeutronSource.cpp",
+      "sha256": "2727a32c82bd257de2bc09cb346f5e020aa52b259a0250673518e90c0455a138",
+      "lines": 1397
+    },
+    {
+      "path": "RMC/src/SampleParticle.cpp",
+      "sha256": "63217ed9a6d37f9b8d52f0bb0fde95a00247aeb871844033aa52fa0823e62248",
+      "lines": 101
+    },
+    {
+      "path": "RMC/src/SampleValue.cpp",
+      "sha256": "32929ffbb8f1ab953ed6dbcf420795fc968584ef548a5b0d82296580ba22793f",
+      "lines": 519
+    },
+    {
+      "path": "RMC/src/SampleVariableFromDistri.cpp",
+      "sha256": "692f96bbacb5c108debb034d810258e0c8d7a2a19d894ec13f689005834a0710",
+      "lines": 248
+    },
+    {
+      "path": "RMC/src/SaveSplitParticles.cpp",
+      "sha256": "c60efb6559c38b0b8d96104c6bd741c1b67534053dd75de03a82b52df241d822",
+      "lines": 77
+    },
+    {
+      "path": "RMC/src/ScoreMeshTally.cpp",
+      "sha256": "b15116cf2a73b97fff3956a8b3fbeed4e708df9af31b6de29069f4e7aa052a4e",
+      "lines": 267
+    },
+    {
+      "path": "RMC/src/ScoreNeuLifeTime.cpp",
+      "sha256": "f371821eb6bf7b7fe7185c05e20a2b00f4314350f964d6840457e9ef52e58369",
+      "lines": 46
+    },
+    {
+      "path": "RMC/src/Source.cpp",
+      "sha256": "d7fbbdc125d6df1789d048b07fc7a89072124a8fc66674bb10ed797212da6ce2",
+      "lines": 132
+    },
+    {
+      "path": "RMC/src/TallyAtPoint.cpp",
+      "sha256": "6e9653c4607f1cc3705e76afec63c574fb4a15145de0ecde79d16355647a8a4f",
+      "lines": 235
+    },
+    {
+      "path": "RMC/src/TallyAtSurface.cpp",
+      "sha256": "b111b2b417071e4798bc037f573e10a0215fda81b489e564f74a20a63038d9c0",
+      "lines": 252
+    },
+    {
+      "path": "RMC/src/TallyCellByTL.cpp",
+      "sha256": "75c2b6f4b98a0e57b64e9644ac6e1bfc79141fa251a84bd8e94403de9e248d2b",
+      "lines": 419
+    },
+    {
+      "path": "RMC/src/TrackElctronHistory.cpp",
+      "sha256": "41604a82126c3df59e561500deae25e7118c82f2eb2413f9236dc5a0845f8c3a",
+      "lines": 518
+    },
+    {
+      "path": "RMC/src/TrackGmaHistory.cpp",
+      "sha256": "c13906c7aad85ac03672a383fab3608cb525ca21a3750f85f193697eef605c14",
+      "lines": 440
+    },
+    {
+      "path": "RMC/src/TrackHistory.cpp",
+      "sha256": "2431cb2aac425a88cdf688376174bff1087fe950fbd5dd7c78d0db584c140e99",
+      "lines": 399
+    },
+    {
+      "path": "RMC/src/TrackWithWeightWindow.cpp",
+      "sha256": "1a5241d9f7151ef17d41e01a14a14e92210c0e249cee535a2d21ed3ce39ec328",
+      "lines": 40
+    },
+    {
+      "path": "RMC/src/UFS.cpp",
+      "sha256": "39b90d3ca73ead0f35ab38709f4f717543d5d6a4f1ff0bd7defa18cf7b603484",
+      "lines": 86
+    },
+    {
+      "path": "RMC/src/WeightWindows.cpp",
+      "sha256": "c1c18e19b69037a6d66371c6626158fcc2b1326d46a3c69699f3d9c1bb8410fb",
+      "lines": 401
+    },
+    {
+      "path": "RMC/src/WldtSampleSource.cpp",
+      "sha256": "4a550db10e4fc87e10ee6ec0c62f1212daebac0c928d2a7726c04c041a083cdc",
+      "lines": 88
+    },
+    {
+      "path": "RMC/src/WrtTrc.cpp",
+      "sha256": "bac146eba089f6019fb4567dd2e46dfac84e490405eb831d123a5ae3316d6921",
+      "lines": 256
+    }
+  ]
+}
