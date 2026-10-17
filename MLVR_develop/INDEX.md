@@ -8,6 +8,9 @@
 
 | 立项日期 | 任务 | 类型 | 状态 | 关联KB | 提交 |
 |---|---|---|---|---|---|
+| 2026-10-17 | [independent-w14-repair-review](2026-10/20261017_02_independent-w14-repair-review/README.md) | 模式C / W14修复后独立审核 | 已完成（**NEEDS CORRECTION · P1**） | W14 | ordinary fixed-energy F/A与WW/诱发bank限定路径通过；type-5 spontaneous-fission Watt能量覆盖路径候选版异常退出、baseline完成，P1阻止W14关闭；未改RMC/KB04/reference，Stage3未启动。见[审核报告](2026-10/20261017_02_independent-w14-repair-review/Independent_W14_Repair_Review.md) |
+
+| 2026-10-17 | [w14-mg-source-velocity-repair](2026-10/20261017_01_w14-mg-source-velocity-repair/README.md) | 缺陷修复 | 已实施；Claude独立审核 **NEEDS CORRECTION · P1**（W14保持OPEN） | W14 | type-5 MG spontaneous-fission Watt路径保持旧速度并将非整数物理MeV送入内部群bank helper；候选版exit 134，baseline exit 0。修复任务自验的ordinary/WW结果保留其限定范围；不得CLOSED，未提交 |
 | 2026-10-15 | [claude-w14-independent-review](2026-10/20261015_03_claude-w14-independent-review/README.md) | 模式C / W14独立源码审核与限定动态验证 | 已完成（**CONFIRMED · P1 · E3；未修复**） | 06 / W14 | 普通MG fixed-source neutron Forward/Adjoint source velocity误把物理MeV当内部群号；低能ASan确认OOB，高能GDB确认错速；时间影响已证、稳态flux/response偏差未证明。主报告见[独立审核](2026-10/20261015_03_claude-w14-independent-review/Independent_W14_RMC_MG_Source_Velocity_Review.md)；RMC/KB04/reference未改，Stage3未启动 |
 | 2026-10-15 | [w14-codex-independent-validation](2026-10/20261015_02_w14-codex-independent-validation/README.md) | 模式C / W14 Codex多群源能量与速度验证 | 已完成（**CONFIRMED / P1 / E3；未修复**） | 06 / W14 | Codex验证报告及其本地证据见[Task02 §4](2026-10/20261015_02_w14-codex-independent-validation/README.md#4-结论与边界)；仅记录与Claude报告并列，不替代其独立证据或修复审批 |
 | 2026-10-15 | [f11-stage3-target-source-response-design](2026-10/20261015_01_f11-stage3-target-source-response-design/README.md) | 模式C / Stage3 技术设计 | 设计完成；Claude独立审查完成（**NEEDS REVISION**）；待修订设计及用户批准生产修改 | 04 | Claude独立审查见[报告](2026-10/20261015_01_f11-stage3-target-source-response-design/Independent_F11_Stage3_Design_Review.md)：MPI scalar归约、T4 raw-segment oracle为P1，bin sampler micro-oracle为P2；未修改RMC/KB04、未运行；实施未启动 |

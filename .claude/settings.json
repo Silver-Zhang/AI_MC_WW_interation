@@ -5,7 +5,15 @@
       "Bash(git -C /home/workspace/AI_MC_WW_interation/RMC branch --show-current)",
       "Bash(git -C /home/workspace/AI_MC_WW_interation/RMC rev-parse HEAD)",
       "Bash(git -C /home/workspace/AI_MC_WW_interation status --short)",
-      "Read(//home/silver/.claude/**)"
+      "Read(//home/silver/.claude/**)",
+      "Bash(find . -type d -name .git -o -type f -name '*.cpp' | head -100; find /home/workspace -maxdepth 4 -type d -iname '*rmc*')",
+      "Read(//home/workspace/**)",
+      "Bash(git submodule *)",
+      "Bash(git -C RMC branch --show-current)",
+      "Bash(git -C RMC rev-parse HEAD)",
+      "Bash(git -C RMC status --short)",
+      "Bash(git -C RMC diff --stat)",
+      "Bash(git -C RMC diff --name-status)"
     ]
   }
 }

@@ -1,0 +1,121 @@
+{
+  "captured_at": "2026-10-17T01:13:40.360585+08:00",
+  "note": "开工时两仓库 porcelain 输出均为空；本快照在 new_task.sh 建档后采集，根仓库新增任务和 INDEX 修改属于本轮。",
+  "repos": {
+    "documents": {
+      "branch": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation",
+          "branch",
+          "--show-current"
+        ],
+        "exit_code": 0,
+        "stdout": "main\n",
+        "stderr": ""
+      },
+      "head": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation",
+          "rev-parse",
+          "HEAD"
+        ],
+        "exit_code": 0,
+        "stdout": "50d9e0eada8016b3f7d71a08f1a2ff195f481559\n",
+        "stderr": ""
+      },
+      "status": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "exit_code": 0,
+        "stdout": " M MLVR_develop/INDEX.md\n?? MLVR_develop/2026-10/20261017_01_w14-mg-source-velocity-repair/README.md\n",
+        "stderr": ""
+      },
+      "diff_check": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    "RMC": {
+      "branch": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation/RMC",
+          "branch",
+          "--show-current"
+        ],
+        "exit_code": 0,
+        "stdout": "Neural_Network_WW_Iteration\n",
+        "stderr": ""
+      },
+      "head": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation/RMC",
+          "rev-parse",
+          "HEAD"
+        ],
+        "exit_code": 0,
+        "stdout": "4810694b7a99dfc3ad7d27f7d443814f511f4829\n",
+        "stderr": ""
+      },
+      "status": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation/RMC",
+          "status",
+          "--porcelain=v1",
+          "--untracked-files=all"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "diff_check": {
+        "argv": [
+          "git",
+          "-C",
+          "/home/workspace/AI_MC_WW_interation/RMC",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    }
+  },
+  "sha256": {
+    "RMC/src/SampleParticle.cpp": "a13321b5f5d8f2dd32589024d7d5f9d1e35746cac2b86db60b606fa2d57a2699",
+    "RMC/src/SampleNeutronSource.cpp": "4fdc597fb43d7196102bcdb5686a81ee5a720d2e28bc33d900738d4fb67f5f7f",
+    "RMC/src/GlobeFun.h": "93e66dd80ef97aaa0a2b60dd71e462ef2e054d3d2305402e7d5352bcac86a9a0",
+    "RMC/src/GetMgCs.cpp": "f718dd4bb9faa97ad620f32afa1e4109f54d9b62760c36f1758b0b629b9c4d37",
+    "RMC/src/FixedSource.h": "e44f78d42da3d01923bc68d3b2b1355c7f7d448d82f16c251b6a778dbdb77979",
+    "RMC/src/ParticleStateFun.cpp": "78570d287c4925dde51a4786d7f29642ea15e01dd52562c77cd5c8ae36b55cc6",
+    "RMC/src/CalcFixedSource.cpp": "38b62145befa9e98a2bdcb98ab1cdcf3114864c4c5307168dc4b182c3326cb21",
+    "MLVR_Knowledge/04_F11_v1_架构与实施设计.md": "aeed2760f84427bdd8d139182d7bb3f4193c0c63f67decec1d42c7aad7a676b0",
+    "MLVR_develop/2026-10/20261015_02_w14-codex-independent-validation/REPORT.md": "6c1886e2a68ce977d33d5916d79e5361c9f7e44757e83ed38f9d38fe77cd0d6a",
+    "MLVR_develop/2026-10/20261015_03_claude-w14-independent-review/Independent_W14_RMC_MG_Source_Velocity_Review.md": "261db30fd8ee00a0d77d35e540f29d98130571e5a26dc038b59987de66e37076",
+    "MLVR_develop/2026-10/20261011_05_f11-prepared-run-lifecycle/README.md": "feec9517dd1906a8712a2ad28a92410c17af777162e36c7a5224c9606fc52665"
+  }
+}

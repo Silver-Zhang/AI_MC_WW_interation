@@ -1,0 +1,247 @@
+diff --git a/src/AceData.h b/src/AceData.h
+index 1ed0835e..008a69b3 100644
+--- a/src/AceData.h
++++ b/src/AceData.h
+@@ -1862,7 +1862,8 @@ public:
+    * @param nParticleType 粒子类型
+    * @return 粒子所属的能群编号
+    */
+-  int LocateMgErgGrp(double dErg, int nParticleType);
++  // Suppress warnings only for a preliminary lookup; the normal conversion warns.
++  int LocateMgErgGrp(double dErg, int nParticleType, bool bWarn = true);
+ 
+   /**
+    * @brief 把从输入卡中读到的一维缓发中子份额数组转换为二维数组
+diff --git a/src/CalcFixedSource.cpp b/src/CalcFixedSource.cpp
+index 53f0a36c..58558312 100644
+--- a/src/CalcFixedSource.cpp
++++ b/src/CalcFixedSource.cpp
+@@ -229,7 +229,7 @@ void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTranspo
+             }
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG, CAceData);
+           } else {
+             break;
+           }
+@@ -317,7 +317,7 @@ void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTranspo
+             }
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Photon].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG, CAceData);
+             CGeometry.p_OBinaryOut.UpdateParticleTypeAndHistoryNum(1, false);
+           }  else if (cFixedSource.p_nElectronBankCount > 0) {
+             cFixedSource.SamplElectronBank(CGeometry, CParticleState, ORNG);
+@@ -451,10 +451,10 @@ void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTranspo
+             }
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG, CAceData);
+             CGeometry.p_OBinaryOut.UpdateParticleTypeAndHistoryNum(0, false);
+           } else if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Photon].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG, CAceData);
+             CGeometry.p_OBinaryOut.UpdateParticleTypeAndHistoryNum(1, false);
+           } else if (cFixedSource.p_nElectronBankCount > 0) {
+             cFixedSource.SamplElectronBank(CGeometry, CParticleState, ORNG);
+@@ -628,7 +628,7 @@ void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTranspo
+             }
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Photon].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG, CAceData);
+           } else if (cFixedSource.p_nElectronBankCount > 0) {
+             cFixedSource.SamplElectronBank(CGeometry, CParticleState, ORNG);
+           } else {
+@@ -740,10 +740,10 @@ void CDCalMode::ExecuteFixedSourcePrepared(CDCalMode &cCalMode, CDNeutronTranspo
+             }
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Neutron].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Neutron, ORNG, CAceData);
+           }
+           if (cFixedSource.p_vFixedParticleSrcBank[CDParticleState::Photon].size() > 1) {
+-            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG);
++            cFixedSource.SampleFromParticleBank(CGeometry, CParticleState, CDParticleState::Photon, ORNG, CAceData);
+           } else if (cFixedSource.p_nElectronBankCount > 0) {
+             cFixedSource.SamplElectronBank(CGeometry, CParticleState, ORNG);
+           } else {
+diff --git a/src/FixedSource.h b/src/FixedSource.h
+index 0031bcbc..cea4163f 100644
+--- a/src/FixedSource.h
++++ b/src/FixedSource.h
+@@ -497,7 +497,7 @@ public:
+      * @param ORNG 随机数
+      */
+   void SampleFromParticleBank(CDGeometry &cGeometry, CDParticleState &cParticleState,
+-                              CDParticleState::eParticleType particleType, CDRNG &ORNG);
++                              CDParticleState::eParticleType particleType, CDRNG &ORNG, const CDAceData &cAceData);
+ 
+   /**
+    * 取出存库的粒子
+@@ -506,7 +506,7 @@ public:
+    * @param particleType
+    */
+   void PopParticleOutofStack(ParticleStack &particleBankpointer, CDParticleState &cParticleState,
+-                             CDParticleState::eParticleType particleType);
++                             CDParticleState::eParticleType particleType, const CDAceData &cAceData);
+ 
+ 
+   /**
+diff --git a/src/GetMgCs.cpp b/src/GetMgCs.cpp
+index 826745f0..999c87b2 100644
+--- a/src/GetMgCs.cpp
++++ b/src/GetMgCs.cpp
+@@ -260,15 +260,20 @@ double CDAceData::GetErgValue(double dParticleErg, int nParticleType) {
+   }
+ }
+ 
+-int CDAceData::LocateMgErgGrp(double dErg, int nParticleType) {
++int CDAceData::LocateMgErgGrp(double dErg, int nParticleType, bool bWarn) {
++  if (!std::isfinite(dErg))
++    throw std::invalid_argument("MG energy lookup: nonfinite physical energy");
+   int nErgGrp = 0;
+   if (nParticleType == CDParticleState::eParticleType::Neutron) {
++    if (p_nNeuMltGrpNum <= 0 || p_vNeuMltErgBins.size() != size_t(p_nNeuMltGrpNum) ||
++        p_vNeuMltCentErg.size() != size_t(p_nNeuMltGrpNum))
++      throw std::invalid_argument("MG energy lookup: invalid neutron group arrays");
+     CDGlobeFun::GetIntpltPos(&p_vNeuMltErgBins[0], dErg, 0, p_nNeuMltGrpNum - 1, nErgGrp);
+-    if (nErgGrp == 0) {
++    if (bWarn && nErgGrp == 0) {
+       //检查粒子能量是否小于最低能群下界，若低于最低能群下界将其置于最低能群中
+       Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy less than minimum energy group lower bound.\n");},
+       Output.p_fpOutputFilePtr, CDOutput::_WARNING);
+-    } else if (nErgGrp == (p_nNeuMltGrpNum - 1)) {
++    } else if (bWarn && nErgGrp == (p_nNeuMltGrpNum - 1)) {
+       if (dErg > (2 * p_vNeuMltCentErg[p_nNeuMltGrpNum - 1] - p_vNeuMltErgBins[p_nNeuMltGrpNum - 1])) {
+         //检查粒子能量是否大于最高能群上界，若高于最高能群上界将其置于最高能群中
+         Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy larger than maximum energy group upper bound.\n");},
+@@ -277,12 +282,15 @@ int CDAceData::LocateMgErgGrp(double dErg, int nParticleType) {
+     }
+     nErgGrp = p_nNeuMltGrpNum - nErgGrp;
+   } else if (nParticleType == CDParticleState::eParticleType::Photon) {
++    if (p_nPhoMltGrpNum <= 0 || p_vPhoMltErgBins.size() != size_t(p_nPhoMltGrpNum) ||
++        p_vPhoMltCentErg.size() != size_t(p_nPhoMltGrpNum))
++      throw std::invalid_argument("MG energy lookup: invalid photon group arrays");
+     CDGlobeFun::GetIntpltPos(&p_vPhoMltErgBins[0], dErg, 0, p_nPhoMltGrpNum - 1, nErgGrp);
+-    if (nErgGrp == 0) {
++    if (bWarn && nErgGrp == 0) {
+       //检查粒子能量是否小于最低能群下界，若低于最低能群下界将其置于最低能群中
+       Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy less than minimum energy group lower bound.\n");},
+       Output.p_fpOutputFilePtr, CDOutput::_WARNING);
+-    } else if (nErgGrp == (p_nPhoMltGrpNum - 1)) {
++    } else if (bWarn && nErgGrp == (p_nPhoMltGrpNum - 1)) {
+       if (dErg > (2 * p_vPhoMltCentErg[p_nPhoMltGrpNum - 1] - p_vPhoMltErgBins[p_nPhoMltGrpNum - 1])) {
+         //检查粒子能量是否大于最高能群上界，若高于最高能群上界将其置于最高能群中
+         Output.OutputMessage([&]() {sprintf(Output.p_sPrintStr, "particle energy larger than maximum energy group upper bound.\n");},
+diff --git a/src/GlobeFun.h b/src/GlobeFun.h
+index ce238f13..15a23a0a 100644
+--- a/src/GlobeFun.h
++++ b/src/GlobeFun.h
+@@ -10,6 +10,7 @@
+ #include "Constants.h"
+ 
+ #include <array>
++#include <stdexcept>
+ 
+ using namespace std;
+ 
+@@ -535,15 +536,18 @@ Interp:
+            / (dNeuErg + NEUTRON_MASS_MEV);
+   }
+ 
+-  static double GetNeuVelMg(double p_dErg, int nMltGrpNum, vector<double> vMltCentErg) {
+-    // 相对论公式：Ek + E0 = E0 /sqrt(1 - v**2/c**2)
+-    // v = c * sqrt(Ek**2 + 2*E0*EK) / (E0 + Ek)
+-    // 其中E0为中子的质量能量，Ek为中子的动能，v为中子的速度，c为光速
+-    double dErg = 0.;
+-    int  k = nMltGrpNum - int(p_dErg + 0.5);
+-    dErg = vMltCentErg[k];
+-    return LIGHT_SPEED * sqrt(dErg * (dErg + 2 * NEUTRON_MASS_MEV)) / (dErg +
+-           NEUTRON_MASS_MEV); // 单位：1.0E8 cm/s=cm/shake
++  // dGroup is an internal integer group (1 = highest energy), not MeV.
++  static double GetNeuVelMg(double dGroup, int nMltGrpNum, const vector<double> &vMltCentErg) {
++    // Validate before converting to int or indexing the low-to-high centers.
++    if (nMltGrpNum <= 0 || vMltCentErg.size() != size_t(nMltGrpNum) ||
++        !std::isfinite(dGroup) || dGroup < 1. || dGroup > nMltGrpNum ||
++        std::floor(dGroup) != dGroup)
++      throw std::invalid_argument("MG neutron velocity: invalid internal group or center array");
++    const int k = nMltGrpNum - int(dGroup);
++    const double dErg = vMltCentErg[k];
++    if (!std::isfinite(dErg) || dErg <= 0.)
++      throw std::invalid_argument("MG neutron velocity: invalid group center energy");
++    return GetNeuVel(dErg); // cm/shake
+   }
+ 
+ 
+diff --git a/src/PythonInterface/PythonInterface.cpp b/src/PythonInterface/PythonInterface.cpp
+index d6962711..e70287ff 100644
+--- a/src/PythonInterface/PythonInterface.cpp
++++ b/src/PythonInterface/PythonInterface.cpp
+@@ -147,7 +147,9 @@ CDPythonInterface::SampleParticleFromSubroutine(CDParticleState &cParticleState,
+     switch (cParticleState.p_eParticleType) {
+     case CDParticleState::Neutron: {
+       if (cAceData.p_bIsMultiGroup) {
+-        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(cParticleState.p_dErg, cAceData.p_nNeuMltGrpNum,
++        // The source callback returns MeV, just like an ordinary source card.
++        const int nGroup = cAceData.LocateMgErgGrp(cParticleState.p_dErg, cParticleState.p_eParticleType, false);
++        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(nGroup, cAceData.p_nNeuMltGrpNum,
+                                 cAceData.p_vNeuMltCentErg);
+       } else {
+         cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+diff --git a/src/SampleNeutronSource.cpp b/src/SampleNeutronSource.cpp
+index 4c91713d..a6e7abaa 100644
+--- a/src/SampleNeutronSource.cpp
++++ b/src/SampleNeutronSource.cpp
+@@ -285,7 +285,7 @@ void CDFixedSource::SampleFixSource(CDCalMode &OCalMode, CDNeutronTransport &cNe
+ }
+ 
+ void CDFixedSource::PopParticleOutofStack(ParticleStack &particleBank, CDParticleState &cParticleState,
+-    CDParticleState::eParticleType particleType) {
++    CDParticleState::eParticleType particleType, const CDAceData &cAceData) {
+   cParticleState.p_bTMSReject = false;
+   ///////////////  flag of kill particle //////////////////////
+   cParticleState.set_alive();
+@@ -314,7 +314,11 @@ void CDFixedSource::PopParticleOutofStack(ParticleStack &particleBank, CDParticl
+     cParticleState.p_dTime = particleStackTop.p_dTime;
+     // 更新中子的飞行速度,后续扩展粒子类型时需要修改\n
+     if (cParticleState.p_eParticleType == CDParticleState::Neutron) {
+-      cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
++      // Bank energy is already an internal group in MG, and remains MeV in CE.
++      cParticleState.p_dVel = cAceData.p_bIsMultiGroup
++          ? CDGlobeFun::GetNeuVelMg(cParticleState.p_dErg, cAceData.p_nNeuMltGrpNum,
++                                   cAceData.p_vNeuMltCentErg)
++          : CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
+     } else if (cParticleState.p_eParticleType == CDParticleState::Photon) {
+       cParticleState.p_dVel = LIGHT_SPEED;
+     }
+@@ -325,9 +329,9 @@ void CDFixedSource::PopParticleOutofStack(ParticleStack &particleBank, CDParticl
+ 
+ }
+ void CDFixedSource::SampleFromParticleBank(CDGeometry &cGeometry, CDParticleState &cParticleState,
+-    CDParticleState::eParticleType particleType, CDRNG &ORNG) {
++    CDParticleState::eParticleType particleType, CDRNG &ORNG, const CDAceData &cAceData) {
+   //////////////////// Get position, direction, energy and weight ////////////////////////////
+-  PopParticleOutofStack(p_vFixedParticleSrcBank[particleType], cParticleState, particleType);
++  PopParticleOutofStack(p_vFixedParticleSrcBank[particleType], cParticleState, particleType, cAceData);
+ 
+   /////////////////////// Locate fission source ///////////////////////
+ 
+diff --git a/src/SampleParticle.cpp b/src/SampleParticle.cpp
+index 32b5f32c..97f8949c 100644
+--- a/src/SampleParticle.cpp
++++ b/src/SampleParticle.cpp
+@@ -79,7 +79,9 @@ void CDSource::SampleParticle(CDParticleState &cParticleState, CDGeometry &cGeom
+     switch (cParticleState.p_eParticleType) {
+     case CDParticleState::Neutron: {
+       if (cAceData.p_bIsMultiGroup) {
+-        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(cParticleState.p_dErg, cAceData.p_nNeuMltGrpNum,
++        // Keep the sampled MeV for SampleFixSource's normal energy conversion.
++        const int nGroup = cAceData.LocateMgErgGrp(cParticleState.p_dErg, cParticleState.p_eParticleType, false);
++        cParticleState.p_dVel = CDGlobeFun::GetNeuVelMg(nGroup, cAceData.p_nNeuMltGrpNum,
+                                 cAceData.p_vNeuMltCentErg);
+       } else {
+         cParticleState.p_dVel = CDGlobeFun::GetNeuVel(cParticleState.p_dErg);
